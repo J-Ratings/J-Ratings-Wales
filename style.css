@@ -24,23 +24,28 @@
   background: rgba(255, 255, 255, 0.05); /* subtle hover effect */
 }
 
-/* Centre-align everything in players table */
+#players {
+  table-layout: auto;
+  width: auto;        /* shrink table to fit content */
+  margin: 0 auto;     /* centre the table horizontally */
+  font-size: 1.1rem;  /* increase text size */
+}
+
 #players th,
 #players td {
-  text-align: center;
+  text-align: center; /* centre all text in the table */
+  padding: 0.5rem 1rem; /* balanced spacing */
 }
 
-/* Keep padding consistent */
-#players th,
-#players td {
-  padding: 0.5rem 1rem;
+#players th {
+  font-weight: 600; /* keep headers bold */
 }
 
-/* Optional: remove the .right class alignment for this table */
-#players td.right {
-  text-align: center !important;
+@media (max-width: 600px) {
+  #players {
+    font-size: 1rem; /* slightly smaller on mobile so it fits */
+  }
 }
-
 
 @media (max-width: 600px) {
   #players th:first-child,
