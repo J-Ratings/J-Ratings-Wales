@@ -38,7 +38,7 @@
 
   const PLAYERS_URL = 'data/players.json';
   const HIST_URL    = `data/history/${encodeURIComponent(idRaw)}.json`;
-
+console.log('HIST_URL =', HIST_URL);
   async function load() {
     try {
       const [playersRes, histRes] = await Promise.all([
