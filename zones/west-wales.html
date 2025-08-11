@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
 </head>
 <body>
 <header>
@@ -17,31 +16,33 @@
       </h1>
       <span class="muted">Alternate WCU Ratings with Live Batch</span>
     </div>
-<nav class="zones" aria-label="Zones">
-  <a href="dyfed.html">Dyfed</a>
-  <a href="east-glam.html">East Glamorgan</a>
-  <a href="gwent.html">Gwent</a>
-  <a href="north-wales.html">North Wales</a>
-  <a href="west-wales.html" class="active-zone">West Wales</a>
-</nav>
-<div class="clubs-nav"></div>
 
+    <nav class="zones" aria-label="Zones">
+      <a href="dyfed.html">Dyfed</a>
+      <a href="east-glam.html">East Glamorgan</a>
+      <a href="gwent.html">Gwent</a>
+      <a href="north-wales.html">North Wales</a>
+      <a href="west-wales.html" class="active-zone">West Wales</a>
+    </nav>
+
+    <div class="clubs-nav"></div>
   </div>
 </header>
-
 
 <main class="wrap">
   <section class="panel" id="players-panel">
     <h2 id="zone-title">West Wales</h2>
-<div class="toolbar">
-  <input id="q" type="search" placeholder="Filter by name…">
-  <span id="count" class="muted"></span>
-  <button id="compare-btn" class="club-btn" type="button" style="margin-left:auto">Compare</button>
-</div>
 
-<div id="compare-wrap" style="display:none; padding:16px">
-  <div id="compare-chart" style="height:420px"></div>
-</div>
+    <div class="toolbar">
+      <input id="q" type="search" placeholder="Filter by name…">
+      <span id="count" class="muted"></span>
+      <button id="compare-btn" class="club-btn" type="button" style="margin-left:auto">Compare</button>
+    </div>
+
+    <div id="compare-wrap" style="display:none; padding:16px">
+      <div id="compare-chart" style="height:420px"></div>
+    </div>
+
     <div class="table-wrap">
       <table id="players">
         <thead>
@@ -57,18 +58,41 @@
 </main>
 
 <script>
+/* ---------- CONFIG (adjust if you copy this for another zone) ---------- */
 const ZONE_CODE = 'W1';
-const DATA_URL = '../data/players.json';
+const ZONE_NAME = 'West Wales';
+const DATA_URL  = '../data/players.json';
 
+// Optional: only include players who have history on/after this date.
+// Set to null to include anyone with any history.
+const COMPARE_SINCE = '2025-07-01';
+
+// Limit traces after filtering (prevents unreadable spaghetti).
+const MAX_SERIES = 50;
+
+// Club codes → human names for this zone only
+const clubNames = {
+  "5CN": "Castell Nedd",
+  "5DB": "De La Beche",
+  "5MO": "Morriston",
+  "5NY": "Noah's Yard",
+  "5UK": "Upper Killay",
+  "5WK": "White Knights",
+  "5SU": "Swansea University"
+};
+
+/* ---------------------------- STATE & RENDER --------------------------- */
 const state = { rows: [], filtered: [], selectedClub: null };
 
-function render() {
+function renderTable() {
   const tbody = document.querySelector('#players tbody');
   tbody.innerHTML = '';
   for (const r of state.filtered) {
     const tr = document.createElement('tr');
+
     const tdName = document.createElement('td');
     const a = document.createElement('a');
+    // Build player link; only encode the query value (no double-encoding)
     a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
     a.textContent = r.name;
     tdName.appendChild(a);
@@ -91,58 +115,32 @@ function applyFilter() {
   if (state.selectedClub) list = list.filter(r => r.club === state.selectedClub);
   if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
   state.filtered = list;
-  render();
-  hideCompare(); // keep chart in sync
+  renderTable();
+  hideCompare(); // keep chart in sync with the visible list
 }
 
-// --- compare helpers ---
+/* ---------------------------- COMPARE CHART ---------------------------- */
+// Cache histories to avoid refetching on every click
+const histCache = new Map(); // id -> array|null
+
 async function fetchHistoryFor(id) {
-  const url = `../data/history/${encodeURIComponent(id)}.json`;
-  try {
+  // Be robust to whether ids in players.json are already URL-encoded.
+  // 1) try as-is (works if filenames are already encoded like "e1%20emmakong.json")
+  // 2) if that 404s, try encodeURIComponent(id)
+  if (histCache.has(id)) return histCache.get(id);
+
+  async function tryUrl(url) {
     const res = await fetch(url, { cache: 'no-cache' });
     if (!res.ok) return null;
     const rows = await res.json();
     return Array.isArray(rows) && rows.length ? rows : null;
-  } catch { return null; }
-}
-
-async function buildComparison(players) {
-  const wrap = document.getElementById('compare-wrap');
-  const chart = document.getElementById('compare-chart');
-  const MAX_SERIES = 12;
-
-  const chosen = players.slice(0, MAX_SERIES);
-  const series = await Promise.all(chosen.map(async p => {
-    const hist = await fetchHistoryFor(p.id);
-    if (!hist) return null;
-    return {
-      name: p.name,
-      x: hist.map(d => d.date),
-      y: hist.map(d => d.rating),
-      mode: 'lines',
-      hovertemplate: '%{x}<br>%{y}<extra>' + p.name + '</extra>'
-    };
-  }));
-
-  const traces = series.filter(Boolean);
-  if (!traces.length) {
-    wrap.style.display = 'block';
-    chart.innerHTML = 'No rating history found for this club.';
-    return;
   }
 
-  const bg = getComputedStyle(document.body).backgroundColor;
-  const fg = getComputedStyle(document.body).color;
+  let hist = await tryUrl(`../data/history/${id}.json`);
+  if (!hist) hist = await tryUrl(`../data/history/${encodeURIComponent(id)}.json`);
 
-  Plotly.newPlot(chart, traces, {
-    margin:{l:50,r:20,t:10,b:40},
-    xaxis:{type:'date', title:''},
-    yaxis:{title:'Rating'},
-    legend:{orientation:'h'},
-    paper_bgcolor:bg, plot_bgcolor:bg, font:{color:fg}
-  }, {displayModeBar:false, responsive:true});
-
-  wrap.style.display = 'block';
+  histCache.set(id, hist ?? null);
+  return hist ?? null;
 }
 
 function hideCompare() {
@@ -152,39 +150,78 @@ function hideCompare() {
   chart.innerHTML = '';
 }
 
+async function buildComparison(players) {
+  const wrap = document.getElementById('compare-wrap');
+  const chart = document.getElementById('compare-chart');
+  wrap.style.display = 'block';
+  chart.innerHTML = 'Loading…';
+
+  const withHist = [];
+  await Promise.all(players.map(async p => {
+    const hist = await fetchHistoryFor(p.id);
+    if (!hist) return;
+
+    const use = COMPARE_SINCE
+      ? hist.filter(d => d.date >= COMPARE_SINCE)
+      : hist;
+
+    if (use.length) withHist.push({ p, hist: use });
+  }));
+
+  if (!withHist.length) {
+    chart.innerHTML = COMPARE_SINCE
+      ? `No rating history since ${COMPARE_SINCE}.`
+      : 'No rating history found.';
+    return;
+  }
+
+  // Choose which to plot: sort by most recent activity and cap
+  withHist.sort((a, b) =>
+    b.hist[b.hist.length - 1].date.localeCompare(a.hist[a.hist.length - 1].date)
+  );
+  const picked = withHist.slice(0, MAX_SERIES);
+
+  const traces = picked.map(({ p, hist }) => ({
+    name: p.name,
+    x: hist.map(d => d.date),
+    y: hist.map(d => d.rating),
+    mode: 'lines',
+    hovertemplate: '%{x}<br>%{y}<extra>' + p.name + '</extra>'
+  }));
+
+  const cs = getComputedStyle(document.body);
+  Plotly.newPlot(chart, traces, {
+    margin:{l:50,r:20,t:10,b:40},
+    xaxis:{type:'date', title:''},
+    yaxis:{title:'Rating'},
+    legend:{orientation:'h'},
+    paper_bgcolor: cs.backgroundColor,
+    plot_bgcolor: cs.backgroundColor,
+    font:{color: cs.color}
+  }, {displayModeBar:false, responsive:true});
+}
+
 function setupCompareButton() {
-  const btn = document.getElementById('compare-btn');
-  btn.addEventListener('click', async () => {
-    // If no club selected, compare everyone currently visible (could be a lot)
-    const list = state.filtered.slice();
-    document.getElementById('compare-chart').innerHTML = 'Loading…';
+  document.getElementById('compare-btn').addEventListener('click', async () => {
+    const list = state.filtered.slice(); // all currently visible rows
     await buildComparison(list);
   });
 }
 
+/* --------------------------------- LOAD -------------------------------- */
 async function load() {
   const res = await fetch(DATA_URL, { cache: 'no-cache' });
+  if (!res.ok) throw new Error('Failed to load players.json');
   const data = await res.json();
 
-  // Filter by this zone
+  // Filter by this zone and sort by rating desc
   state.rows = data
     .filter(d => d.zone === ZONE_CODE)
     .sort((a, b) => b.rating - a.rating);
 
   state.filtered = state.rows.slice();
 
-  // Club codes → names
-  const clubNames = {
-    "5CN": "Castell Nedd",
-    "5DB": "De La Beche",
-    "5MO": "Morriston",
-    "5NY": "Noah's Yard",
-    "5UK": "Upper Killay",
-    "5WK": "White Knights",
-    "5SU": "Swansea University"
-  };
-
-  // Build club buttons
+  // Build club buttons (numeric codes only, present in this zone and in map)
   const clubsNav = document.querySelector('.clubs-nav');
   const clubs = [...new Set(
     state.rows.map(r => r.club).filter(c => /^\d/.test(c) && clubNames[c])
@@ -196,7 +233,7 @@ async function load() {
 
   // Title
   const zoneTitle = document.getElementById('zone-title');
-  zoneTitle.textContent = "West Wales";
+  zoneTitle.textContent = ZONE_NAME;
 
   // Club filtering
   clubsNav.addEventListener('click', e => {
@@ -207,18 +244,20 @@ async function load() {
 
     const code = e.target.dataset.code;
     state.selectedClub = code || null;
-    zoneTitle.textContent = code ? clubNames[code] : "West Wales";
+    zoneTitle.textContent = code ? clubNames[code] : ZONE_NAME;
 
-    applyFilter();   // this also hides the chart
+    applyFilter(); // hides chart too
   });
 
-  render();
+  renderTable();
   setupCompareButton();
 }
 
 document.getElementById('q').addEventListener('input', applyFilter);
-load();
+load().catch(err => {
+  document.querySelector('#players tbody').innerHTML =
+    `<tr><td colspan="2">Error loading data: ${err.message}</td></tr>`;
+});
 </script>
-
 </body>
 </html>
