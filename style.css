@@ -25,18 +25,18 @@
 }
 
 #players {
-  table-layout: auto; /* allow natural column sizing */
-  width: 100%; /* full width on all devices */
+  table-layout: auto;
+  width: auto; /* shrink table to fit content */
+  margin: 0 auto; /* centre the table */
 }
 
-#players th,
-#players td {
-  padding: 0.5rem; /* balanced padding for touch and click */
+#players th:first-child,
+#players td:first-child {
+  padding-right: 2rem; /* control gap between name and rating */
 }
 
 #players td.right {
-  text-align: right; /* keep rating aligned neatly */
-  white-space: nowrap; /* stops ratings breaking onto 2 lines */
+  text-align: left; /* put ratings next to names instead of far right */
 }
 
 @media (max-width: 600px) {
