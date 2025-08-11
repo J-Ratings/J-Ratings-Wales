@@ -124,13 +124,23 @@ async function load() {
     .map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`)
     .join(' ');
 
-  // Title element
+  // Add a "Show All" button at the start
+  clubsNav.insertAdjacentHTML('afterbegin', `<button class="club-btn active-club" data-code="">All</button>`);
+
+  // Title element reference
   const zoneTitle = document.getElementById('zone-title');
   zoneTitle.textContent = "West Wales";
 
-  // Club button click handler
+  // Click handler for club buttons
   clubsNav.addEventListener('click', e => {
     if (!e.target.classList.contains('club-btn')) return;
+
+    // Remove active state from all club buttons
+    document.querySelectorAll('.club-btn').forEach(btn => btn.classList.remove('active-club'));
+
+    // Mark the clicked one as active
+    e.target.classList.add('active-club');
+
     const code = e.target.dataset.code;
     if (code) {
       state.filtered = state.rows.filter(r => r.club === code);
