@@ -1,86 +1,81 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Player Profile</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #e6f2f2;
-            padding: 20px;
-        }
-        h1 {
-            margin-bottom: 5px;
-        }
-        #chart-container {
-            width: 90%;
-            max-width: 800px;
-            margin-top: 30px;
-        }
-    </style>
+  <meta charset="utf-8">
+  <title>Player — J-Ratings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    .player-head{display:flex;justify-content:space-between;align-items:flex-end;margin:12px 0}
+    .badge{border:1px solid var(--border);background:#0f1623;border-radius:8px;padding:6px 10px}
+  </style>
 </head>
 <body>
+<header>
+  <div class="wrap">
+    <div class="title">
+      <h1><a href="index.html" style="color:#8b949e;text-decoration:none">← All players</a></h1>
+      <span class="muted">Unofficial live ratings</span>
+    </div>
+  </div>
+</header>
 
-<h1 id="player-name"></h1>
-<p id="player-info"></p>
-
-<div id="chart-container">
-    <canvas id="ratingChart"></canvas>
-</div>
+<main class="wrap">
+  <section class="panel">
+    <div class="player-head">
+      <h2 id="pname">Player</h2>
+      <div class="badge"><span class="muted">Live K:</span> <strong id="kval">–</strong></div>
+    </div>
+    <div id="chart" style="height:420px"></div>
+  </section>
+</main>
 
 <script>
-    // Get ID from query string
-    const urlParams = new URLSearchParams(window.location.search);
-    const playerId = urlParams.get('id');
+  const params = new URLSearchParams(location.search);
+  const idRaw = params.get('id');                       // e.g. "e1 jose camacho collados"
+  if (!idRaw) { document.getElementById('chart').innerHTML = 'Missing player id.'; throw new Error('no id'); }
 
-    if (!playerId) {
-        document.getElementById("player-name").textContent = "Player not found.";
-    } else {
-        // Load player data from players.json
-        fetch('data/players.json')
-            .then(res => res.json())
-            .then(players => {
-                const player = players.find(p => p.id === playerId);
-                if (!player) {
-                    document.getElementById("player-name").textContent = "Player not found.";
-                    return;
-                }
-                document.getElementById("player-name").textContent = player.name;
-                document.getElementById("player-info").textContent = `K-factor: ${player.kfactor}`;
+  const PLAYERS_URL = 'data/players.json';
+  const HIST_URL    = `data/history/${encodeURIComponent(idRaw)}.json`;
 
-                // Now load history data
-                fetch(`data/history/${encodeURIComponent(playerId)}.json`)
-                    .then(res => res.json())
-                    .then(history => {
-                        const labels = history.map(entry => entry.date);
-                        const ratings = history.map(entry => entry.rating);
+  async function load() {
+    try {
+      const [playersRes, histRes] = await Promise.all([
+        fetch(PLAYERS_URL, {cache:'no-cache'}),
+        fetch(HIST_URL, {cache:'no-cache'})
+      ]);
+      if (!playersRes.ok) throw new Error('players.json not found');
+      if (!histRes.ok) throw new Error('history not found');
 
-                        const ctx = document.getElementById('ratingChart').getContext('2d');
-                        new Chart(ctx, {
-                            type: 'line',
-                            data: {
-                                labels: labels,
-                                datasets: [{
-                                    label: 'Rating',
-                                    data: ratings,
-                                    borderColor: 'blue',
-                                    fill: false
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                scales: {
-                                    y: { beginAtZero: false }
-                                }
-                            }
-                        });
-                    })
-                    .catch(err => console.error("Error loading history:", err));
-            })
-            .catch(err => console.error("Error loading players.json:", err));
+      const players = await playersRes.json();
+      const hist = await histRes.json();
+
+      const me = players.find(p => p.id === idRaw);
+      if (!me) throw new Error('player id not in players.json');
+
+      document.getElementById('pname').textContent = me.name;
+      document.getElementById('kval').textContent = (me.k ?? '–');
+
+      const x = hist.map(d => d.date);
+      const y = hist.map(d => d.rating);
+
+      const bg = getComputedStyle(document.body).backgroundColor;
+      Plotly.newPlot('chart', [{
+        x, y, mode: 'lines+markers',
+        hovertemplate: '%{x}<br>%{y}<extra></extra>'
+      }], {
+        margin:{l:50,r:20,t:10,b:40},
+        xaxis:{type:'date', title:''},
+        yaxis:{title:'Rating'},
+        paper_bgcolor:bg, plot_bgcolor:bg, font:{color:getComputedStyle(document.body).color}
+      }, {displayModeBar:false, responsive:true});
+    } catch (e) {
+      document.getElementById('chart').innerHTML = 'Could not load player data.';
+      console.error(e);
     }
+  }
+  load();
 </script>
-
 </body>
 </html>
