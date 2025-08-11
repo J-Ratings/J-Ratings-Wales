@@ -24,6 +24,28 @@
   background: rgba(255, 255, 255, 0.05); /* subtle hover effect */
 }
 
+#players {
+  table-layout: auto; /* allow natural column sizing */
+  width: 100%; /* full width on all devices */
+}
+
+#players th,
+#players td {
+  padding: 0.5rem; /* balanced padding for touch and click */
+}
+
+#players td.right {
+  text-align: right; /* keep rating aligned neatly */
+  white-space: nowrap; /* stops ratings breaking onto 2 lines */
+}
+
+@media (max-width: 600px) {
+  #players th:first-child,
+  #players td:first-child {
+    min-width: 140px; /* slightly narrower name col on mobile */
+  }
+}
+
 
 :root{
       --maxw: 1100px;
