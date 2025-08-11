@@ -5,7 +5,7 @@
   <title>East Glamorgan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js instead of Plotly -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <header>
@@ -36,7 +36,6 @@
       <button id="compare-btn" class="club-btn" type="button" style="margin-left:auto">Compare</button>
     </div>
 
-    <!-- Compare chart container -->
     <div id="compare-wrap" style="display:none; padding:16px">
       <canvas id="compare-chart" height="420"></canvas>
     </div>
@@ -55,13 +54,11 @@
   </section>
 </main>
 
-
 <script>
 const ZONE_CODE = 'E1';
 const DATA_URL = '../data/players.json';
-const state = { rows: [], filtered: [] };
+const state = { rows: [], filtered: [], selectedClub: null };
 
-// Map club codes to real names for East Glam
 const clubNames = {
   "2CP": "Caerphilly",
   "2BY": "Barry",
@@ -105,64 +102,16 @@ function render() {
 
 function applyFilter() {
   const q = document.getElementById('q').value.trim().toLowerCase();
-  if (!q) {
-    state.filtered = state.rows.slice();
-  } else {
-    state.filtered = state.rows.filter(r => r.name.toLowerCase().includes(q));
-  }
+  let list = state.rows;
+  if (state.selectedClub) list = list.filter(r => r.club === state.selectedClub);
+  if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
+  state.filtered = list;
   render();
+  hideCompare();
 }
 
-async function load() {
-  const res = await fetch(DATA_URL, { cache: 'no-cache' });
-  const data = await res.json();
-
-  // Filter by this zone
-  state.rows = data
-    .filter(d => d.zone === ZONE_CODE)
-    .sort((a, b) => b.rating - a.rating);
-
-  state.filtered = state.rows.slice();
-
-  // Create unique list of clubs for this zone
-  const clubs = [...new Set(
-    state.rows
-      .map(r => r.club)
-      .filter(c => /^\d/.test(c) && clubNames[c])
-  )].sort();
-
-  // Create buttons for each club
-  const clubsNav = document.querySelector('.clubs-nav');
-  clubsNav.innerHTML = clubs
-    .map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`)
-    .join(' ');
-
-  // Add a "Show All" button at the start
-  clubsNav.insertAdjacentHTML('afterbegin', `<button class="club-btn active-club" data-code="">All</button>`);
-
-  // Title element reference
-  const zoneTitle = document.getElementById('zone-title');
-  zoneTitle.textContent = "East Glamorgan";
-
-  // Click handler for club buttons
-  clubsNav.addEventListener('click', e => {
-    if (!e.target.classList.contains('club-btn')) return;
-
-    document.querySelectorAll('.club-btn').forEach(btn => btn.classList.remove('active-club'));
-    e.target.classList.add('active-club');
-
-    const code = e.target.dataset.code;
-    if (code) {
-      state.filtered = state.rows.filter(r => r.club === code);
-      zoneTitle.textContent = clubNames[code];
-    } else {
-      state.filtered = state.rows.slice();
-      zoneTitle.textContent = "East Glamorgan";
-    }
-    render();
-  });
-
-  render();
+function hideCompare() {
+  document.getElementById('compare-wrap').style.display = 'none';
 }
 
 function renderCompareChart(players) {
@@ -193,25 +142,54 @@ function renderCompareChart(players) {
   });
 }
 
+function setupCompareButton() {
+  document.getElementById('compare-btn').addEventListener('click', () => {
+    const list = state.filtered.slice();
+    if (!list.length) {
+      alert('No players found for this selection.');
+      return;
+    }
+    document.getElementById('compare-wrap').style.display = 'block';
+    renderCompareChart(list);
+  });
+}
+
+async function load() {
+  const res = await fetch(DATA_URL, { cache: 'no-cache' });
+  const data = await res.json();
+
+  state.rows = data
+    .filter(d => d.zone === ZONE_CODE)
+    .sort((a, b) => b.rating - a.rating);
+  state.filtered = state.rows.slice();
+
+  const clubs = [...new Set(
+    state.rows.map(r => r.club).filter(c => /^\d/.test(c) && clubNames[c])
+  )].sort();
+
+  const clubsNav = document.querySelector('.clubs-nav');
+  clubsNav.innerHTML =
+    `<button class="club-btn active-club" data-code="">All</button>` +
+    clubs.map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
+
+  const zoneTitle = document.getElementById('zone-title');
+
+  clubsNav.addEventListener('click', e => {
+    if (!e.target.classList.contains('club-btn')) return;
+    document.querySelectorAll('.club-btn').forEach(b => b.classList.remove('active-club'));
+    e.target.classList.add('active-club');
+
+    const code = e.target.dataset.code;
+    state.selectedClub = code || null;
+    zoneTitle.textContent = code ? clubNames[code] : "East Glamorgan";
+    applyFilter();
+  });
+
+  render();
+  setupCompareButton();
+}
+
 document.getElementById('q').addEventListener('input', applyFilter);
-
-document.getElementById('compare-btn').addEventListener('click', () => {
-  const activeClubBtn = document.querySelector('.club-btn.active-club');
-  const code = activeClubBtn ? activeClubBtn.dataset.code : '';
-  let players = code ? state.rows.filter(r => r.club === code) : state.rows;
-
-  // Only include players who have played at least 1 game (games field > 0)
-  players = players.filter(p => p.games && p.games > 0);
-
-  if (players.length === 0) {
-    alert('No players with games found for this selection.');
-    return;
-  }
-
-  document.getElementById('compare-wrap').style.display = 'block';
-  renderCompareChart(players);
-});
-
 load();
 </script>
 
