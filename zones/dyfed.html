@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Dyfed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="title">
+      <h1>Dyfed</h1>
+      <a href="../../index.html" style="color:#8b949e;font-size:0.9rem">← Back to all players</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="panel" id="players-panel">
+    <h2>Players in Dyfed</h2>
+    <div class="toolbar">
+      <input id="q" type="search" placeholder="Filter by name…">
+      <span id="count" class="muted"></span>
+    </div>
+    <div class="table-wrap">
+      <table id="players">
+        <thead>
+          <tr>
+            <th style="min-width:240px">Player</th>
+            <th class="right" style="min-width:120px">Live rating</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script>
+  const ZONE_CODE = 'E1';  // ← this is the only thing you change per zone
+  const DATA_URL = '../../data/players.json';
+
+  const state = { rows: [], filtered: [] };
+
+  function render() {
+    const tbody = document.querySelector('#players tbody');
+    tbody.innerHTML = '';
+    for (const r of state.filtered) {
+      const tr = document.createElement('tr');
+      const tdName = document.createElement('td');
+      const a = document.createElement('a');
+      a.href = `../../player/${encodeURIComponent(r.id)}/`;
+      a.textContent = r.name;
+      tdName.appendChild(a);
+
+      const tdRt = document.createElement('td');
+      tdRt.className = 'right';
+      tdRt.textContent = Math.round(r.rating);
+
+      tr.appendChild(tdName);
+      tr.appendChild(tdRt);
+      tbody.appendChild(tr);
+    }
+    document.getElementById('count').textContent =
+      `${state.filtered.length.toLocaleString()} players`;
+  }
+
+  function applyFilter() {
+    const q = document.getElementById('q').value.trim().toLowerCase();
+    if (!q) {
+      state.filtered = state.rows.slice();
+    } else {
+      state.filtered = state.rows.filter(r => r.name.toLowerCase().includes(q));
+    }
+    render();
+  }
+
+  async function load() {
+    const res = await fetch(DATA_URL, { cache: 'no-cache' });
+    const data = await res.json();
+
+    state.rows = data
+      .filter(d => d.zone === ZONE_CODE)
+      .sort((a,b) => a.name.localeCompare(b.name));
+
+    state.filtered = state.rows.slice();
+    render();
+  }
+
+  document.getElementById('q').addEventListener('input', applyFilter);
+  load();
+</script>
+</body>
+</html>
