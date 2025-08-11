@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>East Glam</title>
+  <title>East Glamorgan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
 </head>
@@ -27,10 +27,9 @@
   </div>
 </header>
 
-
 <main class="wrap">
   <section class="panel" id="players-panel">
-    <h2>Players in East Glam</h2>
+    <h2 id="zone-title">East Glamorgan</h2>
     <div class="toolbar">
       <input id="q" type="search" placeholder="Filter by name…">
       <span id="count" class="muted"></span>
@@ -50,58 +49,116 @@
 </main>
 
 <script>
-  const ZONE_CODE = 'E1';  // ← this is the only thing you change per zone
+const ZONE_CODE = 'E1';
 const DATA_URL = '../data/players.json';
+const state = { rows: [], filtered: [] };
 
-  const state = { rows: [], filtered: [] };
+function render() {
+  const tbody = document.querySelector('#players tbody');
+  tbody.innerHTML = '';
+  for (const r of state.filtered) {
+    const tr = document.createElement('tr');
+    const tdName = document.createElement('td');
+    const a = document.createElement('a');
+    a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
+    a.textContent = r.name;
+    tdName.appendChild(a);
 
-  function render() {
-    const tbody = document.querySelector('#players tbody');
-    tbody.innerHTML = '';
-    for (const r of state.filtered) {
-      const tr = document.createElement('tr');
-      const tdName = document.createElement('td');
-      const a = document.createElement('a');
-      a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
-      a.textContent = r.name;
-      tdName.appendChild(a);
+    const tdRt = document.createElement('td');
+    tdRt.className = 'right';
+    tdRt.textContent = Math.round(r.rating);
 
-      const tdRt = document.createElement('td');
-      tdRt.className = 'right';
-      tdRt.textContent = Math.round(r.rating);
-
-      tr.appendChild(tdName);
-      tr.appendChild(tdRt);
-      tbody.appendChild(tr);
-    }
-    document.getElementById('count').textContent =
-      `${state.filtered.length.toLocaleString()} players`;
+    tr.appendChild(tdName);
+    tr.appendChild(tdRt);
+    tbody.appendChild(tr);
   }
+  document.getElementById('count').textContent =
+    `${state.filtered.length.toLocaleString()} players`;
+}
 
-  function applyFilter() {
-    const q = document.getElementById('q').value.trim().toLowerCase();
-    if (!q) {
-      state.filtered = state.rows.slice();
-    } else {
-      state.filtered = state.rows.filter(r => r.name.toLowerCase().includes(q));
-    }
-    render();
-  }
-
-  async function load() {
-    const res = await fetch(DATA_URL, { cache: 'no-cache' });
-    const data = await res.json();
-
-    state.rows = data
-      .filter(d => d.zone === ZONE_CODE)
-      .sort((a,b) => b.rating - a.rating);
-
+function applyFilter() {
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  if (!q) {
     state.filtered = state.rows.slice();
-    render();
+  } else {
+    state.filtered = state.rows.filter(r => r.name.toLowerCase().includes(q));
   }
+  render();
+}
 
-  document.getElementById('q').addEventListener('input', applyFilter);
-  load();
+async function load() {
+  const res = await fetch(DATA_URL, { cache: 'no-cache' });
+  const data = await res.json();
+
+  // Filter by this zone
+  state.rows = data
+    .filter(d => d.zone === ZONE_CODE)
+    .sort((a, b) => b.rating - a.rating);
+
+  state.filtered = state.rows.slice();
+
+  // Map club codes to real names for East Glam
+  const clubNames = {
+    "5CA": "Caerphilly",
+    "5CB": "Barry",
+    "5PE": "Pentyrch",
+    "5CF": "Cardiff",
+    "5PN": "Penarth",
+    "5SJ": "St John's College",
+    "5CU": "Cardiff University",
+    "5NE": "Nelson",
+    "5RH": "Rhondda",
+    "5EG": "East Glam Zone",
+    "5BR": "Bridgend",
+    "5AP": "All Players",
+    "5NC": "North Cardiff",
+    "5PO": "Pontypridd",
+    "5IM": "Improvement"
+  };
+
+  // Get clubs starting with a digit and in the map
+  const clubs = [...new Set(
+    state.rows
+      .map(r => r.club)
+      .filter(c => /^\d/.test(c) && clubNames[c])
+  )].sort();
+
+  // Create buttons for each club
+  const clubsNav = document.querySelector('.clubs-nav');
+  clubsNav.innerHTML = clubs
+    .map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`)
+    .join(' ');
+
+  // Add a "Show All" button at the start
+  clubsNav.insertAdjacentHTML('afterbegin', `<button class="club-btn active-club" data-code="">All</button>`);
+
+  // Title element reference
+  const zoneTitle = document.getElementById('zone-title');
+  zoneTitle.textContent = "East Glamorgan";
+
+  // Click handler for club buttons
+  clubsNav.addEventListener('click', e => {
+    if (!e.target.classList.contains('club-btn')) return;
+
+    document.querySelectorAll('.club-btn').forEach(btn => btn.classList.remove('active-club'));
+    e.target.classList.add('active-club');
+
+    const code = e.target.dataset.code;
+    if (code) {
+      state.filtered = state.rows.filter(r => r.club === code);
+      zoneTitle.textContent = clubNames[code];
+    } else {
+      state.filtered = state.rows.slice();
+      zoneTitle.textContent = "East Glamorgan";
+    }
+    render();
+  });
+
+  render();
+}
+
+document.getElementById('q').addEventListener('input', applyFilter);
+load();
 </script>
 </body>
 </html>
