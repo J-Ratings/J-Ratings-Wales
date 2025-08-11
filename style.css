@@ -5,6 +5,26 @@
   border-radius: 4px;
 }
 
+/* Club filter bar */
+.clubs-nav {
+  margin: 10px 0;
+}
+
+.club-btn {
+  background: #0f1623;                 /* dark background to match your site */
+  border: 1px solid var(--border);     /* same border colour as other elements */
+  color: var(--text);                  /* text colour from your theme */
+  padding: 4px 8px;                    /* small padding */
+  margin: 0 4px 4px 0;                 /* spacing between buttons */
+  border-radius: 4px;                  /* rounded corners */
+  cursor: pointer;
+}
+
+.club-btn:hover {
+  background: rgba(255, 255, 255, 0.05); /* subtle hover effect */
+}
+
+
 :root{
       --maxw: 1100px;
       --accent: #1f6feb;

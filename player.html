@@ -33,7 +33,7 @@
 
 <script>
   const params = new URLSearchParams(location.search);
-  const idRaw = params.get('id');                       // e.g. "e1 jose camacho collados"
+  const idRaw = params.get('id');                      
   if (!idRaw) { document.getElementById('chart').innerHTML = 'Missing player id.'; throw new Error('no id'); }
 
   const PLAYERS_URL = 'data/players.json';
@@ -71,7 +71,7 @@ console.log('HIST_URL =', HIST_URL);
         paper_bgcolor:bg, plot_bgcolor:bg, font:{color:getComputedStyle(document.body).color}
       }, {displayModeBar:false, responsive:true});
     } catch (e) {
-      document.getElementById('chart').innerHTML = 'Could not load player data.';
+      document.getElementById('chart').innerHTML = 'No Games';
       console.error(e);
     }
   }
