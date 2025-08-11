@@ -1,4 +1,11 @@
-    :root{
+
+
+.zones a.active-zone {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+:root{
       --maxw: 1100px;
       --accent: #1f6feb;
       --bg: #0d1117;
