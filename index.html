@@ -1,70 +1,145 @@
-<!DOCTYPE html>
-<html>
-    <head>
-    <meta charset="utf-8">
-    <meta name="viewpoint" content="width=device-width,initial-scale=1">
-    <title>J-Ratings</title>
-    </head>
-    <style>
-        h3 { 
-            display: inline;
-        }
-        </style>
-    <body style="font-family: sans-serif; background-color:#ebebeb">
-        <h1>J-Ratings</h1>
-        <h2>Overview</h2>
-        A simple site to allow the Cardiff Crows and Cardiff Pawns to see their welsh ratings in spline format.
-        <br><br>
-        With the rating boost in 1st July 2024, I will no longer be updating the splines as the ratings will not be reliable for a couple of years.
-       <!-- 
-        <h2>Players</h2>
-        
-        <h3>Crows</h3>
-        <br>        
-        <a href="https://j-ratings.github.io/J-Ratings/Joe_Fathallah">Joe Fathallah</a><br>
-        <a href="https://j-ratings.github.io/J-Ratings/Sam_Jukes">Sam Jukes</a><br>
-        <a href="https://j-ratings.github.io/J-Ratings/Ed_Donovan">Ed Donovan</a><br>
-        <a href="https://j-ratings.github.io/J-Ratings/Jake_Hurley">Jake Hurley</a><br>
-        <br>
-        <h3>Pawns</h3>
-        <br>
-        <a href="https://j-ratings.github.io/J-Ratings/Matthew_Davies">Matthew Davies</a><br>
-        <a href="https://j-ratings.github.io/J-Ratings/Georgi_Korovski">Georgi Korovski</a><br>
-        <a href="https://j-ratings.github.io/J-Ratings/Leon_Zedlmayer">Leon Zedlmayer</a><br>
-        <a href="https://j-ratings.github.io/J-Ratings/Dave_McGhee">Dave McGhee</a><br>
-        <br>
-        <h3>Others</h3>
-        <br>
-        <a href="https://j-ratings.github.io/J-Ratings/Josh_McKenna">Josh McKenna</a><br>
-         <a href="https://j-ratings.github.io/J-Ratings/Dale_Westcott">Dale Westcott</a><br>
-        <a href="https://j-ratings.github.io/J-Ratings/Steve_Smith">Steve Smith</a><br>
-        <br>
-        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br>
-        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br>
-        -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>J-Ratings (Wales) — Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root{
+      --maxw: 1100px;
+      --accent: #1f6feb;
+      --bg: #0d1117;
+      --card: #161b22;
+      --text: #c9d1d9;
+      --muted: #8b949e;
+      --border: #30363d;
+    }
+    html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{border-bottom:1px solid var(--border);background:var(--card)}
+    .wrap{max-width:var(--maxw);margin:auto;padding:16px}
+    .title{display:flex;flex-wrap:wrap;gap:8px;align-items:end;justify-content:space-between}
+    .title h1{margin:0;font-size:1.4rem}
+    .zones{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .zones a{
+      display:inline-block;padding:10px 14px;border:1px solid var(--border);border-radius:8px;
+      background:#0f1623;color:var(--text);font-weight:600
+    }
+    .zones a:hover{border-color:var(--accent)}
+    .panel{background:var(--card);border:1px solid var(--border);border-radius:10px;margin-top:18px}
+    .panel h2{margin:0;padding:14px 16px;border-bottom:1px solid var(--border);font-size:1.1rem}
+    .table-wrap{overflow:auto}
+    table{width:100%;border-collapse:collapse}
+    th, td{padding:10px 12px;border-bottom:1px solid var(--border)}
+    th{position:sticky;top:0;background:var(--card);text-align:left}
+    tr:hover td{background:#0f1520}
+    .right{text-align:right}
+    .toolbar{display:flex;gap:10px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border)}
+    input[type="search"]{flex:1;min-width:220px;padding:10px;border-radius:8px;border:1px solid var(--border);background:#0f1623;color:var(--text)}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="title">
+      <h1>J-Ratings — Wales (Live)</h1>
+      <span class="muted">Unofficial, independent live ratings</span>
+    </div>
+    <nav class="zones" aria-label="Zones">
+      <a href="zones/east-glam/">East Glamorgan</a>
+      <a href="zones/gwent/">Gwent</a>
+      <a href="zones/dyfed/">Dyfed</a>
+      <a href="zones/north-wales/">North Wales</a>
+      <a href="zones/west-wales/">West Wales</a>
+    </nav>
+  </div>
+</header>
 
-        <br><br>
+<main class="wrap">
+  <section class="panel" id="players-panel">
+    <h2>All players</h2>
+    <div class="toolbar">
+      <input id="q" type="search" placeholder="Filter by name…">
+      <span id="count" class="muted"></span>
+    </div>
+    <div class="table-wrap">
+      <table id="players">
+        <thead>
+          <tr>
+            <th style="min-width:240px">Player</th>
+            <th class="right" style="min-width:120px">Live rating</th>
+          </tr>
+        </thead>
+        <tbody><!-- filled by JS --></tbody>
+      </table>
+    </div>
+  </section>
+</main>
 
-        <h2 style="margin-top: 0; margin-bottom: 0;">Comparison of Ratings</h2>
+<script>
+  // Expected file: ./data/players.json
+  // Example element: { "id":"e1%20oliviasmith", "name":"Olivia Smith", "zone":"E1", "club":"2CD", "rating":2202 }
+  const DATA_URL = 'data/players.json';
 
-        <br>
+  const state = { rows: [], filtered: [] };
 
-        Updated to 28/06/2024
+  function render() {
+    const tbody = document.querySelector('#players tbody');
+    tbody.innerHTML = '';
+    for (const r of state.filtered) {
+      const tr = document.createElement('tr');
+      const tdName = document.createElement('td');
+      const a = document.createElement('a');
+      a.href = `player/${encodeURIComponent(r.id)}/`;   // your per-player page (or JSON endpoint)
+      a.textContent = r.name;
+      tdName.appendChild(a);
 
-        <br><br>
+      const tdRt = document.createElement('td');
+      tdRt.className = 'right';
+      tdRt.textContent = Math.round(r.rating);
 
-        <h3>2022-Present</h3>
-        <br>
-        <a href="https://j-ratings.github.io/J-Ratings/2022_Image">1600+</a> ///
-        <a href="https://j-ratings.github.io/J-Ratings/2022_Image_1500_1800">1500-1800</a> ///
-        <a href="https://j-ratings.github.io/J-Ratings/2022_Image_1700_2000">1700-2000</a> ///
-        <a href="https://j-ratings.github.io/J-Ratings/2022_Image_1900">1900+</a>
-        <br><br>
-        <h3>2015-Present</h3>
-        <br>
-        <a href="https://j-ratings.github.io/J-Ratings/2015_Image">1200+</a> ///
-        <a href="https://j-ratings.github.io/J-Ratings/2015_Image_1600">1600+</a>
-        <br></br>
-    </body>
+      tr.appendChild(tdName);
+      tr.appendChild(tdRt);
+      tbody.appendChild(tr);
+    }
+    document.getElementById('count').textContent =
+      `${state.filtered.length.toLocaleString()} players`;
+  }
 
+  function applyFilter() {
+    const q = document.getElementById('q').value.trim().toLowerCase();
+    if (!q) {
+      state.filtered = state.rows.slice();
+    } else {
+      state.filtered = state.rows.filter(r => r.name.toLowerCase().includes(q));
+    }
+    render();
+  }
+
+  async function load() {
+    try {
+      const res = await fetch(DATA_URL, { cache: 'no-cache' });
+      if (!res.ok) throw new Error('Failed to load players.json');
+      const data = await res.json();
+
+      // minimal shape & sort by name
+      state.rows = data
+        .filter(d => d && d.name && Number.isFinite(+d.rating))
+        .map(d => ({ id: d.id, name: d.name, rating: +d.rating }))
+        .sort((a,b) => a.name.localeCompare(b.name));
+
+      state.filtered = state.rows.slice();
+      render();
+    } catch (err) {
+      document.querySelector('#players tbody').innerHTML =
+        `<tr><td colspan="2">Error loading data: ${err.message}</td></tr>`;
+    }
+  }
+
+  document.getElementById('q').addEventListener('input', applyFilter);
+  load();
+</script>
+</body>
 </html>
