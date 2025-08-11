@@ -13,10 +13,11 @@
   background: #0f1623;
   border: 1px solid var(--border);
   color: var(--text);
-  padding: 4px 8px;
+  padding: 8px 12px; /* increased padding */
   margin: 0 4px 4px 0;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 1rem; /* increased font size */
 }
 .club-btn.active-club {
   background-color: rgba(255, 255, 255, 0.1);
@@ -36,7 +37,7 @@
 
 #players th,
 #players td {
-  text-align: center; /* force centre */
+  text-align: center;
   padding: 0.5rem 1rem;
 }
 
@@ -80,22 +81,23 @@ header { border-bottom: 1px solid var(--border); background: var(--card); }
 .wrap { max-width: var(--maxw); margin: auto; padding: 16px; }
 
 .title { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; justify-content: space-between; }
-.title h1 { margin: 0; font-size: 1.4rem; }
+.title h1 { margin: 0; font-size: 1.6rem; } /* increased site title size */
 
 .zones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
 .zones a {
   display: inline-block;
-  padding: 10px 14px;
+  padding: 12px 16px; /* increased padding */
   border: 1px solid var(--border);
   border-radius: 8px;
   background: #0f1623;
   color: var(--text);
   font-weight: 600;
+  font-size: 1rem; /* increased font size */
 }
 .zones a:hover { border-color: var(--accent); }
 
 .panel { background: var(--card); border: 1px solid var(--border); border-radius: 10px; margin-top: 18px; }
-.panel h2 { margin: 0; padding: 14px 16px; border-bottom: 1px solid var(--border); font-size: 1.1rem; }
+.panel h2 { margin: 0; padding: 16px 18px; border-bottom: 1px solid var(--border); font-size: 1.3rem; font-weight: 600; } /* bigger heading */
 
 .table-wrap { overflow: auto; }
 
@@ -105,15 +107,30 @@ th { position: sticky; top: 0; background: var(--card); }
 
 tr:hover td { background: #0f1520; }
 
-.toolbar { display: flex; gap: 10px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.toolbar { display: flex; gap: 10px; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--border); }
 input[type="search"] {
   flex: 1;
   min-width: 220px;
-  padding: 10px;
+  padding: 12px; /* increased padding */
   border-radius: 8px;
   border: 1px solid var(--border);
   background: #0f1623;
   color: var(--text);
+  font-size: 1rem; /* increased font size */
 }
 
 .muted { color: var(--muted); }
+
+/* Larger sizes for desktops only */
+@media (min-width: 601px) {
+  .zones a,
+  .club-btn {
+    font-size: 1.1rem;
+  }
+  .panel h2 {
+    font-size: 1.4rem;
+  }
+  .title h1 {
+    font-size: 1.8rem;
+  }
+}
