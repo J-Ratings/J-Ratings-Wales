@@ -5,6 +5,7 @@
   <title>East Glamorgan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js instead of Plotly -->
 </head>
 <body>
 <header>
@@ -23,7 +24,6 @@
   <a href="west-wales.html">West Wales</a>
 </nav>
 <div class="clubs-nav"></div>
-
   </div>
 </header>
 
@@ -33,7 +33,14 @@
     <div class="toolbar">
       <input id="q" type="search" placeholder="Filter by name…">
       <span id="count" class="muted"></span>
+      <button id="compare-btn" class="club-btn" type="button" style="margin-left:auto">Compare</button>
     </div>
+
+    <!-- Compare chart container -->
+    <div id="compare-wrap" style="display:none; padding:16px">
+      <canvas id="compare-chart" height="420"></canvas>
+    </div>
+
     <div class="table-wrap">
       <table id="players">
         <thead>
@@ -48,10 +55,30 @@
   </section>
 </main>
 
+
 <script>
 const ZONE_CODE = 'E1';
 const DATA_URL = '../data/players.json';
 const state = { rows: [], filtered: [] };
+
+// Map club codes to real names for East Glam
+const clubNames = {
+  "2CP": "Caerphilly",
+  "2BY": "Barry",
+  "2PR": "Pentyrch",
+  "2CD": "Cardiff",
+  "2PN": "Penarth",
+  "2SJ": "St John's College",
+  "2CU": "Cardiff University",
+  "2NE": "Nelson",
+  "2RH": "Rhondda",
+  "2EG": "East Glam Zone",
+  "2BR": "Bridgend",
+  "2AP": "All Players",
+  "2NC": "North Cardiff",
+  "2PP": "Pontypridd",
+  "2IM": "Improvement"
+};
 
 function render() {
   const tbody = document.querySelector('#players tbody');
@@ -97,26 +124,7 @@ async function load() {
 
   state.filtered = state.rows.slice();
 
-  // Map club codes to real names for East Glam
-  const clubNames = {
-    "2CP": "Caerphilly",
-    "2BY": "Barry",
-    "2PR": "Pentyrch",
-    "2CD": "Cardiff",
-    "2PN": "Penarth",
-    "2SJ": "St John's College",
-    "2CU": "Cardiff University",
-    "2NE": "Nelson",
-    "2RH": "Rhondda",
-    "2EG": "East Glam Zone",
-    "2BR": "Bridgend",
-    "2AP": "All Players",
-    "2NC": "North Cardiff",
-    "2PP": "Pontypridd",
-    "2IM": "Improvement"
-  };
-
-  // Get clubs starting with a digit and in the map
+  // Create unique list of clubs for this zone
   const clubs = [...new Set(
     state.rows
       .map(r => r.club)
@@ -157,8 +165,55 @@ async function load() {
   render();
 }
 
+function renderCompareChart(players) {
+  const ctx = document.getElementById('compare-chart').getContext('2d');
+  if (window.compareChart) window.compareChart.destroy();
+
+  window.compareChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: players.map(p => p.name),
+      datasets: [{
+        label: 'Live Rating',
+        data: players.map(p => p.rating),
+        backgroundColor: 'rgba(31, 111, 235, 0.6)'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { mode: 'index', intersect: false }
+      },
+      scales: {
+        x: { ticks: { autoSkip: false, maxRotation: 90, minRotation: 45 } },
+        y: { beginAtZero: false }
+      }
+    }
+  });
+}
+
 document.getElementById('q').addEventListener('input', applyFilter);
+
+document.getElementById('compare-btn').addEventListener('click', () => {
+  const activeClubBtn = document.querySelector('.club-btn.active-club');
+  const code = activeClubBtn ? activeClubBtn.dataset.code : '';
+  let players = code ? state.rows.filter(r => r.club === code) : state.rows;
+
+  // Only include players who have played at least 1 game (games field > 0)
+  players = players.filter(p => p.games && p.games > 0);
+
+  if (players.length === 0) {
+    alert('No players with games found for this selection.');
+    return;
+  }
+
+  document.getElementById('compare-wrap').style.display = 'block';
+  renderCompareChart(players);
+});
+
 load();
 </script>
+
 </body>
 </html>

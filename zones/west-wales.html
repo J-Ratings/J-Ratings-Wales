@@ -5,6 +5,8 @@
   <title>West Wales</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 </head>
 <body>
 <header>
@@ -31,10 +33,15 @@
 <main class="wrap">
   <section class="panel" id="players-panel">
     <h2 id="zone-title">West Wales</h2>
-    <div class="toolbar">
-      <input id="q" type="search" placeholder="Filter by name…">
-      <span id="count" class="muted"></span>
-    </div>
+<div class="toolbar">
+  <input id="q" type="search" placeholder="Filter by name…">
+  <span id="count" class="muted"></span>
+  <button id="compare-btn" class="club-btn" type="button" style="margin-left:auto">Compare</button>
+</div>
+
+<div id="compare-wrap" style="display:none; padding:16px">
+  <div id="compare-chart" style="height:420px"></div>
+</div>
     <div class="table-wrap">
       <table id="players">
         <thead>
@@ -50,43 +57,110 @@
 </main>
 
 <script>
-  const ZONE_CODE = 'W1';  // ← this is the only thing you change per zone
+const ZONE_CODE = 'W1';
 const DATA_URL = '../data/players.json';
 
-  const state = { rows: [], filtered: [] };
+const state = { rows: [], filtered: [], selectedClub: null };
 
-  function render() {
-    const tbody = document.querySelector('#players tbody');
-    tbody.innerHTML = '';
-    for (const r of state.filtered) {
-      const tr = document.createElement('tr');
-      const tdName = document.createElement('td');
-      const a = document.createElement('a');
-      a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
-      a.textContent = r.name;
-      tdName.appendChild(a);
+function render() {
+  const tbody = document.querySelector('#players tbody');
+  tbody.innerHTML = '';
+  for (const r of state.filtered) {
+    const tr = document.createElement('tr');
+    const tdName = document.createElement('td');
+    const a = document.createElement('a');
+    a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
+    a.textContent = r.name;
+    tdName.appendChild(a);
 
-      const tdRt = document.createElement('td');
-      tdRt.className = 'right';
-      tdRt.textContent = Math.round(r.rating);
+    const tdRt = document.createElement('td');
+    tdRt.className = 'right';
+    tdRt.textContent = Math.round(r.rating);
 
-      tr.appendChild(tdName);
-      tr.appendChild(tdRt);
-      tbody.appendChild(tr);
-    }
-    document.getElementById('count').textContent =
-      `${state.filtered.length.toLocaleString()} players`;
+    tr.appendChild(tdName);
+    tr.appendChild(tdRt);
+    tbody.appendChild(tr);
+  }
+  document.getElementById('count').textContent =
+    `${state.filtered.length.toLocaleString()} players`;
+}
+
+function applyFilter() {
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  let list = state.rows;
+  if (state.selectedClub) list = list.filter(r => r.club === state.selectedClub);
+  if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
+  state.filtered = list;
+  render();
+  hideCompare(); // keep chart in sync
+}
+
+// --- compare helpers ---
+async function fetchHistoryFor(id) {
+  const url = `../data/history/${encodeURIComponent(id)}.json`;
+  try {
+    const res = await fetch(url, { cache: 'no-cache' });
+    if (!res.ok) return null;
+    const rows = await res.json();
+    return Array.isArray(rows) && rows.length ? rows : null;
+  } catch { return null; }
+}
+
+async function buildComparison(players) {
+  const wrap = document.getElementById('compare-wrap');
+  const chart = document.getElementById('compare-chart');
+  const MAX_SERIES = 12;
+
+  const chosen = players.slice(0, MAX_SERIES);
+  const series = await Promise.all(chosen.map(async p => {
+    const hist = await fetchHistoryFor(p.id);
+    if (!hist) return null;
+    return {
+      name: p.name,
+      x: hist.map(d => d.date),
+      y: hist.map(d => d.rating),
+      mode: 'lines',
+      hovertemplate: '%{x}<br>%{y}<extra>' + p.name + '</extra>'
+    };
+  }));
+
+  const traces = series.filter(Boolean);
+  if (!traces.length) {
+    wrap.style.display = 'block';
+    chart.innerHTML = 'No rating history found for this club.';
+    return;
   }
 
-  function applyFilter() {
-    const q = document.getElementById('q').value.trim().toLowerCase();
-    if (!q) {
-      state.filtered = state.rows.slice();
-    } else {
-      state.filtered = state.rows.filter(r => r.name.toLowerCase().includes(q));
-    }
-    render();
-  }
+  const bg = getComputedStyle(document.body).backgroundColor;
+  const fg = getComputedStyle(document.body).color;
+
+  Plotly.newPlot(chart, traces, {
+    margin:{l:50,r:20,t:10,b:40},
+    xaxis:{type:'date', title:''},
+    yaxis:{title:'Rating'},
+    legend:{orientation:'h'},
+    paper_bgcolor:bg, plot_bgcolor:bg, font:{color:fg}
+  }, {displayModeBar:false, responsive:true});
+
+  wrap.style.display = 'block';
+}
+
+function hideCompare() {
+  const wrap = document.getElementById('compare-wrap');
+  const chart = document.getElementById('compare-chart');
+  wrap.style.display = 'none';
+  chart.innerHTML = '';
+}
+
+function setupCompareButton() {
+  const btn = document.getElementById('compare-btn');
+  btn.addEventListener('click', async () => {
+    // If no club selected, compare everyone currently visible (could be a lot)
+    const list = state.filtered.slice();
+    document.getElementById('compare-chart').innerHTML = 'Loading…';
+    await buildComparison(list);
+  });
+}
 
 async function load() {
   const res = await fetch(DATA_URL, { cache: 'no-cache' });
@@ -99,7 +173,7 @@ async function load() {
 
   state.filtered = state.rows.slice();
 
-  // Map club codes to real names for West Wales
+  // Club codes → names
   const clubNames = {
     "5CN": "Castell Nedd",
     "5DB": "De La Beche",
@@ -107,57 +181,44 @@ async function load() {
     "5NY": "Noah's Yard",
     "5UK": "Upper Killay",
     "5WK": "White Knights",
-    "5SU": "Swansea University",
-    "5IM": "Improvement"
+    "5SU": "Swansea University"
   };
 
-  // Get clubs starting with a digit and in the map
+  // Build club buttons
+  const clubsNav = document.querySelector('.clubs-nav');
   const clubs = [...new Set(
-    state.rows
-      .map(r => r.club)
-      .filter(c => /^\d/.test(c) && clubNames[c])
+    state.rows.map(r => r.club).filter(c => /^\d/.test(c) && clubNames[c])
   )].sort();
 
-  // Create buttons for each club
-  const clubsNav = document.querySelector('.clubs-nav');
-  clubsNav.innerHTML = clubs
-    .map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`)
-    .join(' ');
+  clubsNav.innerHTML =
+    `<button class="club-btn active-club" data-code="">All</button>` +
+    clubs.map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
 
-  // Add a "Show All" button at the start
-  clubsNav.insertAdjacentHTML('afterbegin', `<button class="club-btn active-club" data-code="">All</button>`);
-
-  // Title element reference
+  // Title
   const zoneTitle = document.getElementById('zone-title');
   zoneTitle.textContent = "West Wales";
 
-  // Click handler for club buttons
+  // Club filtering
   clubsNav.addEventListener('click', e => {
     if (!e.target.classList.contains('club-btn')) return;
 
-    // Remove active state from all club buttons
-    document.querySelectorAll('.club-btn').forEach(btn => btn.classList.remove('active-club'));
-
-    // Mark the clicked one as active
+    document.querySelectorAll('.club-btn').forEach(b => b.classList.remove('active-club'));
     e.target.classList.add('active-club');
 
     const code = e.target.dataset.code;
-    if (code) {
-      state.filtered = state.rows.filter(r => r.club === code);
-      zoneTitle.textContent = clubNames[code];
-    } else {
-      state.filtered = state.rows.slice();
-      zoneTitle.textContent = "West Wales";
-    }
-    render();
+    state.selectedClub = code || null;
+    zoneTitle.textContent = code ? clubNames[code] : "West Wales";
+
+    applyFilter();   // this also hides the chart
   });
 
   render();
+  setupCompareButton();
 }
 
 document.getElementById('q').addEventListener('input', applyFilter);
 load();
-
 </script>
+
 </body>
 </html>
