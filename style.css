@@ -4,9 +4,13 @@
   border-radius: 4px;
 }
 
-/* Club filter bar */
 .clubs-nav {
-  margin: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.clubs-nav a {
+  color: blue;
 }
 
 .club-btn {

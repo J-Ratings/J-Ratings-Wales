@@ -76,16 +76,18 @@
 
   const state = { rows: [], filtered: [] };
 
-  function renderClubsNav() {
-    const nav = document.querySelector('.clubs-nav');
-    nav.innerHTML = '';
-    for (const code in clubNames) {
-      const link = document.createElement('a');
-      link.href = `north-wales.html?club=${code}`;
-      link.textContent = clubNames[code];
-      nav.appendChild(link);
-    }
+function renderClubsNav() {
+  const nav = document.querySelector('.clubs-nav');
+  nav.innerHTML = '';
+  for (const code in clubNames) {
+    const link = document.createElement('a');
+    link.href = `north-wales.html?club=${code}`;
+    link.textContent = clubNames[code];
+    link.classList.add('club-btn');
+    nav.appendChild(link);
   }
+}
+
 
   function render() {
     const tbody = document.querySelector('#players tbody');
