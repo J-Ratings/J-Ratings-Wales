@@ -30,7 +30,7 @@
 
 <main class="wrap">
   <section class="panel" id="players-panel">
-    <h2>Players in West Wales</h2>
+    <h2 id="zone-title">West Wales</h2>
     <div class="toolbar">
       <input id="q" type="search" placeholder="Filter by name…">
       <span id="count" class="muted"></span>
@@ -108,10 +108,10 @@ async function load() {
     "5UK": "Upper Killay",
     "5WK": "White Knights",
     "5SU": "Swansea University",
-    "5IM": "Improvement" // Only if you want this included
+    "5IM": "Improvement"
   };
 
-  // Filter clubs: starts with digit, is in clubNames map
+  // Get clubs starting with a digit and in the map
   const clubs = [...new Set(
     state.rows
       .map(r => r.club)
@@ -124,16 +124,27 @@ async function load() {
     .map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`)
     .join(' ');
 
+  // Title element
+  const zoneTitle = document.getElementById('zone-title');
+  zoneTitle.textContent = "West Wales";
+
   // Club button click handler
   clubsNav.addEventListener('click', e => {
     if (!e.target.classList.contains('club-btn')) return;
     const code = e.target.dataset.code;
-    state.filtered = state.rows.filter(r => r.club === code);
+    if (code) {
+      state.filtered = state.rows.filter(r => r.club === code);
+      zoneTitle.textContent = clubNames[code];
+    } else {
+      state.filtered = state.rows.slice();
+      zoneTitle.textContent = "West Wales";
+    }
     render();
   });
 
   render();
 }
+
 document.getElementById('q').addEventListener('input', applyFilter);
 load();
 
