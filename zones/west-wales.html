@@ -22,6 +22,8 @@
   <a href="north-wales.html">North Wales</a>
   <a href="west-wales.html" class="active-zone">West Wales</a>
 </nav>
+<div class="clubs-nav"></div>
+
   </div>
 </header>
 
@@ -86,20 +88,40 @@ const DATA_URL = '../data/players.json';
     render();
   }
 
-  async function load() {
-    const res = await fetch(DATA_URL, { cache: 'no-cache' });
-    const data = await res.json();
+async function load() {
+  const res = await fetch(DATA_URL, { cache: 'no-cache' });
+  const data = await res.json();
 
-    state.rows = data
-      .filter(d => d.zone === ZONE_CODE)
-      .sort((a,b) => b.rating - a.rating);
+  // Filter by this zone
+  state.rows = data
+    .filter(d => d.zone === ZONE_CODE)
+    .sort((a, b) => b.rating - a.rating);
 
-    state.filtered = state.rows.slice();
+  state.filtered = state.rows.slice();
+
+  // Build club list for this zone
+  const clubsNav = document.querySelector('.clubs-nav');
+  const clubs = [...new Set(state.rows.map(r => r.club).filter(Boolean))].sort();
+
+  // Create "All" button plus one for each club
+  clubsNav.innerHTML = `<button class="club-btn" data-all>All</button>` +
+    clubs.map(c => `<button class="club-btn">${c}</button>`).join(' ');
+
+  // Club button click handler
+  clubsNav.addEventListener('click', e => {
+    if (!e.target.classList.contains('club-btn')) return;
+    const club = e.target.dataset.all ? null : e.target.textContent;
+    if (!club) {
+      state.filtered = state.rows.slice(); // show all
+    } else {
+      state.filtered = state.rows.filter(r => r.club === club);
+    }
     render();
-  }
+  });
 
-  document.getElementById('q').addEventListener('input', applyFilter);
-  load();
+  render();
+}
+
 </script>
 </body>
 </html>
