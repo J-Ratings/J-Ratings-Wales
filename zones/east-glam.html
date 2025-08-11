@@ -5,7 +5,7 @@
   <title>East Glamorgan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
 <header>
@@ -16,14 +16,14 @@
       </h1>
       <span class="muted">Alternate WCU Ratings with Live Batch</span>
     </div>
-<nav class="zones" aria-label="Zones">
-  <a href="dyfed.html">Dyfed</a>
-  <a href="east-glam.html" class="active-zone">East Glamorgan</a>
-  <a href="gwent.html">Gwent</a>
-  <a href="north-wales.html">North Wales</a>
-  <a href="west-wales.html">West Wales</a>
-</nav>
-<div class="clubs-nav"></div>
+    <nav class="zones" aria-label="Zones">
+      <a href="dyfed.html">Dyfed</a>
+      <a href="east-glam.html" class="active-zone">East Glamorgan</a>
+      <a href="gwent.html">Gwent</a>
+      <a href="north-wales.html">North Wales</a>
+      <a href="west-wales.html">West Wales</a>
+    </nav>
+    <div class="clubs-nav"></div>
   </div>
 </header>
 
@@ -37,7 +37,7 @@
     </div>
 
     <div id="compare-wrap" style="display:none; padding:16px">
-      <canvas id="compare-chart" height="420"></canvas>
+      <div id="compare-chart" style="height:420px"></div>
     </div>
 
     <div class="table-wrap">
@@ -59,22 +59,21 @@ const ZONE_CODE = 'E1';
 const DATA_URL = '../data/players.json';
 const state = { rows: [], filtered: [], selectedClub: null };
 
+// Club codes → names (exclude “All Players” / “Improvement”)
 const clubNames = {
-  "2CP": "Caerphilly",
-  "2BY": "Barry",
-  "2PR": "Pentyrch",
-  "2CD": "Cardiff",
-  "2PN": "Penarth",
-  "2SJ": "St John's College",
-  "2CU": "Cardiff University",
-  "2NE": "Nelson",
-  "2RH": "Rhondda",
-  "2EG": "East Glam Zone",
   "2BR": "Bridgend",
-  "2AP": "All Players",
+  "2BY": "Barry",
+  "2CD": "Cardiff",
+  "2CP": "Caerphilly",
+  "2CU": "Cardiff University",
+  "2EG": "East Glam Zone",
   "2NC": "North Cardiff",
+  "2NE": "Nelson",
+  "2PN": "Penarth",
   "2PP": "Pontypridd",
-  "2IM": "Improvement"
+  "2PR": "Pentyrch",
+  "2RH": "Rhondda",
+  "2SJ": "St John's College"
 };
 
 function render() {
@@ -107,73 +106,103 @@ function applyFilter() {
   if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
   state.filtered = list;
   render();
-  hideCompare();
+  hideCompare(); // keep chart state in sync
+}
+
+// ---- Compare helpers (same pattern as West Wales) ----
+async function fetchHistoryFor(id) {
+  const url = `../data/history/${encodeURIComponent(id)}.json`;
+  try {
+    const res = await fetch(url, { cache: 'no-cache' });
+    if (!res.ok) return null;
+    const rows = await res.json();
+    return Array.isArray(rows) && rows.length ? rows : null;
+  } catch { return null; }
+}
+
+async function buildComparison(players) {
+  const wrap = document.getElementById('compare-wrap');
+  const chart = document.getElementById('compare-chart');
+  const MAX_SERIES = 12;
+
+  const chosen = players.slice(0, MAX_SERIES);
+  const series = await Promise.all(chosen.map(async p => {
+    const hist = await fetchHistoryFor(p.id);
+    if (!hist) return null;
+    return {
+      name: p.name,
+      x: hist.map(d => d.date),
+      y: hist.map(d => d.rating),
+      mode: 'lines',
+      hovertemplate: '%{x}<br>%{y}<extra>' + p.name + '</extra>'
+    };
+  }));
+
+  const traces = series.filter(Boolean);
+  if (!traces.length) {
+    wrap.style.display = 'block';
+    chart.innerHTML = 'No rating history found for this selection.';
+    return;
+  }
+
+  const bg = getComputedStyle(document.body).backgroundColor;
+  const fg = getComputedStyle(document.body).color;
+
+  Plotly.newPlot(chart, traces, {
+    margin:{l:50,r:20,t:10,b:40},
+    xaxis:{type:'date', title:''},
+    yaxis:{title:'Rating'},
+    legend:{orientation:'h'},
+    paper_bgcolor:bg, plot_bgcolor:bg, font:{color:fg}
+  }, {displayModeBar:false, responsive:true});
+
+  wrap.style.display = 'block';
 }
 
 function hideCompare() {
-  document.getElementById('compare-wrap').style.display = 'none';
-}
-
-function renderCompareChart(players) {
-  const ctx = document.getElementById('compare-chart').getContext('2d');
-  if (window.compareChart) window.compareChart.destroy();
-
-  window.compareChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: players.map(p => p.name),
-      datasets: [{
-        label: 'Live Rating',
-        data: players.map(p => p.rating),
-        backgroundColor: 'rgba(31, 111, 235, 0.6)'
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: { mode: 'index', intersect: false }
-      },
-      scales: {
-        x: { ticks: { autoSkip: false, maxRotation: 90, minRotation: 45 } },
-        y: { beginAtZero: false }
-      }
-    }
-  });
+  const wrap = document.getElementById('compare-wrap');
+  const chart = document.getElementById('compare-chart');
+  wrap.style.display = 'none';
+  chart.innerHTML = '';
 }
 
 function setupCompareButton() {
-  document.getElementById('compare-btn').addEventListener('click', () => {
-    const list = state.filtered.slice();
+  const btn = document.getElementById('compare-btn');
+  btn.addEventListener('click', async () => {
+    const list = state.filtered.slice(); // current view (club + search)
     if (!list.length) {
       alert('No players found for this selection.');
       return;
     }
-    document.getElementById('compare-wrap').style.display = 'block';
-    renderCompareChart(list);
+    document.getElementById('compare-chart').innerHTML = 'Loading…';
+    await buildComparison(list);
   });
 }
 
+// ---- Load ----
 async function load() {
   const res = await fetch(DATA_URL, { cache: 'no-cache' });
   const data = await res.json();
 
+  // Zone filter
   state.rows = data
     .filter(d => d.zone === ZONE_CODE)
     .sort((a, b) => b.rating - a.rating);
   state.filtered = state.rows.slice();
 
+  // Build club buttons (only codes we recognise and that start with a digit)
+  const clubsNav = document.querySelector('.clubs-nav');
   const clubs = [...new Set(
     state.rows.map(r => r.club).filter(c => /^\d/.test(c) && clubNames[c])
   )].sort();
 
-  const clubsNav = document.querySelector('.clubs-nav');
   clubsNav.innerHTML =
     `<button class="club-btn active-club" data-code="">All</button>` +
     clubs.map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
 
   const zoneTitle = document.getElementById('zone-title');
 
+  // Club filter logic
   clubsNav.addEventListener('click', e => {
     if (!e.target.classList.contains('club-btn')) return;
     document.querySelectorAll('.club-btn').forEach(b => b.classList.remove('active-club'));
@@ -181,7 +210,7 @@ async function load() {
 
     const code = e.target.dataset.code;
     state.selectedClub = code || null;
-    zoneTitle.textContent = code ? clubNames[code] : "East Glamorgan";
+    zoneTitle.textContent = code ? clubNames[code] : 'East Glamorgan';
     applyFilter();
   });
 
@@ -192,6 +221,5 @@ async function load() {
 document.getElementById('q').addEventListener('input', applyFilter);
 load();
 </script>
-
 </body>
 </html>
