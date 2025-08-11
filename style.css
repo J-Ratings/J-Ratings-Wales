@@ -24,20 +24,23 @@
   background: rgba(255, 255, 255, 0.05); /* subtle hover effect */
 }
 
-#players {
-  table-layout: auto;
-  width: auto; /* shrink table to fit content */
-  margin: 0 auto; /* centre the table */
+/* Centre-align everything in players table */
+#players th,
+#players td {
+  text-align: center;
 }
 
-#players th:first-child,
-#players td:first-child {
-  padding-right: 2rem; /* control gap between name and rating */
+/* Keep padding consistent */
+#players th,
+#players td {
+  padding: 0.5rem 1rem;
 }
 
+/* Optional: remove the .right class alignment for this table */
 #players td.right {
-  text-align: left; /* put ratings next to names instead of far right */
+  text-align: center !important;
 }
+
 
 @media (max-width: 600px) {
   #players th:first-child,
