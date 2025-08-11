@@ -221,7 +221,7 @@ async function load() {
     `<button class="club-btn active-club" data-code="">All</button>` +
     clubs.map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
 
-  document.getElementById('zone-title').textContent = ZONE_NAME;
+  document.getElementById('compare-btn').style.display = 'none';
 
   clubsNav.addEventListener('click', e => {
     if (!e.target.classList.contains('club-btn')) return;
@@ -230,7 +230,10 @@ async function load() {
 
     const code = e.target.dataset.code;
     state.selectedClub = code || null;
-    document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
+document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
+
+// Show/hide Compare button depending on whether a club is selected
+document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
 
     applyFilter();
   });

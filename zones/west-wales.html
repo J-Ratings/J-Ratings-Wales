@@ -235,6 +235,8 @@ async function load() {
   const zoneTitle = document.getElementById('zone-title');
   zoneTitle.textContent = ZONE_NAME;
 
+  document.getElementById('compare-btn').style.display = 'none';
+
   // Club filtering
   clubsNav.addEventListener('click', e => {
     if (!e.target.classList.contains('club-btn')) return;
@@ -245,6 +247,7 @@ async function load() {
     const code = e.target.dataset.code;
     state.selectedClub = code || null;
     zoneTitle.textContent = code ? clubNames[code] : ZONE_NAME;
+document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
 
     applyFilter(); // hides chart too
   });
