@@ -51,9 +51,43 @@
 
 <script>
   const ZONE_CODE = 'N1';  // ← this is the only thing you change per zone
-const DATA_URL = '../data/players.json';
+  const DATA_URL = '../data/players.json';
+
+  const clubNames = {
+    "1NZ": "North Wales Zone",
+    "1BA": "Bangor",
+    "1BM": "Buckley/Mold",
+    "1CF": "Caernarfon",
+    "1CA": "Caer",
+    "1CB": "Colwyn Bay",
+    "1HJ": "Highways Junior CC",
+    "1HW": "Holywell",
+    "1PF": "Penyffordd",
+    "1RP": "Rhyl & Prestatyn",
+    "1WX": "Wrecsam",
+    "1HH": "Hawarden High School",
+    "1PB": "Prifysgol Bangor",
+    "1RS": "Ruthin School",
+    "1SA": "Rydal Penrhos School",
+    "1SC": "Sandycroft CP",
+    "1YD": "Ysgol Dinas Bran, Llangollen",
+    "1YM": "Ysgol Mynydd Isa",
+    "1LL": "All Players",
+    "1MP": "Improvement"
+  };
 
   const state = { rows: [], filtered: [] };
+
+  function renderClubsNav() {
+    const nav = document.querySelector('.clubs-nav');
+    nav.innerHTML = '';
+    for (const code in clubNames) {
+      const link = document.createElement('a');
+      link.href = `north-wales.html?club=${code}`;
+      link.textContent = clubNames[code];
+      nav.appendChild(link);
+    }
+  }
 
   function render() {
     const tbody = document.querySelector('#players tbody');
@@ -101,6 +135,7 @@ const DATA_URL = '../data/players.json';
   }
 
   document.getElementById('q').addEventListener('input', applyFilter);
+  renderClubsNav();
   load();
 </script>
 </body>

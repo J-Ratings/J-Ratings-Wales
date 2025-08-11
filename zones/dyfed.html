@@ -50,10 +50,46 @@
 </main>
 
 <script>
-  const ZONE_CODE = 'D1';  // ← this is the only thing you change per zone
-const DATA_URL = '../data/players.json';
+  const ZONE_CODE = 'D1'; // Dyfed
+  const DATA_URL = '../data/players.json';
 
-  const state = { rows: [], filtered: [] };
+  const state = { rows: [], filtered: [], club: null };
+
+  const clubNames = {
+    "4CG": 'Cardigan',
+    "4CM": 'Carmarthen',
+    "4AB": 'Aberystwyth',
+    "4PB": 'Pembs',
+    "4AU": 'Aberystwyth University',
+    "IMP": 'Improvement'
+  };
+
+  function renderClubs() {
+    const nav = document.querySelector('.clubs-nav');
+    nav.innerHTML = '';
+
+    const allBtn = document.createElement('button');
+    allBtn.textContent = 'All';
+    allBtn.className = 'club-btn' + (state.club === null ? ' active-club' : '');
+    allBtn.addEventListener('click', () => {
+      state.club = null;
+      renderClubs();
+      applyFilter();
+    });
+    nav.appendChild(allBtn);
+
+    for (const [code, name] of Object.entries(clubNames)) {
+      const btn = document.createElement('button');
+      btn.textContent = name;
+      btn.className = 'club-btn' + (state.club === code ? ' active-club' : '');
+      btn.addEventListener('click', () => {
+        state.club = code;
+        renderClubs();
+        applyFilter();
+      });
+      nav.appendChild(btn);
+    }
+  }
 
   function render() {
     const tbody = document.querySelector('#players tbody');
@@ -80,11 +116,10 @@ const DATA_URL = '../data/players.json';
 
   function applyFilter() {
     const q = document.getElementById('q').value.trim().toLowerCase();
-    if (!q) {
-      state.filtered = state.rows.slice();
-    } else {
-      state.filtered = state.rows.filter(r => r.name.toLowerCase().includes(q));
-    }
+    let list = state.rows;
+    if (state.club) list = list.filter(r => r.club === state.club);
+    if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
+    state.filtered = list;
     render();
   }
 
@@ -97,6 +132,7 @@ const DATA_URL = '../data/players.json';
       .sort((a,b) => b.rating - a.rating);
 
     state.filtered = state.rows.slice();
+    renderClubs();
     render();
   }
 
