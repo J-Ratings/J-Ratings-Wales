@@ -82,7 +82,7 @@
 
     state.rows = data
       .filter(d => d.zone === ZONE_CODE)
-      .sort((a,b) => a.name.localeCompare(b.name));
+      .sort((a,b) => b.rating - a.rating);
 
     state.filtered = state.rows.slice();
     render();

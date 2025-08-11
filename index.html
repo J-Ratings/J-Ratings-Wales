@@ -128,7 +128,7 @@
       state.rows = data
         .filter(d => d && d.name && Number.isFinite(+d.rating))
         .map(d => ({ id: d.id, name: d.name, rating: +d.rating }))
-        .sort((a,b) => a.name.localeCompare(b.name));
+      .sort((a,b) => b.rating - a.rating);
 
       state.filtered = state.rows.slice();
       render();
