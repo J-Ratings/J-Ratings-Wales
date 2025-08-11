@@ -99,23 +99,36 @@ async function load() {
 
   state.filtered = state.rows.slice();
 
-  // Build club list for this zone
-  const clubsNav = document.querySelector('.clubs-nav');
-  const clubs = [...new Set(state.rows.map(r => r.club).filter(Boolean))].sort();
+  // Map club codes to real names for West Wales
+  const clubNames = {
+    "5CN": "Castell Nedd",
+    "5DB": "De La Beche",
+    "5MO": "Morriston",
+    "5NY": "Noah's Yard",
+    "5UK": "Upper Killay",
+    "5WK": "White Knights",
+    "5SU": "Swansea University",
+    "5IM": "Improvement" // Only if you want this included
+  };
 
-  // Create "All" button plus one for each club
-  clubsNav.innerHTML = `<button class="club-btn" data-all>All</button>` +
-    clubs.map(c => `<button class="club-btn">${c}</button>`).join(' ');
+  // Filter clubs: starts with digit, is in clubNames map
+  const clubs = [...new Set(
+    state.rows
+      .map(r => r.club)
+      .filter(c => /^\d/.test(c) && clubNames[c])
+  )].sort();
+
+  // Create buttons for each club
+  const clubsNav = document.querySelector('.clubs-nav');
+  clubsNav.innerHTML = clubs
+    .map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`)
+    .join(' ');
 
   // Club button click handler
   clubsNav.addEventListener('click', e => {
     if (!e.target.classList.contains('club-btn')) return;
-    const club = e.target.dataset.all ? null : e.target.textContent;
-    if (!club) {
-      state.filtered = state.rows.slice(); // show all
-    } else {
-      state.filtered = state.rows.filter(r => r.club === club);
-    }
+    const code = e.target.dataset.code;
+    state.filtered = state.rows.filter(r => r.club === code);
     render();
   });
 
