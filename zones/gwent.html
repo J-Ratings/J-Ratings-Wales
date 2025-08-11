@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
 </head>
 <body>
 <header>
@@ -34,7 +33,13 @@
     <div class="toolbar">
       <input id="q" type="search" placeholder="Filter by name…">
       <span id="count" class="muted"></span>
+      <button id="compare-btn" class="club-btn" type="button" style="margin-left:auto">Compare</button>
     </div>
+
+    <div id="compare-wrap" style="display:none; padding:16px">
+      <div id="compare-chart" style="height:420px"></div>
+    </div>
+
     <div class="table-wrap">
       <table id="players">
         <thead>
@@ -50,15 +55,37 @@
 </main>
 
 <script>
+/* ---------- CONFIG ---------- */
 const ZONE_CODE = 'G1';
-const DATA_URL = '../data/players.json';
-const state = { rows: [], filtered: [] };
+const ZONE_NAME = 'Gwent';
+const DATA_URL  = '../data/players.json';
 
-function render() {
+// Only include players with history on/after this date. Set to null to include all.
+const COMPARE_SINCE = '2025-07-01';
+
+// Cap traces after filtering
+const MAX_SERIES = 50;
+
+// Club code → name (adjust as needed)
+const clubNames = {
+  "3AG": "Abergavenny",
+  "3NP": "Newport",
+  "3PL": "Pontypool",
+  "3MA": "Malpas",
+  "3CB": "Cwmbran",
+  "3AP": "All Players",
+  "3IM": "Improvement"
+};
+
+/* ---------- STATE & RENDER ---------- */
+const state = { rows: [], filtered: [], selectedClub: null };
+
+function renderTable() {
   const tbody = document.querySelector('#players tbody');
   tbody.innerHTML = '';
   for (const r of state.filtered) {
     const tr = document.createElement('tr');
+
     const tdName = document.createElement('td');
     const a = document.createElement('a');
     a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
@@ -79,16 +106,100 @@ function render() {
 
 function applyFilter() {
   const q = document.getElementById('q').value.trim().toLowerCase();
-  if (!q) {
-    state.filtered = state.rows.slice();
-  } else {
-    state.filtered = state.rows.filter(r => r.name.toLowerCase().includes(q));
-  }
-  render();
+  let list = state.rows;
+  if (state.selectedClub) list = list.filter(r => r.club === state.selectedClub);
+  if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
+  state.filtered = list;
+  renderTable();
+  hideCompare();
 }
 
+/* ---------- COMPARE CHART ---------- */
+const histCache = new Map(); // id -> array|null
+
+async function fetchHistoryFor(id) {
+  if (histCache.has(id)) return histCache.get(id);
+
+  async function tryUrl(url) {
+    const res = await fetch(url, { cache: 'no-cache' });
+    if (!res.ok) return null;
+    const rows = await res.json();
+    return Array.isArray(rows) && rows.length ? rows : null;
+    }
+
+  // tolerant of raw vs encoded ids
+  let hist = await tryUrl(`../data/history/${id}.json`);
+  if (!hist) hist = await tryUrl(`../data/history/${encodeURIComponent(id)}.json`);
+
+  histCache.set(id, hist ?? null);
+  return hist ?? null;
+}
+
+function hideCompare() {
+  const wrap = document.getElementById('compare-wrap');
+  const chart = document.getElementById('compare-chart');
+  wrap.style.display = 'none';
+  chart.innerHTML = '';
+}
+
+async function buildComparison(players) {
+  const wrap = document.getElementById('compare-wrap');
+  const chart = document.getElementById('compare-chart');
+  wrap.style.display = 'block';
+  chart.innerHTML = 'Loading…';
+
+  const withHist = [];
+  await Promise.all(players.map(async p => {
+    const hist = await fetchHistoryFor(p.id);
+    if (!hist) return;
+
+    const use = COMPARE_SINCE ? hist.filter(d => d.date >= COMPARE_SINCE) : hist;
+    if (use.length) withHist.push({ p, hist: use });
+  }));
+
+  if (!withHist.length) {
+    chart.innerHTML = COMPARE_SINCE
+      ? `No rating history since ${COMPARE_SINCE}.`
+      : 'No rating history found.';
+    return;
+  }
+
+  withHist.sort((a, b) =>
+    b.hist[b.hist.length - 1].date.localeCompare(a.hist[a.hist.length - 1].date)
+  );
+  const picked = withHist.slice(0, MAX_SERIES);
+
+  const traces = picked.map(({ p, hist }) => ({
+    name: p.name,
+    x: hist.map(d => d.date),
+    y: hist.map(d => d.rating),
+    mode: 'lines',
+    hovertemplate: '%{x}<br>%{y}<extra>' + p.name + '</extra>'
+  }));
+
+  const cs = getComputedStyle(document.body);
+  Plotly.newPlot(chart, traces, {
+    margin:{l:50,r:20,t:10,b:40},
+    xaxis:{type:'date', title:''},
+    yaxis:{title:'Rating'},
+    legend:{orientation:'h'},
+    paper_bgcolor: cs.backgroundColor,
+    plot_bgcolor: cs.backgroundColor,
+    font:{color: cs.color}
+  }, {displayModeBar:false, responsive:true});
+}
+
+function setupCompareButton() {
+  document.getElementById('compare-btn').addEventListener('click', async () => {
+    const list = state.filtered.slice(); // all currently visible rows
+    await buildComparison(list);
+  });
+}
+
+/* ---------- LOAD ---------- */
 async function load() {
   const res = await fetch(DATA_URL, { cache: 'no-cache' });
+  if (!res.ok) throw new Error('Failed to load players.json');
   const data = await res.json();
 
   state.rows = data
@@ -97,59 +208,39 @@ async function load() {
 
   state.filtered = state.rows.slice();
 
-  // Club codes → names for Gwent
-  const clubNames = {
-    "3AG": "Abergavenny",
-    "3NP": "Newport",
-    "3PL": "Pontypool",
-    "3MA": "Malpas",
-    "3CB": "Cwmbran",
-    "3AP": "All Players",
-    "3IM": "Improvement"
-  };
-
-  // Get clubs present in data
+  // Build club buttons for clubs present and in the map
+  const clubsNav = document.querySelector('.clubs-nav');
   const clubs = [...new Set(
-    state.rows
-      .map(r => r.club)
-      .filter(c => clubNames[c])
+    state.rows.map(r => r.club).filter(c => /^\d/.test(c) && clubNames[c])
   )].sort();
 
-  // Render club buttons
-  const clubsNav = document.querySelector('.clubs-nav');
-  clubsNav.innerHTML = clubs
-    .map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`)
-    .join(' ');
+  clubsNav.innerHTML =
+    `<button class="club-btn active-club" data-code="">All</button>` +
+    clubs.map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
 
-  // Add "All" button first
-  clubsNav.insertAdjacentHTML('afterbegin', `<button class="club-btn active-club" data-code="">All</button>`);
+  document.getElementById('zone-title').textContent = ZONE_NAME;
 
-  const zoneTitle = document.getElementById('zone-title');
-  zoneTitle.textContent = "Gwent";
-
-  // Handle club filtering
   clubsNav.addEventListener('click', e => {
     if (!e.target.classList.contains('club-btn')) return;
-
-    document.querySelectorAll('.club-btn').forEach(btn => btn.classList.remove('active-club'));
+    document.querySelectorAll('.club-btn').forEach(b => b.classList.remove('active-club'));
     e.target.classList.add('active-club');
 
     const code = e.target.dataset.code;
-    if (code) {
-      state.filtered = state.rows.filter(r => r.club === code);
-      zoneTitle.textContent = clubNames[code];
-    } else {
-      state.filtered = state.rows.slice();
-      zoneTitle.textContent = "Gwent";
-    }
-    render();
+    state.selectedClub = code || null;
+    document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
+
+    applyFilter();
   });
 
-  render();
+  renderTable();
+  setupCompareButton();
 }
 
 document.getElementById('q').addEventListener('input', applyFilter);
-load();
+load().catch(err => {
+  document.querySelector('#players tbody').innerHTML =
+    `<tr><td colspan="2">Error loading data: ${err.message}</td></tr>`;
+});
 </script>
 </body>
 </html>

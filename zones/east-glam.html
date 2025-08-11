@@ -30,6 +30,7 @@
 <main class="wrap">
   <section class="panel" id="players-panel">
     <h2 id="zone-title">East Glamorgan</h2>
+
     <div class="toolbar">
       <input id="q" type="search" placeholder="Filter by name…">
       <span id="count" class="muted"></span>
@@ -55,11 +56,18 @@
 </main>
 
 <script>
+/* ---------- CONFIG ---------- */
 const ZONE_CODE = 'E1';
-const DATA_URL = '../data/players.json';
-const state = { rows: [], filtered: [], selectedClub: null };
+const ZONE_NAME = 'East Glamorgan';
+const DATA_URL  = '../data/players.json';
 
-// Club codes → names (exclude “All Players” / “Improvement”)
+// Only include players with history on/after this date. Set to null to include all.
+const COMPARE_SINCE = '2025-07-01';
+
+// Cap traces after filtering
+const MAX_SERIES = 50;
+
+// Club codes → names (leave out meta groups)
 const clubNames = {
   "2BR": "Bridgend",
   "2BY": "Barry",
@@ -76,11 +84,15 @@ const clubNames = {
   "2SJ": "St John's College"
 };
 
-function render() {
+/* ---------- STATE & RENDER ---------- */
+const state = { rows: [], filtered: [], selectedClub: null };
+
+function renderTable() {
   const tbody = document.querySelector('#players tbody');
   tbody.innerHTML = '';
   for (const r of state.filtered) {
     const tr = document.createElement('tr');
+
     const tdName = document.createElement('td');
     const a = document.createElement('a');
     a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
@@ -105,58 +117,29 @@ function applyFilter() {
   if (state.selectedClub) list = list.filter(r => r.club === state.selectedClub);
   if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
   state.filtered = list;
-  render();
-  hideCompare(); // keep chart state in sync
+  renderTable();
+  hideCompare();
 }
 
-// ---- Compare helpers (same pattern as West Wales) ----
+/* ---------- COMPARE CHART ---------- */
+const histCache = new Map(); // id -> array|null
+
 async function fetchHistoryFor(id) {
-  const url = `../data/history/${encodeURIComponent(id)}.json`;
-  try {
+  if (histCache.has(id)) return histCache.get(id);
+
+  async function tryUrl(url) {
     const res = await fetch(url, { cache: 'no-cache' });
     if (!res.ok) return null;
     const rows = await res.json();
     return Array.isArray(rows) && rows.length ? rows : null;
-  } catch { return null; }
-}
-
-async function buildComparison(players) {
-  const wrap = document.getElementById('compare-wrap');
-  const chart = document.getElementById('compare-chart');
-  const MAX_SERIES = 12;
-
-  const chosen = players.slice(0, MAX_SERIES);
-  const series = await Promise.all(chosen.map(async p => {
-    const hist = await fetchHistoryFor(p.id);
-    if (!hist) return null;
-    return {
-      name: p.name,
-      x: hist.map(d => d.date),
-      y: hist.map(d => d.rating),
-      mode: 'lines',
-      hovertemplate: '%{x}<br>%{y}<extra>' + p.name + '</extra>'
-    };
-  }));
-
-  const traces = series.filter(Boolean);
-  if (!traces.length) {
-    wrap.style.display = 'block';
-    chart.innerHTML = 'No rating history found for this selection.';
-    return;
   }
 
-  const bg = getComputedStyle(document.body).backgroundColor;
-  const fg = getComputedStyle(document.body).color;
+  // tolerate raw vs already-encoded ids
+  let hist = await tryUrl(`../data/history/${id}.json`);
+  if (!hist) hist = await tryUrl(`../data/history/${encodeURIComponent(id)}.json`);
 
-  Plotly.newPlot(chart, traces, {
-    margin:{l:50,r:20,t:10,b:40},
-    xaxis:{type:'date', title:''},
-    yaxis:{title:'Rating'},
-    legend:{orientation:'h'},
-    paper_bgcolor:bg, plot_bgcolor:bg, font:{color:fg}
-  }, {displayModeBar:false, responsive:true});
-
-  wrap.style.display = 'block';
+  histCache.set(id, hist ?? null);
+  return hist ?? null;
 }
 
 function hideCompare() {
@@ -166,31 +149,73 @@ function hideCompare() {
   chart.innerHTML = '';
 }
 
+async function buildComparison(players) {
+  const wrap = document.getElementById('compare-wrap');
+  const chart = document.getElementById('compare-chart');
+  wrap.style.display = 'block';
+  chart.innerHTML = 'Loading…';
+
+  const withHist = [];
+  await Promise.all(players.map(async p => {
+    const hist = await fetchHistoryFor(p.id);
+    if (!hist) return;
+
+    const use = COMPARE_SINCE ? hist.filter(d => d.date >= COMPARE_SINCE) : hist;
+    if (use.length) withHist.push({ p, hist: use });
+  }));
+
+  if (!withHist.length) {
+    chart.innerHTML = COMPARE_SINCE
+      ? `No rating history since ${COMPARE_SINCE}.`
+      : 'No rating history found.';
+    return;
+  }
+
+  withHist.sort((a, b) =>
+    b.hist[b.hist.length - 1].date.localeCompare(a.hist[a.hist.length - 1].date)
+  );
+  const picked = withHist.slice(0, MAX_SERIES);
+
+  const traces = picked.map(({ p, hist }) => ({
+    name: p.name,
+    x: hist.map(d => d.date),
+    y: hist.map(d => d.rating),
+    mode: 'lines',
+    hovertemplate: '%{x}<br>%{y}<extra>' + p.name + '</extra>'
+  }));
+
+  const cs = getComputedStyle(document.body);
+  Plotly.newPlot(chart, traces, {
+    margin:{l:50,r:20,t:10,b:40},
+    xaxis:{type:'date', title:''},
+    yaxis:{title:'Rating'},
+    legend:{orientation:'h'},
+    paper_bgcolor: cs.backgroundColor,
+    plot_bgcolor: cs.backgroundColor,
+    font:{color: cs.color}
+  }, {displayModeBar:false, responsive:true});
+}
+
 function setupCompareButton() {
-  const btn = document.getElementById('compare-btn');
-  btn.addEventListener('click', async () => {
+  document.getElementById('compare-btn').addEventListener('click', async () => {
     const list = state.filtered.slice(); // current view (club + search)
-    if (!list.length) {
-      alert('No players found for this selection.');
-      return;
-    }
-    document.getElementById('compare-chart').innerHTML = 'Loading…';
     await buildComparison(list);
   });
 }
 
-// ---- Load ----
+/* ---------- LOAD ---------- */
 async function load() {
   const res = await fetch(DATA_URL, { cache: 'no-cache' });
+  if (!res.ok) throw new Error('Failed to load players.json');
   const data = await res.json();
 
-  // Zone filter
   state.rows = data
     .filter(d => d.zone === ZONE_CODE)
     .sort((a, b) => b.rating - a.rating);
+
   state.filtered = state.rows.slice();
 
-  // Build club buttons (only codes we recognise and that start with a digit)
+  // Build club buttons only for codes present and known
   const clubsNav = document.querySelector('.clubs-nav');
   const clubs = [...new Set(
     state.rows.map(r => r.club).filter(c => /^\d/.test(c) && clubNames[c])
@@ -200,26 +225,30 @@ async function load() {
     `<button class="club-btn active-club" data-code="">All</button>` +
     clubs.map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
 
-  const zoneTitle = document.getElementById('zone-title');
+  document.getElementById('zone-title').textContent = ZONE_NAME;
 
-  // Club filter logic
   clubsNav.addEventListener('click', e => {
     if (!e.target.classList.contains('club-btn')) return;
+
     document.querySelectorAll('.club-btn').forEach(b => b.classList.remove('active-club'));
     e.target.classList.add('active-club');
 
     const code = e.target.dataset.code;
     state.selectedClub = code || null;
-    zoneTitle.textContent = code ? clubNames[code] : 'East Glamorgan';
+    document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
+
     applyFilter();
   });
 
-  render();
+  renderTable();
   setupCompareButton();
 }
 
 document.getElementById('q').addEventListener('input', applyFilter);
-load();
+load().catch(err => {
+  document.querySelector('#players tbody').innerHTML =
+    `<tr><td colspan="2">Error loading data: ${err.message}</td></tr>`;
+});
 </script>
 </body>
 </html>

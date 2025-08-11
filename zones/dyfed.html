@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
 </head>
 <body>
 <header>
@@ -17,26 +16,31 @@
       </h1>
       <span class="muted">Alternate WCU Ratings with Live Batch</span>
     </div>
-<nav class="zones" aria-label="Zones">
-  <a href="dyfed.html" class="active-zone">Dyfed</a>
-  <a href="east-glam.html">East Glamorgan</a>
-  <a href="gwent.html">Gwent</a>
-  <a href="north-wales.html">North Wales</a>
-  <a href="west-wales.html">West Wales</a>
-</nav>
-<div class="clubs-nav"></div>
-
+    <nav class="zones" aria-label="Zones">
+      <a href="dyfed.html" class="active-zone">Dyfed</a>
+      <a href="east-glam.html">East Glamorgan</a>
+      <a href="gwent.html">Gwent</a>
+      <a href="north-wales.html">North Wales</a>
+      <a href="west-wales.html">West Wales</a>
+    </nav>
+    <div class="clubs-nav"></div>
   </div>
 </header>
 
-
 <main class="wrap">
   <section class="panel" id="players-panel">
-    <h2>Players in Dyfed</h2>
+    <h2 id="zone-title">Dyfed</h2>
+
     <div class="toolbar">
       <input id="q" type="search" placeholder="Filter by name…">
       <span id="count" class="muted"></span>
+      <button id="compare-btn" class="club-btn" type="button" style="margin-left:auto">Compare</button>
     </div>
+
+    <div id="compare-wrap" style="display:none; padding:16px">
+      <div id="compare-chart" style="height:420px"></div>
+    </div>
+
     <div class="table-wrap">
       <table id="players">
         <thead>
@@ -52,93 +56,191 @@
 </main>
 
 <script>
-  const ZONE_CODE = 'D1'; // Dyfed
-  const DATA_URL = '../data/players.json';
+/* ---------- CONFIG ---------- */
+const ZONE_CODE = 'D1';
+const ZONE_NAME = 'Dyfed';
+const DATA_URL  = '../data/players.json';
 
-  const state = { rows: [], filtered: [], club: null };
+// Only include players with history on/after this date. Set to null to include all.
+const COMPARE_SINCE = '2025-07-01';
 
-  const clubNames = {
-    "4CG": 'Cardigan',
-    "4CM": 'Carmarthen',
-    "4AB": 'Aberystwyth',
-    "4PB": 'Pembs',
-    "4AU": 'Aberystwyth University'
-  };
+// Cap traces after filtering
+const MAX_SERIES = 50;
 
-  function renderClubs() {
-    const nav = document.querySelector('.clubs-nav');
-    nav.innerHTML = '';
+// Club code → name
+const clubNames = {
+  "4CG": "Cardigan",
+  "4CM": "Carmarthen",
+  "4AB": "Aberystwyth",
+  "4PB": "Pembs",
+  "4AU": "Aberystwyth University"
+};
 
-    const allBtn = document.createElement('button');
-    allBtn.textContent = 'All';
-    allBtn.className = 'club-btn' + (state.club === null ? ' active-club' : '');
-    allBtn.addEventListener('click', () => {
-      state.club = null;
-      renderClubs();
-      applyFilter();
-    });
-    nav.appendChild(allBtn);
+/* ---------- STATE & RENDER ---------- */
+const state = { rows: [], filtered: [], selectedClub: null };
 
-    for (const [code, name] of Object.entries(clubNames)) {
-      const btn = document.createElement('button');
-      btn.textContent = name;
-      btn.className = 'club-btn' + (state.club === code ? ' active-club' : '');
-      btn.addEventListener('click', () => {
-        state.club = code;
-        renderClubs();
-        applyFilter();
-      });
-      nav.appendChild(btn);
-    }
+function renderTable() {
+  const tbody = document.querySelector('#players tbody');
+  tbody.innerHTML = '';
+  for (const r of state.filtered) {
+    const tr = document.createElement('tr');
+
+    const tdName = document.createElement('td');
+    const a = document.createElement('a');
+    a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
+    a.textContent = r.name;
+    tdName.appendChild(a);
+
+    const tdRt = document.createElement('td');
+    tdRt.className = 'right';
+    tdRt.textContent = Math.round(r.rating);
+
+    tr.appendChild(tdName);
+    tr.appendChild(tdRt);
+    tbody.appendChild(tr);
+  }
+  document.getElementById('count').textContent =
+    `${state.filtered.length.toLocaleString()} players`;
+}
+
+function applyFilter() {
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  let list = state.rows;
+  if (state.selectedClub) list = list.filter(r => r.club === state.selectedClub);
+  if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
+  state.filtered = list;
+  renderTable();
+  hideCompare();
+}
+
+/* ---------- COMPARE CHART ---------- */
+const histCache = new Map(); // id -> array|null
+
+async function fetchHistoryFor(id) {
+  if (histCache.has(id)) return histCache.get(id);
+
+  async function tryUrl(url) {
+    const res = await fetch(url, { cache: 'no-cache' });
+    if (!res.ok) return null;
+    const rows = await res.json();
+    return Array.isArray(rows) && rows.length ? rows : null;
   }
 
-  function render() {
-    const tbody = document.querySelector('#players tbody');
-    tbody.innerHTML = '';
-    for (const r of state.filtered) {
-      const tr = document.createElement('tr');
-      const tdName = document.createElement('td');
-      const a = document.createElement('a');
-      a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
-      a.textContent = r.name;
-      tdName.appendChild(a);
+  // tolerate raw vs already-encoded ids
+  let hist = await tryUrl(`../data/history/${id}.json`);
+  if (!hist) hist = await tryUrl(`../data/history/${encodeURIComponent(id)}.json`);
 
-      const tdRt = document.createElement('td');
-      tdRt.className = 'right';
-      tdRt.textContent = Math.round(r.rating);
+  histCache.set(id, hist ?? null);
+  return hist ?? null;
+}
 
-      tr.appendChild(tdName);
-      tr.appendChild(tdRt);
-      tbody.appendChild(tr);
-    }
-    document.getElementById('count').textContent =
-      `${state.filtered.length.toLocaleString()} players`;
+function hideCompare() {
+  const wrap = document.getElementById('compare-wrap');
+  const chart = document.getElementById('compare-chart');
+  wrap.style.display = 'none';
+  chart.innerHTML = '';
+}
+
+async function buildComparison(players) {
+  const wrap = document.getElementById('compare-wrap');
+  const chart = document.getElementById('compare-chart');
+  wrap.style.display = 'block';
+  chart.innerHTML = 'Loading…';
+
+  const withHist = [];
+  await Promise.all(players.map(async p => {
+    const hist = await fetchHistoryFor(p.id);
+    if (!hist) return;
+
+    const use = COMPARE_SINCE ? hist.filter(d => d.date >= COMPARE_SINCE) : hist;
+    if (use.length) withHist.push({ p, hist: use });
+  }));
+
+  if (!withHist.length) {
+    chart.innerHTML = COMPARE_SINCE
+      ? `No rating history since ${COMPARE_SINCE}.`
+      : 'No rating history found.';
+    return;
   }
 
-  function applyFilter() {
-    const q = document.getElementById('q').value.trim().toLowerCase();
-    let list = state.rows;
-    if (state.club) list = list.filter(r => r.club === state.club);
-    if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
-    state.filtered = list;
-    render();
-  }
+  withHist.sort((a, b) =>
+    b.hist[b.hist.length - 1].date.localeCompare(a.hist[a.hist.length - 1].date)
+  );
+  const picked = withHist.slice(0, MAX_SERIES);
 
-  async function load() {
-    const res = await fetch(DATA_URL, { cache: 'no-cache' });
-    const data = await res.json();
+  const traces = picked.map(({ p, hist }) => ({
+    name: p.name,
+    x: hist.map(d => d.date),
+    y: hist.map(d => d.rating),
+    mode: 'lines',
+    hovertemplate: '%{x}<br>%{y}<extra>' + p.name + '</extra>'
+  }));
 
-    state.rows = data
-      .filter(d => d.zone === ZONE_CODE)
-      .sort((a,b) => b.rating - a.rating);
+  const cs = getComputedStyle(document.body);
+  Plotly.newPlot(chart, traces, {
+    margin:{l:50,r:20,t:10,b:40},
+    xaxis:{type:'date', title:''},
+    yaxis:{title:'Rating'},
+    legend:{orientation:'h'},
+    paper_bgcolor: cs.backgroundColor,
+    plot_bgcolor: cs.backgroundColor,
+    font:{color: cs.color}
+  }, {displayModeBar:false, responsive:true});
+}
 
-    state.filtered = state.rows.slice();
-    renderClubs();
-    render();
-  }
+function setupCompareButton() {
+  document.getElementById('compare-btn').addEventListener('click', async () => {
+    const list = state.filtered.slice(); // all currently visible rows
+    await buildComparison(list);
+  });
+}
 
-  document.getElementById('q').addEventListener('input', applyFilter);
-  load();
+/* ---------- LOAD ---------- */
+async function load() {
+  const res = await fetch(DATA_URL, { cache: 'no-cache' });
+  if (!res.ok) throw new Error('Failed to load players.json');
+  const data = await res.json();
+
+  state.rows = data
+    .filter(d => d.zone === ZONE_CODE)
+    .sort((a, b) => b.rating - a.rating);
+
+  state.filtered = state.rows.slice();
+
+  // Build club buttons present in this zone and known in map
+  const clubsNav = document.querySelector('.clubs-nav');
+  const clubs = [...new Set(
+    state.rows.map(r => r.club).filter(c => /^\d/.test(c) && clubNames[c])
+  )].sort();
+
+  clubsNav.innerHTML =
+    `<button class="club-btn active-club" data-code="">All</button>` +
+    clubs.map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
+
+  document.getElementById('zone-title').textContent = ZONE_NAME;
+
+  clubsNav.addEventListener('click', e => {
+    if (!e.target.classList.contains('club-btn')) return;
+
+    document.querySelectorAll('.club-btn').forEach(b => b.classList.remove('active-club'));
+    e.target.classList.add('active-club');
+
+    const code = e.target.dataset.code;
+    state.selectedClub = code || null;
+    document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
+
+    applyFilter();
+  });
+
+  renderTable();
+  setupCompareButton();
+}
+
+document.getElementById('q').addEventListener('input', applyFilter);
+load().catch(err => {
+  document.querySelector('#players tbody').innerHTML =
+    `<tr><td colspan="2">Error loading data: ${err.message}</td></tr>`;
+});
 </script>
 </body>
 </html>
