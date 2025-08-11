@@ -49,7 +49,7 @@ const DATA_URL = '../data/players.json';
       const tr = document.createElement('tr');
       const tdName = document.createElement('td');
       const a = document.createElement('a');
-      a.href = `../../player/${encodeURIComponent(r.id)}/`;
+      a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
       a.textContent = r.name;
       tdName.appendChild(a);
 
