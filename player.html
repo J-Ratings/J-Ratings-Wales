@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Player Profile</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6f2f2;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 5px;
+        }
+        #chart-container {
+            width: 90%;
+            max-width: 800px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<h1 id="player-name"></h1>
+<p id="player-info"></p>
+
+<div id="chart-container">
+    <canvas id="ratingChart"></canvas>
+</div>
+
+<script>
+    // Get ID from query string
+    const urlParams = new URLSearchParams(window.location.search);
+    const playerId = urlParams.get('id');
+
+    if (!playerId) {
+        document.getElementById("player-name").textContent = "Player not found.";
+    } else {
+        // Load player data from players.json
+        fetch('data/players.json')
+            .then(res => res.json())
+            .then(players => {
+                const player = players.find(p => p.id === playerId);
+                if (!player) {
+                    document.getElementById("player-name").textContent = "Player not found.";
+                    return;
+                }
+                document.getElementById("player-name").textContent = player.name;
+                document.getElementById("player-info").textContent = `K-factor: ${player.kfactor}`;
+
+                // Now load history data
+                fetch(`data/history/${encodeURIComponent(playerId)}.json`)
+                    .then(res => res.json())
+                    .then(history => {
+                        const labels = history.map(entry => entry.date);
+                        const ratings = history.map(entry => entry.rating);
+
+                        const ctx = document.getElementById('ratingChart').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Rating',
+                                    data: ratings,
+                                    borderColor: 'blue',
+                                    fill: false
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    y: { beginAtZero: false }
+                                }
+                            }
+                        });
+                    })
+                    .catch(err => console.error("Error loading history:", err));
+            })
+            .catch(err => console.error("Error loading players.json:", err));
+    }
+</script>
+
+</body>
+</html>
