@@ -48,20 +48,20 @@
   <section class="panel">
     <h2 style="margin:0;padding:16px 18px;border-bottom:1px solid var(--border)">Compare</h2>
 
-    <div class="controls" id="controls">
-      <div id="rows" style="flex:1 1 600px"></div>
+<div class="controls" id="controls">
+  <div id="rows" style="flex:1 1 600px"></div>
 
-      <!-- Create button beneath inputs -->
-      <button id="create" class="btn" type="button" style="width:100%;margin-top:8px">Create</button>
+  <!-- Big primary action under the rows -->
+  <button id="add" class="btn" type="button" style="width:100%;margin-top:8px">Add player</button>
 
-      <!-- Secondary actions -->
-      <div style="display:flex;gap:8px;margin-top:8px">
-        <button id="add" class="btn" type="button">Add player</button>
-        <button id="clear" class="btn" type="button">Clear</button>
-      </div>
+  <!-- Secondary row: Create + Clear (small) -->
+  <div style="display:flex;gap:8px;margin-top:8px">
+    <button id="create" class="btn" type="button">Create</button>
+    <button id="clear" class="btn" type="button">Clear</button>
+  </div>
 
-      <div class="muted-note">Up to 6 players. Start typing a name, pick a suggestion, then Create.</div>
-    </div>
+  <div class="muted-note">Up to 6 players. Start typing a name, pick a suggestion, then Create.</div>
+</div>
 
     <div style="padding:16px">
       <div id="chart" style="height:520px"></div>
@@ -70,7 +70,7 @@
 </main>
 
 <script>
-const PLAYERS_URL = 'data/players.json';
+const PLAYERS_URL = './data/players.json';
 const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;
 const MAX_PLAYERS = 6;
 
