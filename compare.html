@@ -48,20 +48,20 @@
   <section class="panel">
     <h2 style="margin:0;padding:16px 18px;border-bottom:1px solid var(--border)">Compare</h2>
 
-<div class="controls" id="controls">
-  <div id="rows" style="flex:1 1 600px"></div>
+    <div class="controls" id="controls">
+      <div id="rows" style="flex:1 1 600px"></div>
 
-  <!-- Big primary action under the rows -->
-  <button id="add" class="btn" type="button" style="width:100%;margin-top:8px">Add player</button>
+      <!-- Big primary action under the rows -->
+      <button id="add" class="btn" type="button" style="width:100%;margin-top:8px">Add player</button>
 
-  <!-- Secondary row: Create + Clear (small) -->
-  <div style="display:flex;gap:8px;margin-top:8px">
-    <button id="create" class="btn" type="button">Create</button>
-    <button id="clear" class="btn" type="button">Clear</button>
-  </div>
+      <!-- Secondary row: Create + Clear (small) -->
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button id="create" class="btn" type="button">Create</button>
+        <button id="clear" class="btn" type="button">Clear</button>
+      </div>
 
-  <div class="muted-note">Up to 6 players. Start typing a name, pick a suggestion, then Create.</div>
-</div>
+      <div class="muted-note">Up to 6 players. Start typing a name, pick a suggestion, then Create.</div>
+    </div>
 
     <div style="padding:16px">
       <div id="chart" style="height:520px"></div>
@@ -99,14 +99,12 @@ function attachAutocomplete(input){
   input.addEventListener('input', () => {
     const q = input.value.trim().toLowerCase();
     if (!q){ render([]); return; }
-
     const names = state.players.map(p => p.name);
     const starts = names.filter(n => n.toLowerCase().startsWith(q));
     const contains = names.filter(n => !n.toLowerCase().startsWith(q) && n.toLowerCase().includes(q));
     render(starts.concat(contains).slice(0, 12));
   });
 
-  // Click to choose
   list.addEventListener('mousedown', e => {
     const item = e.target.closest('.suggest-item');
     if (!item) return;
@@ -114,7 +112,6 @@ function attachAutocomplete(input){
     list.style.display='none';
   });
 
-  // Enter picks first suggestion if present
   input.addEventListener('keydown', e => {
     if (e.key === 'Enter'){
       const first = list.querySelector('.suggest-item');
@@ -123,7 +120,6 @@ function attachAutocomplete(input){
     if (e.key === 'Escape') list.style.display='none';
   });
 
-  // Hide after blur (allow click to register)
   input.addEventListener('blur', () => setTimeout(() => { list.style.display='none'; }, 120));
 }
 
@@ -169,15 +165,12 @@ function clearAll(){
 
 /* ---------- Chart ---------- */
 async function createChart(){
-  const names = state.inputs
-    .map(r => r.input.value.trim())
-    .filter(Boolean);
-
+  const names = state.inputs.map(r => r.input.value.trim()).filter(Boolean);
   if (!names.length){ alert('Add at least one player.'); return; }
 
   // Resolve names → players (case-insensitive exact match)
   const picks = [];
-  const lower = n => n.toLowerCase();
+  const lower = s => s.toLowerCase();
   for (const name of names){
     const p = state.players.find(x => lower(x.name) === lower(name));
     if (p) picks.push(p);
@@ -201,7 +194,7 @@ async function createChart(){
         mode: 'lines+markers',
         hovertemplate: '%{x}<br>%{y}<extra>' + p.name + '</extra>'
       });
-    }catch(_) {}
+    }catch(_){/* ignore */}
   }));
 
   if (!series.length){ chart.innerHTML = 'No history for the selected players.'; return; }
@@ -232,13 +225,19 @@ async function load(){
   makeRow(); // start with one row
 }
 
-document.getElementById('add').addEventListener('click', makeRow);
-document.getElementById('clear').addEventListener('click', clearAll);
-document.getElementById('create').addEventListener('click', createChart);
+// Ensure handlers are attached even if load() fails
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('add').addEventListener('click', makeRow);
+  document.getElementById('clear').addEventListener('click', clearAll);
+  document.getElementById('create').addEventListener('click', createChart);
 
-load().catch(e => {
-  document.getElementById('chart').innerHTML = 'Error loading players.';
-  console.error(e);
+  load().catch(e => {
+    console.error(e);
+    document.querySelector('.muted-note').textContent =
+      'Could not load player list. Check data path or run via a local server.';
+    // Still give you a row so Add/Create work even if players.json failed
+    makeRow();
+  });
 });
 </script>
 </body>
