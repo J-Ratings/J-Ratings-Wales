@@ -8,11 +8,22 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
     .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:14px 18px;border-bottom:1px solid var(--border)}
-    .row{display:flex;gap:8px;align-items:center;width:100%}
+    .row{display:flex;gap:8px;align-items:center;width:100%;margin-bottom:8px}
     .row input[type="text"]{flex:1;min-width:220px;padding:10px;border-radius:8px;border:1px solid var(--border);background:#0f1623;color:var(--text)}
     .btn{background:#0f1623;border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;cursor:pointer}
     .btn:hover{background:rgba(255,255,255,0.05)}
     .muted-note{color:var(--muted);font-size:.9rem}
+
+    /* Autocomplete */
+    .suggest{position:relative;flex:1}
+    .suggest-list{
+      position:absolute;left:0;right:0;top:100%;
+      max-height:220px;overflow:auto;margin-top:4px;
+      border:1px solid var(--border);background:#0f1623;border-radius:6px;
+      display:none;z-index:20
+    }
+    .suggest-item{padding:8px 10px;cursor:pointer}
+    .suggest-item:hover{background:rgba(255,255,255,.05)}
   </style>
 </head>
 <body>
@@ -39,12 +50,17 @@
 
     <div class="controls" id="controls">
       <div id="rows" style="flex:1 1 600px"></div>
-      <div style="display:flex;gap:8px">
+
+      <!-- Create button beneath inputs -->
+      <button id="create" class="btn" type="button" style="width:100%;margin-top:8px">Create</button>
+
+      <!-- Secondary actions -->
+      <div style="display:flex;gap:8px;margin-top:8px">
         <button id="add" class="btn" type="button">Add player</button>
-        <button id="create" class="btn" type="button">Create</button>
         <button id="clear" class="btn" type="button">Clear</button>
       </div>
-      <div class="muted-note">Up to 6 players. Search by name, then Create.</div>
+
+      <div class="muted-note">Up to 6 players. Start typing a name, pick a suggestion, then Create.</div>
     </div>
 
     <div style="padding:16px">
@@ -59,11 +75,60 @@ const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;
 const MAX_PLAYERS = 6;
 
 const state = {
-  players: [],           // loaded from players.json
-  inputs: []             // [{el,input,datalist}]
+  players: [],   // [{id,name,zone,club,rating}]
+  inputs: []     // [{el,input}]
 };
 
-function makeRow() {
+/* ---------- Autocomplete ---------- */
+function attachAutocomplete(input){
+  const wrap = document.createElement('div');
+  wrap.className = 'suggest';
+  input.parentNode.insertBefore(wrap, input);
+  wrap.appendChild(input);
+
+  const list = document.createElement('div');
+  list.className = 'suggest-list';
+  wrap.appendChild(list);
+
+  function render(items){
+    if (!items.length){ list.style.display='none'; list.innerHTML=''; return; }
+    list.innerHTML = items.map(n => `<div class="suggest-item" data-name="${n}">${n}</div>`).join('');
+    list.style.display='block';
+  }
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    if (!q){ render([]); return; }
+
+    const names = state.players.map(p => p.name);
+    const starts = names.filter(n => n.toLowerCase().startsWith(q));
+    const contains = names.filter(n => !n.toLowerCase().startsWith(q) && n.toLowerCase().includes(q));
+    render(starts.concat(contains).slice(0, 12));
+  });
+
+  // Click to choose
+  list.addEventListener('mousedown', e => {
+    const item = e.target.closest('.suggest-item');
+    if (!item) return;
+    input.value = item.dataset.name;
+    list.style.display='none';
+  });
+
+  // Enter picks first suggestion if present
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter'){
+      const first = list.querySelector('.suggest-item');
+      if (first){ input.value = first.dataset.name; list.style.display='none'; }
+    }
+    if (e.key === 'Escape') list.style.display='none';
+  });
+
+  // Hide after blur (allow click to register)
+  input.addEventListener('blur', () => setTimeout(() => { list.style.display='none'; }, 120));
+}
+
+/* ---------- Rows ---------- */
+function makeRow(){
   if (state.inputs.length >= MAX_PLAYERS) return;
   const rows = document.getElementById('rows');
 
@@ -73,13 +138,8 @@ function makeRow() {
   const input = document.createElement('input');
   input.type = 'text';
   input.placeholder = 'Search player…';
-  input.setAttribute('list', `dl-${Date.now()}-${Math.random().toString(36).slice(2)}`);
 
-  const dl = document.createElement('datalist');
-  dl.id = input.getAttribute('list');
-
-  // fill datalist with all names (browser will filter as you type)
-  dl.innerHTML = state.players.map(p => `<option value="${p.name}">`).join('');
+  attachAutocomplete(input);
 
   const remove = document.createElement('button');
   remove.className = 'btn';
@@ -92,15 +152,14 @@ function makeRow() {
   });
 
   wrap.appendChild(input);
-  wrap.appendChild(dl);
   wrap.appendChild(remove);
   rows.appendChild(wrap);
 
-  state.inputs.push({ el: wrap, input, datalist: dl });
+  state.inputs.push({ el: wrap, input });
   document.getElementById('add').disabled = state.inputs.length >= MAX_PLAYERS;
 }
 
-function clearAll() {
+function clearAll(){
   const rows = document.getElementById('rows');
   rows.innerHTML = '';
   state.inputs = [];
@@ -108,34 +167,29 @@ function clearAll() {
   document.getElementById('chart').innerHTML = '';
 }
 
-async function createChart() {
+/* ---------- Chart ---------- */
+async function createChart(){
   const names = state.inputs
     .map(r => r.input.value.trim())
-    .filter(v => v.length);
+    .filter(Boolean);
 
-  if (!names.length) {
-    alert('Add at least one player.');
-    return;
-  }
+  if (!names.length){ alert('Add at least one player.'); return; }
 
-  // Resolve names to players (case-insensitive exact match)
+  // Resolve names → players (case-insensitive exact match)
   const picks = [];
-  for (const name of names) {
-    const p = state.players.find(x => x.name.toLowerCase() === name.toLowerCase());
+  const lower = n => n.toLowerCase();
+  for (const name of names){
+    const p = state.players.find(x => lower(x.name) === lower(name));
     if (p) picks.push(p);
   }
-  if (!picks.length) {
-    alert('No valid players selected.');
-    return;
-  }
+  if (!picks.length){ alert('No valid players selected.'); return; }
 
   const chart = document.getElementById('chart');
   chart.innerHTML = 'Loading…';
 
-  // Load histories
   const series = [];
   await Promise.all(picks.map(async p => {
-    try {
+    try{
       const res = await fetch(HIST_URL(p.id), { cache: 'no-cache' });
       if (!res.ok) return;
       const hist = await res.json();
@@ -147,18 +201,15 @@ async function createChart() {
         mode: 'lines+markers',
         hovertemplate: '%{x}<br>%{y}<extra>' + p.name + '</extra>'
       });
-    } catch { /* ignore */ }
+    }catch(_) {}
   }));
 
-  if (!series.length) {
-    chart.innerHTML = 'No history for the selected players.';
-    return;
-  }
+  if (!series.length){ chart.innerHTML = 'No history for the selected players.'; return; }
 
   const isTouch = window.matchMedia('(pointer: coarse)').matches;
   const cs = getComputedStyle(document.body);
 
-  Plotly.newPlot(chart, series, {
+  Plotly.newPlot('chart', series, {
     margin:{l:50,r:20,t:10,b:40},
     xaxis:{type:'date', title:''},
     yaxis:{title:'Rating'},
@@ -173,12 +224,12 @@ async function createChart() {
   });
 }
 
-async function load() {
+/* ---------- Boot ---------- */
+async function load(){
   const res = await fetch(PLAYERS_URL, { cache: 'no-cache' });
   if (!res.ok) throw new Error('players.json not found');
   state.players = await res.json();
-  // start with one row
-  makeRow();
+  makeRow(); // start with one row
 }
 
 document.getElementById('add').addEventListener('click', makeRow);
