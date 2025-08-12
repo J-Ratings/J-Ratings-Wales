@@ -8,7 +8,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-top: 12px; /* add spacing between zones and clubs */
 }
+
 .clubs-nav a {
   color: blue;
 }
