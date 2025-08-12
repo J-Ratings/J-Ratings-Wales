@@ -176,16 +176,31 @@ async function buildComparison(players) {
 hovertemplate: '%{x} => %{y}<extra>' + p.name + '</extra>'
   }));
 
-  const cs = getComputedStyle(document.body);
-  Plotly.newPlot(chart, traces, {
-    margin:{l:50,r:20,t:10,b:40},
-    xaxis:{type:'date', title:''},
-    yaxis:{title:'Rating'},
-    legend:{orientation:'h'},
-    paper_bgcolor: cs.backgroundColor,
-    plot_bgcolor: cs.backgroundColor,
-    font:{color: cs.color}
-  }, {displayModeBar:false, responsive:true});
+const cs = getComputedStyle(document.body);
+
+// detect touch devices
+const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+const layout = {
+  margin:{l:50,r:20,t:10,b:40},
+  xaxis:{type:'date', title:''},
+  yaxis:{title:'Rating'},
+  legend:{orientation:'h'},
+  paper_bgcolor: cs.backgroundColor,
+  plot_bgcolor: cs.backgroundColor,
+  font:{color: cs.color}
+};
+
+const config = {
+  displayModeBar: false,
+  responsive: true,
+  scrollZoom: false,        // no wheel zoom on desktop
+  doubleClick: false,       // disable dbl-click zoom
+  staticPlot: isTouch       // disable all drag/pinch on phones
+};
+
+Plotly.newPlot(chart, traces, layout, config);
+
 }
 
 function setupCompareButton() {
