@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    /* Mobile: allow vertical scrolling over the chart without accidental pan/zoom */
+    #compare-chart { touch-action: pan-y; }
+  </style>
 </head>
 <body>
 <header>
@@ -62,14 +66,9 @@
 const ZONE_CODE = 'N1';
 const ZONE_NAME = 'North Wales';
 const DATA_URL  = '../data/players.json';
-
-// Only include players with history on/after this date. Set to null to include all.
 const COMPARE_SINCE = '2025-07-01';
-
-// Cap traces after filtering
 const MAX_SERIES = 50;
 
-// Club code → name
 const clubNames = {
   "1BA": "Bangor",
   "1BM": "Buckley/Mold",
@@ -80,7 +79,6 @@ const clubNames = {
   "1SA": "Rydal Penrhos School"
 };
 
-/* ---------- STATE & RENDER ---------- */
 const state = { rows: [], filtered: [], selectedClub: null };
 
 function renderTable() {
@@ -88,23 +86,19 @@ function renderTable() {
   tbody.innerHTML = '';
   for (const r of state.filtered) {
     const tr = document.createElement('tr');
-
     const tdName = document.createElement('td');
     const a = document.createElement('a');
     a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
     a.textContent = r.name;
     tdName.appendChild(a);
-
     const tdRt = document.createElement('td');
     tdRt.className = 'right';
     tdRt.textContent = Math.round(r.rating);
-
     tr.appendChild(tdName);
     tr.appendChild(tdRt);
     tbody.appendChild(tr);
   }
-  document.getElementById('count').textContent =
-    `${state.filtered.length.toLocaleString()} players`;
+  document.getElementById('count').textContent = `${state.filtered.length.toLocaleString()} players`;
 }
 
 function applyFilter() {
@@ -118,31 +112,25 @@ function applyFilter() {
 }
 
 /* ---------- COMPARE CHART ---------- */
-const histCache = new Map(); // id -> array|null
+const histCache = new Map();
 
 async function fetchHistoryFor(id) {
   if (histCache.has(id)) return histCache.get(id);
-
   async function tryUrl(url) {
     const res = await fetch(url, { cache: 'no-cache' });
     if (!res.ok) return null;
     const rows = await res.json();
     return Array.isArray(rows) && rows.length ? rows : null;
   }
-
-  // be tolerant of encoded vs raw ids
   let hist = await tryUrl(`../data/history/${id}.json`);
   if (!hist) hist = await tryUrl(`../data/history/${encodeURIComponent(id)}.json`);
-
   histCache.set(id, hist ?? null);
   return hist ?? null;
 }
 
 function hideCompare() {
-  const wrap = document.getElementById('compare-wrap');
-  const chart = document.getElementById('compare-chart');
-  wrap.style.display = 'none';
-  chart.innerHTML = '';
+  document.getElementById('compare-wrap').style.display = 'none';
+  document.getElementById('compare-chart').innerHTML = '';
 }
 
 async function buildComparison(players) {
@@ -155,7 +143,6 @@ async function buildComparison(players) {
   await Promise.all(players.map(async p => {
     const hist = await fetchHistoryFor(p.id);
     if (!hist) return;
-
     const use = COMPARE_SINCE ? hist.filter(d => d.date >= COMPARE_SINCE) : hist;
     if (use.length) withHist.push({ p, hist: use });
   }));
@@ -172,24 +159,50 @@ async function buildComparison(players) {
   );
   const picked = withHist.slice(0, MAX_SERIES);
 
-  const traces = picked.map(({ p, hist }) => ({
-    name: p.name,
-    x: hist.map(d => d.date),
-    y: hist.map(d => d.rating),
-    mode: 'lines',
-hovertemplate: '%{x} => %{y}<extra>' + p.name + '</extra>'
-  }));
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+  const traces = picked.map(({ p, hist }) => {
+    if (isTouch) {
+      const n = hist.length;
+      const text = hist.map((_, i) => (i === n - 1 ? p.name : ''));
+      return {
+        name: p.name,
+        x: hist.map(d => d.date),
+        y: hist.map(d => d.rating),
+        mode: 'lines+text',
+        text,
+        textposition: 'middle right',
+        textfont: { size: 10 },
+        cliponaxis: false,
+        hoverinfo: 'skip'
+      };
+    } else {
+      return {
+        name: p.name,
+        x: hist.map(d => d.date),
+        y: hist.map(d => d.rating),
+        mode: 'lines',
+        hovertemplate: '%{x} => %{y}<extra>' + p.name + '</extra>'
+      };
+    }
+  });
 
   const cs = getComputedStyle(document.body);
-  Plotly.newPlot(chart, traces, {
-    margin:{l:50,r:20,t:10,b:40},
-    xaxis:{type:'date', title:''},
-    yaxis:{title:'Rating'},
-    legend:{orientation:'h'},
+  const layout = {
+    margin: { l: 50, r: (isTouch ? 110 : 20), t: 10, b: 40 },
+    xaxis: { type: 'date', title: '' },
+    yaxis: { title: 'Rating' },
+    legend: { orientation: 'h' },
     paper_bgcolor: cs.backgroundColor,
     plot_bgcolor: cs.backgroundColor,
-    font:{color: cs.color}
-  }, {displayModeBar:false, responsive:true});
+    font: { color: cs.color }
+  };
+
+  const config = isTouch
+    ? { displayModeBar: false, responsive: true, staticPlot: true }
+    : { displayModeBar: false, responsive: true, scrollZoom: false, doubleClick: false, dragMode: false };
+
+  Plotly.newPlot(chart, traces, layout, config);
 }
 
 function setupCompareButton() {
@@ -211,7 +224,6 @@ async function load() {
 
   state.filtered = state.rows.slice();
 
-  // clubs present in this zone and defined in map
   const clubsNav = document.querySelector('.clubs-nav');
   const clubs = [...new Set(
     state.rows.map(r => r.club).filter(c => /^\d/.test(c) && clubNames[c])
@@ -227,14 +239,10 @@ async function load() {
     if (!e.target.classList.contains('club-btn')) return;
     document.querySelectorAll('.club-btn').forEach(b => b.classList.remove('active-club'));
     e.target.classList.add('active-club');
-
     const code = e.target.dataset.code;
     state.selectedClub = code || null;
-document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
-
-// Show/hide Compare button depending on whether a club is selected
-document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
-
+    document.getElementById('zone-title').textContent = code ? clubNames[c] : ZONE_NAME;
+    document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
     applyFilter();
   });
 
