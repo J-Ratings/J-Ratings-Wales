@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    /* Let the page scroll vertically over the chart on touch devices */
+    #compare-chart { touch-action: pan-y; }
+  </style>
 </head>
 <body>
 <header>
@@ -171,44 +175,43 @@ async function buildComparison(players) {
     return;
   }
 
+  // Sort by most recent activity and cap
   withHist.sort((a, b) =>
     b.hist[b.hist.length - 1].date.localeCompare(a.hist[a.hist.length - 1].date)
   );
   const picked = withHist.slice(0, MAX_SERIES);
+
+  // Touch detection ONCE (used below)
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
 
   const traces = picked.map(({ p, hist }) => ({
     name: p.name,
     x: hist.map(d => d.date),
     y: hist.map(d => d.rating),
     mode: 'lines',
-hovertemplate: '%{x} => %{y}<extra>' + p.name + '</extra>'
+    hovertemplate: '%{x} => %{y}<extra>' + p.name + '</extra>'
   }));
 
-const cs = getComputedStyle(document.body);
+  const cs = getComputedStyle(document.body);
+  const layout = {
+    margin: { l: 50, r: 20, t: 10, b: 40 },
+    xaxis: { type: 'date', title: '' },
+    yaxis: { title: 'Rating' },
+    legend: { orientation: 'h' },
+    paper_bgcolor: cs.backgroundColor,
+    plot_bgcolor: cs.backgroundColor,
+    font: { color: cs.color }
+  };
 
-// detect touch devices
-const isTouch = window.matchMedia('(pointer: coarse)').matches;
+  const config = {
+    displayModeBar: false,
+    responsive: true,
+    scrollZoom: false,       // no wheel/pinch zoom
+    doubleClick: false,      // no dbl-click zoom
+    staticPlot: isTouch      // static on mobile, interactive on desktop
+  };
 
-const layout = {
-  margin:{l:50,r:20,t:10,b:40},
-  xaxis:{type:'date', title:''},
-  yaxis:{title:'Rating'},
-  legend:{orientation:'h'},
-  paper_bgcolor: cs.backgroundColor,
-  plot_bgcolor: cs.backgroundColor,
-  font:{color: cs.color}
-};
-
-const config = {
-  displayModeBar: false,
-  responsive: true,
-  scrollZoom: false,        // no wheel zoom on desktop
-  doubleClick: false,       // disable dbl-click zoom
-  staticPlot: isTouch       // disable all drag/pinch on phones
-};
-
-Plotly.newPlot(chart, traces, layout, config);
-
+  Plotly.newPlot(chart, traces, layout, config);
 }
 
 function setupCompareButton() {
@@ -240,7 +243,11 @@ async function load() {
     `<button class="club-btn active-club" data-code="">All</button>` +
     clubs.map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
 
-document.getElementById('compare-btn').style.display = 'none';
+  // Title
+  document.getElementById('zone-title').textContent = ZONE_NAME;
+
+  // Compare button only when a club is selected
+  document.getElementById('compare-btn').style.display = 'none';
 
   clubsNav.addEventListener('click', e => {
     if (!e.target.classList.contains('club-btn')) return;
@@ -250,10 +257,9 @@ document.getElementById('compare-btn').style.display = 'none';
 
     const code = e.target.dataset.code;
     state.selectedClub = code || null;
-document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
+    document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
+    document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
 
-// Show/hide Compare button depending on whether a club is selected
-document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
     applyFilter();
   });
 

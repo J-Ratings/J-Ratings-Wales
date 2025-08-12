@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    /* Allow vertical scroll on touch devices without zoom */
+    #compare-chart { touch-action: pan-y; }
+  </style>
 </head>
 <body>
 <header>
@@ -59,14 +63,9 @@
 const ZONE_CODE = 'G1';
 const ZONE_NAME = 'Gwent';
 const DATA_URL  = '../data/players.json';
-
-// Only include players with history on/after this date. Set to null to include all.
 const COMPARE_SINCE = '2025-07-01';
-
-// Cap traces after filtering
 const MAX_SERIES = 50;
 
-// Club code → name (adjust as needed)
 const clubNames = {
   "3AG": "Abergavenny",
   "3NP": "Newport",
@@ -77,7 +76,7 @@ const clubNames = {
   "3IM": "Improvement"
 };
 
-/* ---------- STATE & RENDER ---------- */
+/* ---------- STATE ---------- */
 const state = { rows: [], filtered: [], selectedClub: null };
 
 function renderTable() {
@@ -85,17 +84,14 @@ function renderTable() {
   tbody.innerHTML = '';
   for (const r of state.filtered) {
     const tr = document.createElement('tr');
-
     const tdName = document.createElement('td');
     const a = document.createElement('a');
     a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
     a.textContent = r.name;
     tdName.appendChild(a);
-
     const tdRt = document.createElement('td');
     tdRt.className = 'right';
     tdRt.textContent = Math.round(r.rating);
-
     tr.appendChild(tdName);
     tr.appendChild(tdRt);
     tbody.appendChild(tr);
@@ -115,22 +111,18 @@ function applyFilter() {
 }
 
 /* ---------- COMPARE CHART ---------- */
-const histCache = new Map(); // id -> array|null
+const histCache = new Map();
 
 async function fetchHistoryFor(id) {
   if (histCache.has(id)) return histCache.get(id);
-
   async function tryUrl(url) {
     const res = await fetch(url, { cache: 'no-cache' });
     if (!res.ok) return null;
     const rows = await res.json();
     return Array.isArray(rows) && rows.length ? rows : null;
-    }
-
-  // tolerant of raw vs encoded ids
+  }
   let hist = await tryUrl(`../data/history/${id}.json`);
   if (!hist) hist = await tryUrl(`../data/history/${encodeURIComponent(id)}.json`);
-
   histCache.set(id, hist ?? null);
   return hist ?? null;
 }
@@ -152,7 +144,6 @@ async function buildComparison(players) {
   await Promise.all(players.map(async p => {
     const hist = await fetchHistoryFor(p.id);
     if (!hist) return;
-
     const use = COMPARE_SINCE ? hist.filter(d => d.date >= COMPARE_SINCE) : hist;
     if (use.length) withHist.push({ p, hist: use });
   }));
@@ -168,46 +159,40 @@ async function buildComparison(players) {
     b.hist[b.hist.length - 1].date.localeCompare(a.hist[a.hist.length - 1].date)
   );
   const picked = withHist.slice(0, MAX_SERIES);
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
 
   const traces = picked.map(({ p, hist }) => ({
     name: p.name,
     x: hist.map(d => d.date),
     y: hist.map(d => d.rating),
     mode: 'lines',
-hovertemplate: '%{x} => %{y}<extra>' + p.name + '</extra>'
+    hovertemplate: '%{x} => %{y}<extra>' + p.name + '</extra>'
   }));
 
-const cs = getComputedStyle(document.body);
+  const cs = getComputedStyle(document.body);
+  const layout = {
+    margin:{l:50,r:20,t:10,b:40},
+    xaxis:{type:'date', title:''},
+    yaxis:{title:'Rating'},
+    legend:{orientation:'h'},
+    paper_bgcolor: cs.backgroundColor,
+    plot_bgcolor: cs.backgroundColor,
+    font:{color: cs.color}
+  };
+  const config = {
+    displayModeBar: false,
+    responsive: true,
+    scrollZoom: false,
+    doubleClick: false,
+    staticPlot: isTouch
+  };
 
-// detect touch devices
-const isTouch = window.matchMedia('(pointer: coarse)').matches;
-
-const layout = {
-  margin:{l:50,r:20,t:10,b:40},
-  xaxis:{type:'date', title:''},
-  yaxis:{title:'Rating'},
-  legend:{orientation:'h'},
-  paper_bgcolor: cs.backgroundColor,
-  plot_bgcolor: cs.backgroundColor,
-  font:{color: cs.color}
-};
-
-const config = {
-  displayModeBar: false,
-  responsive: true,
-  scrollZoom: false,        // no wheel zoom on desktop
-  doubleClick: false,       // disable dbl-click zoom
-  staticPlot: isTouch       // disable all drag/pinch on phones
-};
-
-Plotly.newPlot(chart, traces, layout, config);
-
+  Plotly.newPlot(chart, traces, layout, config);
 }
 
 function setupCompareButton() {
   document.getElementById('compare-btn').addEventListener('click', async () => {
-    const list = state.filtered.slice(); // all currently visible rows
-    await buildComparison(list);
+    await buildComparison(state.filtered.slice());
   });
 }
 
@@ -220,15 +205,12 @@ async function load() {
   state.rows = data
     .filter(d => d.zone === ZONE_CODE)
     .sort((a, b) => b.rating - a.rating);
-
   state.filtered = state.rows.slice();
 
-  // Build club buttons for clubs present and in the map
   const clubsNav = document.querySelector('.clubs-nav');
   const clubs = [...new Set(
     state.rows.map(r => r.club).filter(c => /^\d/.test(c) && clubNames[c])
   )].sort();
-
   clubsNav.innerHTML =
     `<button class="club-btn active-club" data-code="">All</button>` +
     clubs.map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
@@ -239,14 +221,10 @@ async function load() {
     if (!e.target.classList.contains('club-btn')) return;
     document.querySelectorAll('.club-btn').forEach(b => b.classList.remove('active-club'));
     e.target.classList.add('active-club');
-
     const code = e.target.dataset.code;
     state.selectedClub = code || null;
-document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
-
-// Show/hide Compare button depending on whether a club is selected
-document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
-
+    document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
+    document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
     applyFilter();
   });
 

@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    /* Let the page scroll vertically over the chart on touch devices */
+    #compare-chart { touch-action: pan-y; }
+  </style>
 </head>
 <body>
 <header>
@@ -61,10 +65,10 @@ const ZONE_CODE = 'D1';
 const ZONE_NAME = 'Dyfed';
 const DATA_URL  = '../data/players.json';
 
-// Only include players with history on/after this date. Set to null to include all.
+// Include players with history on/after this date; set null to include all
 const COMPARE_SINCE = '2025-07-01';
 
-// Cap traces after filtering
+// Limit traces after filtering
 const MAX_SERIES = 50;
 
 // Club code → name
@@ -163,49 +167,64 @@ async function buildComparison(players) {
     return;
   }
 
+  // Sort by most recent activity and cap
   withHist.sort((a, b) =>
     b.hist[b.hist.length - 1].date.localeCompare(a.hist[a.hist.length - 1].date)
   );
   const picked = withHist.slice(0, MAX_SERIES);
 
-  const traces = picked.map(({ p, hist }) => ({
-    name: p.name,
-    x: hist.map(d => d.date),
-    y: hist.map(d => d.rating),
-    mode: 'lines',
-hovertemplate: '%{x} => %{y}<extra>' + p.name + '</extra>'
-  }));
+  // Touch detection ONCE (used below)
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
 
-const cs = getComputedStyle(document.body);
+  const traces = picked.map(({ p, hist }) => {
+    if (isTouch) {
+      // Mobile: static plot with label at end of each line
+      const n = hist.length;
+      const text = hist.map((_, i) => (i === n - 1 ? p.name : ''));
+      return {
+        name: p.name,
+        x: hist.map(d => d.date),
+        y: hist.map(d => d.rating),
+        mode: 'lines+text',
+        text,
+        textposition: 'middle right',
+        textfont: { size: 10 },
+        cliponaxis: false,
+        hoverinfo: 'skip'
+      };
+    } else {
+      // Desktop: interactive hover
+      return {
+        name: p.name,
+        x: hist.map(d => d.date),
+        y: hist.map(d => d.rating),
+        mode: 'lines',
+        hovertemplate: '%{x} => %{y}<extra>' + p.name + '</extra>'
+      };
+    }
+  });
 
-// detect touch devices
-const isTouch = window.matchMedia('(pointer: coarse)').matches;
+  const cs = getComputedStyle(document.body);
+  const layout = {
+    margin: { l: 50, r: (isTouch ? 110 : 20), t: 10, b: 40 }, // extra right space on mobile for labels
+    xaxis: { type: 'date', title: '' },
+    yaxis: { title: 'Rating' },
+    legend: { orientation: 'h' },
+    paper_bgcolor: cs.backgroundColor,
+    plot_bgcolor: cs.backgroundColor,
+    font: { color: cs.color }
+  };
 
-const layout = {
-  margin:{l:50,r:20,t:10,b:40},
-  xaxis:{type:'date', title:''},
-  yaxis:{title:'Rating'},
-  legend:{orientation:'h'},
-  paper_bgcolor: cs.backgroundColor,
-  plot_bgcolor: cs.backgroundColor,
-  font:{color: cs.color}
-};
+  const config = isTouch
+    ? { displayModeBar: false, responsive: true, staticPlot: true }
+    : { displayModeBar: false, responsive: true, scrollZoom: false, doubleClick: false, dragMode: false };
 
-const config = {
-  displayModeBar: false,
-  responsive: true,
-  scrollZoom: false,        // no wheel zoom on desktop
-  doubleClick: false,       // disable dbl-click zoom
-  staticPlot: isTouch       // disable all drag/pinch on phones
-};
-
-Plotly.newPlot(chart, traces, layout, config);
-
+  Plotly.newPlot(chart, traces, layout, config);
 }
 
 function setupCompareButton() {
   document.getElementById('compare-btn').addEventListener('click', async () => {
-    const list = state.filtered.slice(); // all currently visible rows
+    const list = state.filtered.slice(); // current view (club + search)
     await buildComparison(list);
   });
 }
@@ -222,7 +241,7 @@ async function load() {
 
   state.filtered = state.rows.slice();
 
-  // Build club buttons present in this zone and known in map
+  // Build club buttons only for codes present and known
   const clubsNav = document.querySelector('.clubs-nav');
   const clubs = [...new Set(
     state.rows.map(r => r.club).filter(c => /^\d/.test(c) && clubNames[c])
@@ -232,6 +251,10 @@ async function load() {
     `<button class="club-btn active-club" data-code="">All</button>` +
     clubs.map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
 
+  // Title
+  document.getElementById('zone-title').textContent = ZONE_NAME;
+
+  // Compare button: only show when a club is selected
   document.getElementById('compare-btn').style.display = 'none';
 
   clubsNav.addEventListener('click', e => {
@@ -242,10 +265,8 @@ async function load() {
 
     const code = e.target.dataset.code;
     state.selectedClub = code || null;
-document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
-
-// Show/hide Compare button depending on whether a club is selected
-document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
+    document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
+    document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
 
     applyFilter();
   });
