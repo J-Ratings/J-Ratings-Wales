@@ -69,7 +69,13 @@
   --muted: #8b949e;
   --border: #30363d;
 }
-
+.site-title a {
+  color: var(--text);
+  text-decoration: none;
+}
+.site-title a:visited {
+  color: var(--text);
+}
 html, body {
   margin: 0;
   background: var(--bg);
