@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    /* Mobile: allow vertical scrolling over the chart without accidental pan/zoom */
+    #compare-chart { touch-action: pan-y; }
+  </style>
 </head>
 <body>
 <header>
@@ -58,19 +62,18 @@
 </main>
 
 <script>
-/* ---------- CONFIG (adjust if you copy this for another zone) ---------- */
+/* ---------- CONFIG ---------- */
 const ZONE_CODE = 'W1';
 const ZONE_NAME = 'West Wales';
 const DATA_URL  = '../data/players.json';
 
-// Optional: only include players who have history on/after this date.
-// Set to null to include anyone with any history.
+// Only include players with history on/after this date (set null to include all)
 const COMPARE_SINCE = '2025-07-01';
 
-// Limit traces after filtering (prevents unreadable spaghetti).
+// Cap traces after filtering
 const MAX_SERIES = 50;
 
-// Club codes → human names for this zone only
+// Club codes → names (West Wales)
 const clubNames = {
   "5CN": "Castell Nedd",
   "5DB": "De La Beche",
@@ -81,7 +84,7 @@ const clubNames = {
   "5SU": "Swansea University"
 };
 
-/* ---------------------------- STATE & RENDER --------------------------- */
+/* ---------- STATE & RENDER ---------- */
 const state = { rows: [], filtered: [], selectedClub: null };
 
 function renderTable() {
@@ -92,7 +95,6 @@ function renderTable() {
 
     const tdName = document.createElement('td');
     const a = document.createElement('a');
-    // Build player link; only encode the query value (no double-encoding)
     a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
     a.textContent = r.name;
     tdName.appendChild(a);
@@ -116,17 +118,13 @@ function applyFilter() {
   if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
   state.filtered = list;
   renderTable();
-  hideCompare(); // keep chart in sync with the visible list
+  hideCompare();
 }
 
-/* ---------------------------- COMPARE CHART ---------------------------- */
-// Cache histories to avoid refetching on every click
+/* ---------- COMPARE CHART ---------- */
 const histCache = new Map(); // id -> array|null
 
 async function fetchHistoryFor(id) {
-  // Be robust to whether ids in players.json are already URL-encoded.
-  // 1) try as-is (works if filenames are already encoded like "e1%20emmakong.json")
-  // 2) if that 404s, try encodeURIComponent(id)
   if (histCache.has(id)) return histCache.get(id);
 
   async function tryUrl(url) {
@@ -160,11 +158,7 @@ async function buildComparison(players) {
   await Promise.all(players.map(async p => {
     const hist = await fetchHistoryFor(p.id);
     if (!hist) return;
-
-    const use = COMPARE_SINCE
-      ? hist.filter(d => d.date >= COMPARE_SINCE)
-      : hist;
-
+    const use = COMPARE_SINCE ? hist.filter(d => d.date >= COMPARE_SINCE) : hist;
     if (use.length) withHist.push({ p, hist: use });
   }));
 
@@ -175,90 +169,81 @@ async function buildComparison(players) {
     return;
   }
 
-  // Choose which to plot: sort by most recent activity and cap
+  // Sort by most recent activity and cap
   withHist.sort((a, b) =>
     b.hist[b.hist.length - 1].date.localeCompare(a.hist[a.hist.length - 1].date)
   );
   const picked = withHist.slice(0, MAX_SERIES);
 
-// detect touch devices
-const traces = picked.map(({ p, hist }) => {
-  if (isTouch) {
-    // label only the last point
-    const n = hist.length;
-    const text = hist.map((_, i) => (i === n - 1 ? p.name : ''));
-    return {
-      name: p.name,
-      x: hist.map(d => d.date),
-      y: hist.map(d => d.rating),
-      mode: 'lines+text',
-      text,
-      textposition: 'middle right',
-      textfont: { size: 10 },
-      cliponaxis: false,
-      hoverinfo: 'skip'
-    };
-  } else {
-    // desktop: keep hover
-    return {
-      name: p.name,
-      x: hist.map(d => d.date),
-      y: hist.map(d => d.rating),
-      mode: 'lines',
-      hovertemplate: '%{x} => %{y}<extra>' + p.name + '</extra>'
-    };
-  }
-});
+  // Touch detection ONCE (used for traces and layout/config)
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
 
+  const traces = picked.map(({ p, hist }) => {
+    if (isTouch) {
+      // Mobile: static plot with label at end of each line
+      const n = hist.length;
+      const text = hist.map((_, i) => (i === n - 1 ? p.name : ''));
+      return {
+        name: p.name,
+        x: hist.map(d => d.date),
+        y: hist.map(d => d.rating),
+        mode: 'lines+text',
+        text,
+        textposition: 'middle right',
+        textfont: { size: 10 },
+        cliponaxis: false,
+        hoverinfo: 'skip'
+      };
+    } else {
+      // Desktop: interactive hover
+      return {
+        name: p.name,
+        x: hist.map(d => d.date),
+        y: hist.map(d => d.rating),
+        mode: 'lines',
+        hovertemplate: '%{x} => %{y}<extra>' + p.name + '</extra>'
+      };
+    }
+  });
 
-const cs = getComputedStyle(document.body);
+  const cs = getComputedStyle(document.body);
+  const layout = {
+    margin: { l: 50, r: (isTouch ? 110 : 20), t: 10, b: 40 }, // extra right space for mobile labels
+    xaxis: { type: 'date', title: '' },
+    yaxis: { title: 'Rating' },
+    legend: { orientation: 'h' },
+    paper_bgcolor: cs.backgroundColor,
+    plot_bgcolor: cs.backgroundColor,
+    font: { color: cs.color }
+  };
 
-// detect touch devices
-const isTouch = window.matchMedia('(pointer: coarse)').matches;
+  const config = isTouch
+    ? { displayModeBar: false, responsive: true, staticPlot: true }
+    : { displayModeBar: false, responsive: true, scrollZoom: false, doubleClick: false, dragMode: false };
 
-const layout = {
-  margin:{l:50,r:20,t:10,b:40},
-  xaxis:{type:'date', title:''},
-  yaxis:{title:'Rating'},
-  legend:{orientation:'h'},
-  paper_bgcolor: cs.backgroundColor,
-  plot_bgcolor: cs.backgroundColor,
-  font:{color: cs.color}
-};
-
-const config = {
-  displayModeBar: false,
-  responsive: true,
-  scrollZoom: false,        // no wheel zoom on desktop
-  doubleClick: false,       // disable dbl-click zoom
-  staticPlot: isTouch       // disable all drag/pinch on phones
-};
-
-Plotly.newPlot(chart, traces, layout, config);
-
+  Plotly.newPlot(chart, traces, layout, config);
 }
 
 function setupCompareButton() {
   document.getElementById('compare-btn').addEventListener('click', async () => {
-    const list = state.filtered.slice(); // all currently visible rows
+    const list = state.filtered.slice(); // current view (club + search)
     await buildComparison(list);
   });
 }
 
-/* --------------------------------- LOAD -------------------------------- */
+/* ---------- LOAD ---------- */
 async function load() {
   const res = await fetch(DATA_URL, { cache: 'no-cache' });
   if (!res.ok) throw new Error('Failed to load players.json');
   const data = await res.json();
 
-  // Filter by this zone and sort by rating desc
   state.rows = data
     .filter(d => d.zone === ZONE_CODE)
     .sort((a, b) => b.rating - a.rating);
 
   state.filtered = state.rows.slice();
 
-  // Build club buttons (numeric codes only, present in this zone and in map)
+  // Build club buttons only for codes present and known
   const clubsNav = document.querySelector('.clubs-nav');
   const clubs = [...new Set(
     state.rows.map(r => r.club).filter(c => /^\d/.test(c) && clubNames[c])
@@ -269,12 +254,11 @@ async function load() {
     clubs.map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
 
   // Title
-  const zoneTitle = document.getElementById('zone-title');
-  zoneTitle.textContent = ZONE_NAME;
+  document.getElementById('zone-title').textContent = ZONE_NAME;
 
+  // Compare button: only show when a club is selected
   document.getElementById('compare-btn').style.display = 'none';
 
-  // Club filtering
   clubsNav.addEventListener('click', e => {
     if (!e.target.classList.contains('club-btn')) return;
 
@@ -283,10 +267,10 @@ async function load() {
 
     const code = e.target.dataset.code;
     state.selectedClub = code || null;
-    zoneTitle.textContent = code ? clubNames[code] : ZONE_NAME;
-document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
+    document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
+    document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
 
-    applyFilter(); // hides chart too
+    applyFilter();
   });
 
   renderTable();
