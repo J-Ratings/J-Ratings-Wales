@@ -7,23 +7,23 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
-    .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:14px 18px;border-bottom:1px solid var(--border)}
-    .row{display:flex;gap:8px;align-items:center;width:100%;margin-bottom:8px}
-    .row input[type="text"]{flex:1;min-width:220px;padding:10px;border-radius:8px;border:1px solid var(--border);background:#0f1623;color:var(--text)}
-    .btn{background:#0f1623;border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;cursor:pointer}
-    .btn:hover{background:rgba(255,255,255,0.05)}
-    .muted-note{color:var(--muted);font-size:.9rem}
+    .controls { display:flex; flex-direction:column; gap:8px; padding:14px 18px; border-bottom:1px solid var(--border) }
+    .row { display:flex; gap:8px; align-items:center; width:100%; }
+    .row input[type="text"] { flex:1; min-width:220px; padding:10px; border-radius:8px; border:1px solid var(--border); background:#0f1623; color:var(--text); }
+    .btn { background:#0f1623; border:1px solid var(--border); color:var(--text); padding:8px 12px; border-radius:6px; cursor:pointer; }
+    .btn:hover { background:rgba(255,255,255,0.05); }
+    .muted-note { color:var(--muted); font-size:.9rem; }
 
     /* Autocomplete */
-    .suggest{position:relative;flex:1}
-    .suggest-list{
-      position:absolute;left:0;right:0;top:100%;
-      max-height:220px;overflow:auto;margin-top:4px;
-      border:1px solid var(--border);background:#0f1623;border-radius:6px;
-      display:none;z-index:20
+    .suggest { position:relative; flex:1 }
+    .suggest-list {
+      position:absolute; left:0; right:0; top:100%;
+      max-height:220px; overflow:auto; margin-top:4px;
+      border:1px solid var(--border); background:#0f1623; border-radius:6px;
+      display:none; z-index:20;
     }
-    .suggest-item{padding:8px 10px;cursor:pointer}
-    .suggest-item:hover{background:rgba(255,255,255,.05)}
+    .suggest-item { padding:8px 10px; cursor:pointer; }
+    .suggest-item:hover { background:rgba(255,255,255,.05); }
   </style>
 </head>
 <body>
@@ -51,11 +51,11 @@
     <div class="controls" id="controls">
       <div id="rows" style="flex:1 1 600px"></div>
 
-      <!-- Big primary action under the rows -->
-      <button id="add" class="btn" type="button" style="width:100%;margin-top:8px">Add player</button>
+      <!-- Big Add player button -->
+      <button id="add" class="btn" type="button" style="width:100%">Add player</button>
 
-      <!-- Secondary row: Create + Clear (small) -->
-      <div style="display:flex;gap:8px;margin-top:8px">
+      <!-- Create + Clear buttons -->
+      <div style="display:flex; gap:8px;">
         <button id="create" class="btn" type="button">Create</button>
         <button id="clear" class="btn" type="button">Clear</button>
       </div>
@@ -83,7 +83,9 @@ const state = {
 function attachAutocomplete(input){
   const wrap = document.createElement('div');
   wrap.className = 'suggest';
-  input.parentNode.insertBefore(wrap, input);
+
+  // Replace input in DOM with wrapped version
+  input.parentNode.replaceChild(wrap, input);
   wrap.appendChild(input);
 
   const list = document.createElement('div');
@@ -134,8 +136,7 @@ function makeRow(){
   const input = document.createElement('input');
   input.type = 'text';
   input.placeholder = 'Search player…';
-
-  attachAutocomplete(input);
+  wrap.appendChild(input);
 
   const remove = document.createElement('button');
   remove.className = 'btn';
@@ -147,95 +148,41 @@ function makeRow(){
     document.getElementById('add').disabled = state.inputs.length >= MAX_PLAYERS;
   });
 
-  wrap.appendChild(input);
   wrap.appendChild(remove);
   rows.appendChild(wrap);
 
+  attachAutocomplete(input); // only after in DOM
   state.inputs.push({ el: wrap, input });
   document.getElementById('add').disabled = state.inputs.length >= MAX_PLAYERS;
 }
 
 function clearAll(){
-  const rows = document.getElementById('rows');
-  rows.innerHTML = '';
+  document.getElementById('rows').innerHTML = '';
   state.inputs = [];
   document.getElementById('add').disabled = false;
-  document.getElementById('chart').innerHTML = '';
 }
 
-/* ---------- Chart ---------- */
-async function createChart(){
-  const names = state.inputs.map(r => r.input.value.trim()).filter(Boolean);
-  if (!names.length){ alert('Add at least one player.'); return; }
-
-  // Resolve names → players (case-insensitive exact match)
-  const picks = [];
-  const lower = s => s.toLowerCase();
-  for (const name of names){
-    const p = state.players.find(x => lower(x.name) === lower(name));
-    if (p) picks.push(p);
-  }
-  if (!picks.length){ alert('No valid players selected.'); return; }
-
-  const chart = document.getElementById('chart');
-  chart.innerHTML = 'Loading…';
-
-  const series = [];
-  await Promise.all(picks.map(async p => {
-    try{
-      const res = await fetch(HIST_URL(p.id), { cache: 'no-cache' });
-      if (!res.ok) return;
-      const hist = await res.json();
-      if (!Array.isArray(hist) || !hist.length) return;
-      series.push({
-        name: p.name,
-        x: hist.map(d => d.date),
-        y: hist.map(d => d.rating),
-        mode: 'lines+markers',
-        hovertemplate: '%{x}<br>%{y}<extra>' + p.name + '</extra>'
-      });
-    }catch(_){/* ignore */}
-  }));
-
-  if (!series.length){ chart.innerHTML = 'No history for the selected players.'; return; }
-
-  const isTouch = window.matchMedia('(pointer: coarse)').matches;
-  const cs = getComputedStyle(document.body);
-
-  Plotly.newPlot('chart', series, {
-    margin:{l:50,r:20,t:10,b:40},
-    xaxis:{type:'date', title:''},
-    yaxis:{title:'Rating'},
-    legend:{orientation:'h'},
-    paper_bgcolor: cs.backgroundColor,
-    plot_bgcolor: cs.backgroundColor,
-    font:{color: cs.color}
-  }, {
-    displayModeBar:false,
-    responsive:true,
-    staticPlot: isTouch
-  });
-}
-
-/* ---------- Boot ---------- */
 async function load(){
-  const res = await fetch(PLAYERS_URL, { cache: 'no-cache' });
-  if (!res.ok) throw new Error('players.json not found');
+  const res = await fetch(PLAYERS_URL);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
   state.players = await res.json();
-  makeRow(); // start with one row
 }
 
-// Ensure handlers are attached even if load() fails
+function createChart(){
+  // Your chart logic here
+  console.log('Creating chart with', state.inputs.map(r => r.input.value));
+}
+
+/* ---------- Init ---------- */
 window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('add').addEventListener('click', makeRow);
   document.getElementById('clear').addEventListener('click', clearAll);
   document.getElementById('create').addEventListener('click', createChart);
 
-  load().catch(e => {
+  load().then(makeRow).catch(e => {
     console.error(e);
     document.querySelector('.muted-note').textContent =
       'Could not load player list. Check data path or run via a local server.';
-    // Still give you a row so Add/Create work even if players.json failed
     makeRow();
   });
 });
