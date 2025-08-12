@@ -169,13 +169,39 @@ function createChart(){
     return fetch(HIST_URL(player.id)).then(r => r.json()).then(hist => ({
       name,
       x: hist.map(h => h.date),
-      y: hist.map(h => h.rating)
+      y: hist.map(h => h.rating),
+      mode: 'lines+markers',
+      marker: { size: 6 },
+      line: { width: 2 }
     }));
   })).then(series => {
     series = series.filter(Boolean);
-    Plotly.newPlot('chart', series, { margin:{t:30} });
+
+    const layout = {
+      margin: { t: 30, r: 20, l: 50, b: 50 },
+      paper_bgcolor: '#0f1623',
+      plot_bgcolor: '#0f1623',
+      font: { color: '#ccc' },
+      xaxis: {
+        gridcolor: '#222',
+        zeroline: false
+      },
+      yaxis: {
+        title: 'Rating',
+        gridcolor: '#222',
+        zeroline: false
+      },
+      legend: {
+        x: 1,
+        y: 0,
+        bgcolor: 'rgba(0,0,0,0)'
+      }
+    };
+
+    Plotly.newPlot('chart', series, layout, { responsive: true });
   });
 }
+
 
 window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('add').addEventListener('click', makeRow);
