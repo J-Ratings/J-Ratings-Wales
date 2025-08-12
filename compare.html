@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Compare — J-Ratings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:14px 18px;border-bottom:1px solid var(--border)}
+    .row{display:flex;gap:8px;align-items:center;width:100%}
+    .row input[type="text"]{flex:1;min-width:220px;padding:10px;border-radius:8px;border:1px solid var(--border);background:#0f1623;color:var(--text)}
+    .btn{background:#0f1623;border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;cursor:pointer}
+    .btn:hover{background:rgba(255,255,255,0.05)}
+    .muted-note{color:var(--muted);font-size:.9rem}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="title">
+      <h1 class="site-title"><a href="index.html">J-Ratings</a></h1>
+      <span class="muted subtitle">Compare players</span>
+    </div>
+    <nav class="zones" aria-label="Zones">
+      <a href="zones/dyfed.html">Dyfed</a>
+      <a href="zones/east-glam.html">East Glamorgan</a>
+      <a href="zones/gwent.html">Gwent</a>
+      <a href="zones/north-wales.html">North Wales</a>
+      <a href="zones/west-wales.html">West Wales</a>
+      <a href="compare.html" class="active-zone">Compare</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="panel">
+    <h2 style="margin:0;padding:16px 18px;border-bottom:1px solid var(--border)">Compare</h2>
+
+    <div class="controls" id="controls">
+      <div id="rows" style="flex:1 1 600px"></div>
+      <div style="display:flex;gap:8px">
+        <button id="add" class="btn" type="button">Add player</button>
+        <button id="create" class="btn" type="button">Create</button>
+        <button id="clear" class="btn" type="button">Clear</button>
+      </div>
+      <div class="muted-note">Up to 6 players. Search by name, then Create.</div>
+    </div>
+
+    <div style="padding:16px">
+      <div id="chart" style="height:520px"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+const PLAYERS_URL = 'data/players.json';
+const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;
+const MAX_PLAYERS = 6;
+
+const state = {
+  players: [],           // loaded from players.json
+  inputs: []             // [{el,input,datalist}]
+};
+
+function makeRow() {
+  if (state.inputs.length >= MAX_PLAYERS) return;
+  const rows = document.getElementById('rows');
+
+  const wrap = document.createElement('div');
+  wrap.className = 'row';
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.placeholder = 'Search player…';
+  input.setAttribute('list', `dl-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+
+  const dl = document.createElement('datalist');
+  dl.id = input.getAttribute('list');
+
+  // fill datalist with all names (browser will filter as you type)
+  dl.innerHTML = state.players.map(p => `<option value="${p.name}">`).join('');
+
+  const remove = document.createElement('button');
+  remove.className = 'btn';
+  remove.type = 'button';
+  remove.textContent = 'Remove';
+  remove.addEventListener('click', () => {
+    rows.removeChild(wrap);
+    state.inputs = state.inputs.filter(r => r.el !== wrap);
+    document.getElementById('add').disabled = state.inputs.length >= MAX_PLAYERS;
+  });
+
+  wrap.appendChild(input);
+  wrap.appendChild(dl);
+  wrap.appendChild(remove);
+  rows.appendChild(wrap);
+
+  state.inputs.push({ el: wrap, input, datalist: dl });
+  document.getElementById('add').disabled = state.inputs.length >= MAX_PLAYERS;
+}
+
+function clearAll() {
+  const rows = document.getElementById('rows');
+  rows.innerHTML = '';
+  state.inputs = [];
+  document.getElementById('add').disabled = false;
+  document.getElementById('chart').innerHTML = '';
+}
+
+async function createChart() {
+  const names = state.inputs
+    .map(r => r.input.value.trim())
+    .filter(v => v.length);
+
+  if (!names.length) {
+    alert('Add at least one player.');
+    return;
+  }
+
+  // Resolve names to players (case-insensitive exact match)
+  const picks = [];
+  for (const name of names) {
+    const p = state.players.find(x => x.name.toLowerCase() === name.toLowerCase());
+    if (p) picks.push(p);
+  }
+  if (!picks.length) {
+    alert('No valid players selected.');
+    return;
+  }
+
+  const chart = document.getElementById('chart');
+  chart.innerHTML = 'Loading…';
+
+  // Load histories
+  const series = [];
+  await Promise.all(picks.map(async p => {
+    try {
+      const res = await fetch(HIST_URL(p.id), { cache: 'no-cache' });
+      if (!res.ok) return;
+      const hist = await res.json();
+      if (!Array.isArray(hist) || !hist.length) return;
+      series.push({
+        name: p.name,
+        x: hist.map(d => d.date),
+        y: hist.map(d => d.rating),
+        mode: 'lines+markers',
+        hovertemplate: '%{x}<br>%{y}<extra>' + p.name + '</extra>'
+      });
+    } catch { /* ignore */ }
+  }));
+
+  if (!series.length) {
+    chart.innerHTML = 'No history for the selected players.';
+    return;
+  }
+
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+  const cs = getComputedStyle(document.body);
+
+  Plotly.newPlot(chart, series, {
+    margin:{l:50,r:20,t:10,b:40},
+    xaxis:{type:'date', title:''},
+    yaxis:{title:'Rating'},
+    legend:{orientation:'h'},
+    paper_bgcolor: cs.backgroundColor,
+    plot_bgcolor: cs.backgroundColor,
+    font:{color: cs.color}
+  }, {
+    displayModeBar:false,
+    responsive:true,
+    staticPlot: isTouch
+  });
+}
+
+async function load() {
+  const res = await fetch(PLAYERS_URL, { cache: 'no-cache' });
+  if (!res.ok) throw new Error('players.json not found');
+  state.players = await res.json();
+  // start with one row
+  makeRow();
+}
+
+document.getElementById('add').addEventListener('click', makeRow);
+document.getElementById('clear').addEventListener('click', clearAll);
+document.getElementById('create').addEventListener('click', createChart);
+
+load().catch(e => {
+  document.getElementById('chart').innerHTML = 'Error loading players.';
+  console.error(e);
+});
+</script>
+</body>
+</html>
