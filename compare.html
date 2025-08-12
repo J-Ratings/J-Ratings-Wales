@@ -7,23 +7,21 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
-    .controls { display:flex; flex-direction:column; gap:8px; padding:14px 18px; border-bottom:1px solid var(--border) }
-    .row { display:flex; gap:8px; align-items:center; width:100%; }
-    .row input[type="text"] { flex:1; min-width:220px; padding:10px; border-radius:8px; border:1px solid var(--border); background:#0f1623; color:var(--text); }
-    .btn { background:#0f1623; border:1px solid var(--border); color:var(--text); padding:8px 12px; border-radius:6px; cursor:pointer; }
-    .btn:hover { background:rgba(255,255,255,0.05); }
-    .muted-note { color:var(--muted); font-size:.9rem; }
-
-    /* Autocomplete */
-    .suggest { position:relative; flex:1 }
-    .suggest-list {
-      position:absolute; left:0; right:0; top:100%;
-      max-height:220px; overflow:auto; margin-top:4px;
-      border:1px solid var(--border); background:#0f1623; border-radius:6px;
-      display:none; z-index:20;
+    .controls{display:flex;flex-direction:column;gap:8px;padding:14px 18px;border-bottom:1px solid var(--border)}
+    .row{display:flex;gap:8px;align-items:center;width:100%}
+    .row input[type="text"]{flex:1;min-width:220px;padding:10px;border-radius:8px;border:1px solid var(--border);background:#0f1623;color:var(--text)}
+    .btn{background:#0f1623;border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;cursor:pointer}
+    .btn:hover{background:rgba(255,255,255,0.05)}
+    .muted-note{color:var(--muted);font-size:.9rem}
+    .suggest{position:relative;flex:1}
+    .suggest-list{
+      position:absolute;left:0;right:0;top:100%;
+      max-height:220px;overflow:auto;margin-top:4px;
+      border:1px solid var(--border);background:#0f1623;border-radius:6px;
+      display:none;z-index:20
     }
-    .suggest-item { padding:8px 10px; cursor:pointer; }
-    .suggest-item:hover { background:rgba(255,255,255,.05); }
+    .suggest-item{padding:8px 10px;cursor:pointer}
+    .suggest-item:hover{background:rgba(255,255,255,.05)}
   </style>
 </head>
 <body>
@@ -48,18 +46,14 @@
   <section class="panel">
     <h2 style="margin:0;padding:16px 18px;border-bottom:1px solid var(--border)">Compare</h2>
 
-    <div class="controls" id="controls">
-      <div id="rows" style="flex:1 1 600px"></div>
+    <div class="controls">
+      <div id="rows"></div>
 
-      <!-- Big Add player button -->
-      <button id="add" class="btn" type="button" style="width:100%">Add player</button>
-
-      <!-- Create + Clear buttons -->
-      <div style="display:flex; gap:8px;">
+      <button id="add" class="btn" type="button">Add player</button>
+      <div style="display:flex;gap:8px">
         <button id="create" class="btn" type="button">Create</button>
         <button id="clear" class="btn" type="button">Clear</button>
       </div>
-
       <div class="muted-note">Up to 6 players. Start typing a name, pick a suggestion, then Create.</div>
     </div>
 
@@ -75,17 +69,14 @@ const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;
 const MAX_PLAYERS = 6;
 
 const state = {
-  players: [],   // [{id,name,zone,club,rating}]
-  inputs: []     // [{el,input}]
+  players: [],
+  inputs: []
 };
 
-/* ---------- Autocomplete ---------- */
 function attachAutocomplete(input){
   const wrap = document.createElement('div');
   wrap.className = 'suggest';
-
-  // Replace input in DOM with wrapped version
-  input.parentNode.replaceChild(wrap, input);
+  input.parentNode.insertBefore(wrap, input);
   wrap.appendChild(input);
 
   const list = document.createElement('div');
@@ -125,7 +116,6 @@ function attachAutocomplete(input){
   input.addEventListener('blur', () => setTimeout(() => { list.style.display='none'; }, 120));
 }
 
-/* ---------- Rows ---------- */
 function makeRow(){
   if (state.inputs.length >= MAX_PLAYERS) return;
   const rows = document.getElementById('rows');
@@ -137,6 +127,7 @@ function makeRow(){
   input.type = 'text';
   input.placeholder = 'Search player…';
   wrap.appendChild(input);
+  attachAutocomplete(input);
 
   const remove = document.createElement('button');
   remove.className = 'btn';
@@ -151,13 +142,13 @@ function makeRow(){
   wrap.appendChild(remove);
   rows.appendChild(wrap);
 
-  attachAutocomplete(input); // only after in DOM
   state.inputs.push({ el: wrap, input });
   document.getElementById('add').disabled = state.inputs.length >= MAX_PLAYERS;
 }
 
 function clearAll(){
-  document.getElementById('rows').innerHTML = '';
+  const rows = document.getElementById('rows');
+  rows.innerHTML = '';
   state.inputs = [];
   document.getElementById('add').disabled = false;
 }
@@ -169,11 +160,23 @@ async function load(){
 }
 
 function createChart(){
-  // Your chart logic here
-  console.log('Creating chart with', state.inputs.map(r => r.input.value));
+  const names = state.inputs.map(r => r.input.value.trim()).filter(Boolean);
+  if (!names.length) return alert('Please add at least one player');
+
+  Promise.all(names.map(name => {
+    const player = state.players.find(p => p.name === name);
+    if (!player) return null;
+    return fetch(HIST_URL(player.id)).then(r => r.json()).then(hist => ({
+      name,
+      x: hist.map(h => h.date),
+      y: hist.map(h => h.rating)
+    }));
+  })).then(series => {
+    series = series.filter(Boolean);
+    Plotly.newPlot('chart', series, { margin:{t:30} });
+  });
 }
 
-/* ---------- Init ---------- */
 window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('add').addEventListener('click', makeRow);
   document.getElementById('clear').addEventListener('click', clearAll);
