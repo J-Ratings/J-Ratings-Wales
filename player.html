@@ -56,8 +56,19 @@ console.log('HIST_URL =', HIST_URL);
       document.getElementById('pname').textContent = me.name;
       document.getElementById('kval').textContent = (me.k ?? '–');
 
-      const x = hist.map(d => d.date);
-      const y = hist.map(d => d.rating);
+document.getElementById('pname').textContent = me.name;
+
+const x = hist.map(d => d.date);
+const y = hist.map(d => d.rating);
+
+// Find peak rating
+const peak = Math.max(...y);
+
+// Update the badge to show "Peak = xxxx" before Live K
+document.querySelector('.badge').innerHTML =
+  `<span class="muted">Peak:</span> <strong>${peak}</strong> &nbsp;|&nbsp; ` +
+  `<span class="muted">Live K:</span> <strong>${me.k ?? '–'}</strong>`;
+
 
       const bg = getComputedStyle(document.body).backgroundColor;
       Plotly.newPlot('chart', [{
