@@ -7,15 +7,28 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
-    .player-head{display:flex;justify-content:space-between;align-items:flex-end;margin:12px 0}
-    .badge{border:1px solid var(--border);background:#0f1623;border-radius:8px;padding:6px 10px}
+    .player-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      margin:12px 0;
+      padding-right:12px;          /* space between badge and right edge */
+    }
+    .badge{
+      border:1px solid var(--border);
+      background:#0f1623;
+      border-radius:8px;
+      padding:6px 10px;
+      margin-right:4px;            /* tiny extra buffer */
+      white-space:nowrap;
+    }
   </style>
 </head>
 <body>
 <header>
   <div class="wrap">
     <div class="title">
-      <h1><a href="index.html" style="color:#8b949e;text-decoration:none"></a></h1>
+      <h1><a href="index.html" style="color:#8b949e;text-decoration:none">J-Ratings</a></h1>
     </div>
   </div>
 </header>
@@ -24,7 +37,11 @@
   <section class="panel">
     <div class="player-head">
       <h2 id="pname">Player</h2>
-      <div class="badge"><span class="muted">Live K:</span> <strong id="kval">–</strong></div>
+      <div class="badge">
+        <span class="muted">Peak:</span> <strong id="peak">–</strong>
+        &nbsp;|&nbsp;
+        <span class="muted">Live K:</span> <strong id="kval">–</strong>
+      </div>
     </div>
     <div id="chart" style="height:420px"></div>
   </section>
@@ -32,59 +49,71 @@
 
 <script>
   const params = new URLSearchParams(location.search);
-  const idRaw = params.get('id');                      
-  if (!idRaw) { document.getElementById('chart').innerHTML = 'Missing player id.'; throw new Error('no id'); }
+  const idRaw = params.get('id');
+  if (!idRaw) {
+    document.getElementById('chart').textContent = 'Missing player id.';
+    throw new Error('no id');
+  }
 
   const PLAYERS_URL = 'data/players.json';
   const HIST_URL    = `data/history/${encodeURIComponent(idRaw)}.json`;
-console.log('HIST_URL =', HIST_URL);
+
+  const kFromRating = r => (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
+
   async function load() {
     try {
       const [playersRes, histRes] = await Promise.all([
-        fetch(PLAYERS_URL, {cache:'no-cache'}),
-        fetch(HIST_URL, {cache:'no-cache'})
+        fetch(PLAYERS_URL, { cache:'no-cache' }),
+        fetch(HIST_URL,    { cache:'no-cache' })
       ]);
       if (!playersRes.ok) throw new Error('players.json not found');
-      if (!histRes.ok) throw new Error('history not found');
+      if (!histRes.ok)    throw new Error('history not found');
 
       const players = await playersRes.json();
-      const hist = await histRes.json();
+      const hist    = await histRes.json();
 
       const me = players.find(p => p.id === idRaw);
       if (!me) throw new Error('player id not in players.json');
 
+      // Title
       document.getElementById('pname').textContent = me.name;
-      document.getElementById('kval').textContent = (me.k ?? '–');
 
-document.getElementById('pname').textContent = me.name;
+      // Series
+      const x = hist.map(d => d.date);
+      const y = hist.map(d => Number(d.rating)).filter(Number.isFinite);
 
-const x = hist.map(d => d.date);
-const y = hist.map(d => d.rating);
+      // Peak and Live K
+      const peak  = y.length ? Math.round(Math.max(...y)) : '–';
+      const liveK = (typeof me?.k === 'number')
+        ? me.k
+        : (typeof me?.rating === 'number')
+          ? kFromRating(me.rating)
+          : kFromRating(y.length ? y[y.length - 1] : NaN);
 
-// Find peak rating
-const peak = Math.max(...y);
+      document.getElementById('peak').textContent = peak;
+      document.getElementById('kval').textContent = liveK;
 
-// Update the badge to show "Peak = xxxx" before Live K
-document.querySelector('.badge').innerHTML =
-  `<span class="muted">Peak:</span> <strong>${peak}</strong> &nbsp;|&nbsp; ` +
-  `<span class="muted">Live K:</span> <strong>${me.k ?? '–'}</strong>`;
-
-
+      // Chart (lines only)
       const bg = getComputedStyle(document.body).backgroundColor;
       Plotly.newPlot('chart', [{
         x, y, mode: 'lines',
-        hovertemplate: '%{x}<br>%{y}<extra></extra>'
+        hovertemplate: '%{x}<br>%{y}<extra></extra>',
+        line: { width: 2 }
       }], {
-        margin:{l:50,r:20,t:10,b:40},
-        xaxis:{type:'date', title:''},
-        yaxis:{title:'Rating'},
-        paper_bgcolor:bg, plot_bgcolor:bg, font:{color:getComputedStyle(document.body).color}
-      }, {displayModeBar:false, responsive:true});
+        margin:{ l:50, r:20, t:10, b:40 },
+        xaxis:{ type:'date', title:'' },
+        yaxis:{ title:'Rating' },
+        paper_bgcolor:bg,
+        plot_bgcolor:bg,
+        font:{ color:getComputedStyle(document.body).color }
+      }, { displayModeBar:false, responsive:true });
+
     } catch (e) {
-      document.getElementById('chart').innerHTML = 'No Games';
       console.error(e);
+      document.getElementById('chart').textContent = 'No Games';
     }
   }
+
   load();
 </script>
 </body>
