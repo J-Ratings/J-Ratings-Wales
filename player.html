@@ -61,7 +61,7 @@ console.log('HIST_URL =', HIST_URL);
 
       const bg = getComputedStyle(document.body).backgroundColor;
       Plotly.newPlot('chart', [{
-        x, y, mode: 'lines+markers',
+        x, y, mode: 'lines',
         hovertemplate: '%{x}<br>%{y}<extra></extra>'
       }], {
         margin:{l:50,r:20,t:10,b:40},
