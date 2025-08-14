@@ -12,7 +12,7 @@
       justify-content:space-between;
       align-items:flex-end;
       margin:12px 0;
-      padding-right:12px; /* space from right edge */
+      padding-right:12px;
     }
     .badge{
       border:1px solid var(--border);
@@ -23,8 +23,10 @@
       white-space:nowrap;
       display:flex;
       align-items:center;
-      gap:.5rem;
+      gap:.75rem;
     }
+    .badge .stack{ display:flex; flex-direction:column; gap:2px }
+    .badge .stack strong{ font-variant-numeric: tabular-nums }
     .btn-mini{
       background:#0f1623;
       border:1px solid var(--border);
@@ -52,12 +54,23 @@
     <div class="player-head">
       <h2 id="pname">Player</h2>
       <div class="badge">
-        <button id="toggle" class="btn-mini" type="button" title="Toggle WCU/Live">Show WCU</button>
-        <span class="muted">Live:</span> <strong id="live">–</strong>
-        <span class="muted">|</span>
-        <span class="muted">Peak:</span> <strong id="peak">–</strong>
-        <span class="muted">|</span>
-        <span class="muted">Live K:</span> <strong id="kval">–</strong>
+        <button id="toggle" class="btn-mini" type="button" title="Toggle WCU overlay">Show WCU</button>
+        <div class="stack">
+          <div id="stats-j">
+            <span class="muted">J Live:</span> <strong id="live-j">–</strong>
+            <span class="muted">|</span>
+            <span class="muted">Peak:</span> <strong id="peak-j">–</strong>
+            <span class="muted">|</span>
+            <span class="muted">K:</span> <strong id="kval-j">–</strong>
+          </div>
+          <div id="stats-wcu" style="display:none">
+            <span class="muted">WCU Live:</span> <strong id="live-wcu">–</strong>
+            <span class="muted">|</span>
+            <span class="muted">Peak:</span> <strong id="peak-wcu">–</strong>
+            <span class="muted">|</span>
+            <span class="muted">K:</span> <strong id="kval-wcu">–</strong>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -75,16 +88,16 @@
   }
 
   const PLAYERS_URL = 'data/players.json';
-  const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;       // J-Ratings (live)
-  const HIST_WCU    = id => `data/history/${encodeURIComponent(id)}_wcu.json`;   // WCU "New"
+  const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;       // J-Ratings series
+  const HIST_WCU    = id => `data/history/${encodeURIComponent(id)}_wcu.json`;   // WCU series (site "New")
 
-  function kFromRating(r){ return (r >= 2200 ? 10 : r >= 1800 ? 20 : 30); }
+  const kFromRating = r => (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
 
   // ---- State --------------------------------------------------------------
   let me = null;
-  let seriesLive = null;
-  let seriesWCU  = null;
-  let showWCU    = false;   // default = J only
+  let seriesLive = null; // J
+  let seriesWCU  = null; // WCU
+  let showWCU    = false; // default: J only
 
   // ---- Rendering ----------------------------------------------------------
   function makeTrace(series, name){
@@ -92,7 +105,7 @@
       x: series.x,
       y: series.y,
       mode: 'lines',
-      line: { width: 2, shape: 'hv' }, // step line: flat between points
+      line: { width: 2, shape: 'hv' }, // step line: flat between games
       name,
       hovertemplate: '%{x}<br>%{y}<extra>' + name + '</extra>'
     };
@@ -100,7 +113,6 @@
 
   function draw(){
     const bg = getComputedStyle(document.body).backgroundColor;
-
     const traces = [ makeTrace(seriesLive, 'J-Ratings') ];
     if (showWCU && seriesWCU) traces.push(makeTrace(seriesWCU, 'WCU'));
 
@@ -115,20 +127,33 @@
     }, { displayModeBar:false, responsive:true });
   }
 
+  function computeMetrics(series){
+    const y = series?.y ?? [];
+    const live = y.length ? Math.round(y[y.length - 1]) : null;
+    const peak = y.length ? Math.round(Math.max(...y)) : null;
+    const kval = Number.isFinite(live) ? kFromRating(live) : null;
+    return { live, peak, kval };
+  }
+
   function refreshBadge(){
-    // Live/Peak and K are based on J-Ratings (as requested)
-    const y = seriesLive?.y ?? [];
-    const liveVal = y.length ? Math.round(y[y.length - 1]) : '–';
-    const peakVal = y.length ? Math.round(Math.max(...y)) : '–';
+    // J line always shown in badge
+    const j = computeMetrics(seriesLive);
+    document.getElementById('live-j').textContent = j.live ?? '–';
+    document.getElementById('peak-j').textContent = j.peak ?? '–';
+    const kvalJ = (typeof me?.k === 'number') ? me.k : (j.kval ?? '–');
+    document.getElementById('kval-j').textContent = kvalJ;
 
-    const liveForK = y.length ? y[y.length - 1] : NaN;
-    const kVal = (typeof me?.k === 'number') ? me.k
-              : (typeof me?.rating === 'number') ? kFromRating(me.rating)
-              : kFromRating(liveForK);
-
-    document.getElementById('live').textContent = liveVal;
-    document.getElementById('peak').textContent = peakVal;
-    document.getElementById('kval').textContent = kVal;
+    // WCU row appears only when overlay is visible
+    const wcuRow = document.getElementById('stats-wcu');
+    if (showWCU && seriesWCU) {
+      const w = computeMetrics(seriesWCU);
+      document.getElementById('live-wcu').textContent = w.live ?? '–';
+      document.getElementById('peak-wcu').textContent = w.peak ?? '–';
+      document.getElementById('kval-wcu').textContent = w.kval ?? '–';
+      wcuRow.style.display = '';
+    } else {
+      wcuRow.style.display = 'none';
+    }
 
     document.getElementById('toggle').textContent = showWCU ? 'Hide WCU' : 'Show WCU';
   }
@@ -149,6 +174,7 @@
       if (!me) throw new Error('player id not in players.json');
       document.getElementById('pname').textContent = me.name;
 
+      // Pairwise filtering to keep x/y aligned
       const livePairs = (await liveRes.json())
         .map(d => ({ x: d.date, y: Number(d.rating) }))
         .filter(p => Number.isFinite(p.y));
@@ -165,8 +191,8 @@
         document.getElementById('toggle').textContent = 'WCU N/A';
       }
 
-      draw();          // J only
-      refreshBadge();  // badge from J
+      draw();         // J only to start
+      refreshBadge(); // badge from J
 
     } catch (e) {
       console.error(e);
@@ -177,9 +203,9 @@
   // ---- Events -------------------------------------------------------------
   document.addEventListener('click', e => {
     if (e.target.id === 'toggle' && !e.target.disabled) {
-      showWCU = !showWCU;   // toggle overlay
+      showWCU = !showWCU; // overlay on/off
       draw();
-      refreshBadge();       // badge still reflects J
+      refreshBadge();
     }
   });
 
