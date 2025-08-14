@@ -25,8 +25,17 @@
       align-items:center;
       gap:.75rem;
     }
-    .badge .stack{ display:flex; flex-direction:column; gap:2px }
-    .badge .stack strong{ font-variant-numeric: tabular-nums }
+.badge .stack {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  column-gap: .35rem;
+}
+.badge .stack div {
+  display: contents;
+}
+.badge strong {
+  font-variant-numeric: tabular-nums;
+}
     .btn-mini{
       background:#0f1623;
       border:1px solid var(--border);
@@ -55,21 +64,18 @@
       <h2 id="pname">Player</h2>
       <div class="badge">
         <button id="toggle" class="btn-mini" type="button" title="Toggle WCU overlay">Show WCU</button>
-        <div class="stack">
-          <div id="stats-j">
-            <span class="muted">J Live:</span> <strong id="live-j">–</strong>
-            <span class="muted">|</span>
-            <span class="muted">Peak:</span> <strong id="peak-j">–</strong>
-            <span class="muted">|</span>
-            <span class="muted">K:</span> <strong id="kval-j">–</strong>
-          </div>
-          <div id="stats-wcu" style="display:none">
-            <span class="muted">WCU Live:</span> <strong id="live-wcu">–</strong>
-            <span class="muted">|</span>
-            <span class="muted">Peak:</span> <strong id="peak-wcu">–</strong>
-            <span class="muted">|</span>
-            <span class="muted">K:</span> <strong id="kval-wcu">–</strong>
-          </div>
+<div class="stack">
+  <div id="stats-j">
+    <span class="muted">J Live:</span> <strong id="live-j">–</strong>
+    <span class="muted">Peak:</span> <strong id="peak-j">–</strong>
+    <span class="muted">K:</span> <strong id="kval-j">–</strong>
+  </div>
+  <div id="stats-wcu" style="display:none">
+    <span class="muted">WCU Live:</span> <strong id="live-wcu">–</strong>
+    <span class="muted">Peak:</span> <strong id="peak-wcu">–</strong>
+    <span class="muted">K:</span> <strong id="kval-wcu">–</strong>
+  </div>
+</div>
         </div>
       </div>
     </div>
