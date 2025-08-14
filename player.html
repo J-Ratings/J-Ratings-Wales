@@ -12,7 +12,7 @@
       justify-content:space-between;
       align-items:flex-end;
       margin:12px 0;
-      padding-right:12px;          /* space from right edge */
+      padding-right:12px; /* space from right edge */
     }
     .badge{
       border:1px solid var(--border);
@@ -21,7 +21,21 @@
       padding:6px 10px;
       margin-right:4px;
       white-space:nowrap;
+      display:flex;
+      align-items:center;
+      gap:.5rem;
     }
+    .btn-mini{
+      background:#0f1623;
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:4px 8px;
+      border-radius:6px;
+      cursor:pointer;
+      font-size:.9rem;
+    }
+    .btn-mini[disabled]{opacity:.5; cursor:default}
+    .btn-mini:hover:not([disabled]){background:rgba(255,255,255,.05)}
   </style>
 </head>
 <body>
@@ -38,18 +52,21 @@
     <div class="player-head">
       <h2 id="pname">Player</h2>
       <div class="badge">
+        <button id="toggle" class="btn-mini" type="button" title="Toggle WCU/Live">Show WCU</button>
         <span class="muted">Live:</span> <strong id="live">–</strong>
-        &nbsp;|&nbsp;
+        <span class="muted">|</span>
         <span class="muted">Peak:</span> <strong id="peak">–</strong>
-        &nbsp;|&nbsp;
+        <span class="muted">|</span>
         <span class="muted">Live K:</span> <strong id="kval">–</strong>
       </div>
     </div>
+
     <div id="chart" style="height:420px"></div>
   </section>
 </main>
 
 <script>
+  // ---- Inputs & helpers ---------------------------------------------------
   const params = new URLSearchParams(location.search);
   const idRaw = params.get('id');
   if (!idRaw) {
@@ -58,61 +75,109 @@
   }
 
   const PLAYERS_URL = 'data/players.json';
-  const HIST_URL    = `data/history/${encodeURIComponent(idRaw)}.json`;
+  const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;       // Live (your series)
+  const HIST_WCU    = id => `data/history/${encodeURIComponent(id)}_wcu.json`;   // WCU displayed series
 
-  const kFromRating = r => (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
+  function kFromRating(r){
+    return (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
+  }
 
-  async function load() {
+  // ---- State --------------------------------------------------------------
+  let me = null;
+  let seriesLive = null;
+  let seriesWCU  = null;
+  let showingWCU = false;
+
+  // ---- Rendering ----------------------------------------------------------
+  function draw(series){
+    const bg = getComputedStyle(document.body).backgroundColor;
+    Plotly.newPlot('chart', [{
+      x: series.x,
+      y: series.y,
+      mode: 'lines',
+      line: { width: 2 },
+      hovertemplate: '%{x}<br>%{y}<extra></extra>'
+    }], {
+      margin:{ l:50, r:20, t:10, b:40 },
+      xaxis:{ type:'date' },
+      yaxis:{ title:'Rating' },
+      paper_bgcolor:bg,
+      plot_bgcolor:bg,
+      font:{ color:getComputedStyle(document.body).color }
+    }, { displayModeBar:false, responsive:true });
+  }
+
+  function refreshBadge(){
+    const y = (showingWCU && seriesWCU) ? seriesWCU.y : seriesLive.y;
+    const liveVal = y.length ? Math.round(y[y.length - 1]) : '–';
+    const peakVal = y.length ? Math.round(Math.max(...y)) : '–';
+
+    // Live K is based on the Live rating (not the WCU series)
+    const liveForK = seriesLive.y.length ? seriesLive.y[seriesLive.y.length - 1] : NaN;
+    const kVal = (typeof me?.k === 'number')
+      ? me.k
+      : (typeof me?.rating === 'number')
+        ? kFromRating(me.rating)
+        : kFromRating(liveForK);
+
+    document.getElementById('live').textContent = liveVal;
+    document.getElementById('peak').textContent = peakVal;
+    document.getElementById('kval').textContent = kVal;
+  }
+
+  // ---- Data loading -------------------------------------------------------
+  async function load(){
     try {
-      const [playersRes, histRes] = await Promise.all([
+      const [playersRes, liveRes, wcuRes] = await Promise.all([
         fetch(PLAYERS_URL, { cache:'no-cache' }),
-        fetch(HIST_URL,    { cache:'no-cache' })
+        fetch(HIST_URL(idRaw), { cache:'no-cache' }),
+        fetch(HIST_WCU(idRaw), { cache:'no-cache' }).catch(() => null)
       ]);
       if (!playersRes.ok) throw new Error('players.json not found');
-      if (!histRes.ok)    throw new Error('history not found');
+      if (!liveRes.ok)    throw new Error('live history not found');
 
       const players = await playersRes.json();
-      const hist    = await histRes.json();
-
-      const me = players.find(p => p.id === idRaw);
+      me = players.find(p => p.id === idRaw);
       if (!me) throw new Error('player id not in players.json');
 
       document.getElementById('pname').textContent = me.name;
 
-      const x = hist.map(d => d.date);
-      const y = hist.map(d => Number(d.rating)).filter(Number.isFinite);
+      const live = await liveRes.json();
+      seriesLive = {
+        x: live.map(d => d.date),
+        y: live.map(d => Number(d.rating)).filter(Number.isFinite)
+      };
 
-      const live  = y.length ? Math.round(y[y.length - 1]) : '–';
-      const peak  = y.length ? Math.round(Math.max(...y)) : '–';
-      const liveK = (typeof me?.k === 'number')
-        ? me.k
-        : (typeof me?.rating === 'number')
-          ? kFromRating(me.rating)
-          : kFromRating(y.length ? y[y.length - 1] : NaN);
+      if (wcuRes && wcuRes.ok) {
+        const wcu = await wcuRes.json();
+        seriesWCU = {
+          x: wcu.map(d => d.date),
+          y: wcu.map(d => Number(d.rating)).filter(Number.isFinite)
+        };
+        document.getElementById('toggle').disabled = false;
+      } else {
+        document.getElementById('toggle').disabled = true;
+        document.getElementById('toggle').textContent = 'WCU N/A';
+      }
 
-      document.getElementById('live').textContent = live;
-      document.getElementById('peak').textContent = peak;
-      document.getElementById('kval').textContent = liveK;
-
-      const bg = getComputedStyle(document.body).backgroundColor;
-      Plotly.newPlot('chart', [{
-        x, y, mode: 'lines',
-        line: { width: 2 },
-        hovertemplate: '%{x}<br>%{y}<extra></extra>'
-      }], {
-        margin:{ l:50, r:20, t:10, b:40 },
-        xaxis:{ type:'date', title:'' },
-        yaxis:{ title:'Rating' },
-        paper_bgcolor:bg,
-        plot_bgcolor:bg,
-        font:{ color:getComputedStyle(document.body).color }
-      }, { displayModeBar:false, responsive:true });
+      draw(seriesLive);
+      refreshBadge();
 
     } catch (e) {
       console.error(e);
       document.getElementById('chart').textContent = 'No Games';
     }
   }
+
+  // ---- Events -------------------------------------------------------------
+  document.addEventListener('click', e => {
+    if (e.target.id === 'toggle' && !e.target.disabled) {
+      showingWCU = !showingWCU;
+      e.target.textContent = showingWCU ? 'Show Live' : 'Show WCU';
+      draw(showingWCU && seriesWCU ? seriesWCU : seriesLive);
+      refreshBadge();
+    }
+  });
 
   load();
 </script>
