@@ -75,54 +75,62 @@
   }
 
   const PLAYERS_URL = 'data/players.json';
-  const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;       // Live (your series)
-  const HIST_WCU    = id => `data/history/${encodeURIComponent(id)}_wcu.json`;   // WCU displayed series
+  const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;       // J-Ratings (live)
+  const HIST_WCU    = id => `data/history/${encodeURIComponent(id)}_wcu.json`;   // WCU "New"
 
-  function kFromRating(r){
-    return (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
-  }
+  function kFromRating(r){ return (r >= 2200 ? 10 : r >= 1800 ? 20 : 30); }
 
   // ---- State --------------------------------------------------------------
   let me = null;
   let seriesLive = null;
   let seriesWCU  = null;
-  let showingWCU = false;
+  let showWCU    = false;   // default = J only
 
   // ---- Rendering ----------------------------------------------------------
-  function draw(series){
-    const bg = getComputedStyle(document.body).backgroundColor;
-    Plotly.newPlot('chart', [{
+  function makeTrace(series, name){
+    return {
       x: series.x,
       y: series.y,
       mode: 'lines',
-      line: { width: 2 },
-      hovertemplate: '%{x}<br>%{y}<extra></extra>'
-    }], {
+      line: { width: 2, shape: 'hv' }, // step line: flat between points
+      name,
+      hovertemplate: '%{x}<br>%{y}<extra>' + name + '</extra>'
+    };
+  }
+
+  function draw(){
+    const bg = getComputedStyle(document.body).backgroundColor;
+
+    const traces = [ makeTrace(seriesLive, 'J-Ratings') ];
+    if (showWCU && seriesWCU) traces.push(makeTrace(seriesWCU, 'WCU'));
+
+    Plotly.newPlot('chart', traces, {
       margin:{ l:50, r:20, t:10, b:40 },
       xaxis:{ type:'date' },
       yaxis:{ title:'Rating' },
       paper_bgcolor:bg,
       plot_bgcolor:bg,
-      font:{ color:getComputedStyle(document.body).color }
+      font:{ color:getComputedStyle(document.body).color },
+      legend:{ orientation:'h', x:0, y:1.1 }
     }, { displayModeBar:false, responsive:true });
   }
 
   function refreshBadge(){
-    const y = (showingWCU && seriesWCU) ? seriesWCU.y : seriesLive.y;
+    // Live/Peak and K are based on J-Ratings (as requested)
+    const y = seriesLive?.y ?? [];
     const liveVal = y.length ? Math.round(y[y.length - 1]) : '–';
     const peakVal = y.length ? Math.round(Math.max(...y)) : '–';
 
-    // Live K is based on the Live rating (not the WCU series)
-    const liveForK = seriesLive.y.length ? seriesLive.y[seriesLive.y.length - 1] : NaN;
-    const kVal = (typeof me?.k === 'number')
-      ? me.k
-      : (typeof me?.rating === 'number')
-        ? kFromRating(me.rating)
-        : kFromRating(liveForK);
+    const liveForK = y.length ? y[y.length - 1] : NaN;
+    const kVal = (typeof me?.k === 'number') ? me.k
+              : (typeof me?.rating === 'number') ? kFromRating(me.rating)
+              : kFromRating(liveForK);
 
     document.getElementById('live').textContent = liveVal;
     document.getElementById('peak').textContent = peakVal;
     document.getElementById('kval').textContent = kVal;
+
+    document.getElementById('toggle').textContent = showWCU ? 'Hide WCU' : 'Show WCU';
   }
 
   // ---- Data loading -------------------------------------------------------
@@ -139,29 +147,26 @@
       const players = await playersRes.json();
       me = players.find(p => p.id === idRaw);
       if (!me) throw new Error('player id not in players.json');
-
       document.getElementById('pname').textContent = me.name;
 
-      const live = await liveRes.json();
-      seriesLive = {
-        x: live.map(d => d.date),
-        y: live.map(d => Number(d.rating)).filter(Number.isFinite)
-      };
+      const livePairs = (await liveRes.json())
+        .map(d => ({ x: d.date, y: Number(d.rating) }))
+        .filter(p => Number.isFinite(p.y));
+      seriesLive = { x: livePairs.map(p => p.x), y: livePairs.map(p => p.y) };
 
       if (wcuRes && wcuRes.ok) {
-        const wcu = await wcuRes.json();
-        seriesWCU = {
-          x: wcu.map(d => d.date),
-          y: wcu.map(d => Number(d.rating)).filter(Number.isFinite)
-        };
+        const wcuPairs = (await wcuRes.json())
+          .map(d => ({ x: d.date, y: Number(d.rating) }))
+          .filter(p => Number.isFinite(p.y));
+        seriesWCU = { x: wcuPairs.map(p => p.x), y: wcuPairs.map(p => p.y) };
         document.getElementById('toggle').disabled = false;
       } else {
         document.getElementById('toggle').disabled = true;
         document.getElementById('toggle').textContent = 'WCU N/A';
       }
 
-      draw(seriesLive);
-      refreshBadge();
+      draw();          // J only
+      refreshBadge();  // badge from J
 
     } catch (e) {
       console.error(e);
@@ -172,10 +177,9 @@
   // ---- Events -------------------------------------------------------------
   document.addEventListener('click', e => {
     if (e.target.id === 'toggle' && !e.target.disabled) {
-      showingWCU = !showingWCU;
-      e.target.textContent = showingWCU ? 'Show Live' : 'Show WCU';
-      draw(showingWCU && seriesWCU ? seriesWCU : seriesLive);
-      refreshBadge();
+      showWCU = !showWCU;   // toggle overlay
+      draw();
+      refreshBadge();       // badge still reflects J
     }
   });
 
