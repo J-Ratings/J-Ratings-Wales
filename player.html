@@ -25,17 +25,17 @@
       align-items:center;
       gap:.75rem;
     }
-.badge .stack {
-  display: grid;
-  grid-template-columns: auto auto auto auto auto auto;
-  column-gap: .35rem;
-}
-.badge .stack div {
-  display: contents;
-}
-.badge strong {
-  font-variant-numeric: tabular-nums;
-}
+    .badge .stack {
+      display: grid;
+      grid-template-columns: auto auto auto auto auto auto;
+      column-gap: .35rem;
+    }
+    .badge .stack div {
+      display: contents;
+    }
+    .badge strong {
+      font-variant-numeric: tabular-nums;
+    }
     .btn-mini{
       background:#0f1623;
       border:1px solid var(--border);
@@ -47,6 +47,10 @@
     }
     .btn-mini[disabled]{opacity:.5; cursor:default}
     .btn-mini:hover:not([disabled]){background:rgba(255,255,255,.05)}
+    #chart{
+      height:420px;
+      touch-action: pan-y; /* Allow vertical scroll, not pinch zoom */
+    }
   </style>
 </head>
 <body>
@@ -64,23 +68,22 @@
       <h2 id="pname">Player</h2>
       <div class="badge">
         <button id="toggle" class="btn-mini" type="button" title="Toggle WCU overlay">Show WCU</button>
-<div class="stack">
-  <div id="stats-j">
-    <span class="muted">J Live:</span> <strong id="live-j">–</strong>
-    <span class="muted">Peak:</span> <strong id="peak-j">–</strong>
-    <span class="muted">K:</span> <strong id="kval-j">–</strong>
-  </div>
-  <div id="stats-wcu" style="display:none">
-    <span class="muted">WCU Live:</span> <strong id="live-wcu">–</strong>
-    <span class="muted">Peak:</span> <strong id="peak-wcu">–</strong>
-    <span class="muted">K:</span> <strong id="kval-wcu">–</strong>
-  </div>
-</div>
+        <div class="stack">
+          <div id="stats-j">
+            <span class="muted">J Live:</span> <strong id="live-j">–</strong>
+            <span class="muted">Peak:</span> <strong id="peak-j">–</strong>
+            <span class="muted">K:</span> <strong id="kval-j">–</strong>
+          </div>
+          <div id="stats-wcu" style="display:none">
+            <span class="muted">WCU Live:</span> <strong id="live-wcu">–</strong>
+            <span class="muted">Peak:</span> <strong id="peak-wcu">–</strong>
+            <span class="muted">K:</span> <strong id="kval-wcu">–</strong>
+          </div>
         </div>
       </div>
     </div>
 
-    <div id="chart" style="height:420px"></div>
+    <div id="chart"></div>
   </section>
 </main>
 
@@ -104,6 +107,7 @@
   let seriesLive = null; // J
   let seriesWCU  = null; // WCU
   let showWCU    = false; // default: J only
+  const IS_TOUCH = window.matchMedia('(pointer: coarse)').matches;
 
   // ---- Rendering ----------------------------------------------------------
   function makeTrace(series, name){
@@ -130,7 +134,12 @@
       plot_bgcolor:bg,
       font:{ color:getComputedStyle(document.body).color },
       legend:{ orientation:'h', x:0, y:1.1 }
-    }, { displayModeBar:false, responsive:true });
+    }, { 
+      staticPlot: IS_TOUCH,  // static on touch devices
+      scrollZoom: false,
+      displayModeBar:false, 
+      responsive:true 
+    });
   }
 
   function computeMetrics(series){
@@ -180,7 +189,6 @@
       if (!me) throw new Error('player id not in players.json');
       document.getElementById('pname').textContent = me.name;
 
-      // Pairwise filtering to keep x/y aligned
       const livePairs = (await liveRes.json())
         .map(d => ({ x: d.date, y: Number(d.rating) }))
         .filter(p => Number.isFinite(p.y));
