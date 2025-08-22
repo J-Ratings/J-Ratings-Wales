@@ -121,10 +121,30 @@
     };
   }
 
+  // Compute rounded min/max and build “major” grid line shapes every 100
+  function majorGridShapes(ymin, ymax){
+    const shapes = [];
+    for (let v = ymin; v <= ymax; v += 100) {
+      shapes.push({
+        type: 'line',
+        xref: 'paper', x0: 0, x1: 1,
+        y0: v, y1: v,
+        line: { width: 2, color: 'rgba(128,128,128,0.35)' },
+        layer: 'below'
+      });
+    }
+    return shapes;
+  }
+
   function draw(){
     const bg = getComputedStyle(document.body).backgroundColor;
     const traces = [ makeTrace(seriesLive, 'J-Ratings') ];
     if (showWCU && seriesWCU) traces.push(makeTrace(seriesWCU, 'WCU'));
+
+    // Collate Y across visible series to set sensible bounds for major lines
+    const ys = [...seriesLive.y, ...(showWCU && seriesWCU ? seriesWCU.y : [])];
+    const ymin = Math.floor(Math.min(...ys) / 100) * 100;
+    const ymax = Math.ceil(Math.max(...ys) / 100) * 100;
 
     Plotly.newPlot('chart', traces, {
       margin:{ l:50, r:20, t:10, b:40 },
@@ -133,12 +153,14 @@
       paper_bgcolor:bg,
       plot_bgcolor:bg,
       font:{ color:getComputedStyle(document.body).color },
-      legend:{ orientation:'h', x:0, y:1.1 }
-    }, { 
+      legend:{ orientation:'h', x:0, y:1.1 },
+      // thicker horizontal lines every 100 rating points
+      shapes: majorGridShapes(ymin, ymax)
+    }, {
       staticPlot: IS_TOUCH,  // static on touch devices
       scrollZoom: false,
-      displayModeBar:false, 
-      responsive:true 
+      displayModeBar:false,
+      responsive:true
     });
   }
 
@@ -218,7 +240,7 @@
   document.addEventListener('click', e => {
     if (e.target.id === 'toggle' && !e.target.disabled) {
       showWCU = !showWCU; // overlay on/off
-      draw();
+      draw();             // redraw so major lines reflect current y-range
       refreshBadge();
     }
   });
