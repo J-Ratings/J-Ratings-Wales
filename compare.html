@@ -159,6 +159,21 @@ async function load(){
   state.players = await res.json();
 }
 
+// --- helper to make thicker horizontal lines every 100 rating points -------
+function majorGridShapes(ymin, ymax){
+  const shapes = [];
+  for (let v = ymin; v <= ymax; v += 100){
+    shapes.push({
+      type: 'line',
+      xref: 'paper', x0: 0, x1: 1,
+      y0: v, y1: v,
+      line: { width: 2, color: 'rgba(128,128,128,0.35)' },
+      layer: 'below'
+    });
+  }
+  return shapes;
+}
+
 function createChart(){
   const names = state.inputs.map(r => r.input.value.trim()).filter(Boolean);
   if (!names.length) return alert('Please add at least one player');
@@ -176,6 +191,12 @@ function createChart(){
     }));
   })).then(series => {
     series = series.filter(Boolean);
+    if (!series.length) return;
+
+    // compute bounds for major lines from all displayed series
+    const allY = series.flatMap(s => s.y).filter(Number.isFinite);
+    const ymin = Math.floor(Math.min(...allY) / 100) * 100;
+    const ymax = Math.ceil(Math.max(...allY) / 100) * 100;
 
     const layout = {
       margin: { t: 30, r: 20, l: 50, b: 50 },
@@ -195,13 +216,14 @@ function createChart(){
         x: 1,
         y: 0,
         bgcolor: 'rgba(0,0,0,0)'
-      }
+      },
+      // thicker horizontal lines every 100
+      shapes: majorGridShapes(ymin, ymax)
     };
 
     Plotly.newPlot('chart', series, layout, { responsive: true });
   });
 }
-
 
 window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('add').addEventListener('click', makeRow);
