@@ -51,6 +51,10 @@
       height:420px;
       touch-action: pan-y; /* Allow vertical scroll, not pinch zoom */
     }
+
+    /* Label colours to match line colours */
+    #stats-j   .muted { color:#1f77b4; } /* J-Ratings blue   */
+    #stats-wcu .muted { color:#ff7f0e; } /* WCU orange       */
   </style>
 </head>
 <body>
@@ -102,6 +106,9 @@
 
   const kFromRating = r => (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
 
+  // Colours kept in one place so traces and labels always match
+  const COLORS = { J: '#1f77b4', WCU: '#ff7f0e' };
+
   // ---- State --------------------------------------------------------------
   let me = null;
   let seriesLive = null; // J
@@ -110,12 +117,12 @@
   const IS_TOUCH = window.matchMedia('(pointer: coarse)').matches;
 
   // ---- Rendering ----------------------------------------------------------
-  function makeTrace(series, name){
+  function makeTrace(series, name, colour){
     return {
       x: series.x,
       y: series.y,
       mode: 'lines',
-      line: { width: 2, shape: 'hv' }, // step line: flat between games
+      line: { width: 2, shape: 'hv', color: colour }, // step line, fixed colour
       name,
       hovertemplate: '%{x}<br>%{y}<extra>' + name + '</extra>'
     };
@@ -138,8 +145,8 @@
 
   function draw(){
     const bg = getComputedStyle(document.body).backgroundColor;
-    const traces = [ makeTrace(seriesLive, 'J-Ratings') ];
-    if (showWCU && seriesWCU) traces.push(makeTrace(seriesWCU, 'WCU'));
+    const traces = [ makeTrace(seriesLive, 'J-Ratings', COLORS.J) ];
+    if (showWCU && seriesWCU) traces.push(makeTrace(seriesWCU, 'WCU', COLORS.WCU));
 
     // Collate Y across visible series to set sensible bounds for major lines
     const ys = [...seriesLive.y, ...(showWCU && seriesWCU ? seriesWCU.y : [])];
