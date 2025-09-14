@@ -49,12 +49,38 @@
     .btn-mini:hover:not([disabled]){background:rgba(255,255,255,.05)}
     #chart{
       height:420px;
-      touch-action: pan-y; /* Allow vertical scroll, not pinch zoom */
+      touch-action: pan-y;
     }
 
     /* Label colours to match line colours */
-#stats-j   .muted { color:#1f77b4; font-weight:bold; } /* J-Ratings blue   */
-#stats-wcu .muted { color:#ff7f0e; font-weight:bold; } /* WCU orange       */
+    #stats-j   .muted { color:#1f77b4; font-weight:bold; }
+    #stats-wcu .muted { color:#ff7f0e; font-weight:bold; }
+
+    /* ---- Games table styles ---- */
+    #gamesWrap { max-height: 520px; overflow:auto; margin-top:12px; }
+    table.games {
+      width:100%; border-collapse:separate; border-spacing:0; font-size:14px;
+    }
+    table.games th, table.games td{
+      padding:6px 8px; border-bottom:1px solid #2b2f36; text-align:center;
+      vertical-align:middle; white-space:nowrap;
+    }
+    table.games th{ position:sticky; top:0; z-index:2;
+      background-color: var(--panel-bg, #1a1a1a); }
+    table.games th:nth-child(1), table.games td:nth-child(1),
+    table.games th:nth-child(3), table.games td:nth-child(3),
+    table.games th:nth-child(5), table.games td:nth-child(5),
+    table.games th:nth-child(6), table.games td:nth-child(6){
+      border-right:3px double rgba(128,128,128,0.6);
+    }
+    .result{ font-weight:700; }
+    .result.win  { color:#2e7d32; }
+    .result.draw { color:#ff8f00; }
+    .result.loss { color:#c62828; }
+    .delta{ font-weight:700; }
+    .delta.pos  { color:#2e7d32; }
+    .delta.neg  { color:#c62828; }
+    .delta.zero { color:#ff8f00; }
   </style>
 </head>
 <body>
@@ -88,6 +114,12 @@
     </div>
 
     <div id="chart"></div>
+
+    <!-- Games table -->
+    <h3 style="margin-top:18px;">Games</h3>
+    <div id="gamesWrap">
+      <table id="games" class="games"></table>
+    </div>
   </section>
 </main>
 
@@ -101,34 +133,30 @@
   }
 
   const PLAYERS_URL = 'data/players.json';
-  const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;       // J-Ratings series
-  const HIST_WCU    = id => `data/history/${encodeURIComponent(id)}_wcu.json`;   // WCU series (site "New")
+  const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;
+  const HIST_WCU    = id => `data/history/${encodeURIComponent(id)}_wcu.json`;
+  const GAMES_URL   = id => `data/games/${encodeURIComponent(id)}.json`;
 
   const kFromRating = r => (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
-
-  // Colours kept in one place so traces and labels always match
   const COLORS = { J: '#1f77b4', WCU: '#ff7f0e' };
 
-  // ---- State --------------------------------------------------------------
   let me = null;
-  let seriesLive = null; // J
-  let seriesWCU  = null; // WCU
-  let showWCU    = false; // default: J only
+  let seriesLive = null;
+  let seriesWCU  = null;
+  let showWCU    = false;
   const IS_TOUCH = window.matchMedia('(pointer: coarse)').matches;
 
-  // ---- Rendering ----------------------------------------------------------
+  // ---- Rendering chart ----------------------------------------------------
   function makeTrace(series, name, colour){
     return {
       x: series.x,
       y: series.y,
       mode: 'lines',
-      line: { width: 2, shape: 'hv', color: colour }, // step line, fixed colour
+      line: { width: 2, shape: 'hv', color: colour },
       name,
       hovertemplate: '%{x}<br>%{y}<extra>' + name + '</extra>'
     };
   }
-
-  // Compute rounded min/max and build “major” grid line shapes every 100
   function majorGridShapes(ymin, ymax){
     const shapes = [];
     for (let v = ymin; v <= ymax; v += 100) {
@@ -142,13 +170,11 @@
     }
     return shapes;
   }
-
   function draw(){
     const bg = getComputedStyle(document.body).backgroundColor;
     const traces = [ makeTrace(seriesLive, 'J-Ratings', COLORS.J) ];
     if (showWCU && seriesWCU) traces.push(makeTrace(seriesWCU, 'WCU', COLORS.WCU));
 
-    // Collate Y across visible series to set sensible bounds for major lines
     const ys = [...seriesLive.y, ...(showWCU && seriesWCU ? seriesWCU.y : [])];
     const ymin = Math.floor(Math.min(...ys) / 100) * 100;
     const ymax = Math.ceil(Math.max(...ys) / 100) * 100;
@@ -161,16 +187,14 @@
       plot_bgcolor:bg,
       font:{ color:getComputedStyle(document.body).color },
       legend:{ orientation:'h', x:0, y:1.1 },
-      // thicker horizontal lines every 100 rating points
       shapes: majorGridShapes(ymin, ymax)
     }, {
-      staticPlot: IS_TOUCH,  // static on touch devices
+      staticPlot: IS_TOUCH,
       scrollZoom: false,
       displayModeBar:false,
       responsive:true
     });
   }
-
   function computeMetrics(series){
     const y = series?.y ?? [];
     const live = y.length ? Math.round(y[y.length - 1]) : null;
@@ -178,16 +202,13 @@
     const kval = Number.isFinite(live) ? kFromRating(live) : null;
     return { live, peak, kval };
   }
-
   function refreshBadge(){
-    // J line always shown in badge
     const j = computeMetrics(seriesLive);
     document.getElementById('live-j').textContent = j.live ?? '–';
     document.getElementById('peak-j').textContent = j.peak ?? '–';
     const kvalJ = (typeof me?.k === 'number') ? me.k : (j.kval ?? '–');
     document.getElementById('kval-j').textContent = kvalJ;
 
-    // WCU row appears only when overlay is visible
     const wcuRow = document.getElementById('stats-wcu');
     if (showWCU && seriesWCU) {
       const w = computeMetrics(seriesWCU);
@@ -198,17 +219,54 @@
     } else {
       wcuRow.style.display = 'none';
     }
-
     document.getElementById('toggle').textContent = showWCU ? 'Hide WCU' : 'Show WCU';
+  }
+
+  // ---- Games table rendering ----------------------------------------------
+  function renderGamesTable(myName, games){
+    const tbl = document.getElementById('games');
+    tbl.innerHTML = '';
+
+    const thead = document.createElement('thead');
+    const hr = document.createElement('tr');
+    for (const h of ['Date','Player','Elo','Opponent','Elo','Result','Δ']) {
+      const th = document.createElement('th'); th.textContent = h; hr.appendChild(th);
+    }
+    thead.appendChild(hr);
+    tbl.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    games.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+    for (const g of games){
+      const tr = document.createElement('tr');
+      const tdD = document.createElement('td'); tdD.textContent = g.date;
+      const tdP = document.createElement('td');
+      if (g.player === myName) { const s=document.createElement('strong'); s.textContent=g.player; tdP.appendChild(s);} else tdP.textContent = g.player;
+      const tdPE = document.createElement('td'); tdPE.textContent = g.playerElo ?? '';
+      const tdO  = document.createElement('td'); tdO.textContent = g.opponent ?? '';
+      const tdOE = document.createElement('td'); tdOE.textContent = g.oppElo ?? '';
+      const tdR  = document.createElement('td'); tdR.textContent = g.result ?? ''; tdR.className = 'result ' + (g.result||'').toLowerCase();
+      const tdDelta = document.createElement('td');
+      if (typeof g.delta === 'number' && !Number.isNaN(g.delta)) {
+        const signed = (g.delta > 0 ? '+' : '') + g.delta.toFixed(1);
+        tdDelta.textContent = signed;
+        tdDelta.className = 'delta ' + (g.delta>0?'pos':g.delta<0?'neg':'zero');
+      }
+      tr.append(tdD, tdP, tdPE, tdO, tdOE, tdR, tdDelta);
+      tbody.appendChild(tr);
+    }
+    tbl.appendChild(tbody);
   }
 
   // ---- Data loading -------------------------------------------------------
   async function load(){
     try {
-      const [playersRes, liveRes, wcuRes] = await Promise.all([
+      const [playersRes, liveRes, wcuRes, gamesRes] = await Promise.all([
         fetch(PLAYERS_URL, { cache:'no-cache' }),
         fetch(HIST_URL(idRaw), { cache:'no-cache' }),
-        fetch(HIST_WCU(idRaw), { cache:'no-cache' }).catch(() => null)
+        fetch(HIST_WCU(idRaw), { cache:'no-cache' }).catch(() => null),
+        fetch(GAMES_URL(idRaw), { cache:'no-cache' }).catch(() => null)
       ]);
       if (!playersRes.ok) throw new Error('players.json not found');
       if (!liveRes.ok)    throw new Error('live history not found');
@@ -234,20 +292,29 @@
         document.getElementById('toggle').textContent = 'WCU N/A';
       }
 
-      draw();         // J only to start
-      refreshBadge(); // badge from J
+      draw();
+      refreshBadge();
 
+      if (gamesRes && gamesRes.ok) {
+        const games = await gamesRes.json();
+        renderGamesTable(me.name, games);
+      } else {
+        document.getElementById('games').innerHTML =
+          '<tbody><tr><td style="padding:10px;text-align:center;">No games</td></tr></tbody>';
+      }
     } catch (e) {
       console.error(e);
       document.getElementById('chart').textContent = 'No Games';
+      document.getElementById('games').innerHTML =
+        '<tbody><tr><td style="padding:10px;text-align:center;">Error loading games</td></tr></tbody>';
     }
   }
 
   // ---- Events -------------------------------------------------------------
   document.addEventListener('click', e => {
     if (e.target.id === 'toggle' && !e.target.disabled) {
-      showWCU = !showWCU; // overlay on/off
-      draw();             // redraw so major lines reflect current y-range
+      showWCU = !showWCU;
+      draw();
       refreshBadge();
     }
   });
