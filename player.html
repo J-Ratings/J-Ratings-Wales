@@ -59,7 +59,9 @@
     #games th, #games td{
       padding:6px 10px;
       border-bottom:1px solid #333;
-      text-align:left;
+      text-align:center !important;
+      vertical-align:middle;
+      white-space:nowrap;
     }
     #games th{
       background:#111;
@@ -67,13 +69,13 @@
       top:0;
     }
     /* Result colouring */
-    .result-win  { color:#28a745; font-weight:bold; }
-    .result-draw { color:#ffb000; font-weight:bold; }
-    .result-loss { color:#d93030; font-weight:bold; }
+    .result-win  { color:#34c759; font-weight:bold; }   /* brighter green */
+    .result-draw { color:#ffb833; font-weight:bold; }   /* brighter amber */
+    .result-loss { color:#e53935; font-weight:bold; }   /* brighter red */
     /* Delta colouring */
-    .delta-pos { color:#28a745; font-weight:bold; }
-    .delta-neg { color:#d93030; font-weight:bold; }
-    .delta-zero{ color:#aaa;     font-weight:bold; }
+    .delta-pos { color:#34c759; font-weight:bold; }
+    .delta-neg { color:#e53935; font-weight:bold; }
+    .delta-zero{ color:#ffb833; font-weight:bold; }
   </style>
 </head>
 <body>
