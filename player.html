@@ -49,38 +49,31 @@
     .btn-mini:hover:not([disabled]){background:rgba(255,255,255,.05)}
     #chart{
       height:420px;
-      touch-action: pan-y;
+      touch-action: pan-y; /* Allow vertical scroll, not pinch zoom */
     }
-
-    /* Label colours to match line colours */
-    #stats-j   .muted { color:#1f77b4; font-weight:bold; }
-    #stats-wcu .muted { color:#ff7f0e; font-weight:bold; }
-
-    /* ---- Games table styles ---- */
-    #gamesWrap { max-height: 520px; overflow:auto; margin-top:12px; }
-    table.games {
-      width:100%; border-collapse:separate; border-spacing:0; font-size:14px;
+    #games{
+      margin-top:1.5rem;
+      width:100%;
+      border-collapse:collapse;
     }
-    table.games th, table.games td{
-      padding:6px 8px; border-bottom:1px solid #2b2f36; text-align:center;
-      vertical-align:middle; white-space:nowrap;
+    #games th, #games td{
+      padding:6px 10px;
+      border-bottom:1px solid #333;
+      text-align:left;
     }
-    table.games th{ position:sticky; top:0; z-index:2;
-      background-color: var(--panel-bg, #1a1a1a); }
-    table.games th:nth-child(1), table.games td:nth-child(1),
-    table.games th:nth-child(3), table.games td:nth-child(3),
-    table.games th:nth-child(5), table.games td:nth-child(5),
-    table.games th:nth-child(6), table.games td:nth-child(6){
-      border-right:3px double rgba(128,128,128,0.6);
+    #games th{
+      background:#111;
+      position:sticky;
+      top:0;
     }
-    .result{ font-weight:700; }
-    .result.win  { color:#2e7d32; }
-    .result.draw { color:#ff8f00; }
-    .result.loss { color:#c62828; }
-    .delta{ font-weight:700; }
-    .delta.pos  { color:#2e7d32; }
-    .delta.neg  { color:#c62828; }
-    .delta.zero { color:#ff8f00; }
+    /* Result colouring */
+    .result-win  { color:#28a745; font-weight:bold; }
+    .result-draw { color:#ffb000; font-weight:bold; }
+    .result-loss { color:#d93030; font-weight:bold; }
+    /* Delta colouring */
+    .delta-pos { color:#28a745; font-weight:bold; }
+    .delta-neg { color:#d93030; font-weight:bold; }
+    .delta-zero{ color:#aaa;     font-weight:bold; }
   </style>
 </head>
 <body>
@@ -115,16 +108,25 @@
 
     <div id="chart"></div>
 
-    <!-- Games table -->
-    <h3 style="margin-top:18px;">Games</h3>
-    <div id="gamesWrap">
-      <table id="games" class="games"></table>
-    </div>
+    <h3>Games</h3>
+    <table id="games">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Player</th>
+          <th>Elo</th>
+          <th>Opponent</th>
+          <th>Elo</th>
+          <th>Result</th>
+          <th>Δ</th>
+        </tr>
+      </thead>
+      <tbody id="games-body"></tbody>
+    </table>
   </section>
 </main>
 
 <script>
-  // ---- Inputs & helpers ---------------------------------------------------
   const params = new URLSearchParams(location.search);
   const idRaw = params.get('id');
   if (!idRaw) {
@@ -137,188 +139,126 @@
   const HIST_WCU    = id => `data/history/${encodeURIComponent(id)}_wcu.json`;
   const GAMES_URL   = id => `data/games/${encodeURIComponent(id)}.json`;
 
-  const kFromRating = r => (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
   const COLORS = { J: '#1f77b4', WCU: '#ff7f0e' };
-
-  let me = null;
-  let seriesLive = null;
-  let seriesWCU  = null;
-  let showWCU    = false;
+  const kFromRating = r => (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
+  let me=null, seriesLive=null, seriesWCU=null, showWCU=false;
   const IS_TOUCH = window.matchMedia('(pointer: coarse)').matches;
 
-  // ---- Rendering chart ----------------------------------------------------
   function makeTrace(series, name, colour){
     return {
-      x: series.x,
-      y: series.y,
-      mode: 'lines',
-      line: { width: 2, shape: 'hv', color: colour },
+      x: series.x, y: series.y,
+      mode:'lines',
+      line:{width:2,shape:'hv',color:colour},
       name,
-      hovertemplate: '%{x}<br>%{y}<extra>' + name + '</extra>'
+      hovertemplate: '%{x}<br>%{y}<extra>'+name+'</extra>'
     };
   }
-  function majorGridShapes(ymin, ymax){
-    const shapes = [];
-    for (let v = ymin; v <= ymax; v += 100) {
-      shapes.push({
-        type: 'line',
-        xref: 'paper', x0: 0, x1: 1,
-        y0: v, y1: v,
-        line: { width: 2, color: 'rgba(128,128,128,0.35)' },
-        layer: 'below'
-      });
+  function majorGridShapes(ymin,ymax){
+    const shapes=[];
+    for(let v=ymin;v<=ymax;v+=100){
+      shapes.push({type:'line',xref:'paper',x0:0,x1:1,y0:v,y1:v,
+        line:{width:2,color:'rgba(128,128,128,0.35)'},layer:'below'});
     }
     return shapes;
   }
   function draw(){
-    const bg = getComputedStyle(document.body).backgroundColor;
-    const traces = [ makeTrace(seriesLive, 'J-Ratings', COLORS.J) ];
-    if (showWCU && seriesWCU) traces.push(makeTrace(seriesWCU, 'WCU', COLORS.WCU));
-
-    const ys = [...seriesLive.y, ...(showWCU && seriesWCU ? seriesWCU.y : [])];
-    const ymin = Math.floor(Math.min(...ys) / 100) * 100;
-    const ymax = Math.ceil(Math.max(...ys) / 100) * 100;
-
-    Plotly.newPlot('chart', traces, {
-      margin:{ l:50, r:20, t:10, b:40 },
-      xaxis:{ type:'date' },
-      yaxis:{ title:'Rating' },
-      paper_bgcolor:bg,
-      plot_bgcolor:bg,
-      font:{ color:getComputedStyle(document.body).color },
-      legend:{ orientation:'h', x:0, y:1.1 },
-      shapes: majorGridShapes(ymin, ymax)
-    }, {
-      staticPlot: IS_TOUCH,
-      scrollZoom: false,
-      displayModeBar:false,
-      responsive:true
-    });
+    const bg=getComputedStyle(document.body).backgroundColor;
+    const traces=[makeTrace(seriesLive,'J-Ratings',COLORS.J)];
+    if(showWCU && seriesWCU) traces.push(makeTrace(seriesWCU,'WCU',COLORS.WCU));
+    const ys=[...seriesLive.y,...(showWCU&&seriesWCU?seriesWCU.y:[])];
+    const ymin=Math.floor(Math.min(...ys)/100)*100;
+    const ymax=Math.ceil(Math.max(...ys)/100)*100;
+    Plotly.newPlot('chart',traces,{
+      margin:{l:50,r:20,t:10,b:40},xaxis:{type:'date'},yaxis:{title:'Rating'},
+      paper_bgcolor:bg,plot_bgcolor:bg,font:{color:getComputedStyle(document.body).color},
+      legend:{orientation:'h',x:0,y:1.1},shapes:majorGridShapes(ymin,ymax)
+    },{staticPlot:IS_TOUCH,scrollZoom:false,displayModeBar:false,responsive:true});
   }
   function computeMetrics(series){
-    const y = series?.y ?? [];
-    const live = y.length ? Math.round(y[y.length - 1]) : null;
-    const peak = y.length ? Math.round(Math.max(...y)) : null;
-    const kval = Number.isFinite(live) ? kFromRating(live) : null;
-    return { live, peak, kval };
+    const y=series?.y??[];
+    const live=y.length?Math.round(y[y.length-1]):null;
+    const peak=y.length?Math.round(Math.max(...y)):null;
+    const kval=Number.isFinite(live)?kFromRating(live):null;
+    return {live,peak,kval};
   }
   function refreshBadge(){
-    const j = computeMetrics(seriesLive);
-    document.getElementById('live-j').textContent = j.live ?? '–';
-    document.getElementById('peak-j').textContent = j.peak ?? '–';
-    const kvalJ = (typeof me?.k === 'number') ? me.k : (j.kval ?? '–');
-    document.getElementById('kval-j').textContent = kvalJ;
-
-    const wcuRow = document.getElementById('stats-wcu');
-    if (showWCU && seriesWCU) {
-      const w = computeMetrics(seriesWCU);
-      document.getElementById('live-wcu').textContent = w.live ?? '–';
-      document.getElementById('peak-wcu').textContent = w.peak ?? '–';
-      document.getElementById('kval-wcu').textContent = w.kval ?? '–';
-      wcuRow.style.display = '';
-    } else {
-      wcuRow.style.display = 'none';
-    }
-    document.getElementById('toggle').textContent = showWCU ? 'Hide WCU' : 'Show WCU';
+    const j=computeMetrics(seriesLive);
+    document.getElementById('live-j').textContent=j.live??'–';
+    document.getElementById('peak-j').textContent=j.peak??'–';
+    document.getElementById('kval-j').textContent=(typeof me?.k==='number')?me.k:(j.kval??'–');
+    const wcuRow=document.getElementById('stats-wcu');
+    if(showWCU&&seriesWCU){
+      const w=computeMetrics(seriesWCU);
+      document.getElementById('live-wcu').textContent=w.live??'–';
+      document.getElementById('peak-wcu').textContent=w.peak??'–';
+      document.getElementById('kval-wcu').textContent=w.kval??'–';
+      wcuRow.style.display='';
+    }else wcuRow.style.display='none';
+    document.getElementById('toggle').textContent=showWCU?'Hide WCU':'Show WCU';
   }
-
-  // ---- Games table rendering ----------------------------------------------
-  function renderGamesTable(myName, games){
-    const tbl = document.getElementById('games');
-    tbl.innerHTML = '';
-
-    const thead = document.createElement('thead');
-    const hr = document.createElement('tr');
-    for (const h of ['Date','Player','Elo','Opponent','Elo','Result','Δ']) {
-      const th = document.createElement('th'); th.textContent = h; hr.appendChild(th);
-    }
-    thead.appendChild(hr);
-    tbl.appendChild(thead);
-
-    const tbody = document.createElement('tbody');
-    games.sort((a,b) => new Date(b.date) - new Date(a.date));
-
-    for (const g of games){
-      const tr = document.createElement('tr');
-      const tdD = document.createElement('td'); tdD.textContent = g.date;
-      const tdP = document.createElement('td');
-      if (g.player === myName) { const s=document.createElement('strong'); s.textContent=g.player; tdP.appendChild(s);} else tdP.textContent = g.player;
-      const tdPE = document.createElement('td'); tdPE.textContent = g.playerElo ?? '';
-      const tdO  = document.createElement('td'); tdO.textContent = g.opponent ?? '';
-      const tdOE = document.createElement('td'); tdOE.textContent = g.oppElo ?? '';
-      const tdR  = document.createElement('td'); tdR.textContent = g.result ?? ''; tdR.className = 'result ' + (g.result||'').toLowerCase();
-      const tdDelta = document.createElement('td');
-      if (typeof g.delta === 'number' && !Number.isNaN(g.delta)) {
-        const signed = (g.delta > 0 ? '+' : '') + g.delta.toFixed(1);
-        tdDelta.textContent = signed;
-        tdDelta.className = 'delta ' + (g.delta>0?'pos':g.delta<0?'neg':'zero');
-      }
-      tr.append(tdD, tdP, tdPE, tdO, tdOE, tdR, tdDelta);
-      tbody.appendChild(tr);
-    }
-    tbl.appendChild(tbody);
+  function resultClass(r){
+    if(r==="Win") return "result-win";
+    if(r==="Draw")return "result-draw";
+    if(r==="Loss")return "result-loss";
+    return "";
   }
-
-  // ---- Data loading -------------------------------------------------------
+  function deltaClass(d){
+    if(!d) return "";
+    if(d.startsWith("+")) return "delta-pos";
+    if(d.startsWith("-")) return "delta-neg";
+    return "delta-zero";
+  }
   async function load(){
-    try {
-      const [playersRes, liveRes, wcuRes, gamesRes] = await Promise.all([
-        fetch(PLAYERS_URL, { cache:'no-cache' }),
-        fetch(HIST_URL(idRaw), { cache:'no-cache' }),
-        fetch(HIST_WCU(idRaw), { cache:'no-cache' }).catch(() => null),
-        fetch(GAMES_URL(idRaw), { cache:'no-cache' }).catch(() => null)
+    try{
+      const [playersRes,liveRes,wcuRes,gamesRes]=await Promise.all([
+        fetch(PLAYERS_URL,{cache:'no-cache'}),
+        fetch(HIST_URL(idRaw),{cache:'no-cache'}),
+        fetch(HIST_WCU(idRaw),{cache:'no-cache'}).catch(()=>null),
+        fetch(GAMES_URL(idRaw),{cache:'no-cache'}).catch(()=>null)
       ]);
-      if (!playersRes.ok) throw new Error('players.json not found');
-      if (!liveRes.ok)    throw new Error('live history not found');
-
-      const players = await playersRes.json();
-      me = players.find(p => p.id === idRaw);
-      if (!me) throw new Error('player id not in players.json');
-      document.getElementById('pname').textContent = me.name;
-
-      const livePairs = (await liveRes.json())
-        .map(d => ({ x: d.date, y: Number(d.rating) }))
-        .filter(p => Number.isFinite(p.y));
-      seriesLive = { x: livePairs.map(p => p.x), y: livePairs.map(p => p.y) };
-
-      if (wcuRes && wcuRes.ok) {
-        const wcuPairs = (await wcuRes.json())
-          .map(d => ({ x: d.date, y: Number(d.rating) }))
-          .filter(p => Number.isFinite(p.y));
-        seriesWCU = { x: wcuPairs.map(p => p.x), y: wcuPairs.map(p => p.y) };
-        document.getElementById('toggle').disabled = false;
-      } else {
-        document.getElementById('toggle').disabled = true;
-        document.getElementById('toggle').textContent = 'WCU N/A';
+      if(!playersRes.ok) throw new Error('players.json not found');
+      if(!liveRes.ok) throw new Error('live history not found');
+      const players=await playersRes.json();
+      me=players.find(p=>p.id===idRaw);
+      if(!me) throw new Error('player id not in players.json');
+      document.getElementById('pname').textContent=me.name;
+      const livePairs=(await liveRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
+      seriesLive={x:livePairs.map(p=>p.x),y:livePairs.map(p=>p.y)};
+      if(wcuRes&&wcuRes.ok){
+        const wcuPairs=(await wcuRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
+        seriesWCU={x:wcuPairs.map(p=>p.x),y:wcuPairs.map(p=>p.y)};
+        document.getElementById('toggle').disabled=false;
+      }else{
+        document.getElementById('toggle').disabled=true;
+        document.getElementById('toggle').textContent='WCU N/A';
       }
-
-      draw();
-      refreshBadge();
-
-      if (gamesRes && gamesRes.ok) {
-        const games = await gamesRes.json();
-        renderGamesTable(me.name, games);
-      } else {
-        document.getElementById('games').innerHTML =
-          '<tbody><tr><td style="padding:10px;text-align:center;">No games</td></tr></tbody>';
+      draw();refreshBadge();
+      if(gamesRes&&gamesRes.ok){
+        const games=await gamesRes.json();
+        const tbody=document.getElementById('games-body');
+        games.forEach(g=>{
+          const tr=document.createElement('tr');
+          const cols=["date","player","playerElo","opponent","opponentElo","result","delta"];
+          cols.forEach(col=>{
+            const td=document.createElement("td");
+            td.textContent=g[col]??"";
+            if(col==="result") td.className=resultClass(g[col]);
+            if(col==="delta") td.className=deltaClass(g[col]);
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
       }
-    } catch (e) {
+    }catch(e){
       console.error(e);
-      document.getElementById('chart').textContent = 'No Games';
-      document.getElementById('games').innerHTML =
-        '<tbody><tr><td style="padding:10px;text-align:center;">Error loading games</td></tr></tbody>';
+      document.getElementById('chart').textContent='No Games';
     }
   }
-
-  // ---- Events -------------------------------------------------------------
-  document.addEventListener('click', e => {
-    if (e.target.id === 'toggle' && !e.target.disabled) {
-      showWCU = !showWCU;
-      draw();
-      refreshBadge();
+  document.addEventListener('click',e=>{
+    if(e.target.id==='toggle'&&!e.target.disabled){
+      showWCU=!showWCU;draw();refreshBadge();
     }
   });
-
   load();
 </script>
 </body>
