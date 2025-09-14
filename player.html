@@ -56,18 +56,27 @@
       width:100%;
       border-collapse:collapse;
     }
-    #games th, #games td{
-      padding:6px 10px;
-      border-bottom:1px solid #333;
-      text-align:center !important;
-      vertical-align:middle;
-      white-space:nowrap;
-    }
-    #games th{
-      background:#111;
-      position:sticky;
-      top:0;
-    }
+#games th, #games td {
+  padding:6px 10px;
+  border-bottom:1px solid #333;
+  text-align:center !important;
+  vertical-align:middle;
+  white-space:nowrap;
+  font-weight:bold;   /* if you want everything bold */
+}
+#games th {
+  background:#111;
+  position:sticky;
+  top:0;
+}
+/* double vertical separators */
+#games th:nth-child(1), #games td:nth-child(1),
+#games th:nth-child(3), #games td:nth-child(3),
+#games th:nth-child(5), #games td:nth-child(5),
+#games th:nth-child(6), #games td:nth-child(6) {
+  border-right:3px double rgba(128,128,128,0.6);
+}
+
     /* Result colouring */
     .result-win  { color:#34c759; font-weight:bold; }   /* brighter green */
     .result-draw { color:#ffb833; font-weight:bold; }   /* brighter amber */
