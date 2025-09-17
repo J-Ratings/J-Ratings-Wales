@@ -19,7 +19,6 @@
       background:#0f1623;
       border-radius:8px;
       padding:6px 10px;
-      margin-right:4px;
       white-space:nowrap;
       display:flex;
       align-items:center;
@@ -30,12 +29,9 @@
       grid-template-columns: auto auto auto auto auto auto;
       column-gap: .35rem;
     }
-    .badge .stack div {
-      display: contents;
-    }
-    .badge strong {
-      font-variant-numeric: tabular-nums;
-    }
+    .badge .stack div { display: contents; }
+    .badge strong { font-variant-numeric: tabular-nums; }
+
     .btn-mini{
       background:#0f1623;
       border:1px solid var(--border);
@@ -47,10 +43,12 @@
     }
     .btn-mini[disabled]{opacity:.5; cursor:default}
     .btn-mini:hover:not([disabled]){background:rgba(255,255,255,.05)}
+
     #chart{
       height:420px;
-      touch-action: pan-y; /* Allow vertical scroll, not pinch zoom */
+      touch-action: pan-y; /* allow vertical scroll on touch */
     }
+
     #games{
       margin-top:1.5rem;
       width:100%;
@@ -76,14 +74,29 @@
       border-right:3px double rgba(128,128,128,0.6);
     }
 
-    /* Result colouring */
+    /* Result colouring (bold only on Result) */
     .result-win  { color:#34c759; font-weight:bold; }
     .result-draw { color:#ffb833; font-weight:bold; }
     .result-loss { color:#e53935; font-weight:bold; }
-    /* Delta colouring */
+
+    /* Delta colouring (bold only on Δ) */
     .delta-pos { color:#34c759; font-weight:bold; }
     .delta-neg { color:#e53935; font-weight:bold; }
     .delta-zero{ color:#ffb833; font-weight:bold; }
+
+    /* Float badge above the panel, not inside the border */
+    .panel { position: relative; }
+    .badge-float {
+      position: absolute;
+      right: 16px;
+      top: -42px;        /* lifts it above the rounded border */
+      z-index: 2;        /* ensure it sits above */
+    }
+
+    @media (max-width: 560px){
+      .badge-float { right: 8px; top: -36px; }
+      .badge { gap:.5rem; padding:6px 8px; }
+    }
   </style>
 </head>
 <body>
@@ -95,27 +108,25 @@
   </div>
 </header>
 
-<!-- Badge ABOVE the panel -->
-<div class="wrap" style="margin-top:1rem; margin-bottom:.5rem; display:flex; justify-content:flex-end">
-  <div class="badge">
-    <button id="toggle" class="btn-mini" type="button" title="Toggle WCU overlay">Show WCU</button>
-    <div class="stack">
-      <div id="stats-j">
-        <span class="muted">J Live:</span> <strong id="live-j">–</strong>
-        <span class="muted">Peak:</span> <strong id="peak-j">–</strong>
-        <span class="muted">K:</span> <strong id="kval-j">–</strong>
-      </div>
-      <div id="stats-wcu" style="display:none">
-        <span class="muted">WCU Live:</span> <strong id="live-wcu">–</strong>
-        <span class="muted">Peak:</span> <strong id="peak-wcu">–</strong>
-        <span class="muted">K:</span> <strong id="kval-wcu">–</strong>
-      </div>
-    </div>
-  </div>
-</div>
-
 <main class="wrap">
   <section class="panel">
+    <!-- Badge positioned OUTSIDE the panel border, above the name -->
+    <div class="badge badge-float">
+      <button id="toggle" class="btn-mini" type="button" title="Toggle WCU overlay">Show WCU</button>
+      <div class="stack">
+        <div id="stats-j">
+          <span class="muted">J Live:</span> <strong id="live-j">–</strong>
+          <span class="muted">Peak:</span> <strong id="peak-j">–</strong>
+          <span class="muted">K:</span> <strong id="kval-j">–</strong>
+        </div>
+        <div id="stats-wcu" style="display:none">
+          <span class="muted">WCU Live:</span> <strong id="live-wcu">–</strong>
+          <span class="muted">Peak:</span> <strong id="peak-wcu">–</strong>
+          <span class="muted">K:</span> <strong id="kval-wcu">–</strong>
+        </div>
+      </div>
+    </div>
+
     <div class="player-head">
       <h2 id="pname">Player</h2>
     </div>
@@ -236,8 +247,10 @@
       me=players.find(p=>p.id===idRaw);
       if(!me) throw new Error('player id not in players.json');
       document.getElementById('pname').textContent=me.name;
+
       const livePairs=(await liveRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
       seriesLive={x:livePairs.map(p=>p.x),y:livePairs.map(p=>p.y)};
+
       if(wcuRes&&wcuRes.ok){
         const wcuPairs=(await wcuRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
         seriesWCU={x:wcuPairs.map(p=>p.x),y:wcuPairs.map(p=>p.y)};
@@ -246,7 +259,10 @@
         document.getElementById('toggle').disabled=true;
         document.getElementById('toggle').textContent='WCU N/A';
       }
-      draw();refreshBadge();
+
+      draw();
+      refreshBadge();
+
       if(gamesRes&&gamesRes.ok){
         const games=await gamesRes.json();
         const tbody=document.getElementById('games-body');
@@ -270,7 +286,7 @@
   }
   document.addEventListener('click',e=>{
     if(e.target.id==='toggle'&&!e.target.disabled){
-      showWCU=!showWCU;draw();refreshBadge();
+      showWCU=!showWCU; draw(); refreshBadge();
     }
   });
   load();
