@@ -95,28 +95,30 @@
   </div>
 </header>
 
+<!-- Badge ABOVE the panel -->
+<div class="wrap" style="margin-top:1rem; margin-bottom:.5rem; display:flex; justify-content:flex-end">
+  <div class="badge">
+    <button id="toggle" class="btn-mini" type="button" title="Toggle WCU overlay">Show WCU</button>
+    <div class="stack">
+      <div id="stats-j">
+        <span class="muted">J Live:</span> <strong id="live-j">–</strong>
+        <span class="muted">Peak:</span> <strong id="peak-j">–</strong>
+        <span class="muted">K:</span> <strong id="kval-j">–</strong>
+      </div>
+      <div id="stats-wcu" style="display:none">
+        <span class="muted">WCU Live:</span> <strong id="live-wcu">–</strong>
+        <span class="muted">Peak:</span> <strong id="peak-wcu">–</strong>
+        <span class="muted">K:</span> <strong id="kval-wcu">–</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
 <main class="wrap">
   <section class="panel">
     <div class="player-head">
       <h2 id="pname">Player</h2>
-      <div class="badge">
-        <button id="toggle" class="btn-mini" type="button" title="Toggle WCU overlay">Show WCU</button>
-        <div class="stack">
-          <div id="stats-j">
-            <span class="muted">J Live:</span> <strong id="live-j">–</strong>
-            <span class="muted">Peak:</span> <strong id="peak-j">–</strong>
-            <span class="muted">K:</span> <strong id="kval-j">–</strong>
-          </div>
-          <div id="stats-wcu" style="display:none">
-            <span class="muted">WCU Live:</span> <strong id="live-wcu">–</strong>
-            <span class="muted">Peak:</span> <strong id="peak-wcu">–</strong>
-            <span class="muted">K:</span> <strong id="kval-wcu">–</strong>
-          </div>
-        </div>
-      </div>
     </div>
-
-    <p class="muted" style="margin:4px 0 12px 0; font-size:0.9rem">Scroll down for results</p>
 
     <div id="chart"></div>
 
