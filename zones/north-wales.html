@@ -15,9 +15,9 @@
 <header>
   <div class="wrap">
     <div class="title">
-  <h1 class="site-title"><a href="../index.html">J-Ratings</a></h1>
-  <span class="muted subtitle"></span>
-</div>
+      <h1 class="site-title"><a href="../index.html">J-Ratings</a></h1>
+      <span class="muted subtitle"></span>
+    </div>
 
     <nav class="zones" aria-label="Zones">
       <a href="dyfed.html">Dyfed</a>
@@ -58,48 +58,45 @@
       </table>
     </div>
   </section>
+
   <!-- Compare Selection Modal -->
-<div id="compare-modal" style="
-  display:none; 
-  position:fixed; 
-  top:0; left:0; 
-  width:100%; height:100%; 
-  background:rgba(0,0,0,0.6); 
-  justify-content:center; 
-  align-items:center;
-  z-index:9999;
-">
-  <div style="
-    background:#1a1a1a;
-    padding:20px;
-    border-radius:8px;
-    max-width:500px;
-    width:90%;
-    max-height:80%;
-    overflow:auto;
-    color:#fff;
+  <div id="compare-modal" style="
+    display:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
   ">
-    <h3>Select players to view:</h3>
-<div id="compare-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:9999;">
-  <div style="background:#1a1a1a; padding:20px; border-radius:8px; max-width:500px; width:90%; max-height:80%; overflow:auto; color:#fff;">
-    <h3>Select players to view:</h3>
+    <div style="
+      background:#1a1a1a;
+      padding:20px;
+      border-radius:8px;
+      max-width:500px;
+      width:90%;
+      max-height:80%;
+      overflow:auto;
+      color:#fff;
+    ">
+      <h3>Select players to view:</h3>
 
-    <!-- Button group at the top -->
-    <div class="compare-actions" style="margin-bottom:10px;">
-      <button id="compare-show-top" style="margin-right:10px">Show Selected</button>
-      <button id="compare-cancel-top">Cancel</button>
-    </div>
+      <!-- Button group at the top -->
+      <div class="compare-actions" style="margin-bottom:12px;">
+        <button class="compare-show" style="margin-right:10px">Show Selected</button>
+        <button class="compare-cancel">Cancel</button>
+      </div>
 
-    <div id="compare-list" style="margin:20px 0;"></div>
+      <div id="compare-list" style="margin:20px 0;"></div>
 
-    <!-- Button group at the bottom -->
-    <div class="compare-actions" style="margin-top:10px;">
-      <button id="compare-show" style="margin-right:10px">Show Selected</button>
-      <button id="compare-cancel">Cancel</button>
+      <!-- Button group at the bottom -->
+      <div class="compare-actions" style="margin-top:12px;">
+        <button class="compare-show" style="margin-right:10px">Show Selected</button>
+        <button class="compare-cancel">Cancel</button>
+      </div>
     </div>
   </div>
-</div>
-
 </main>
 
 <script>
@@ -139,7 +136,8 @@ function renderTable() {
     tr.appendChild(tdRt);
     tbody.appendChild(tr);
   }
-  document.getElementById('count').textContent = `${state.filtered.length.toLocaleString()} players`;
+  document.getElementById('count').textContent =
+    `${state.filtered.length.toLocaleString()} players`;
 }
 
 function applyFilter() {
@@ -223,7 +221,7 @@ async function buildComparison(players) {
         x: hist.map(d => d.date),
         y: hist.map(d => d.rating),
         mode: 'lines',
-        hovertemplate: '%{x} => %{y}<extra>' + p.name + '</extra>'
+        hovertemplate: '%{x} → %{y}<extra>' + p.name + '</extra>'
       };
     }
   });
@@ -231,7 +229,7 @@ async function buildComparison(players) {
   const cs = getComputedStyle(document.body);
   const layout = {
     margin: { l: 50, r: (isTouch ? 110 : 20), t: 10, b: 40 },
-    xaxis: { type: 'date', title: '' },
+    xaxis: { type: 'date' },
     yaxis: { title: 'Rating' },
     legend: { orientation: 'h' },
     paper_bgcolor: cs.backgroundColor,
@@ -249,11 +247,10 @@ async function buildComparison(players) {
 function setupCompareButton() {
   const modal = document.getElementById('compare-modal');
   const listDiv = document.getElementById('compare-list');
-  const showBtn = document.getElementById('compare-show');
-  const cancelBtn = document.getElementById('compare-cancel');
+  const showBtns = modal.querySelectorAll('.compare-show');
+  const cancelBtns = modal.querySelectorAll('.compare-cancel');
 
   document.getElementById('compare-btn').addEventListener('click', () => {
-    // Build the list of checkboxes from currently filtered players
     listDiv.innerHTML = '';
     state.filtered.forEach(p => {
       const id = `chk-${p.id}`;
@@ -270,21 +267,23 @@ function setupCompareButton() {
     modal.style.display = 'flex';
   });
 
-  cancelBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
+  cancelBtns.forEach(btn =>
+    btn.addEventListener('click', () => { modal.style.display = 'none'; })
+  );
 
-  showBtn.addEventListener('click', async () => {
-    const selectedIds = Array.from(listDiv.querySelectorAll('input[type=checkbox]:checked'))
-      .map(cb => cb.value);
-    if (!selectedIds.length) {
-      alert('Please select at least one player.');
-      return;
-    }
-    modal.style.display = 'none';
-    const chosenPlayers = state.filtered.filter(p => selectedIds.includes(p.id));
-    await buildComparison(chosenPlayers);
-  });
+  showBtns.forEach(btn =>
+    btn.addEventListener('click', async () => {
+      const selectedIds = Array.from(listDiv.querySelectorAll('input[type=checkbox]:checked'))
+        .map(cb => cb.value);
+      if (!selectedIds.length) {
+        alert('Please select at least one player.');
+        return;
+      }
+      modal.style.display = 'none';
+      const chosenPlayers = state.filtered.filter(p => selectedIds.includes(p.id));
+      await buildComparison(chosenPlayers);
+    })
+  );
 }
 
 /* ---------- LOAD ---------- */
@@ -316,7 +315,7 @@ async function load() {
     e.target.classList.add('active-club');
     const code = e.target.dataset.code;
     state.selectedClub = code || null;
-    document.getElementById('zone-title').textContent = code ? clubNames[c] : ZONE_NAME;
+    document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
     document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
     applyFilter();
   });

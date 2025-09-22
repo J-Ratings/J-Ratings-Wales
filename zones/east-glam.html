@@ -15,9 +15,9 @@
 <header>
   <div class="wrap">
     <div class="title">
-  <h1 class="site-title"><a href="../index.html">J-Ratings</a></h1>
-  <span class="muted subtitle"></span>
-</div>
+      <h1 class="site-title"><a href="../index.html">J-Ratings</a></h1>
+      <span class="muted subtitle"></span>
+    </div>
     <nav class="zones" aria-label="Zones">
       <a href="dyfed.html">Dyfed</a>
       <a href="east-glam.html" class="active-zone">East Glamorgan</a>
@@ -56,48 +56,45 @@
       </table>
     </div>
   </section>
+
   <!-- Compare Selection Modal -->
-<div id="compare-modal" style="
-  display:none; 
-  position:fixed; 
-  top:0; left:0; 
-  width:100%; height:100%; 
-  background:rgba(0,0,0,0.6); 
-  justify-content:center; 
-  align-items:center;
-  z-index:9999;
-">
-  <div style="
-    background:#1a1a1a;
-    padding:20px;
-    border-radius:8px;
-    max-width:500px;
-    width:90%;
-    max-height:80%;
-    overflow:auto;
-    color:#fff;
+  <div id="compare-modal" style="
+    display:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
   ">
-    <h3>Select players to view:</h3>
-<div id="compare-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:9999;">
-  <div style="background:#1a1a1a; padding:20px; border-radius:8px; max-width:500px; width:90%; max-height:80%; overflow:auto; color:#fff;">
-    <h3>Select players to view:</h3>
+    <div style="
+      background:#1a1a1a;
+      padding:20px;
+      border-radius:8px;
+      max-width:500px;
+      width:90%;
+      max-height:80%;
+      overflow:auto;
+      color:#fff;
+    ">
+      <h3>Select players to view:</h3>
 
-    <!-- Button group at the top -->
-    <div class="compare-actions" style="margin-bottom:10px;">
-      <button id="compare-show-top" style="margin-right:10px">Show Selected</button>
-      <button id="compare-cancel-top">Cancel</button>
-    </div>
+      <!-- Button group at the top -->
+      <div class="compare-actions" style="margin-bottom:12px;">
+        <button class="compare-show" style="margin-right:10px">Show Selected</button>
+        <button class="compare-cancel">Cancel</button>
+      </div>
 
-    <div id="compare-list" style="margin:20px 0;"></div>
+      <div id="compare-list" style="margin:20px 0;"></div>
 
-    <!-- Button group at the bottom -->
-    <div class="compare-actions" style="margin-top:10px;">
-      <button id="compare-show" style="margin-right:10px">Show Selected</button>
-      <button id="compare-cancel">Cancel</button>
+      <!-- Button group at the bottom -->
+      <div class="compare-actions" style="margin-top:12px;">
+        <button class="compare-show" style="margin-right:10px">Show Selected</button>
+        <button class="compare-cancel">Cancel</button>
+      </div>
     </div>
   </div>
-</div>
-
 </main>
 
 <script>
@@ -106,13 +103,10 @@ const ZONE_CODE = 'E1';
 const ZONE_NAME = 'East Glamorgan';
 const DATA_URL  = '../data/players.json';
 
-// Only include players with history on/after this date. Set to null to include all.
-const COMPARE_SINCE = null;
+const COMPARE_SINCE = null; // only include history on/after this date if set
+const MAX_SERIES = 50;      // cap traces after filtering
 
-// Cap traces after filtering
-const MAX_SERIES = 50;
-
-// Club codes → names (leave out meta groups)
+// Club codes → names
 const clubNames = {
   "2BR": "Bridgend",
   "2BY": "Barry",
@@ -179,7 +173,6 @@ async function fetchHistoryFor(id) {
     return Array.isArray(rows) && rows.length ? rows : null;
   }
 
-  // tolerate raw vs already-encoded ids
   let hist = await tryUrl(`../data/history/${id}.json`);
   if (!hist) hist = await tryUrl(`../data/history/${encodeURIComponent(id)}.json`);
 
@@ -204,7 +197,6 @@ async function buildComparison(players) {
   await Promise.all(players.map(async p => {
     const hist = await fetchHistoryFor(p.id);
     if (!hist) return;
-
     const use = COMPARE_SINCE ? hist.filter(d => d.date >= COMPARE_SINCE) : hist;
     if (use.length) withHist.push({ p, hist: use });
   }));
@@ -216,13 +208,11 @@ async function buildComparison(players) {
     return;
   }
 
-  // Sort by most recent activity and cap
   withHist.sort((a, b) =>
     b.hist[b.hist.length - 1].date.localeCompare(a.hist[a.hist.length - 1].date)
   );
   const picked = withHist.slice(0, MAX_SERIES);
 
-  // Touch detection ONCE (used below)
   const isTouch = window.matchMedia('(pointer: coarse)').matches;
 
   const traces = picked.map(({ p, hist }) => ({
@@ -236,7 +226,7 @@ async function buildComparison(players) {
   const cs = getComputedStyle(document.body);
   const layout = {
     margin: { l: 50, r: 20, t: 10, b: 40 },
-    xaxis: { type: 'date', title: '' },
+    xaxis: { type: 'date' },
     yaxis: { title: 'Rating' },
     legend: { orientation: 'h' },
     paper_bgcolor: cs.backgroundColor,
@@ -247,9 +237,9 @@ async function buildComparison(players) {
   const config = {
     displayModeBar: false,
     responsive: true,
-    scrollZoom: false,       // no wheel/pinch zoom
-    doubleClick: false,      // no dbl-click zoom
-    staticPlot: isTouch      // static on mobile, interactive on desktop
+    scrollZoom: false,
+    doubleClick: false,
+    staticPlot: isTouch
   };
 
   Plotly.newPlot(chart, traces, layout, config);
@@ -258,11 +248,10 @@ async function buildComparison(players) {
 function setupCompareButton() {
   const modal = document.getElementById('compare-modal');
   const listDiv = document.getElementById('compare-list');
-  const showBtn = document.getElementById('compare-show');
-  const cancelBtn = document.getElementById('compare-cancel');
+  const showBtns = modal.querySelectorAll('.compare-show');
+  const cancelBtns = modal.querySelectorAll('.compare-cancel');
 
   document.getElementById('compare-btn').addEventListener('click', () => {
-    // Build the list of checkboxes from currently filtered players
     listDiv.innerHTML = '';
     state.filtered.forEach(p => {
       const id = `chk-${p.id}`;
@@ -279,21 +268,23 @@ function setupCompareButton() {
     modal.style.display = 'flex';
   });
 
-  cancelBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
+  cancelBtns.forEach(btn =>
+    btn.addEventListener('click', () => { modal.style.display = 'none'; })
+  );
 
-  showBtn.addEventListener('click', async () => {
-    const selectedIds = Array.from(listDiv.querySelectorAll('input[type=checkbox]:checked'))
-      .map(cb => cb.value);
-    if (!selectedIds.length) {
-      alert('Please select at least one player.');
-      return;
-    }
-    modal.style.display = 'none';
-    const chosenPlayers = state.filtered.filter(p => selectedIds.includes(p.id));
-    await buildComparison(chosenPlayers);
-  });
+  showBtns.forEach(btn =>
+    btn.addEventListener('click', async () => {
+      const selectedIds = Array.from(listDiv.querySelectorAll('input[type=checkbox]:checked'))
+        .map(cb => cb.value);
+      if (!selectedIds.length) {
+        alert('Please select at least one player.');
+        return;
+      }
+      modal.style.display = 'none';
+      const chosenPlayers = state.filtered.filter(p => selectedIds.includes(p.id));
+      await buildComparison(chosenPlayers);
+    })
+  );
 }
 
 /* ---------- LOAD ---------- */
@@ -308,7 +299,6 @@ async function load() {
 
   state.filtered = state.rows.slice();
 
-  // Build club buttons only for codes present and known
   const clubsNav = document.querySelector('.clubs-nav');
   const clubs = [...new Set(
     state.rows.map(r => r.club).filter(c => /^\d/.test(c) && clubNames[c])
@@ -318,23 +308,17 @@ async function load() {
     `<button class="club-btn active-club" data-code="">All</button>` +
     clubs.map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
 
-  // Title
   document.getElementById('zone-title').textContent = ZONE_NAME;
-
-  // Compare button only when a club is selected
   document.getElementById('compare-btn').style.display = 'none';
 
   clubsNav.addEventListener('click', e => {
     if (!e.target.classList.contains('club-btn')) return;
-
     document.querySelectorAll('.club-btn').forEach(b => b.classList.remove('active-club'));
     e.target.classList.add('active-club');
-
     const code = e.target.dataset.code;
     state.selectedClub = code || null;
     document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
     document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
-
     applyFilter();
   });
 
