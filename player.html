@@ -8,71 +8,52 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
     .player-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      margin:12px 0;
-      padding-right:12px;
+      display:flex;justify-content:space-between;align-items:flex-end;
+      margin:12px 0;padding-right:12px;
     }
     .badge{
-      border:1px solid var(--border);
-      background:#0f1623;
-      border-radius:8px;
-      padding:6px 10px;
-      margin-right:4px;
-      white-space:nowrap;
-      display:flex;
-      align-items:center;
-      gap:.75rem;
+      border:1px solid var(--border);background:#0f1623;border-radius:8px;
+      padding:6px 10px;margin-right:4px;white-space:nowrap;display:flex;
+      align-items:center;gap:.75rem;
     }
-    .badge .stack { display:grid; grid-template-columns:auto auto; column-gap:.75rem; }
-    .badge .stack div { display:contents; }
-    .badge strong { font-variant-numeric: tabular-nums; }
-    /* colour the stats to match series */
-    #stats-j, #stats-j .muted, #stats-j strong { color:#1f77b4; }
-    #stats-wcu, #stats-wcu .muted, #stats-wcu strong { color:#ff7f0e; }
+    .badge .stack{display:grid;grid-template-columns:auto auto;column-gap:.75rem}
+    .badge .stack div{display:contents}
+    .badge strong{font-variant-numeric:tabular-nums}
+    /* Colour only the LABEL text; numbers stay default */
+    #stats-j .muted{color:#1f77b4}
+    #stats-wcu .muted{color:#ff7f0e}
+    #stats-j strong,#stats-wcu strong{color:var(--text)}
 
     .btn-mini{
-      background:#0f1623;
-      border:1px solid var(--border);
-      color:var(--text);
-      padding:4px 8px;
-      border-radius:6px;
-      cursor:pointer;
-      font-size:.9rem;
+      background:#0f1623;border:1px solid var(--border);color:var(--text);
+      padding:4px 8px;border-radius:6px;cursor:pointer;font-size:.9rem;
     }
-    .btn-mini[disabled]{opacity:.5; cursor:default}
+    .btn-mini[disabled]{opacity:.5;cursor:default}
     .btn-mini:hover:not([disabled]){background:rgba(255,255,255,.05)}
-    #chart{ height:420px; touch-action: pan-y; }
 
-    #games{ margin-top:1.5rem; width:100%; border-collapse:collapse; }
-    #games th, #games td {
-      padding:6px 10px;
-      border-bottom:1px solid #333;
-      text-align:center !important;
-      vertical-align:middle;
-      white-space:nowrap;
+    #chart{height:420px;touch-action:pan-y}
+
+    #games{margin-top:1.5rem;width:100%;border-collapse:collapse}
+    #games th,#games td{
+      padding:6px 10px;border-bottom:1px solid #333;text-align:center!important;
+      vertical-align:middle;white-space:nowrap
     }
-    #games th { background:#111; position:sticky; top:0; }
-    /* double vertical separators */
-    #games th:nth-child(1), #games td:nth-child(1),
-    #games th:nth-child(3), #games td:nth-child(3),
-    #games th:nth-child(5), #games td:nth-child(5),
-    #games th:nth-child(6), #games td:nth-child(6) {
-      border-right:3px double rgba(128,128,128,0.6);
+    #games th{background:#111;position:sticky;top:0}
+    #games th:nth-child(1),#games td:nth-child(1),
+    #games th:nth-child(3),#games td:nth-child(3),
+    #games th:nth-child(5),#games td:nth-child(5),
+    #games th:nth-child(6),#games td:nth-child(6){
+      border-right:3px double rgba(128,128,128,.6)
     }
+    .result-win{color:#34c759;font-weight:bold}
+    .result-draw{color:#ffb833;font-weight:bold}
+    .result-loss{color:#e53935;font-weight:bold}
+    .delta-pos{color:#34c759;font-weight:bold}
+    .delta-neg{color:#e53935;font-weight:bold}
+    .delta-zero{color:#ffb833;font-weight:bold}
 
-    /* Result colouring */
-    .result-win  { color:#34c759; font-weight:bold; }
-    .result-draw { color:#ffb833; font-weight:bold; }
-    .result-loss { color:#e53935; font-weight:bold; }
-    /* Delta colouring */
-    .delta-pos { color:#34c759; font-weight:bold; }
-    .delta-neg { color:#e53935; font-weight:bold; }
-    .delta-zero{ color:#ffb833; font-weight:bold; }
-
-    .toolbar { margin-bottom:10px; text-align:center; }
-    .toolbar label { margin-right:6px; }
+    .toolbar{margin-bottom:10px;text-align:center}
+    .toolbar label{margin-right:6px}
   </style>
 </head>
 <body>
@@ -105,7 +86,6 @@
       </div>
     </div>
 
-    <!-- View dropdown -->
     <div class="toolbar">
       <label for="agg">View:</label>
       <select id="agg">
@@ -122,13 +102,8 @@
     <table id="games">
       <thead>
         <tr>
-          <th>Date</th>
-          <th>Player</th>
-          <th>Elo</th>
-          <th>Opponent</th>
-          <th>Elo</th>
-          <th>Result</th>
-          <th>Δ</th>
+          <th>Date</th><th>Player</th><th>Elo</th>
+          <th>Opponent</th><th>Elo</th><th>Result</th><th>Δ</th>
         </tr>
       </thead>
       <tbody id="games-body"></tbody>
@@ -139,179 +114,134 @@
 <script>
   const params = new URLSearchParams(location.search);
   const idRaw = params.get('id');
-  if (!idRaw) {
-    document.getElementById('chart').textContent = 'Missing player id.';
-    throw new Error('no id');
-  }
+  if (!idRaw) { document.getElementById('chart').textContent = 'Missing player id.'; throw new Error('no id'); }
 
   const PLAYERS_URL = 'data/players.json';
   const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;
   const HIST_WCU    = id => `data/history/${encodeURIComponent(id)}_wcu.json`;
   const GAMES_URL   = id => `data/games/${encodeURIComponent(id)}.json`;
 
-  const COLORS = { J: '#1f77b4', WCU: '#ff7f0e' };
-  const kFromRating = r => (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
+  const COLORS = { J:'#1f77b4', WCU:'#ff7f0e' };
+  const kFromRating = r => (r>=2200?10:r>=1800?20:30);
   let me=null, rawLive=null, rawWCU=null, seriesLive=null, seriesWCU=null, showWCU=false;
   const IS_TOUCH = window.matchMedia('(pointer: coarse)').matches;
 
   /* ---------- date helpers ---------- */
-  function toISODateUTC(d){
-    const y = d.getUTCFullYear();
-    const m = String(d.getUTCMonth()+1).padStart(2,'0');
-    const da = String(d.getUTCDate()).padStart(2,'0');
-    return `${y}-${m}-${da}`;
-  }
-  function monthStartUTC(d){
-    return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1));
-  }
-  function monthEndUTC(d){ // last day of month
-    return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth()+1, 0));
-  }
-  function yearStartUTC(d){ return new Date(Date.UTC(d.getUTCFullYear(),0,1)); }
-  function yearEndUTC(d){ return new Date(Date.UTC(d.getUTCFullYear(),11,31)); }
-  function mondayOfWeekUTC(d){ const dow=(d.getUTCDay()+6)%7; return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()-dow)); }
-  function sundayOfWeekUTC(d){ const dow=(d.getUTCDay()+6)%7; return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()+(6-dow))); }
+  const toISO = d => `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`;
+  const weekStart = d => { const dow=(d.getUTCDay()+6)%7; return new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()-dow)); };
+  const weekEnd   = d => { const s=weekStart(d); return new Date(Date.UTC(s.getUTCFullYear(),s.getUTCMonth(),s.getUTCDate()+6)); };
+  const monthStart= d => new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1));
+  const monthEnd  = d => new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth()+1, 0));
+  const yearStart = d => new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  const yearEnd   = d => new Date(Date.UTC(d.getUTCFullYear(),11,31));
 
   /* ---------- aggregation ---------- */
-  // keep last point per calendar day from raw
   function dailyPairs(pairs){
-    const byDay = {};
-    for(const p of pairs){ byDay[p.x] = +p.y; }
-    return Object.keys(byDay).sort().map(x => ({ x, y: byDay[x] }));
+    const byDay={}; for(const p of pairs) byDay[p.x]=+p.y;
+    return Object.keys(byDay).sort().map(x=>({x,y:byDay[x]}));
   }
 
-  // average by bucket (week/month/year), then expand to [period start, period end] with same value,
-  // and fill any missing buckets flat; result draws flat within period and a short diagonal at boundaries.
+  // Flat inside a bucket, short diagonal only at boundary to next bucket with games;
+  // missing buckets are inserted as flat with previous value.
   function aggregateExpanded(pairs, mode){
-    if (mode === 'daily') return dailyPairs(pairs);
+    if (mode==='daily') return dailyPairs(pairs);
+    if (!pairs.length) return [];
 
-    // 1) average into buckets using UTC boundaries
-    const buckets = {};
+    // Average value per bucket
+    const map={};
     for(const p of pairs){
-      const d = new Date(p.x + 'T00:00:00Z');
-      if (Number.isNaN(d)) continue;
-      let kDateStart, kDateEnd;
-      if (mode === 'weekly'){ kDateStart = mondayOfWeekUTC(d); kDateEnd = sundayOfWeekUTC(d); }
-      else if (mode === 'monthly'){ kDateStart = monthStartUTC(d); kDateEnd = monthEndUTC(d); }
-      else { kDateStart = yearStartUTC(d); kDateEnd = yearEndUTC(d); }
-      const key = toISODateUTC(kDateStart);
-      (buckets[key] ||= { ys:[], start:kDateStart, end:kDateEnd });
-      buckets[key].ys.push(+p.y);
+      const d=new Date(p.x+'T00:00:00Z'); if(Number.isNaN(d)) continue;
+      let s,e;
+      if(mode==='weekly'){ s=weekStart(d); e=weekEnd(d); }
+      else if(mode==='monthly'){ s=monthStart(d); e=monthEnd(d); }
+      else { s=yearStart(d); e=yearEnd(d); }
+      const k=toISO(s);
+      (map[k] ||= {start:s,end:e,ys:[]}).ys.push(+p.y);
     }
-    const keys = Object.keys(buckets).sort();
-    if (!keys.length) return [];
+    const keys=Object.keys(map).sort();
+    if(!keys.length) return [];
 
-    const avgByKey = keys.map(k => {
-      const ys = buckets[k].ys.filter(Number.isFinite);
-      const avg = ys.reduce((a,b)=>a+b,0) / ys.length;
-      return { key:k, start:buckets[k].start, end:buckets[k].end, val:avg };
+    const buckets = keys.map(k=>{
+      const ys=map[k].ys.filter(Number.isFinite);
+      return {start:map[k].start, end:map[k].end, val: ys.reduce((a,b)=>a+b,0)/ys.length};
     });
 
-    // 2) expand to flat segments per period and fill gaps flat
-    const out = [];
-    let prev = null;
-    function pushPoint(dateObj, val){ out.push({ x: toISODateUTC(dateObj), y: val }); }
+    // Build continuous series with flat-per-bucket and fill gaps flat
+    const out=[];
+    const emit=(d,v)=>out.push({x:toISO(d),y:v});
 
-    for (let i=0;i<avgByKey.length;i++){
-      const cur = avgByKey[i];
-
-      // fill any missing buckets between prev and cur (flat at prev.val)
-      if (prev){
-        // advance cursor one full bucket from prev.start to next bucket start until reaching cur.start
-        if (mode === 'weekly'){
-          let cursor = new Date(prev.start); cursor.setUTCDate(cursor.getUTCDate()+7);
-          while (cursor < cur.start){
-            const wkStart = new Date(cursor);
-            const wkEnd = sundayOfWeekUTC(wkStart);
-            pushPoint(wkStart, prev.val); // flat across missing week
-            pushPoint(wkEnd,   prev.val);
-            cursor.setUTCDate(cursor.getUTCDate()+7);
-          }
-        } else if (mode === 'monthly'){
-          let cursor = new Date(Date.UTC(prev.start.getUTCFullYear(), prev.start.getUTCMonth()+1, 1));
-          while (cursor < cur.start){
-            const mStart = new Date(cursor);
-            const mEnd = monthEndUTC(mStart);
-            pushPoint(mStart, prev.val);
-            pushPoint(mEnd,   prev.val);
-            cursor = new Date(Date.UTC(cursor.getUTCFullYear(), cursor.getUTCMonth()+1, 1));
-          }
-        } else { // yearly
-          let cursor = new Date(Date.UTC(prev.start.getUTCFullYear()+1,0,1));
-          while (cursor < cur.start){
-            const yStart = new Date(cursor);
-            const yEnd   = yearEndUTC(yStart);
-            pushPoint(yStart, prev.val);
-            pushPoint(yEnd,   prev.val);
-            cursor = new Date(Date.UTC(cursor.getUTCFullYear()+1,0,1));
-          }
+    let prev=null;
+    for(const cur of buckets){
+      // fill any missing buckets flat at prev.val
+      if(prev){
+        if(mode==='weekly'){
+          let c=new Date(prev.start); c.setUTCDate(c.getUTCDate()+7);
+          while(c < cur.start){ emit(c,prev.val); emit(weekEnd(c),prev.val); c.setUTCDate(c.getUTCDate()+7); }
+        }else if(mode==='monthly'){
+          let c=new Date(Date.UTC(prev.start.getUTCFullYear(),prev.start.getUTCMonth()+1,1));
+          while(c < cur.start){ emit(c,prev.val); emit(monthEnd(c),prev.val);
+            c=new Date(Date.UTC(c.getUTCFullYear(),c.getUTCMonth()+1,1)); }
+        }else{
+          let c=new Date(Date.UTC(prev.start.getUTCFullYear()+1,0,1));
+          while(c < cur.start){ emit(c,prev.val); emit(yearEnd(c),prev.val);
+            c=new Date(Date.UTC(c.getUTCFullYear()+1,0,1)); }
         }
       }
-
-      // emit this period: start & end with same value (flat within period)
-      pushPoint(cur.start, cur.val);
-      pushPoint(cur.end,   cur.val);
-
-      prev = cur;
+      // this bucket flat: start -> end at same value
+      emit(cur.start,cur.val);
+      emit(cur.end,cur.val);
+      prev=cur;
     }
     return out;
   }
 
   /* ---------- plotting ---------- */
-  function makeTrace(series, name, colour){
+  function makeTrace(series,name,colour){
     return {
-      x: series.x, y: series.y,
+      x:series.x, y:series.y,
       mode:'lines',
-      line:{ width:2, shape:'linear', color:colour }, // straight lines, no steps
+      line:{width:2,shape:'linear',color:colour},   // straight (no step)
       name,
-      hovertemplate: '%{x}<br>%{y:.0f}<extra>'+name+'</extra>' // integer hover
+      hovertemplate:'%{x}<br>%{y:.0f}<extra>'+name+'</extra>' // integers
     };
   }
-  function majorGridShapes(ymin,ymax){
-    const shapes=[];
-    for(let v=ymin;v<=ymax;v+=100){
-      shapes.push({type:'line',xref:'paper',x0:0,x1:1,y0:v,y1:v,
+  function grid(ymin,ymax){
+    const s=[]; for(let v=ymin;v<=ymax;v+=100){
+      s.push({type:'line',xref:'paper',x0:0,x1:1,y0:v,y1:v,
         line:{width:2,color:'rgba(128,128,128,0.35)'},layer:'below'});
-    }
-    return shapes;
+    } return s;
   }
   function draw(){
     const mode=document.getElementById('agg')?.value || 'daily';
-
-    const aggLive = aggregateExpanded(rawLive||[], mode);
-    seriesLive = { x: aggLive.map(p=>p.x), y: aggLive.map(p=>p.y) };
-
-    if (rawWCU){
-      const aggW = aggregateExpanded(rawWCU, mode);
-      seriesWCU = { x: aggW.map(p=>p.x), y: aggW.map(p=>p.y) };
+    const aggLive=aggregateExpanded(rawLive||[],mode);
+    seriesLive={x:aggLive.map(p=>p.x),y:aggLive.map(p=>p.y)};
+    if(rawWCU){
+      const aggW=aggregateExpanded(rawWCU,mode);
+      seriesWCU={x:aggW.map(p=>p.x),y:aggW.map(p=>p.y)};
     }
 
     const bg=getComputedStyle(document.body).backgroundColor;
     const traces=[makeTrace(seriesLive,'J-Ratings',COLORS.J)];
-    if(showWCU && seriesWCU) traces.push(makeTrace(seriesWCU,'WCU',COLORS.WCU));
+    if(showWCU&&seriesWCU) traces.push(makeTrace(seriesWCU,'WCU',COLORS.WCU));
 
     const ys=[...seriesLive.y,...(showWCU&&seriesWCU?seriesWCU.y:[])].filter(Number.isFinite);
-    if(!ys.length){
-      document.getElementById('chart').textContent='No Games';
-      return;
-    }
+    if(!ys.length){ document.getElementById('chart').textContent='No Games'; return; }
     const ymin=Math.floor(Math.min(...ys)/100)*100;
     const ymax=Math.ceil(Math.max(...ys)/100)*100;
 
     Plotly.newPlot('chart',traces,{
       margin:{l:50,r:20,t:10,b:40},
-      xaxis:{ type:'date' },
-      yaxis:{ title:'Rating' },
-      paper_bgcolor:bg, plot_bgcolor:bg,
-      font:{ color:getComputedStyle(document.body).color },
-      legend:{ orientation:'h', x:0, y:1.1 },
-      shapes:majorGridShapes(ymin,ymax)
-    },{ staticPlot:IS_TOUCH, scrollZoom:false, displayModeBar:false, responsive:true });
+      xaxis:{type:'date'},
+      yaxis:{title:'Rating'},
+      paper_bgcolor:bg,plot_bgcolor:bg,
+      font:{color:getComputedStyle(document.body).color},
+      legend:{orientation:'h',x:0,y:1.1},
+      shapes:grid(ymin,ymax)
+    },{staticPlot:IS_TOUCH,scrollZoom:false,displayModeBar:false,responsive:true});
   }
 
   function computeMetrics(series){
-    const y=series?.y??[];
-    const live=y.length?Math.round(y[y.length-1]):null;
+    const y=series?.y??[]; const live=y.length?Math.round(y[y.length-1]):null;
     const peak=y.length?Math.round(Math.max(...y)):null;
     const kval=Number.isFinite(live)?kFromRating(live):null;
     return {live,peak,kval};
@@ -329,25 +259,13 @@
       document.getElementById('peak-wcu').textContent=w.peak??'–';
       document.getElementById('kval-wcu').textContent=w.kval??'–';
       wcuRow.style.display='';
-    }else{
-      wcuRow.style.display='none';
-    }
+    } else { wcuRow.style.display='none'; }
     document.getElementById('toggle').textContent=showWCU?'Hide WCU':'Show WCU';
   }
-  function resultClass(r){
-    if(r==="Win") return "result-win";
-    if(r==="Draw")return "result-draw";
-    if(r==="Loss")return "result-loss";
-    return "";
-  }
-  function deltaClass(d){
-    if(!d) return "";
-    if(d.startsWith("+")) return "delta-pos";
-    if(d.startsWith("-")) return "delta-neg";
-    return "delta-zero";
-  }
 
-  /* ---------- load ---------- */
+  function resultClass(r){ if(r==='Win')return'result-win'; if(r==='Draw')return'result-draw'; if(r==='Loss')return'result-loss'; return''; }
+  function deltaClass(d){ if(!d)return''; if(d.startsWith('+'))return'delta-pos'; if(d.startsWith('-'))return'delta-neg'; return'delta-zero'; }
+
   async function load(){
     try{
       const [playersRes,liveRes,wcuRes,gamesRes]=await Promise.all([
@@ -365,13 +283,11 @@
       document.getElementById('pname').textContent=me.name;
 
       const livePairs=(await liveRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
-      rawLive=livePairs;
-      seriesLive={x:livePairs.map(p=>p.x),y:livePairs.map(p=>p.y)};
+      rawLive=livePairs; seriesLive={x:livePairs.map(p=>p.x),y:livePairs.map(p=>p.y)};
 
       if(wcuRes&&wcuRes.ok){
         const wcuPairs=(await wcuRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
-        rawWCU=wcuPairs;
-        seriesWCU={x:wcuPairs.map(p=>p.x),y:wcuPairs.map(p=>p.y)};
+        rawWCU=wcuPairs; seriesWCU={x:wcuPairs.map(p=>p.x),y:wcuPairs.map(p=>p.y)};
         document.getElementById('toggle').disabled=false;
       }else{
         document.getElementById('toggle').disabled=true;
@@ -379,7 +295,7 @@
       }
 
       draw(); refreshBadge();
-      document.getElementById('agg').addEventListener('change', ()=>{ draw(); refreshBadge(); });
+      document.getElementById('agg').addEventListener('change',()=>{ draw(); refreshBadge(); });
 
       if(gamesRes&&gamesRes.ok){
         const games=await gamesRes.json();
@@ -390,16 +306,12 @@
           cols.forEach(col=>{
             const td=document.createElement("td");
             if(col==="opponent"){
-              const opp=g.opponent ?? "";
-              const oppId=g.opponent_id;
+              const opp=g.opponent ?? ""; const oppId=g.opponent_id;
               if(oppId){
                 const a=document.createElement("a");
                 a.href=`player.html?id=${encodeURIComponent(oppId)}`;
-                a.textContent=opp;
-                td.appendChild(a);
-              }else{
-                td.textContent=opp;
-              }
+                a.textContent=opp; td.appendChild(a);
+              }else{ td.textContent=opp; }
             }else{
               td.textContent=g[col]??"";
               if(col==="result") td.className=resultClass(g[col]);
