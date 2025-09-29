@@ -251,9 +251,22 @@
           const cols=["date","player","playerElo","opponent","opponentElo","result","delta"];
           cols.forEach(col=>{
             const td=document.createElement("td");
-            td.textContent=g[col]??"";
-            if(col==="result") td.className=resultClass(g[col]);
-            if(col==="delta") td.className=deltaClass(g[col]);
+            if(col==="opponent"){
+              const opp=g.opponent ?? "";
+              const oppId=g.opponent_id;
+              if(oppId){
+                const a=document.createElement("a");
+                a.href=`player.html?id=${encodeURIComponent(oppId)}`;
+                a.textContent=opp;
+                td.appendChild(a);
+              }else{
+                td.textContent=opp;
+              }
+            }else{
+              td.textContent=g[col]??"";
+              if(col==="result") td.className=resultClass(g[col]);
+              if(col==="delta")  td.className=deltaClass(g[col]);
+            }
             tr.appendChild(td);
           });
           tbody.appendChild(tr);
