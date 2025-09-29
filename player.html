@@ -290,19 +290,28 @@ async function load(){
         const tr=document.createElement('tr');
         const cols=["date","player","playerElo","opponent","opponentElo","result","delta"];
         cols.forEach(col=>{
-          const td=document.createElement("td");
-          if(col==="player"||col==="opponent"){
-            const a=document.createElement("a");
-            a.href=`player.html?id=${encodeURIComponent(g[col+'Id']??g[col])}`;
-            a.textContent=g[col]??"";
-            td.appendChild(a);
-          }else{
-            td.textContent=g[col]??"";
-          }
-          if(col==="result") td.className=resultClass(g[col]);
-          if(col==="delta") td.className=deltaClass(g[col]);
-          tr.appendChild(td);
-        });
+  const td=document.createElement("td");
+
+  if(col==="player" || col==="opponent"){
+    const name = g[col] ?? "";
+    const id   = g[col+"Id"]; // only present if they have a profile
+    if(id){
+      const a=document.createElement("a");
+      a.href=`player.html?id=${encodeURIComponent(id)}`;
+      a.textContent=name;
+      td.appendChild(a);
+    }else{
+      td.textContent=name;
+    }
+  } else {
+    td.textContent=g[col]??"";
+  }
+
+  if(col==="result") td.className=resultClass(g[col]);
+  if(col==="delta") td.className=deltaClass(g[col]);
+  tr.appendChild(td);
+});
+
         tbody.appendChild(tr);
       });
     }
