@@ -30,12 +30,8 @@
       grid-template-columns: auto auto auto auto auto auto;
       column-gap: .35rem;
     }
-    .badge .stack div {
-      display: contents;
-    }
-    .badge strong {
-      font-variant-numeric: tabular-nums;
-    }
+    .badge .stack div { display: contents; }
+    .badge strong { font-variant-numeric: tabular-nums; }
     .btn-mini{
       background:#0f1623;
       border:1px solid var(--border);
@@ -47,15 +43,8 @@
     }
     .btn-mini[disabled]{opacity:.5; cursor:default}
     .btn-mini:hover:not([disabled]){background:rgba(255,255,255,.05)}
-    #chart{
-      height:420px;
-      touch-action: pan-y;
-    }
-    #games{
-      margin-top:1.5rem;
-      width:100%;
-      border-collapse:collapse;
-    }
+    #chart{ height:420px; touch-action: pan-y; }
+    #games{ margin-top:1.5rem; width:100%; border-collapse:collapse; }
     #games th, #games td {
       padding:6px 10px;
       border-bottom:1px solid #333;
@@ -114,7 +103,7 @@
       </div>
     </div>
 
-    <!-- New aggregation toolbar -->
+    <!-- View dropdown -->
     <div class="toolbar">
       <label for="agg">View:</label>
       <select id="agg">
@@ -160,48 +149,40 @@
 
   const COLORS = { J: '#1f77b4', WCU: '#ff7f0e' };
   const kFromRating = r => (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
-  let me=null, seriesLive=null, seriesWCU=null, showWCU=false;
+  let me=null, rawLive=null, rawWCU=null, seriesLive=null, seriesWCU=null, showWCU=false;
   const IS_TOUCH = window.matchMedia('(pointer: coarse)').matches;
 
-  function normalise(series, dedupeByDay=false){
-    const s = series
-      .filter(p => p && p.x && Number.isFinite(p.y))
-      .map(p => ({ x:p.x, y:+p.y }))
-      .sort((a,b)=> new Date(a.x) - new Date(b.x));
-    if(!dedupeByDay) return s;
-    const out=[], seen=new Set();
-    for(const p of s){
-      const d=new Date(p.x);
-      const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-      if(!seen.has(key)){ out.push(p); seen.add(key); }
-      else out[out.length-1]=p;
-    }
-    return out;
+  function toISODateUTC(d){
+    const y = d.getUTCFullYear();
+    const m = String(d.getUTCMonth()+1).padStart(2,'0');
+    const da = String(d.getUTCDate()).padStart(2,'0');
+    return `${y}-${m}-${da}`;
   }
-
-  function aggregate(series, mode){
-    if(mode==="daily") return normalise(series,true);
-    const buckets=Object.create(null);
-    for(const p of series){
-      const d=new Date(p.x);
-      let key;
-      if(mode==="weekly"){
-        const firstJan=new Date(d.getFullYear(),0,1);
-        const dayOfYear=Math.floor((d-firstJan)/86400000);
-        const week=Math.floor(dayOfYear/7)+1;
-        key=`${d.getFullYear()}-W${String(week).padStart(2,'0')}`;
-      } else if(mode==="monthly"){
-        key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-      } else {
-        key=`${d.getFullYear()}`;
-      }
-      (buckets[key] ||= []).push(p.y);
+  function mondayOfWeekUTC(d){
+    const dow = (d.getUTCDay()+6)%7;
+    return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() - dow));
+  }
+  function aggregatePairs(pairs, mode){
+    if(mode==="daily"){
+      const byDay={};
+      for(const p of pairs) byDay[p.x]=+p.y;
+      return Object.keys(byDay).sort().map(x=>({x,y:byDay[x]}));
+    }
+    const buckets={};
+    for(const p of pairs){
+      const d=new Date(p.x+"T00:00:00Z");
+      if(Number.isNaN(d)) continue;
+      let keyDate;
+      if(mode==="weekly") keyDate=mondayOfWeekUTC(d);
+      else if(mode==="monthly") keyDate=new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1));
+      else keyDate=new Date(Date.UTC(d.getUTCFullYear(),0,1));
+      const key=toISODateUTC(keyDate);
+      (buckets[key] ||= []).push(+p.y);
     }
     return Object.keys(buckets).sort().map(k=>{
       const ys=buckets[k].filter(Number.isFinite);
       const avg=ys.reduce((a,b)=>a+b,0)/ys.length;
-      const x=(k.includes('W'))? k : (k.length===7?`${k}-01`:`${k}-01-01`);
-      return {x,y:avg};
+      return {x:k,y:avg};
     });
   }
 
@@ -224,17 +205,20 @@
   }
   function draw(){
     const mode=document.getElementById('agg')?.value || 'daily';
-    const livePairs=aggregate(seriesLive.x.map((x,i)=>({x,y:seriesLive.y[i]})), mode);
-    seriesLive={x:livePairs.map(p=>p.x), y:livePairs.map(p=>p.y)};
-    if(seriesWCU){
-      const wcuPairs=aggregate(seriesWCU.x.map((x,i)=>({x,y:seriesWCU.y[i]})), mode);
-      seriesWCU={x:wcuPairs.map(p=>p.x), y:wcuPairs.map(p=>p.y)};
+    const aggLive=aggregatePairs(rawLive||[], mode);
+    seriesLive={x:aggLive.map(p=>p.x),y:aggLive.map(p=>p.y)};
+    if(rawWCU){
+      const aggW=aggregatePairs(rawWCU, mode);
+      seriesWCU={x:aggW.map(p=>p.x),y:aggW.map(p=>p.y)};
     }
-
     const bg=getComputedStyle(document.body).backgroundColor;
     const traces=[makeTrace(seriesLive,'J-Ratings',COLORS.J)];
     if(showWCU && seriesWCU) traces.push(makeTrace(seriesWCU,'WCU',COLORS.WCU));
     const ys=[...seriesLive.y,...(showWCU&&seriesWCU?seriesWCU.y:[])];
+    if(!ys.length){
+      document.getElementById('chart').textContent='No Games';
+      return;
+    }
     const ymin=Math.floor(Math.min(...ys)/100)*100;
     const ymax=Math.ceil(Math.max(...ys)/100)*100;
     Plotly.newPlot('chart',traces,{
@@ -292,18 +276,22 @@
       me=players.find(p=>p.id===idRaw);
       if(!me) throw new Error('player id not in players.json');
       document.getElementById('pname').textContent=me.name;
+
       const livePairs=(await liveRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
+      rawLive=livePairs;
       seriesLive={x:livePairs.map(p=>p.x),y:livePairs.map(p=>p.y)};
       if(wcuRes&&wcuRes.ok){
         const wcuPairs=(await wcuRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
+        rawWCU=wcuPairs;
         seriesWCU={x:wcuPairs.map(p=>p.x),y:wcuPairs.map(p=>p.y)};
         document.getElementById('toggle').disabled=false;
       }else{
         document.getElementById('toggle').disabled=true;
         document.getElementById('toggle').textContent='WCU N/A';
       }
+
       draw();refreshBadge();
-      document.getElementById('agg').addEventListener('change', ()=>{ draw(); refreshBadge(); });
+      document.getElementById('agg').addEventListener('change',()=>{draw();refreshBadge();});
 
       if(gamesRes&&gamesRes.ok){
         const games=await gamesRes.json();
@@ -313,9 +301,22 @@
           const cols=["date","player","playerElo","opponent","opponentElo","result","delta"];
           cols.forEach(col=>{
             const td=document.createElement("td");
-            td.textContent=g[col]??"";
-            if(col==="result") td.className=resultClass(g[col]);
-            if(col==="delta") td.className=deltaClass(g[col]);
+            if(col==="opponent"){
+              const opp=g.opponent ?? "";
+              const oppId=g.opponent_id;
+              if(oppId){
+                const a=document.createElement("a");
+                a.href=`player.html?id=${encodeURIComponent(oppId)}`;
+                a.textContent=opp;
+                td.appendChild(a);
+              }else{
+                td.textContent=opp;
+              }
+            }else{
+              td.textContent=g[col]??"";
+              if(col==="result") td.className=resultClass(g[col]);
+              if(col==="delta") td.className=deltaClass(g[col]);
+            }
             tr.appendChild(td);
           });
           tbody.appendChild(tr);
