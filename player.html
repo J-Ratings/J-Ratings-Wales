@@ -22,16 +22,18 @@
       margin-right:4px;
       white-space:nowrap;
       display:flex;
-      align-items:center;
-      gap:.75rem;
+      align-items:flex-start;
+      flex-direction:column;
+      gap:.5rem;
     }
     .badge .stack {
       display:flex;
-      gap:1.25rem; /* spacing between J and WCU groups */
+      flex-direction:column;
+      gap:.25rem;
     }
     .badge strong { font-variant-numeric: tabular-nums; }
-    #stats-j span.muted { color:#1f77b4; }   /* J labels */
-    #stats-wcu span.muted { color:#ff7f0e; } /* WCU labels */
+    #stats-j span.muted { color:#1f77b4; font-weight:bold; }   /* J labels */
+    #stats-wcu span.muted { color:#ff7f0e; font-weight:bold; } /* WCU labels */
 
     .btn-mini {
       background:#0f1623;
@@ -103,9 +105,9 @@
   <div>
     <label for="agg">View:</label>
     <select id="agg">
-      <option value="daily"selected>Daily</option>
+      <option value="daily" selected>Daily</option>
       <option value="weekly">Weekly</option>
-      <option value="monthly" >Monthly</option>
+      <option value="monthly">Monthly</option>
       <option value="yearly">Yearly</option>
     </select>
   </div>
@@ -126,29 +128,28 @@
 </main>
 
 <script>
-const params = new URLSearchParams(location.search);
-const idRaw = params.get('id');
-if (!idRaw) { document.getElementById('chart').textContent='Missing player id.'; throw new Error('no id'); }
+const params=new URLSearchParams(location.search);
+const idRaw=params.get('id');
+if(!idRaw){document.getElementById('chart').textContent='Missing player id.';throw new Error('no id');}
 
 const PLAYERS_URL='data/players.json';
 const HIST_URL   =id=>`data/history/${encodeURIComponent(id)}.json`;
 const HIST_WCU  =id=>`data/history/${encodeURIComponent(id)}_wcu.json`;
 const GAMES_URL =id=>`data/games/${encodeURIComponent(id)}.json`;
 
-const COLORS={ J:'#1f77b4', WCU:'#ff7f0e' };
+const COLORS={J:'#1f77b4',WCU:'#ff7f0e'};
 const kFromRating=r=>(r>=2200?10:r>=1800?20:30);
 
-let me=null, rawLive=[], rawWCU=[], seriesLive=null, seriesWCU=null, showWCU=false;
+let me=null,rawLive=[],rawWCU=[],seriesLive=null,seriesWCU=null,showWCU=false;
 const IS_TOUCH=window.matchMedia('(pointer: coarse)').matches;
 
-function normalise(series){ return series.filter(p=>p&&p.x&&Number.isFinite(p.y)).map(p=>({x:p.x,y:+p.y})).sort((a,b)=>new Date(a.x)-new Date(b.x)); }
+function normalise(series){return series.filter(p=>p&&p.x&&Number.isFinite(p.y)).map(p=>({x:p.x,y:+p.y})).sort((a,b)=>new Date(a.x)-new Date(b.x));}
 
-function aggregateExpanded(series, mode){
+function aggregateExpanded(series,mode){
   if(mode==='daily') return normalise(series);
   const buckets=Object.create(null);
   for(const p of series){
-    const d=new Date(p.x);
-    let key;
+    const d=new Date(p.x);let key;
     if(mode==='weekly'){
       const tmp=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
       const dayNum=tmp.getUTCDay()||7;
@@ -168,14 +169,14 @@ function aggregateExpanded(series, mode){
     const avg=ys.reduce((a,b)=>a+b,0)/ys.length;
     let x;
     if(k.includes('W')){
-      const [y,w]=k.split('-W'); const year=parseInt(y,10),week=parseInt(w,10);
+      const [y,w]=k.split('-W');const year=parseInt(y,10),week=parseInt(w,10);
       const simple=new Date(Date.UTC(year,0,1+(week-1)*7));
-      const dow=simple.getUTCDay(); const ISOweekStart=simple;
+      const dow=simple.getUTCDay();const ISOweekStart=simple;
       if(dow<=4) ISOweekStart.setUTCDate(simple.getUTCDate()-simple.getUTCDay()+1);
       else ISOweekStart.setUTCDate(simple.getUTCDate()+8-simple.getUTCDay());
       x=ISOweekStart.toISOString().slice(0,10);
-    }else if(k.length===7){ x=`${k}-01`; }
-    else{ x=`${k}-01-01`; }
+    }else if(k.length===7){x=`${k}-01`;}
+    else{x=`${k}-01-01`;}
     return {x,y:avg};
   });
   return normalise(out);
@@ -183,20 +184,20 @@ function aggregateExpanded(series, mode){
 
 function makeTrace(series,name,colour,mode){
   return {
-    x:series.map(p=>p.x), y:series.map(p=>p.y),
+    x:series.map(p=>p.x),y:series.map(p=>p.y),
     mode:(mode==='daily'?'lines':'lines+markers'),
     line:{width:2,shape:'linear',color:colour},
     marker:(mode==='daily'?{size:0}:{size:4}),
-    name, hovertemplate:'%{x}<br>%{y:.0f}<extra>'+name+'</extra>',
+    name,hovertemplate:'%{x}<br>%{y:.0f}<extra>'+name+'</extra>',
     connectgaps:true
   };
 }
 
 function majorGridShapes(ymin,ymax){
-  const shapes=[]; for(let v=ymin;v<=ymax;v+=100){
+  const shapes=[];for(let v=ymin;v<=ymax;v+=100){
     shapes.push({type:'line',xref:'paper',x0:0,x1:1,y0:v,y1:v,
       line:{width:1,color:'rgba(128,128,128,0.35)'},layer:'below'});
-  } return shapes;
+  }return shapes;
 }
 
 function draw(){
@@ -251,8 +252,8 @@ function refreshBadge(){
   document.getElementById('toggle').textContent=showWCU?'Hide WCU':'Show WCU';
 }
 
-function resultClass(r){ if(r==="Win")return"result-win"; if(r==="Draw")return"result-draw"; if(r==="Loss")return"result-loss"; return""; }
-function deltaClass(d){ if(!d)return""; if(d.startsWith("+"))return"delta-pos"; if(d.startsWith("-"))return"delta-neg"; return"delta-zero"; }
+function resultClass(r){if(r==="Win")return"result-win";if(r==="Draw")return"result-draw";if(r==="Loss")return"result-loss";return"";}
+function deltaClass(d){if(!d)return"";if(d.startsWith("+"))return"delta-pos";if(d.startsWith("-"))return"delta-neg";return"delta-zero";}
 
 async function load(){
   try{
@@ -279,7 +280,7 @@ async function load(){
       document.getElementById('toggle').textContent='WCU N/A';
     }
 
-    draw(); refreshBadge();
+    draw();refreshBadge();
     document.getElementById('agg').addEventListener('change',()=>{draw();refreshBadge();});
 
     if(gamesRes&&gamesRes.ok){
@@ -290,7 +291,14 @@ async function load(){
         const cols=["date","player","playerElo","opponent","opponentElo","result","delta"];
         cols.forEach(col=>{
           const td=document.createElement("td");
-          td.textContent=g[col]??"";
+          if(col==="player"||col==="opponent"){
+            const a=document.createElement("a");
+            a.href=`player.html?id=${encodeURIComponent(g[col+'Id']??g[col])}`;
+            a.textContent=g[col]??"";
+            td.appendChild(a);
+          }else{
+            td.textContent=g[col]??"";
+          }
           if(col==="result") td.className=resultClass(g[col]);
           if(col==="delta") td.className=deltaClass(g[col]);
           tr.appendChild(td);
@@ -305,7 +313,7 @@ async function load(){
 }
 
 document.addEventListener('click',e=>{
-  if(e.target.id==='toggle'&&!e.target.disabled){ showWCU=!showWCU; draw(); refreshBadge(); }
+  if(e.target.id==='toggle'&&!e.target.disabled){showWCU=!showWCU;draw();refreshBadge();}
 });
 
 load();
