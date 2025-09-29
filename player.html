@@ -2,339 +2,278 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Player — J-Ratings</title>
+  <title>J-Ratings</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <style>
-    .player-head{
-      display:flex;justify-content:space-between;align-items:flex-end;
-      margin:12px 0;padding-right:12px;
-    }
-    .badge{
-      border:1px solid var(--border);background:#0f1623;border-radius:8px;
-      padding:6px 10px;margin-right:4px;white-space:nowrap;display:flex;
-      align-items:center;gap:.75rem;
-    }
-    .badge .stack{display:grid;grid-template-columns:auto auto;column-gap:.75rem}
-    .badge .stack div{display:contents}
-    .badge strong{font-variant-numeric:tabular-nums}
-    /* Colour only the LABEL text; numbers stay default */
-    #stats-j .muted{color:#1f77b4}
-    #stats-wcu .muted{color:#ff7f0e}
-    #stats-j strong,#stats-wcu strong{color:var(--text)}
+    #chart { height: 420px; }
+    .toolbar { margin-bottom: 10px; text-align: center; }
+    .toolbar label { margin-right: 6px; }
+    h2#pname { margin-bottom: 10px; }
 
-    .btn-mini{
-      background:#0f1623;border:1px solid var(--border);color:var(--text);
-      padding:4px 8px;border-radius:6px;cursor:pointer;font-size:.9rem;
+    /* Key styling */
+    #badge {
+      position:absolute; top:12px; right:12px;
+      background:#111; border-radius:6px; padding:6px 12px;
+      font-size:14px; line-height:1.4;
+      display:flex; gap:20px; /* side by side */
     }
-    .btn-mini[disabled]{opacity:.5;cursor:default}
-    .btn-mini:hover:not([disabled]){background:rgba(255,255,255,.05)}
+    #badge .col { display:flex; flex-direction:column; }
+    #badge .label { font-weight:600; }
+    #badge .j { color:#1f77b4; }
+    #badge .wcu { color:#ff7f0e; }
 
-    #chart{height:420px;touch-action:pan-y}
-
-    #games{margin-top:1.5rem;width:100%;border-collapse:collapse}
-    #games th,#games td{
-      padding:6px 10px;border-bottom:1px solid #333;text-align:center!important;
-      vertical-align:middle;white-space:nowrap
+    /* Games table */
+    #gamesWrap { max-height: 520px; overflow: auto; margin-top: 12px; }
+    table.games {
+      width:100%; border-collapse: collapse; font-size:14px;
     }
-    #games th{background:#111;position:sticky;top:0}
-    #games th:nth-child(1),#games td:nth-child(1),
-    #games th:nth-child(3),#games td:nth-child(3),
-    #games th:nth-child(5),#games td:nth-child(5),
-    #games th:nth-child(6),#games td:nth-child(6){
-      border-right:3px double rgba(128,128,128,.6)
+    table.games th, table.games td {
+      padding:6px 8px; border-bottom:1px solid #2b2f36;
+      text-align:center; white-space: nowrap;
     }
-    .result-win{color:#34c759;font-weight:bold}
-    .result-draw{color:#ffb833;font-weight:bold}
-    .result-loss{color:#e53935;font-weight:bold}
-    .delta-pos{color:#34c759;font-weight:bold}
-    .delta-neg{color:#e53935;font-weight:bold}
-    .delta-zero{color:#ffb833;font-weight:bold}
-
-    .toolbar{margin-bottom:10px;text-align:center}
-    .toolbar label{margin-right:6px}
+    table.games th { position: sticky; top: 0; background:#1a1a1a; }
+    .result.win { color:#2e7d32; font-weight:700; }
+    .result.loss{ color:#c62828; font-weight:700; }
+    .delta.pos { color:#2e7d32; font-weight:700; }
+    .delta.neg { color:#c62828; font-weight:700; }
   </style>
 </head>
 <body>
 <header>
   <div class="wrap">
-    <div class="title">
-      <h1><a href="index.html" style="color:#8b949e;text-decoration:none">J-Ratings</a></h1>
-    </div>
+    <h1 class="site-title"><a href="index.html">J-Ratings</a></h1>
+    <nav class="topnav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="compare.html">Compare</a>
+      <a href="peak.html">Peak</a>
+    </nav>
   </div>
 </header>
 
 <main class="wrap">
-  <section class="panel">
-    <div class="player-head">
-      <h2 id="pname">Player</h2>
-      <div class="badge">
-        <button id="toggle" class="btn-mini" type="button" title="Toggle WCU overlay">Show WCU</button>
-        <div class="stack">
-          <div id="stats-j">
-            <span class="muted">J Live:</span> <strong id="live-j">–</strong>
-            <span class="muted">Peak:</span> <strong id="peak-j">–</strong>
-            <span class="muted">K:</span> <strong id="kval-j">–</strong>
-          </div>
-          <div id="stats-wcu" style="display:none">
-            <span class="muted">WCU Live:</span> <strong id="live-wcu">–</strong>
-            <span class="muted">Peak:</span> <strong id="peak-wcu">–</strong>
-            <span class="muted">K:</span> <strong id="kval-wcu">–</strong>
-          </div>
-        </div>
-      </div>
-    </div>
-
+  <section class="panel" style="position:relative">
+    <h2 id="pname">Player</h2>
     <div class="toolbar">
       <label for="agg">View:</label>
       <select id="agg">
-        <option value="daily" selected>Daily</option>
+        <option value="daily">Daily</option>
         <option value="weekly">Weekly</option>
-        <option value="monthly">Monthly</option>
+        <option value="monthly" selected>Monthly</option>
         <option value="yearly">Yearly</option>
       </select>
     </div>
+    <div id="chart">Loading…</div>
+    <div id="badge">
+      <div class="col j">
+        <span class="label">J Live: <span id="j-live"></span></span>
+        <span>Peak: <span id="j-peak"></span></span>
+        <span>K: <span id="j-k"></span></span>
+      </div>
+      <div class="col wcu">
+        <span class="label">WCU Live: <span id="wcu-live"></span></span>
+        <span>Peak: <span id="wcu-peak"></span></span>
+        <span>K: <span id="wcu-k"></span></span>
+        <button id="toggle">Hide WCU</button>
+      </div>
+    </div>
 
-    <div id="chart"></div>
-
-    <h3>Games</h3>
-    <table id="games">
-      <thead>
-        <tr>
-          <th>Date</th><th>Player</th><th>Elo</th>
-          <th>Opponent</th><th>Elo</th><th>Result</th><th>Δ</th>
-        </tr>
-      </thead>
-      <tbody id="games-body"></tbody>
-    </table>
+    <h3 class="section-title" style="margin-top:18px;">Games</h3>
+    <div id="gamesWrap"><table id="games" class="games"></table></div>
   </section>
 </main>
 
 <script>
-  const params = new URLSearchParams(location.search);
-  const idRaw = params.get('id');
-  if (!idRaw) { document.getElementById('chart').textContent = 'Missing player id.'; throw new Error('no id'); }
+const params = new URLSearchParams(location.search);
+const idRaw = params.get('id');
+if (!idRaw) {
+  document.getElementById('chart').textContent = 'Missing player id.';
+  throw new Error('no id');
+}
 
-  const PLAYERS_URL = 'data/players.json';
-  const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;
-  const HIST_WCU    = id => `data/history/${encodeURIComponent(id)}_wcu.json`;
-  const GAMES_URL   = id => `data/games/${encodeURIComponent(id)}.json`;
+const PLAYERS_URL='data/players.json';
+const HIST_URL=id=>`data/history/${encodeURIComponent(id)}.json`;
+const HIST_WCU=id=>`data/history_wcu/${encodeURIComponent(id)}.json`;
+const GAMES_URL=id=>`data/games/${encodeURIComponent(id)}.json`;
+const IS_TOUCH=window.matchMedia('(pointer: coarse)').matches;
 
-  const COLORS = { J:'#1f77b4', WCU:'#ff7f0e' };
-  const kFromRating = r => (r>=2200?10:r>=1800?20:30);
-  let me=null, rawLive=null, rawWCU=null, seriesLive=null, seriesWCU=null, showWCU=false;
-  const IS_TOUCH = window.matchMedia('(pointer: coarse)').matches;
+let RAW=[], RAW_WCU=[];
 
-  /* ---------- date helpers ---------- */
-  const toISO = d => `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`;
-  const weekStart = d => { const dow=(d.getUTCDay()+6)%7; return new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()-dow)); };
-  const weekEnd   = d => { const s=weekStart(d); return new Date(Date.UTC(s.getUTCFullYear(),s.getUTCMonth(),s.getUTCDate()+6)); };
-  const monthStart= d => new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1));
-  const monthEnd  = d => new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth()+1, 0));
-  const yearStart = d => new Date(Date.UTC(d.getUTCFullYear(),0,1));
-  const yearEnd   = d => new Date(Date.UTC(d.getUTCFullYear(),11,31));
-
-  /* ---------- aggregation ---------- */
-  function dailyPairs(pairs){
-    const byDay={}; for(const p of pairs) byDay[p.x]=+p.y;
-    return Object.keys(byDay).sort().map(x=>({x,y:byDay[x]}));
+function normalise(series, dedupeByDay=false){
+  const s=series
+    .filter(p=>p && p.x && Number.isFinite(p.y))
+    .map(p=>({x:p.x,y:+p.y}))
+    .sort((a,b)=>new Date(a.x)-new Date(b.x));
+  if(!dedupeByDay) return s;
+  const out=[]; let lastKey=null;
+  for(const p of s){
+    const d=new Date(p.x);
+    const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    if(key!==lastKey) out.push(p);
+    else out[out.length-1]=p;
+    lastKey=key;
   }
+  return out;
+}
 
-  // Flat inside a bucket, short diagonal only at boundary to next bucket with games;
-  // missing buckets are inserted as flat with previous value.
-  function aggregateExpanded(pairs, mode){
-    if (mode==='daily') return dailyPairs(pairs);
-    if (!pairs.length) return [];
+function aggregateExpanded(series, mode){
+  if(mode==='daily') return normalise(series,true);
 
-    // Average value per bucket
-    const map={};
-    for(const p of pairs){
-      const d=new Date(p.x+'T00:00:00Z'); if(Number.isNaN(d)) continue;
-      let s,e;
-      if(mode==='weekly'){ s=weekStart(d); e=weekEnd(d); }
-      else if(mode==='monthly'){ s=monthStart(d); e=monthEnd(d); }
-      else { s=yearStart(d); e=yearEnd(d); }
-      const k=toISO(s);
-      (map[k] ||= {start:s,end:e,ys:[]}).ys.push(+p.y);
+  const buckets={};
+  for(const p of series){
+    const d=new Date(p.x); let key;
+    if(mode==='weekly'){
+      const tmp=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+      const dayNum=tmp.getUTCDay()||7;
+      tmp.setUTCDate(tmp.getUTCDate()+4-dayNum);
+      const yearStart=new Date(Date.UTC(tmp.getUTCFullYear(),0,1));
+      const weekNo=Math.ceil((((tmp-yearStart)/86400000)+1)/7);
+      key=`${tmp.getUTCFullYear()}-W${String(weekNo).padStart(2,'0')}`;
+    }else if(mode==='monthly'){
+      key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    }else if(mode==='yearly'){
+      key=`${d.getFullYear()}`;
     }
-    const keys=Object.keys(map).sort();
-    if(!keys.length) return [];
-
-    const buckets = keys.map(k=>{
-      const ys=map[k].ys.filter(Number.isFinite);
-      return {start:map[k].start, end:map[k].end, val: ys.reduce((a,b)=>a+b,0)/ys.length};
-    });
-
-    // Build continuous series with flat-per-bucket and fill gaps flat
-    const out=[];
-    const emit=(d,v)=>out.push({x:toISO(d),y:v});
-
-    let prev=null;
-    for(const cur of buckets){
-      // fill any missing buckets flat at prev.val
-      if(prev){
-        if(mode==='weekly'){
-          let c=new Date(prev.start); c.setUTCDate(c.getUTCDate()+7);
-          while(c < cur.start){ emit(c,prev.val); emit(weekEnd(c),prev.val); c.setUTCDate(c.getUTCDate()+7); }
-        }else if(mode==='monthly'){
-          let c=new Date(Date.UTC(prev.start.getUTCFullYear(),prev.start.getUTCMonth()+1,1));
-          while(c < cur.start){ emit(c,prev.val); emit(monthEnd(c),prev.val);
-            c=new Date(Date.UTC(c.getUTCFullYear(),c.getUTCMonth()+1,1)); }
-        }else{
-          let c=new Date(Date.UTC(prev.start.getUTCFullYear()+1,0,1));
-          while(c < cur.start){ emit(c,prev.val); emit(yearEnd(c),prev.val);
-            c=new Date(Date.UTC(c.getUTCFullYear()+1,0,1)); }
-        }
-      }
-      // this bucket flat: start -> end at same value
-      emit(cur.start,cur.val);
-      emit(cur.end,cur.val);
-      prev=cur;
-    }
-    return out;
+    (buckets[key] ||= []).push(p.y);
   }
 
-  /* ---------- plotting ---------- */
-  function makeTrace(series,name,colour){
-    return {
-      x:series.x, y:series.y,
-      mode:'lines',
-      line:{width:2,shape:'linear',color:colour},   // straight (no step)
-      name,
-      hovertemplate:'%{x}<br>%{y:.0f}<extra>'+name+'</extra>' // integers
-    };
-  }
-  function grid(ymin,ymax){
-    const s=[]; for(let v=ymin;v<=ymax;v+=100){
-      s.push({type:'line',xref:'paper',x0:0,x1:1,y0:v,y1:v,
-        line:{width:2,color:'rgba(128,128,128,0.35)'},layer:'below'});
-    } return s;
-  }
-  function draw(){
-    const mode=document.getElementById('agg')?.value || 'daily';
-    const aggLive=aggregateExpanded(rawLive||[],mode);
-    seriesLive={x:aggLive.map(p=>p.x),y:aggLive.map(p=>p.y)};
-    if(rawWCU){
-      const aggW=aggregateExpanded(rawWCU,mode);
-      seriesWCU={x:aggW.map(p=>p.x),y:aggW.map(p=>p.y)};
-    }
-
-    const bg=getComputedStyle(document.body).backgroundColor;
-    const traces=[makeTrace(seriesLive,'J-Ratings',COLORS.J)];
-    if(showWCU&&seriesWCU) traces.push(makeTrace(seriesWCU,'WCU',COLORS.WCU));
-
-    const ys=[...seriesLive.y,...(showWCU&&seriesWCU?seriesWCU.y:[])].filter(Number.isFinite);
-    if(!ys.length){ document.getElementById('chart').textContent='No Games'; return; }
-    const ymin=Math.floor(Math.min(...ys)/100)*100;
-    const ymax=Math.ceil(Math.max(...ys)/100)*100;
-
-    Plotly.newPlot('chart',traces,{
-      margin:{l:50,r:20,t:10,b:40},
-      xaxis:{type:'date'},
-      yaxis:{title:'Rating'},
-      paper_bgcolor:bg,plot_bgcolor:bg,
-      font:{color:getComputedStyle(document.body).color},
-      legend:{orientation:'h',x:0,y:1.1},
-      shapes:grid(ymin,ymax)
-    },{staticPlot:IS_TOUCH,scrollZoom:false,displayModeBar:false,responsive:true});
-  }
-
-  function computeMetrics(series){
-    const y=series?.y??[]; const live=y.length?Math.round(y[y.length-1]):null;
-    const peak=y.length?Math.round(Math.max(...y)):null;
-    const kval=Number.isFinite(live)?kFromRating(live):null;
-    return {live,peak,kval};
-  }
-  function refreshBadge(){
-    const j=computeMetrics(seriesLive);
-    document.getElementById('live-j').textContent=j.live??'–';
-    document.getElementById('peak-j').textContent=j.peak??'–';
-    document.getElementById('kval-j').textContent=(typeof me?.k==='number')?me.k:(j.kval??'–');
-
-    const wcuRow=document.getElementById('stats-wcu');
-    if(showWCU&&seriesWCU){
-      const w=computeMetrics(seriesWCU);
-      document.getElementById('live-wcu').textContent=w.live??'–';
-      document.getElementById('peak-wcu').textContent=w.peak??'–';
-      document.getElementById('kval-wcu').textContent=w.kval??'–';
-      wcuRow.style.display='';
-    } else { wcuRow.style.display='none'; }
-    document.getElementById('toggle').textContent=showWCU?'Hide WCU':'Show WCU';
-  }
-
-  function resultClass(r){ if(r==='Win')return'result-win'; if(r==='Draw')return'result-draw'; if(r==='Loss')return'result-loss'; return''; }
-  function deltaClass(d){ if(!d)return''; if(d.startsWith('+'))return'delta-pos'; if(d.startsWith('-'))return'delta-neg'; return'delta-zero'; }
-
-  async function load(){
-    try{
-      const [playersRes,liveRes,wcuRes,gamesRes]=await Promise.all([
-        fetch(PLAYERS_URL,{cache:'no-cache'}),
-        fetch(HIST_URL(idRaw),{cache:'no-cache'}),
-        fetch(HIST_WCU(idRaw),{cache:'no-cache'}).catch(()=>null),
-        fetch(GAMES_URL(idRaw),{cache:'no-cache'}).catch(()=>null)
-      ]);
-      if(!playersRes.ok) throw new Error('players.json not found');
-      if(!liveRes.ok) throw new Error('live history not found');
-
-      const players=await playersRes.json();
-      me=players.find(p=>p.id===idRaw);
-      if(!me) throw new Error('player id not in players.json');
-      document.getElementById('pname').textContent=me.name;
-
-      const livePairs=(await liveRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
-      rawLive=livePairs; seriesLive={x:livePairs.map(p=>p.x),y:livePairs.map(p=>p.y)};
-
-      if(wcuRes&&wcuRes.ok){
-        const wcuPairs=(await wcuRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
-        rawWCU=wcuPairs; seriesWCU={x:wcuPairs.map(p=>p.x),y:wcuPairs.map(p=>p.y)};
-        document.getElementById('toggle').disabled=false;
-      }else{
-        document.getElementById('toggle').disabled=true;
-        document.getElementById('toggle').textContent='WCU N/A';
-      }
-
-      draw(); refreshBadge();
-      document.getElementById('agg').addEventListener('change',()=>{ draw(); refreshBadge(); });
-
-      if(gamesRes&&gamesRes.ok){
-        const games=await gamesRes.json();
-        const tbody=document.getElementById('games-body');
-        games.forEach(g=>{
-          const tr=document.createElement('tr');
-          const cols=["date","player","playerElo","opponent","opponentElo","result","delta"];
-          cols.forEach(col=>{
-            const td=document.createElement("td");
-            if(col==="opponent"){
-              const opp=g.opponent ?? ""; const oppId=g.opponent_id;
-              if(oppId){
-                const a=document.createElement("a");
-                a.href=`player.html?id=${encodeURIComponent(oppId)}`;
-                a.textContent=opp; td.appendChild(a);
-              }else{ td.textContent=opp; }
-            }else{
-              td.textContent=g[col]??"";
-              if(col==="result") td.className=resultClass(g[col]);
-              if(col==="delta")  td.className=deltaClass(g[col]);
-            }
-            tr.appendChild(td);
-          });
-          tbody.appendChild(tr);
-        });
-      }
-    }catch(e){
-      console.error(e);
-      document.getElementById('chart').textContent='No Games';
-    }
-  }
-
-  document.addEventListener('click',e=>{
-    if(e.target.id==='toggle'&&!e.target.disabled){
-      showWCU=!showWCU; draw(); refreshBadge();
-    }
+  return Object.keys(buckets).sort().map(k=>{
+    const ys=buckets[k].filter(Number.isFinite);
+    const avg=ys.reduce((a,b)=>a+b,0)/ys.length;
+    let x;
+    if(k.includes('W')){
+      const [y,w]=k.split('-W'); const year=+y, week=+w;
+      const simple=new Date(Date.UTC(year,0,1+(week-1)*7));
+      const dow=simple.getUTCDay();
+      if(dow<=4) simple.setUTCDate(simple.getUTCDate()-dow+1);
+      else simple.setUTCDate(simple.getUTCDate()+8-dow);
+      x=simple.toISOString().slice(0,10);
+    }else if(k.length===7){ x=`${k}-01`; }
+    else { x=`${k}-01-01`; }
+    return {x,y:avg};
   });
+}
 
-  load();
+function draw(mode){
+  const el=document.getElementById('chart');
+  if(el.textContent.includes('Loading')) el.textContent='';
+
+  const dataJ=aggregateExpanded(RAW,mode);
+  const dataW=aggregateExpanded(RAW_WCU,mode);
+  if(!dataJ.length && !dataW.length){ el.textContent='No games'; return; }
+
+  const traces=[];
+  if(dataJ.length){
+    traces.push({
+      type:'scatter', x:dataJ.map(p=>p.x), y:dataJ.map(p=>p.y),
+      mode:(mode==='daily')?'lines':'lines+markers',
+      line:{width:2,shape:'linear',color:'#1f77b4'},
+      marker:(mode==='daily')?{size:0}:{size:4},
+      hovertemplate:'%{x}<br>%{y:.0f}<extra></extra>',
+      name:'J-Ratings'
+    });
+  }
+  if(dataW.length){
+    traces.push({
+      type:'scatter', x:dataW.map(p=>p.x), y:dataW.map(p=>p.y),
+      mode:(mode==='daily')?'lines':'lines+markers',
+      line:{width:2,shape:'linear',color:'#ff7f0e'},
+      marker:(mode==='daily')?{size:0}:{size:4},
+      hovertemplate:'%{x}<br>%{y:.0f}<extra></extra>',
+      name:'WCU'
+    });
+  }
+
+  const bg=getComputedStyle(document.body).backgroundColor;
+  Plotly.newPlot('chart', traces, {
+    margin:{l:50,r:20,t:10,b:40},
+    xaxis:{type:'date'}, yaxis:{title:'Rating'},
+    paper_bgcolor:bg, plot_bgcolor:bg,
+    font:{color:getComputedStyle(document.body).color}
+  },{
+    staticPlot:IS_TOUCH, displayModeBar:false, responsive:true
+  });
+}
+
+async function load(){
+  try{
+    const [playersRes,liveRes,wcuRes,gamesRes]=await Promise.all([
+      fetch(PLAYERS_URL,{cache:'no-cache'}),
+      fetch(HIST_URL(idRaw),{cache:'no-cache'}),
+      fetch(HIST_WCU(idRaw),{cache:'no-cache'}).catch(()=>null),
+      fetch(GAMES_URL(idRaw),{cache:'no-cache'}).catch(()=>null)
+    ]);
+    if(!playersRes.ok) throw new Error('players.json not found');
+    if(!liveRes.ok) throw new Error('live history not found');
+
+    const players=await playersRes.json();
+    const me=players.find(p=>p.id===idRaw);
+    if(!me) throw new Error('player id not in players.json');
+    document.getElementById('pname').textContent=me.name;
+
+    RAW=normalise((await liveRes.json()).map(d=>({x:d.date,y:+d.rating})),true);
+    if(wcuRes&&wcuRes.ok){
+      RAW_WCU=normalise((await wcuRes.json()).map(d=>({x:d.date,y:+d.rating})),true);
+      document.getElementById('toggle').disabled=false;
+    }else{
+      RAW_WCU=[];
+      document.getElementById('toggle').disabled=true;
+      document.getElementById('toggle').textContent='WCU N/A';
+    }
+
+    const initialMode='monthly';
+    document.getElementById('agg').value=initialMode;
+    draw(initialMode);
+    document.getElementById('agg').addEventListener('change',e=>draw(e.target.value));
+
+    // badge numbers
+    if(RAW.length){
+      document.getElementById('j-live').textContent=Math.round(RAW.at(-1).y);
+      document.getElementById('j-peak').textContent=Math.round(Math.max(...RAW.map(p=>p.y)));
+      document.getElementById('j-k').textContent=20;
+    }
+    if(RAW_WCU.length){
+      document.getElementById('wcu-live').textContent=Math.round(RAW_WCU.at(-1).y);
+      document.getElementById('wcu-peak').textContent=Math.round(Math.max(...RAW_WCU.map(p=>p.y)));
+      document.getElementById('wcu-k').textContent=20;
+    }
+
+    if(gamesRes&&gamesRes.ok){
+      const games=await gamesRes.json();
+      renderGamesTable(games);
+    }else{
+      document.getElementById('games').innerHTML='<tbody><tr><td>No games</td></tr></tbody>';
+    }
+  }catch(e){
+    console.error(e);
+    document.getElementById('chart').textContent='Error: '+e.message;
+  }
+}
+
+function renderGamesTable(games){
+  const tbl=document.getElementById('games');
+  tbl.innerHTML='';
+  const thead=document.createElement('thead');
+  const hr=document.createElement('tr');
+  for(const h of ['Date','Opponent','Result','Δ']){
+    const th=document.createElement('th'); th.textContent=h; hr.appendChild(th);
+  }
+  thead.appendChild(hr); tbl.appendChild(thead);
+  const tbody=document.createElement('tbody');
+  games.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  for(const g of games){
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${g.date}</td>
+                  <td>${g.opponent??''}</td>
+                  <td class="result ${g.result==='1'?'win':'loss'}">${g.result}</td>
+                  <td class="delta ${(g.delta>0)?'pos':(g.delta<0?'neg':'')}">${g.delta??''}</td>`;
+    tbody.appendChild(tr);
+  }
+  tbl.appendChild(tbody);
+}
+
+load();
 </script>
 </body>
 </html>
