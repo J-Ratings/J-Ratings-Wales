@@ -4,7 +4,7 @@
     "name": "Jose Camacho Collados",
     "zone": "E1",
     "club": "2EG",
-    "rating": 2433,
+    "rating": 2432,
     "k": 10
   },
   {
@@ -12,7 +12,7 @@
     "name": "Daniel Kozusek",
     "zone": "E1",
     "club": "2EG",
-    "rating": 2409,
+    "rating": 2408,
     "k": 10
   },
   {
@@ -20,7 +20,7 @@
     "name": "Ioan Rees",
     "zone": "E1",
     "club": "2CP",
-    "rating": 2361,
+    "rating": 2358,
     "k": 10
   },
   {
@@ -28,15 +28,7 @@
     "name": "Howard Williams",
     "zone": "D1",
     "club": "4CG",
-    "rating": 2318,
-    "k": 10
-  },
-  {
-    "id": "n1 richard dineley",
-    "name": "Richard Dineley",
-    "zone": "N1",
-    "club": "1WX",
-    "rating": 2304,
+    "rating": 2311,
     "k": 10
   },
   {
@@ -44,7 +36,15 @@
     "name": "Jonathan LB Blackburn",
     "zone": "G1",
     "club": "1NZ",
-    "rating": 2303,
+    "rating": 2301,
+    "k": 10
+  },
+  {
+    "id": "n1 richard dineley",
+    "name": "Richard Dineley",
+    "zone": "N1",
+    "club": "1WX",
+    "rating": 2299,
     "k": 10
   },
   {
@@ -52,7 +52,7 @@
     "name": "Grzegorz Toczek",
     "zone": "E1",
     "club": "2CD",
-    "rating": 2295,
+    "rating": 2288,
     "k": 10
   },
   {
@@ -60,7 +60,7 @@
     "name": "Elijah Everett",
     "zone": "N1",
     "club": "1CF",
-    "rating": 2285,
+    "rating": 2283,
     "k": 10
   },
   {
@@ -68,15 +68,23 @@
     "name": "Alexis Harakis",
     "zone": "D1",
     "club": "4PB",
-    "rating": 2262,
+    "rating": 2263,
     "k": 10
   },
   {
-    "id": "w1 roy phillips",
-    "name": "Roy Phillips",
-    "zone": "W1",
-    "club": "WCU",
-    "rating": 2228,
+    "id": "e1 carl strugnell",
+    "name": "Carl Strugnell",
+    "zone": "E1",
+    "club": "2EG",
+    "rating": 2245,
+    "k": 10
+  },
+  {
+    "id": "n1 iwan cave",
+    "name": "Iwan Cave",
+    "zone": "N1",
+    "club": "1NZ",
+    "rating": 2227,
     "k": 10
   },
   {
@@ -88,19 +96,11 @@
     "k": 10
   },
   {
-    "id": "n1 iwan cave",
-    "name": "Iwan Cave",
-    "zone": "N1",
-    "club": "1NZ",
-    "rating": 2224,
-    "k": 10
-  },
-  {
-    "id": "e1 carl strugnell",
-    "name": "Carl Strugnell",
-    "zone": "E1",
-    "club": "2EG",
-    "rating": 2220,
+    "id": "w1 roy phillips",
+    "name": "Roy Phillips",
+    "zone": "W1",
+    "club": "WCU",
+    "rating": 2219,
     "k": 10
   },
   {
@@ -108,7 +108,7 @@
     "name": "Alex Bullen",
     "zone": "E1",
     "club": "2CD",
-    "rating": 2216,
+    "rating": 2212,
     "k": 10
   },
   {
@@ -132,6 +132,14 @@
     "name": "Sven Zeidler",
     "zone": "N1",
     "club": "1NZ",
+    "rating": 2201,
+    "k": 10
+  },
+  {
+    "id": "d1 gerry heap",
+    "name": "Gerry Heap",
+    "zone": "D1",
+    "club": "4CM",
     "rating": 2199,
     "k": 20
   },
@@ -148,7 +156,7 @@
     "name": "Peter Varley",
     "zone": "G1",
     "club": "3NP",
-    "rating": 2187,
+    "rating": 2184,
     "k": 20
   },
   {
@@ -156,7 +164,7 @@
     "name": "Charles F Morris",
     "zone": "N1",
     "club": "1WX",
-    "rating": 2176,
+    "rating": 2178,
     "k": 20
   },
   {
@@ -164,31 +172,7 @@
     "name": "Ivan De La Cruz",
     "zone": "E1",
     "club": "2CD",
-    "rating": 2175,
-    "k": 20
-  },
-  {
-    "id": "e1 tim kett",
-    "name": "Tim Kett",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 2159,
-    "k": 20
-  },
-  {
-    "id": "d1 gerry heap",
-    "name": "Gerry Heap",
-    "zone": "D1",
-    "club": "4CM",
-    "rating": 2158,
-    "k": 20
-  },
-  {
-    "id": "e1 james tapp",
-    "name": "James Tapp",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 2155,
+    "rating": 2176,
     "k": 20
   },
   {
@@ -196,15 +180,23 @@
     "name": "Tom Brown",
     "zone": "E1",
     "club": "2CD",
-    "rating": 2154,
+    "rating": 2165,
     "k": 20
   },
   {
-    "id": "g1 james lavender",
-    "name": "James Lavender",
-    "zone": "G1",
-    "club": "3MA",
-    "rating": 2141,
+    "id": "e1 tim kett",
+    "name": "Tim Kett",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 2160,
+    "k": 20
+  },
+  {
+    "id": "e1 james tapp",
+    "name": "James Tapp",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 2157,
     "k": 20
   },
   {
@@ -212,7 +204,15 @@
     "name": "Jane Richmond",
     "zone": "G1",
     "club": "WCU",
-    "rating": 2131,
+    "rating": 2141,
+    "k": 20
+  },
+  {
+    "id": "g1 james lavender",
+    "name": "James Lavender",
+    "zone": "G1",
+    "club": "3MA",
+    "rating": 2125,
     "k": 20
   },
   {
@@ -220,7 +220,15 @@
     "name": "Pete Heaven",
     "zone": "E1",
     "club": "2NC",
-    "rating": 2112,
+    "rating": 2116,
+    "k": 20
+  },
+  {
+    "id": "w1 jason garcia",
+    "name": "Jason Garcia",
+    "zone": "W1",
+    "club": "5WK",
+    "rating": 2113,
     "k": 20
   },
   {
@@ -228,7 +236,23 @@
     "name": "Alex Freeland",
     "zone": "E1",
     "club": "2EG",
+    "rating": 2112,
+    "k": 20
+  },
+  {
+    "id": "g1 lloyd powell",
+    "name": "Lloyd Powell",
+    "zone": "G1",
+    "club": "3AG",
     "rating": 2111,
+    "k": 20
+  },
+  {
+    "id": "n1 david j james",
+    "name": "David J James",
+    "zone": "N1",
+    "club": "1WX",
+    "rating": 2109,
     "k": 20
   },
   {
@@ -240,27 +264,19 @@
     "k": 20
   },
   {
-    "id": "n1 david j james",
-    "name": "David J James",
-    "zone": "N1",
-    "club": "1WX",
-    "rating": 2108,
-    "k": 20
-  },
-  {
-    "id": "w1 jason garcia",
-    "name": "Jason Garcia",
+    "id": "w1 moss mccarthy",
+    "name": "Moss McCarthy",
     "zone": "W1",
-    "club": "5WK",
-    "rating": 2108,
+    "club": "5MO",
+    "rating": 2097,
     "k": 20
   },
   {
-    "id": "g1 lloyd powell",
-    "name": "Lloyd Powell",
-    "zone": "G1",
-    "club": "3AG",
-    "rating": 2104,
+    "id": "n1 michael vidler",
+    "name": "Michael Vidler",
+    "zone": "N1",
+    "club": "1CB",
+    "rating": 2094,
     "k": 20
   },
   {
@@ -268,7 +284,7 @@
     "name": "Hugo Fowler",
     "zone": "G1",
     "club": "1NZ",
-    "rating": 2092,
+    "rating": 2093,
     "k": 20
   },
   {
@@ -280,27 +296,11 @@
     "k": 20
   },
   {
-    "id": "w1 moss mccarthy",
-    "name": "Moss McCarthy",
-    "zone": "W1",
-    "club": "5MO",
-    "rating": 2083,
-    "k": 20
-  },
-  {
-    "id": "w1 gareth morris",
-    "name": "Gareth Morris",
-    "zone": "W1",
-    "club": "WCU",
-    "rating": 2081,
-    "k": 20
-  },
-  {
     "id": "w1 adam musson",
     "name": "Adam Musson",
     "zone": "W1",
     "club": "5MO",
-    "rating": 2080,
+    "rating": 2083,
     "k": 20
   },
   {
@@ -308,7 +308,7 @@
     "name": "Allan Pleasants",
     "zone": "E1",
     "club": "2EG",
-    "rating": 2080,
+    "rating": 2081,
     "k": 20
   },
   {
@@ -316,7 +316,31 @@
     "name": "Jonathan James",
     "zone": "E1",
     "club": "2NE",
-    "rating": 2066,
+    "rating": 2078,
+    "k": 20
+  },
+  {
+    "id": "e1 gareth yeo",
+    "name": "Gareth Yeo",
+    "zone": "E1",
+    "club": "2CP",
+    "rating": 2075,
+    "k": 20
+  },
+  {
+    "id": "e1 nigel ralphs",
+    "name": "Nigel Ralphs",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 2068,
+    "k": 20
+  },
+  {
+    "id": "g1 jonathan gilbert",
+    "name": "Jonathan Gilbert",
+    "zone": "G1",
+    "club": "3CB",
+    "rating": 2061,
     "k": 20
   },
   {
@@ -328,35 +352,19 @@
     "k": 20
   },
   {
-    "id": "e1 nigel ralphs",
-    "name": "Nigel Ralphs",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 2059,
+    "id": "w1 gareth morris",
+    "name": "Gareth Morris",
+    "zone": "W1",
+    "club": "WCU",
+    "rating": 2054,
     "k": 20
   },
   {
-    "id": "g1 jonathan gilbert",
-    "name": "Jonathan Gilbert",
-    "zone": "G1",
-    "club": "3CB",
-    "rating": 2057,
-    "k": 20
-  },
-  {
-    "id": "e1 gareth yeo",
-    "name": "Gareth Yeo",
-    "zone": "E1",
-    "club": "2CP",
-    "rating": 2055,
-    "k": 20
-  },
-  {
-    "id": "n1 michael vidler",
-    "name": "Michael Vidler",
+    "id": "n1 piotr swiech",
+    "name": "Piotr Swiech",
     "zone": "N1",
-    "club": "1CB",
-    "rating": 2053,
+    "club": "1WX",
+    "rating": 2054,
     "k": 20
   },
   {
@@ -364,7 +372,23 @@
     "name": "Matteo Favoni",
     "zone": "W1",
     "club": "5NY",
-    "rating": 2052,
+    "rating": 2053,
+    "k": 20
+  },
+  {
+    "id": "w1 richard cleveland",
+    "name": "Richard Cleveland",
+    "zone": "W1",
+    "club": "5MO",
+    "rating": 2051,
+    "k": 20
+  },
+  {
+    "id": "n1 john shakespeare",
+    "name": "John Shakespeare",
+    "zone": "N1",
+    "club": "1BA",
+    "rating": 2050,
     "k": 20
   },
   {
@@ -372,12 +396,20 @@
     "name": "Sam Jukes",
     "zone": "E1",
     "club": "2CD",
-    "rating": 2043,
+    "rating": 2045,
     "k": 20
   },
   {
     "id": "e1 joe fathallah",
     "name": "Joe Fathallah",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 2042,
+    "k": 20
+  },
+  {
+    "id": "e1 elliott macneil",
+    "name": "Elliott MacNeil",
     "zone": "E1",
     "club": "2CD",
     "rating": 2041,
@@ -392,10 +424,10 @@
     "k": 20
   },
   {
-    "id": "e1 elliott macneil",
-    "name": "Elliott MacNeil",
-    "zone": "E1",
-    "club": "2CD",
+    "id": "w1 andrew gibbons",
+    "name": "Andrew Gibbons",
+    "zone": "W1",
+    "club": "5MO",
     "rating": 2039,
     "k": 20
   },
@@ -404,31 +436,15 @@
     "name": "Paul Hatchett",
     "zone": "E1",
     "club": "2EG",
-    "rating": 2037,
+    "rating": 2039,
     "k": 20
   },
   {
-    "id": "n1 piotr swiech",
-    "name": "Piotr Swiech",
-    "zone": "N1",
-    "club": "1WX",
-    "rating": 2036,
-    "k": 20
-  },
-  {
-    "id": "n1 john shakespeare",
-    "name": "John Shakespeare",
-    "zone": "N1",
-    "club": "1BA",
-    "rating": 2034,
-    "k": 20
-  },
-  {
-    "id": "w1 andrew gibbons",
-    "name": "Andrew Gibbons",
+    "id": "w1 rob saunders",
+    "name": "Rob Saunders",
     "zone": "W1",
     "club": "5MO",
-    "rating": 2033,
+    "rating": 2039,
     "k": 20
   },
   {
@@ -436,7 +452,15 @@
     "name": "Bence Szakmany",
     "zone": "E1",
     "club": "2NC",
-    "rating": 2031,
+    "rating": 2032,
+    "k": 20
+  },
+  {
+    "id": "e1 gwynfor rees",
+    "name": "Gwynfor Rees",
+    "zone": "E1",
+    "club": "2CP",
+    "rating": 2032,
     "k": 20
   },
   {
@@ -448,43 +472,11 @@
     "k": 20
   },
   {
-    "id": "e1 gwynfor rees",
-    "name": "Gwynfor Rees",
-    "zone": "E1",
-    "club": "2CP",
-    "rating": 2030,
-    "k": 20
-  },
-  {
     "id": "e1 john fletcher",
     "name": "John Fletcher",
     "zone": "E1",
     "club": "2EG",
-    "rating": 2023,
-    "k": 20
-  },
-  {
-    "id": "w1 rob saunders",
-    "name": "Rob Saunders",
-    "zone": "W1",
-    "club": "5MO",
-    "rating": 2019,
-    "k": 20
-  },
-  {
-    "id": "e1 anezka vlkova",
-    "name": "Anezka Vlkova",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 2016,
-    "k": 20
-  },
-  {
-    "id": "e1 daniel wilmot",
-    "name": "Daniel Wilmot",
-    "zone": "E1",
-    "club": "2PP",
-    "rating": 2016,
+    "rating": 2024,
     "k": 20
   },
   {
@@ -492,15 +484,47 @@
     "name": "John D Thornton",
     "zone": "E1",
     "club": "2CP",
-    "rating": 2016,
+    "rating": 2021,
     "k": 20
   },
   {
-    "id": "w1 richard cleveland",
-    "name": "Richard Cleveland",
-    "zone": "W1",
-    "club": "5MO",
-    "rating": 2015,
+    "id": "e1 daniel wilmot",
+    "name": "Daniel Wilmot",
+    "zone": "E1",
+    "club": "2PP",
+    "rating": 2020,
+    "k": 20
+  },
+  {
+    "id": "e1 anezka vlkova",
+    "name": "Anezka Vlkova",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 2018,
+    "k": 20
+  },
+  {
+    "id": "g1 douglas spencer",
+    "name": "Douglas Spencer",
+    "zone": "G1",
+    "club": "3AG",
+    "rating": 2018,
+    "k": 20
+  },
+  {
+    "id": "g1 frank may",
+    "name": "Frank May",
+    "zone": "G1",
+    "club": "3AG",
+    "rating": 2018,
+    "k": 20
+  },
+  {
+    "id": "e1 alan spice",
+    "name": "Alan Spice",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 2011,
     "k": 20
   },
   {
@@ -512,19 +536,51 @@
     "k": 20
   },
   {
-    "id": "g1 frank may",
-    "name": "Frank May",
-    "zone": "G1",
-    "club": "3AG",
-    "rating": 2007,
-    "k": 20
-  },
-  {
     "id": "w1 william hewitt",
     "name": "William Hewitt",
     "zone": "W1",
     "club": "5WK",
-    "rating": 2004,
+    "rating": 2009,
+    "k": 20
+  },
+  {
+    "id": "e1 benjamin choo yin",
+    "name": "Benjamin Choo Yin",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 2008,
+    "k": 20
+  },
+  {
+    "id": "g1 richard miles",
+    "name": "Richard Miles",
+    "zone": "G1",
+    "club": "3AG",
+    "rating": 2006,
+    "k": 20
+  },
+  {
+    "id": "e1 matthew davies",
+    "name": "Matthew Davies",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 2003,
+    "k": 20
+  },
+  {
+    "id": "d1 adam watkin-jones",
+    "name": "Adam Watkin-Jones",
+    "zone": "D1",
+    "club": "4AB",
+    "rating": 2002,
+    "k": 20
+  },
+  {
+    "id": "n1 robert g clark",
+    "name": "Robert G Clark",
+    "zone": "N1",
+    "club": "1WX",
+    "rating": 2000,
     "k": 20
   },
   {
@@ -536,67 +592,11 @@
     "k": 20
   },
   {
-    "id": "n1 robert g clark",
-    "name": "Robert G Clark",
-    "zone": "N1",
-    "club": "1WX",
-    "rating": 1999,
-    "k": 20
-  },
-  {
-    "id": "g1 douglas spencer",
-    "name": "Douglas Spencer",
-    "zone": "G1",
-    "club": "3AG",
-    "rating": 1998,
-    "k": 20
-  },
-  {
-    "id": "e1 matthew davies",
-    "name": "Matthew Davies",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1998,
-    "k": 20
-  },
-  {
     "id": "e1 peter davies",
     "name": "Peter Davies",
     "zone": "E1",
     "club": "2EG",
-    "rating": 1994,
-    "k": 20
-  },
-  {
-    "id": "g1 richard miles",
-    "name": "Richard Miles",
-    "zone": "G1",
-    "club": "3AG",
-    "rating": 1994,
-    "k": 20
-  },
-  {
-    "id": "e1 alan spice",
-    "name": "Alan Spice",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1993,
-    "k": 20
-  },
-  {
-    "id": "e1 matt staniforth",
-    "name": "Matt Staniforth",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1993,
-    "k": 20
-  },
-  {
-    "id": "e1 jake hurley",
-    "name": "Jake Hurley",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1990,
+    "rating": 1999,
     "k": 20
   },
   {
@@ -604,7 +604,7 @@
     "name": "David Perrett",
     "zone": "E1",
     "club": "2CP",
-    "rating": 1988,
+    "rating": 1994,
     "k": 20
   },
   {
@@ -612,7 +612,23 @@
     "name": "Ian Jones",
     "zone": "W1",
     "club": "5MO",
-    "rating": 1984,
+    "rating": 1994,
+    "k": 20
+  },
+  {
+    "id": "e1 matt staniforth",
+    "name": "Matt Staniforth",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1994,
+    "k": 20
+  },
+  {
+    "id": "e1 jake hurley",
+    "name": "Jake Hurley",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1992,
     "k": 20
   },
   {
@@ -620,143 +636,7 @@
     "name": "John Waterfield",
     "zone": "G1",
     "club": "3AG",
-    "rating": 1984,
-    "k": 20
-  },
-  {
-    "id": "e1 reginald mba",
-    "name": "Reginald Mba",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1984,
-    "k": 20
-  },
-  {
-    "id": "e1 callum smith",
-    "name": "Callum Smith",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1982,
-    "k": 20
-  },
-  {
-    "id": "e1 george turner",
-    "name": "George Turner",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1978,
-    "k": 20
-  },
-  {
-    "id": "g1 peter kirby",
-    "name": "Peter Kirby",
-    "zone": "G1",
-    "club": "3MA",
-    "rating": 1978,
-    "k": 20
-  },
-  {
-    "id": "e1 nick van noorden",
-    "name": "Nick Van Noorden",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1975,
-    "k": 20
-  },
-  {
-    "id": "e1 barbara graczyk-gibiec",
-    "name": "Barbara Graczyk-Gibiec",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1971,
-    "k": 20
-  },
-  {
-    "id": "e1 james thomas",
-    "name": "James Thomas",
-    "zone": "E1",
-    "club": "2EG",
-    "rating": 1971,
-    "k": 20
-  },
-  {
-    "id": "w1 alan young",
-    "name": "Alan Young",
-    "zone": "W1",
-    "club": "5WK",
-    "rating": 1970,
-    "k": 20
-  },
-  {
-    "id": "g1 leslie blohm",
-    "name": "Leslie Blohm",
-    "zone": "G1",
-    "club": "3NP",
-    "rating": 1969,
-    "k": 20
-  },
-  {
-    "id": "n1 mark bastow",
-    "name": "Mark Bastow",
-    "zone": "N1",
-    "club": "1NZ",
-    "rating": 1969,
-    "k": 20
-  },
-  {
-    "id": "e1 benjamin choo yin",
-    "name": "Benjamin Choo Yin",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1968,
-    "k": 20
-  },
-  {
-    "id": "e1 georgi korovski",
-    "name": "Georgi Korovski",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1968,
-    "k": 20
-  },
-  {
-    "id": "g1 david vaughan",
-    "name": "David Vaughan",
-    "zone": "G1",
-    "club": "3PL",
-    "rating": 1965,
-    "k": 20
-  },
-  {
-    "id": "e1 john trevelyan",
-    "name": "John Trevelyan",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1965,
-    "k": 20
-  },
-  {
-    "id": "e1 yuxuan wu",
-    "name": "Yuxuan Wu",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1965,
-    "k": 20
-  },
-  {
-    "id": "e1 kevin evans",
-    "name": "Kevin Evans",
-    "zone": "E1",
-    "club": "2PP",
-    "rating": 1964,
-    "k": 20
-  },
-  {
-    "id": "w1 mark thomas",
-    "name": "Mark Thomas",
-    "zone": "W1",
-    "club": "WCU",
-    "rating": 1961,
+    "rating": 1989,
     "k": 20
   },
   {
@@ -764,15 +644,151 @@
     "name": "Cliff Rice",
     "zone": "N1",
     "club": "1CF",
-    "rating": 1957,
+    "rating": 1987,
     "k": 20
   },
   {
-    "id": "d1 adam watkin-jones",
-    "name": "Adam Watkin-Jones",
-    "zone": "D1",
-    "club": "4AB",
-    "rating": 1956,
+    "id": "e1 callum smith",
+    "name": "Callum Smith",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1986,
+    "k": 20
+  },
+  {
+    "id": "n1 mark bastow",
+    "name": "Mark Bastow",
+    "zone": "N1",
+    "club": "1NZ",
+    "rating": 1985,
+    "k": 20
+  },
+  {
+    "id": "e1 reginald mba",
+    "name": "Reginald Mba",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1985,
+    "k": 20
+  },
+  {
+    "id": "e1 barbara graczyk-gibiec",
+    "name": "Barbara Graczyk-Gibiec",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1982,
+    "k": 20
+  },
+  {
+    "id": "g1 leslie blohm",
+    "name": "Leslie Blohm",
+    "zone": "G1",
+    "club": "3NP",
+    "rating": 1981,
+    "k": 20
+  },
+  {
+    "id": "g1 peter kirby",
+    "name": "Peter Kirby",
+    "zone": "G1",
+    "club": "3MA",
+    "rating": 1980,
+    "k": 20
+  },
+  {
+    "id": "e1 george turner",
+    "name": "George Turner",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1979,
+    "k": 20
+  },
+  {
+    "id": "e1 james thomas",
+    "name": "James Thomas",
+    "zone": "E1",
+    "club": "2EG",
+    "rating": 1979,
+    "k": 20
+  },
+  {
+    "id": "e1 nick van noorden",
+    "name": "Nick Van Noorden",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1977,
+    "k": 20
+  },
+  {
+    "id": "w1 alan young",
+    "name": "Alan Young",
+    "zone": "W1",
+    "club": "5WK",
+    "rating": 1975,
+    "k": 20
+  },
+  {
+    "id": "e1 georgi korovski",
+    "name": "Georgi Korovski",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1970,
+    "k": 20
+  },
+  {
+    "id": "g1 david vaughan",
+    "name": "David Vaughan",
+    "zone": "G1",
+    "club": "3PL",
+    "rating": 1969,
+    "k": 20
+  },
+  {
+    "id": "e1 john trevelyan",
+    "name": "John Trevelyan",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1967,
+    "k": 20
+  },
+  {
+    "id": "e1 kevin evans",
+    "name": "Kevin Evans",
+    "zone": "E1",
+    "club": "2PP",
+    "rating": 1965,
+    "k": 20
+  },
+  {
+    "id": "w1 marek simon",
+    "name": "Marek Simon",
+    "zone": "W1",
+    "club": "5NY",
+    "rating": 1962,
+    "k": 20
+  },
+  {
+    "id": "w1 mark thomas",
+    "name": "Mark Thomas",
+    "zone": "W1",
+    "club": "WCU",
+    "rating": 1962,
+    "k": 20
+  },
+  {
+    "id": "e1 yuxuan wu",
+    "name": "Yuxuan Wu",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1962,
+    "k": 20
+  },
+  {
+    "id": "g1 joseph addis",
+    "name": "Joseph Addis",
+    "zone": "G1",
+    "club": "3NP",
+    "rating": 1959,
     "k": 20
   },
   {
@@ -780,6 +796,22 @@
     "name": "Michael Binks",
     "zone": "E1",
     "club": "2BR",
+    "rating": 1957,
+    "k": 20
+  },
+  {
+    "id": "e1 edward donovan",
+    "name": "Edward Donovan",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1956,
+    "k": 20
+  },
+  {
+    "id": "n1 imogen camp",
+    "name": "Imogen Camp",
+    "zone": "N1",
+    "club": "1CB",
     "rating": 1956,
     "k": 20
   },
@@ -792,14 +824,6 @@
     "k": 20
   },
   {
-    "id": "e1 edward donovan",
-    "name": "Edward Donovan",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1954,
-    "k": 20
-  },
-  {
     "id": "g1 anthony hughes",
     "name": "Anthony Hughes",
     "zone": "G1",
@@ -808,11 +832,11 @@
     "k": 20
   },
   {
-    "id": "n1 imogen camp",
-    "name": "Imogen Camp",
-    "zone": "N1",
-    "club": "1CB",
-    "rating": 1952,
+    "id": "w1 bob moore",
+    "name": "Bob Moore",
+    "zone": "W1",
+    "club": "5MO",
+    "rating": 1951,
     "k": 20
   },
   {
@@ -824,27 +848,27 @@
     "k": 20
   },
   {
+    "id": "n1 gareth ellis",
+    "name": "Gareth Ellis",
+    "zone": "N1",
+    "club": "1RP",
+    "rating": 1949,
+    "k": 20
+  },
+  {
     "id": "g1 mark adams",
     "name": "Mark Adams",
     "zone": "G1",
     "club": "3PL",
-    "rating": 1948,
+    "rating": 1949,
     "k": 20
   },
   {
-    "id": "w1 bob moore",
-    "name": "Bob Moore",
-    "zone": "W1",
-    "club": "5MO",
-    "rating": 1945,
-    "k": 20
-  },
-  {
-    "id": "g1 joseph addis",
-    "name": "Joseph Addis",
+    "id": "g1 nigel saunders",
+    "name": "Nigel Saunders",
     "zone": "G1",
-    "club": "3NP",
-    "rating": 1945,
+    "club": "3AG",
+    "rating": 1942,
     "k": 20
   },
   {
@@ -856,19 +880,11 @@
     "k": 20
   },
   {
-    "id": "g1 nigel saunders",
-    "name": "Nigel Saunders",
-    "zone": "G1",
-    "club": "3AG",
+    "id": "e1 david tomboline",
+    "name": "David Tomboline",
+    "zone": "E1",
+    "club": "2EG",
     "rating": 1935,
-    "k": 20
-  },
-  {
-    "id": "n1 gareth ellis",
-    "name": "Gareth Ellis",
-    "zone": "N1",
-    "club": "1RP",
-    "rating": 1933,
     "k": 20
   },
   {
@@ -876,7 +892,23 @@
     "name": "Steve Smith",
     "zone": "W1",
     "club": "5CN",
-    "rating": 1931,
+    "rating": 1933,
+    "k": 20
+  },
+  {
+    "id": "g1 david llewellyn",
+    "name": "David Llewellyn",
+    "zone": "G1",
+    "club": "3AG",
+    "rating": 1932,
+    "k": 20
+  },
+  {
+    "id": "d1 ben brewer",
+    "name": "Ben Brewer",
+    "zone": "D1",
+    "club": "4CG",
+    "rating": 1930,
     "k": 20
   },
   {
@@ -888,35 +920,11 @@
     "k": 20
   },
   {
-    "id": "d1 ben brewer",
-    "name": "Ben Brewer",
-    "zone": "D1",
-    "club": "4CG",
-    "rating": 1928,
-    "k": 20
-  },
-  {
-    "id": "g1 david llewellyn",
-    "name": "David Llewellyn",
-    "zone": "G1",
-    "club": "3AG",
-    "rating": 1928,
-    "k": 20
-  },
-  {
-    "id": "e1 david tomboline",
-    "name": "David Tomboline",
+    "id": "e1 john mcgregor",
+    "name": "John McGregor",
     "zone": "E1",
-    "club": "2EG",
-    "rating": 1928,
-    "k": 20
-  },
-  {
-    "id": "e1 leon zedlmayer",
-    "name": "Leon Zedlmayer",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1926,
+    "club": "2NC",
+    "rating": 1929,
     "k": 20
   },
   {
@@ -924,15 +932,15 @@
     "name": "David Robinson",
     "zone": "E1",
     "club": "2BR",
-    "rating": 1925,
+    "rating": 1928,
     "k": 20
   },
   {
-    "id": "e1 john mcgregor",
-    "name": "John McGregor",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1925,
+    "id": "w1 adam may",
+    "name": "Adam May",
+    "zone": "W1",
+    "club": "5WK",
+    "rating": 1926,
     "k": 20
   },
   {
@@ -944,18 +952,18 @@
     "k": 20
   },
   {
-    "id": "w1 marek simon",
-    "name": "Marek Simon",
-    "zone": "W1",
-    "club": "5NY",
+    "id": "e1 leon zedlmayer",
+    "name": "Leon Zedlmayer",
+    "zone": "E1",
+    "club": "2CD",
     "rating": 1924,
     "k": 20
   },
   {
-    "id": "w1 adam may",
-    "name": "Adam May",
-    "zone": "W1",
-    "club": "5WK",
+    "id": "g1 richard batey",
+    "name": "Richard Batey",
+    "zone": "G1",
+    "club": "3PL",
     "rating": 1923,
     "k": 20
   },
@@ -964,7 +972,7 @@
     "name": "Dave Turner",
     "zone": "G1",
     "club": "3MA",
-    "rating": 1919,
+    "rating": 1921,
     "k": 20
   },
   {
@@ -976,19 +984,11 @@
     "k": 20
   },
   {
-    "id": "g1 richard batey",
-    "name": "Richard Batey",
-    "zone": "G1",
-    "club": "3PL",
-    "rating": 1916,
-    "k": 20
-  },
-  {
     "id": "e1 calum harris",
     "name": "Calum Harris",
     "zone": "E1",
     "club": "2PP",
-    "rating": 1914,
+    "rating": 1916,
     "k": 20
   },
   {
@@ -996,15 +996,7 @@
     "name": "Duncan Williams",
     "zone": "W1",
     "club": "5MO",
-    "rating": 1911,
-    "k": 20
-  },
-  {
-    "id": "w1 andrew thomas",
-    "name": "Andrew Thomas",
-    "zone": "W1",
-    "club": "5MO",
-    "rating": 1909,
+    "rating": 1913,
     "k": 20
   },
   {
@@ -1012,15 +1004,7 @@
     "name": "Denys Podcherniaeva",
     "zone": "N1",
     "club": "1CB",
-    "rating": 1908,
-    "k": 20
-  },
-  {
-    "id": "w1 jonathan thomas",
-    "name": "Jonathan Thomas",
-    "zone": "W1",
-    "club": "5CN",
-    "rating": 1905,
+    "rating": 1910,
     "k": 20
   },
   {
@@ -1028,7 +1012,15 @@
     "name": "Glyn Sinnett",
     "zone": "W1",
     "club": "5MO",
-    "rating": 1904,
+    "rating": 1906,
+    "k": 20
+  },
+  {
+    "id": "e1 derek jones",
+    "name": "Derek Jones",
+    "zone": "E1",
+    "club": "2PP",
+    "rating": 1905,
     "k": 20
   },
   {
@@ -1036,6 +1028,14 @@
     "name": "Gary Thomas",
     "zone": "N1",
     "club": "1NZ",
+    "rating": 1904,
+    "k": 20
+  },
+  {
+    "id": "e1 vishnu kirupakaran",
+    "name": "Vishnu Kirupakaran",
+    "zone": "E1",
+    "club": "2CU",
     "rating": 1903,
     "k": 20
   },
@@ -1044,31 +1044,7 @@
     "name": "Lynda Smith",
     "zone": "G1",
     "club": "WCU",
-    "rating": 1903,
-    "k": 20
-  },
-  {
-    "id": "e1 vishnu kirupakaran",
-    "name": "Vishnu Kirupakaran",
-    "zone": "E1",
-    "club": "2CU",
     "rating": 1902,
-    "k": 20
-  },
-  {
-    "id": "e1 derek jones",
-    "name": "Derek Jones",
-    "zone": "E1",
-    "club": "2PP",
-    "rating": 1900,
-    "k": 20
-  },
-  {
-    "id": "g1 andrew owen",
-    "name": "Andrew Owen",
-    "zone": "G1",
-    "club": "3AG",
-    "rating": 1892,
     "k": 20
   },
   {
@@ -1076,7 +1052,15 @@
     "name": "Emma Kong",
     "zone": "E1",
     "club": "2CD",
-    "rating": 1891,
+    "rating": 1892,
+    "k": 20
+  },
+  {
+    "id": "n1 ray j holland",
+    "name": "Ray J Holland",
+    "zone": "N1",
+    "club": "1WX",
+    "rating": 1888,
     "k": 20
   },
   {
@@ -1088,11 +1072,19 @@
     "k": 20
   },
   {
-    "id": "g1 owain davies",
-    "name": "Owain Davies",
+    "id": "w1 andrew thomas",
+    "name": "Andrew Thomas",
+    "zone": "W1",
+    "club": "5MO",
+    "rating": 1887,
+    "k": 20
+  },
+  {
+    "id": "g1 andrew owen",
+    "name": "Andrew Owen",
     "zone": "G1",
     "club": "3AG",
-    "rating": 1887,
+    "rating": 1886,
     "k": 20
   },
   {
@@ -1100,6 +1092,14 @@
     "name": "Andrew Di-Vetta",
     "zone": "E1",
     "club": "2BR",
+    "rating": 1884,
+    "k": 20
+  },
+  {
+    "id": "g1 owain davies",
+    "name": "Owain Davies",
+    "zone": "G1",
+    "club": "3AG",
     "rating": 1884,
     "k": 20
   },
@@ -1116,7 +1116,7 @@
     "name": "Callum Davies",
     "zone": "E1",
     "club": "2EG",
-    "rating": 1880,
+    "rating": 1879,
     "k": 20
   },
   {
@@ -1128,11 +1128,27 @@
     "k": 20
   },
   {
-    "id": "n1 ray j holland",
-    "name": "Ray J Holland",
-    "zone": "N1",
-    "club": "1WX",
+    "id": "w1 david guy",
+    "name": "David Guy",
+    "zone": "W1",
+    "club": "5WK",
     "rating": 1877,
+    "k": 20
+  },
+  {
+    "id": "n1 haydn parry",
+    "name": "Haydn Parry",
+    "zone": "N1",
+    "club": "1BM",
+    "rating": 1876,
+    "k": 20
+  },
+  {
+    "id": "g1 alan keene",
+    "name": "Alan Keene",
+    "zone": "G1",
+    "club": "3AG",
+    "rating": 1874,
     "k": 20
   },
   {
@@ -1144,34 +1160,18 @@
     "k": 20
   },
   {
-    "id": "w1 david guy",
-    "name": "David Guy",
+    "id": "w1 jonathan thomas",
+    "name": "Jonathan Thomas",
     "zone": "W1",
-    "club": "5WK",
+    "club": "5CN",
     "rating": 1873,
     "k": 20
   },
   {
-    "id": "g1 caspian fowler",
-    "name": "Caspian Fowler",
-    "zone": "G1",
-    "club": "1NZ",
-    "rating": 1871,
-    "k": 20
-  },
-  {
-    "id": "n1 haydn parry",
-    "name": "Haydn Parry",
-    "zone": "N1",
-    "club": "1BM",
-    "rating": 1871,
-    "k": 20
-  },
-  {
-    "id": "n1 will g williams",
-    "name": "Will G Williams",
-    "zone": "N1",
-    "club": "1CB",
+    "id": "e1 dai james",
+    "name": "Dai James",
+    "zone": "E1",
+    "club": "2PP",
     "rating": 1871,
     "k": 20
   },
@@ -1184,19 +1184,35 @@
     "k": 20
   },
   {
-    "id": "n1 john bowers",
-    "name": "John Bowers",
+    "id": "n1 will g williams",
+    "name": "Will G Williams",
     "zone": "N1",
-    "club": "1CF",
+    "club": "1CB",
     "rating": 1870,
     "k": 20
   },
   {
-    "id": "g1 alan keene",
-    "name": "Alan Keene",
-    "zone": "G1",
-    "club": "3AG",
+    "id": "n1 john bowers",
+    "name": "John Bowers",
+    "zone": "N1",
+    "club": "1CF",
+    "rating": 1869,
+    "k": 20
+  },
+  {
+    "id": "e1 charles summers",
+    "name": "Charles Summers",
+    "zone": "E1",
+    "club": "2CD",
     "rating": 1866,
+    "k": 20
+  },
+  {
+    "id": "n1 mohammed ayad",
+    "name": "Mohammed Ayad",
+    "zone": "N1",
+    "club": "1RP",
+    "rating": 1865,
     "k": 20
   },
   {
@@ -1208,6 +1224,14 @@
     "k": 20
   },
   {
+    "id": "e1 ellison smith",
+    "name": "Ellison Smith",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1863,
+    "k": 20
+  },
+  {
     "id": "e1 joshua mckenna",
     "name": "Joshua McKenna",
     "zone": "E1",
@@ -1216,35 +1240,11 @@
     "k": 20
   },
   {
-    "id": "e1 charles summers",
-    "name": "Charles Summers",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1860,
-    "k": 20
-  },
-  {
-    "id": "e1 dai james",
-    "name": "Dai James",
-    "zone": "E1",
-    "club": "2PP",
-    "rating": 1860,
-    "k": 20
-  },
-  {
-    "id": "e1 ellison smith",
-    "name": "Ellison Smith",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1860,
-    "k": 20
-  },
-  {
-    "id": "n1 ethan challoner",
-    "name": "Ethan Challoner",
-    "zone": "N1",
+    "id": "g1 caspian fowler",
+    "name": "Caspian Fowler",
+    "zone": "G1",
     "club": "1NZ",
-    "rating": 1857,
+    "rating": 1862,
     "k": 20
   },
   {
@@ -1252,14 +1252,22 @@
     "name": "Liam Penny",
     "zone": "E1",
     "club": "2NC",
-    "rating": 1857,
+    "rating": 1859,
     "k": 20
   },
   {
-    "id": "n1 mohammed ayad",
-    "name": "Mohammed Ayad",
+    "id": "n1 ethan challoner",
+    "name": "Ethan Challoner",
     "zone": "N1",
-    "club": "1RP",
+    "club": "1NZ",
+    "rating": 1858,
+    "k": 20
+  },
+  {
+    "id": "e1 paul bridges",
+    "name": "Paul Bridges",
+    "zone": "E1",
+    "club": "2NE",
     "rating": 1857,
     "k": 20
   },
@@ -1268,7 +1276,7 @@
     "name": "Joseph Browse",
     "zone": "E1",
     "club": "2EG",
-    "rating": 1855,
+    "rating": 1854,
     "k": 20
   },
   {
@@ -1280,11 +1288,11 @@
     "k": 20
   },
   {
-    "id": "e1 paul bridges",
-    "name": "Paul Bridges",
-    "zone": "E1",
-    "club": "2NE",
-    "rating": 1852,
+    "id": "g1 mateusz gibiec",
+    "name": "Mateusz Gibiec",
+    "zone": "G1",
+    "club": "3NP",
+    "rating": 1851,
     "k": 20
   },
   {
@@ -1292,6 +1300,30 @@
     "name": "Les Simcock",
     "zone": "N1",
     "club": "1RP",
+    "rating": 1850,
+    "k": 20
+  },
+  {
+    "id": "g1 neil carter",
+    "name": "Neil Carter",
+    "zone": "G1",
+    "club": "3NP",
+    "rating": 1849,
+    "k": 20
+  },
+  {
+    "id": "w1 ben mora",
+    "name": "Ben Mora",
+    "zone": "W1",
+    "club": "5UK",
+    "rating": 1848,
+    "k": 20
+  },
+  {
+    "id": "g1 kevin thomas",
+    "name": "Kevin Thomas",
+    "zone": "G1",
+    "club": "3AG",
     "rating": 1848,
     "k": 20
   },
@@ -1312,30 +1344,6 @@
     "k": 20
   },
   {
-    "id": "g1 kevin thomas",
-    "name": "Kevin Thomas",
-    "zone": "G1",
-    "club": "3AG",
-    "rating": 1846,
-    "k": 20
-  },
-  {
-    "id": "w1 martyn griffiths",
-    "name": "Martyn Griffiths",
-    "zone": "W1",
-    "club": "5CN",
-    "rating": 1846,
-    "k": 20
-  },
-  {
-    "id": "e1 alun smith",
-    "name": "Alun Smith",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1845,
-    "k": 20
-  },
-  {
     "id": "d1 jon tuson",
     "name": "Jon Tuson",
     "zone": "D1",
@@ -1344,11 +1352,11 @@
     "k": 20
   },
   {
-    "id": "e1 tom bennett",
-    "name": "Tom Bennett",
+    "id": "e1 alun smith",
+    "name": "Alun Smith",
     "zone": "E1",
-    "club": "2BR",
-    "rating": 1844,
+    "club": "2NC",
+    "rating": 1843,
     "k": 20
   },
   {
@@ -1368,59 +1376,19 @@
     "k": 20
   },
   {
+    "id": "w1 martyn griffiths",
+    "name": "Martyn Griffiths",
+    "zone": "W1",
+    "club": "5CN",
+    "rating": 1842,
+    "k": 20
+  },
+  {
     "id": "w1 hywel griffiths",
     "name": "Hywel Griffiths",
     "zone": "W1",
     "club": "5CN",
-    "rating": 1841,
-    "k": 20
-  },
-  {
-    "id": "g1 neil carter",
-    "name": "Neil Carter",
-    "zone": "G1",
-    "club": "3NP",
-    "rating": 1841,
-    "k": 20
-  },
-  {
-    "id": "g1 chris dixon",
-    "name": "Chris Dixon",
-    "zone": "G1",
-    "club": "3PL",
-    "rating": 1837,
-    "k": 20
-  },
-  {
-    "id": "e1 dave parsons",
-    "name": "Dave Parsons",
-    "zone": "E1",
-    "club": "2BY",
-    "rating": 1837,
-    "k": 20
-  },
-  {
-    "id": "n1 syringa camp",
-    "name": "Syringa Camp",
-    "zone": "N1",
-    "club": "1CB",
-    "rating": 1837,
-    "k": 20
-  },
-  {
-    "id": "n1 michael whale",
-    "name": "Michael Whale",
-    "zone": "N1",
-    "club": "1CB",
-    "rating": 1836,
-    "k": 20
-  },
-  {
-    "id": "e1 mike gale",
-    "name": "Mike Gale",
-    "zone": "E1",
-    "club": "2BY",
-    "rating": 1836,
+    "rating": 1840,
     "k": 20
   },
   {
@@ -1428,14 +1396,54 @@
     "name": "Owain Meurig",
     "zone": "N1",
     "club": "1BM",
-    "rating": 1836,
+    "rating": 1839,
     "k": 20
   },
   {
-    "id": "g1 mateusz gibiec",
-    "name": "Mateusz Gibiec",
+    "id": "w1 thomas wells",
+    "name": "Thomas Wells",
+    "zone": "W1",
+    "club": "5NY",
+    "rating": 1839,
+    "k": 20
+  },
+  {
+    "id": "e1 will elworthy",
+    "name": "Will Elworthy",
+    "zone": "E1",
+    "club": "2PR",
+    "rating": 1839,
+    "k": 20
+  },
+  {
+    "id": "g1 chris dixon",
+    "name": "Chris Dixon",
     "zone": "G1",
-    "club": "3NP",
+    "club": "3PL",
+    "rating": 1838,
+    "k": 20
+  },
+  {
+    "id": "e1 dave parsons",
+    "name": "Dave Parsons",
+    "zone": "E1",
+    "club": "2BY",
+    "rating": 1838,
+    "k": 20
+  },
+  {
+    "id": "e1 tom bennett",
+    "name": "Tom Bennett",
+    "zone": "E1",
+    "club": "2BR",
+    "rating": 1838,
+    "k": 20
+  },
+  {
+    "id": "e1 mike gale",
+    "name": "Mike Gale",
+    "zone": "E1",
+    "club": "2BY",
     "rating": 1835,
     "k": 20
   },
@@ -1448,11 +1456,19 @@
     "k": 20
   },
   {
+    "id": "n1 michael whale",
+    "name": "Michael Whale",
+    "zone": "N1",
+    "club": "1CB",
+    "rating": 1834,
+    "k": 20
+  },
+  {
     "id": "e1 gwyn havard",
     "name": "Gwyn Havard",
     "zone": "E1",
     "club": "2BY",
-    "rating": 1832,
+    "rating": 1833,
     "k": 20
   },
   {
@@ -1460,6 +1476,14 @@
     "name": "Mark Thomas (N)",
     "zone": "N1",
     "club": "1BM",
+    "rating": 1833,
+    "k": 20
+  },
+  {
+    "id": "g1 william phillips",
+    "name": "William Phillips",
+    "zone": "G1",
+    "club": "3AG",
     "rating": 1832,
     "k": 20
   },
@@ -1472,26 +1496,10 @@
     "k": 20
   },
   {
-    "id": "n1 shion rowlands",
-    "name": "Shion Rowlands",
-    "zone": "N1",
-    "club": "1RP",
-    "rating": 1831,
-    "k": 20
-  },
-  {
     "id": "e1 thomas mahoney",
     "name": "Thomas Mahoney",
     "zone": "E1",
     "club": "2CU",
-    "rating": 1831,
-    "k": 20
-  },
-  {
-    "id": "w1 thomas wells",
-    "name": "Thomas Wells",
-    "zone": "W1",
-    "club": "5NY",
     "rating": 1831,
     "k": 20
   },
@@ -1504,18 +1512,10 @@
     "k": 20
   },
   {
-    "id": "g1 william phillips",
-    "name": "William Phillips",
-    "zone": "G1",
-    "club": "3AG",
-    "rating": 1830,
-    "k": 20
-  },
-  {
-    "id": "g1 madged bani hani",
-    "name": "Madged Bani Hani",
-    "zone": "G1",
-    "club": "3MA",
+    "id": "n1 chris grier",
+    "name": "Chris Grier",
+    "zone": "N1",
+    "club": "1RP",
     "rating": 1829,
     "k": 20
   },
@@ -1524,6 +1524,30 @@
     "name": "Kristan Enoch",
     "zone": "E1",
     "club": "2CD",
+    "rating": 1829,
+    "k": 20
+  },
+  {
+    "id": "g1 madged bani hani",
+    "name": "Madged Bani Hani",
+    "zone": "G1",
+    "club": "3MA",
+    "rating": 1828,
+    "k": 20
+  },
+  {
+    "id": "n1 peter s fisher",
+    "name": "Peter S Fisher",
+    "zone": "N1",
+    "club": "1WX",
+    "rating": 1828,
+    "k": 20
+  },
+  {
+    "id": "n1 shion rowlands",
+    "name": "Shion Rowlands",
+    "zone": "N1",
+    "club": "1RP",
     "rating": 1828,
     "k": 20
   },
@@ -1552,14 +1576,6 @@
     "k": 20
   },
   {
-    "id": "n1 peter s fisher",
-    "name": "Peter S Fisher",
-    "zone": "N1",
-    "club": "1WX",
-    "rating": 1827,
-    "k": 20
-  },
-  {
     "id": "d1 toby carter",
     "name": "Toby Carter",
     "zone": "D1",
@@ -1583,11 +1599,11 @@
     "k": 20
   },
   {
-    "id": "n1 chris grier",
-    "name": "Chris Grier",
-    "zone": "N1",
-    "club": "1RP",
-    "rating": 1824,
+    "id": "e1 roy thomas",
+    "name": "Roy Thomas",
+    "zone": "E1",
+    "club": "2PP",
+    "rating": 1823,
     "k": 20
   },
   {
@@ -1595,23 +1611,7 @@
     "name": "Lef Zografos",
     "zone": "E1",
     "club": "2NC",
-    "rating": 1823,
-    "k": 20
-  },
-  {
-    "id": "e1 roy thomas",
-    "name": "Roy Thomas",
-    "zone": "E1",
-    "club": "2PP",
     "rating": 1822,
-    "k": 20
-  },
-  {
-    "id": "w1 ben mora",
-    "name": "Ben Mora",
-    "zone": "W1",
-    "club": "5UK",
-    "rating": 1821,
     "k": 20
   },
   {
@@ -1619,6 +1619,14 @@
     "name": "Jay Drawbridge",
     "zone": "N1",
     "club": "1BA",
+    "rating": 1820,
+    "k": 20
+  },
+  {
+    "id": "n1 joe muxlow",
+    "name": "Joe Muxlow",
+    "zone": "N1",
+    "club": "1WX",
     "rating": 1820,
     "k": 20
   },
@@ -1639,26 +1647,10 @@
     "k": 20
   },
   {
-    "id": "w1 cameron westwood",
-    "name": "Cameron Westwood",
-    "zone": "W1",
-    "club": "5NY",
-    "rating": 1819,
-    "k": 20
-  },
-  {
-    "id": "n1 joe muxlow",
-    "name": "Joe Muxlow",
+    "id": "n1 syringa camp",
+    "name": "Syringa Camp",
     "zone": "N1",
-    "club": "1WX",
-    "rating": 1817,
-    "k": 20
-  },
-  {
-    "id": "n1 dewi jones",
-    "name": "Dewi Jones",
-    "zone": "N1",
-    "club": "1CF",
+    "club": "1CB",
     "rating": 1814,
     "k": 20
   },
@@ -1671,26 +1663,18 @@
     "k": 20
   },
   {
-    "id": "g1 lucas james",
-    "name": "Lucas James",
-    "zone": "G1",
-    "club": "3MA",
-    "rating": 1813,
-    "k": 20
-  },
-  {
-    "id": "e1 mark jones",
-    "name": "Mark Jones",
-    "zone": "E1",
-    "club": "2BR",
-    "rating": 1813,
-    "k": 20
-  },
-  {
     "id": "e1 steve jones",
     "name": "Steve Jones",
     "zone": "E1",
     "club": "2BY",
+    "rating": 1813,
+    "k": 20
+  },
+  {
+    "id": "e1 yusuf sulemani",
+    "name": "Yusuf Sulemani",
+    "zone": "E1",
+    "club": "2PP",
     "rating": 1813,
     "k": 20
   },
@@ -1703,11 +1687,11 @@
     "k": 20
   },
   {
-    "id": "e1 kimberly chong",
-    "name": "Kimberly Chong",
+    "id": "e1 mark jones",
+    "name": "Mark Jones",
     "zone": "E1",
-    "club": "2CD",
-    "rating": 1811,
+    "club": "2BR",
+    "rating": 1812,
     "k": 20
   },
   {
@@ -1719,11 +1703,11 @@
     "k": 20
   },
   {
-    "id": "e1 yusuf sulemani",
-    "name": "Yusuf Sulemani",
+    "id": "e1 kimberly chong",
+    "name": "Kimberly Chong",
     "zone": "E1",
-    "club": "2PP",
-    "rating": 1810,
+    "club": "2CD",
+    "rating": 1809,
     "k": 20
   },
   {
@@ -1731,7 +1715,7 @@
     "name": "Lachlan Tyrell",
     "zone": "E1",
     "club": "2CU",
-    "rating": 1808,
+    "rating": 1809,
     "k": 20
   },
   {
@@ -1743,18 +1727,10 @@
     "k": 20
   },
   {
-    "id": "n1 richard doble",
-    "name": "Richard Doble",
+    "id": "n1 gary fox",
+    "name": "Gary Fox",
     "zone": "N1",
     "club": "1CB",
-    "rating": 1807,
-    "k": 20
-  },
-  {
-    "id": "e1 mohamed binesmael",
-    "name": "Mohamed Binesmael",
-    "zone": "E1",
-    "club": "2EG",
     "rating": 1806,
     "k": 20
   },
@@ -1767,27 +1743,51 @@
     "k": 20
   },
   {
-    "id": "n1 gary fox",
-    "name": "Gary Fox",
-    "zone": "N1",
-    "club": "1CB",
+    "id": "e1 mohamed binesmael",
+    "name": "Mohamed Binesmael",
+    "zone": "E1",
+    "club": "2EG",
     "rating": 1805,
     "k": 20
   },
   {
-    "id": "e1 kam choo yin",
-    "name": "Kam Choo Yin",
+    "id": "n1 richard owens",
+    "name": "Richard Owens",
+    "zone": "N1",
+    "club": "1BM",
+    "rating": 1804,
+    "k": 20
+  },
+  {
+    "id": "e1 will harwood",
+    "name": "Will Harwood",
     "zone": "E1",
-    "club": "2NC",
+    "club": "2PR",
+    "rating": 1804,
+    "k": 20
+  },
+  {
+    "id": "g1 zane allford",
+    "name": "Zane Allford",
+    "zone": "G1",
+    "club": "3AG",
+    "rating": 1804,
+    "k": 20
+  },
+  {
+    "id": "n1 dewi jones",
+    "name": "Dewi Jones",
+    "zone": "N1",
+    "club": "1CF",
     "rating": 1803,
     "k": 20
   },
   {
-    "id": "w1 keith downey",
-    "name": "Keith Downey",
-    "zone": "W1",
-    "club": "WCU",
-    "rating": 1802,
+    "id": "g1 lucas james",
+    "name": "Lucas James",
+    "zone": "G1",
+    "club": "3MA",
+    "rating": 1803,
     "k": 20
   },
   {
@@ -1795,22 +1795,38 @@
     "name": "Ovidiu Pintea",
     "zone": "W1",
     "club": "5NY",
-    "rating": 1802,
+    "rating": 1803,
     "k": 20
   },
   {
-    "id": "e1 david lewis",
-    "name": "David Lewis",
+    "id": "n1 richard doble",
+    "name": "Richard Doble",
+    "zone": "N1",
+    "club": "1CB",
+    "rating": 1803,
+    "k": 20
+  },
+  {
+    "id": "e1 kam choo yin",
+    "name": "Kam Choo Yin",
     "zone": "E1",
-    "club": "2PR",
+    "club": "2NC",
     "rating": 1801,
     "k": 20
   },
   {
-    "id": "e1 hamid farani sani",
-    "name": "Hamid Farani Sani",
-    "zone": "E1",
-    "club": "2CD",
+    "id": "n1 timothy j soar",
+    "name": "Timothy J Soar",
+    "zone": "N1",
+    "club": "1CB",
+    "rating": 1800,
+    "k": 20
+  },
+  {
+    "id": "w1 cameron westwood",
+    "name": "Cameron Westwood",
+    "zone": "W1",
+    "club": "5NY",
     "rating": 1799,
     "k": 30
   },
@@ -1823,19 +1839,27 @@
     "k": 30
   },
   {
+    "id": "e1 hamid farani sani",
+    "name": "Hamid Farani Sani",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1798,
+    "k": 30
+  },
+  {
     "id": "w1 huw jones",
     "name": "Huw Jones",
     "zone": "W1",
     "club": "5WK",
-    "rating": 1797,
+    "rating": 1798,
     "k": 30
   },
   {
-    "id": "e1 will harwood",
-    "name": "Will Harwood",
-    "zone": "E1",
-    "club": "2PR",
-    "rating": 1797,
+    "id": "w1 keith downey",
+    "name": "Keith Downey",
+    "zone": "W1",
+    "club": "WCU",
+    "rating": 1798,
     "k": 30
   },
   {
@@ -1847,11 +1871,19 @@
     "k": 30
   },
   {
-    "id": "e1 ian abraham",
-    "name": "Ian Abraham",
-    "zone": "E1",
-    "club": "2BY",
-    "rating": 1793,
+    "id": "n1 stephen dunning",
+    "name": "Stephen Dunning",
+    "zone": "N1",
+    "club": "1BM",
+    "rating": 1796,
+    "k": 30
+  },
+  {
+    "id": "w1 raghav aithrajui",
+    "name": "Raghav Aithrajui",
+    "zone": "W1",
+    "club": "5NY",
+    "rating": 1795,
     "k": 30
   },
   {
@@ -1863,11 +1895,11 @@
     "k": 30
   },
   {
-    "id": "n1 timothy j soar",
-    "name": "Timothy J Soar",
-    "zone": "N1",
-    "club": "1CB",
-    "rating": 1793,
+    "id": "e1 ian abraham",
+    "name": "Ian Abraham",
+    "zone": "E1",
+    "club": "2BY",
+    "rating": 1792,
     "k": 30
   },
   {
@@ -1879,11 +1911,11 @@
     "k": 30
   },
   {
-    "id": "w1 raghav aithrajui",
-    "name": "Raghav Aithrajui",
-    "zone": "W1",
-    "club": "5NY",
-    "rating": 1792,
+    "id": "e1 david lewis",
+    "name": "David Lewis",
+    "zone": "E1",
+    "club": "2PR",
+    "rating": 1791,
     "k": 30
   },
   {
@@ -1891,15 +1923,7 @@
     "name": "Mark Cooke",
     "zone": "E1",
     "club": "2BY",
-    "rating": 1789,
-    "k": 30
-  },
-  {
-    "id": "d1 r gareth williams",
-    "name": "R Gareth Williams",
-    "zone": "D1",
-    "club": "4CG",
-    "rating": 1789,
+    "rating": 1791,
     "k": 30
   },
   {
@@ -1911,19 +1935,11 @@
     "k": 30
   },
   {
-    "id": "e1 bill hunt",
-    "name": "Bill Hunt",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1788,
-    "k": 30
-  },
-  {
     "id": "e1 jonathan lewis",
     "name": "Jonathan Lewis",
     "zone": "E1",
     "club": "2CD",
-    "rating": 1788,
+    "rating": 1787,
     "k": 30
   },
   {
@@ -1931,39 +1947,15 @@
     "name": "Sam Brown",
     "zone": "W1",
     "club": "5MO",
-    "rating": 1788,
+    "rating": 1787,
     "k": 30
   },
   {
-    "id": "w1 lysa brooks",
-    "name": "Lysa Brooks",
-    "zone": "W1",
-    "club": "5NY",
-    "rating": 1785,
-    "k": 30
-  },
-  {
-    "id": "e1 russell dodington",
-    "name": "Russell Dodington",
+    "id": "e1 gavin williams",
+    "name": "Gavin Williams",
     "zone": "E1",
-    "club": "2NE",
+    "club": "2NC",
     "rating": 1785,
-    "k": 30
-  },
-  {
-    "id": "n1 g brian davies",
-    "name": "G Brian Davies",
-    "zone": "N1",
-    "club": "1WX",
-    "rating": 1783,
-    "k": 30
-  },
-  {
-    "id": "n1 stephen dunning",
-    "name": "Stephen Dunning",
-    "zone": "N1",
-    "club": "1BM",
-    "rating": 1783,
     "k": 30
   },
   {
@@ -1975,27 +1967,19 @@
     "k": 30
   },
   {
-    "id": "w1 ian eustis",
-    "name": "Ian Eustis",
-    "zone": "W1",
-    "club": "5MO",
-    "rating": 1782,
-    "k": 30
-  },
-  {
-    "id": "w1 jordan heatman",
-    "name": "Jordan Heatman",
-    "zone": "W1",
-    "club": "5CN",
-    "rating": 1781,
-    "k": 30
-  },
-  {
     "id": "n1 paul sadler",
     "name": "Paul Sadler",
     "zone": "N1",
     "club": "1WX",
-    "rating": 1781,
+    "rating": 1782,
+    "k": 30
+  },
+  {
+    "id": "w1 ian eustis",
+    "name": "Ian Eustis",
+    "zone": "W1",
+    "club": "5MO",
+    "rating": 1780,
     "k": 30
   },
   {
@@ -2007,10 +1991,18 @@
     "k": 30
   },
   {
-    "id": "w1 darson beeston",
-    "name": "Darson Beeston",
+    "id": "w1 jordan heatman",
+    "name": "Jordan Heatman",
     "zone": "W1",
-    "club": "5MO",
+    "club": "5CN",
+    "rating": 1779,
+    "k": 30
+  },
+  {
+    "id": "w1 lysa brooks",
+    "name": "Lysa Brooks",
+    "zone": "W1",
+    "club": "5NY",
     "rating": 1779,
     "k": 30
   },
@@ -2023,19 +2015,43 @@
     "k": 30
   },
   {
-    "id": "g1 zane allford",
-    "name": "Zane Allford",
-    "zone": "G1",
-    "club": "3AG",
-    "rating": 1778,
+    "id": "d1 alan williams",
+    "name": "Alan Williams",
+    "zone": "D1",
+    "club": "4CM",
+    "rating": 1776,
     "k": 30
   },
   {
-    "id": "e1 kevin stephens",
-    "name": "Kevin Stephens",
+    "id": "d1 r gareth williams",
+    "name": "R Gareth Williams",
+    "zone": "D1",
+    "club": "4CG",
+    "rating": 1776,
+    "k": 30
+  },
+  {
+    "id": "e1 russell dodington",
+    "name": "Russell Dodington",
     "zone": "E1",
-    "club": "2PP",
-    "rating": 1777,
+    "club": "2NE",
+    "rating": 1776,
+    "k": 30
+  },
+  {
+    "id": "e1 bill hunt",
+    "name": "Bill Hunt",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1775,
+    "k": 30
+  },
+  {
+    "id": "e1 mike maguire",
+    "name": "Mike Maguire",
+    "zone": "E1",
+    "club": "2PR",
+    "rating": 1775,
     "k": 30
   },
   {
@@ -2043,31 +2059,23 @@
     "name": "Scott Hammett",
     "zone": "D1",
     "club": "4PB",
-    "rating": 1776,
-    "k": 30
-  },
-  {
-    "id": "d1 toby bates",
-    "name": "Toby Bates",
-    "zone": "D1",
-    "club": "4AU",
     "rating": 1775,
     "k": 30
   },
   {
-    "id": "e1 david rovaretti",
-    "name": "David Rovaretti",
-    "zone": "E1",
-    "club": "2NE",
-    "rating": 1773,
+    "id": "w1 darson beeston",
+    "name": "Darson Beeston",
+    "zone": "W1",
+    "club": "5MO",
+    "rating": 1774,
     "k": 30
   },
   {
-    "id": "n1 huw davies",
-    "name": "Huw Davies",
+    "id": "n1 g brian davies",
+    "name": "G Brian Davies",
     "zone": "N1",
-    "club": "1BA",
-    "rating": 1773,
+    "club": "1WX",
+    "rating": 1774,
     "k": 30
   },
   {
@@ -2079,26 +2087,10 @@
     "k": 30
   },
   {
-    "id": "n1 catriona coutts",
-    "name": "Catriona Coutts",
-    "zone": "N1",
-    "club": "1BA",
-    "rating": 1772,
-    "k": 30
-  },
-  {
-    "id": "e1 gavin williams",
-    "name": "Gavin Williams",
+    "id": "e1 david rovaretti",
+    "name": "David Rovaretti",
     "zone": "E1",
-    "club": "2NC",
-    "rating": 1772,
-    "k": 30
-  },
-  {
-    "id": "e1 justin morgans",
-    "name": "Justin Morgans",
-    "zone": "E1",
-    "club": "2CP",
+    "club": "2NE",
     "rating": 1772,
     "k": 30
   },
@@ -2111,11 +2103,27 @@
     "k": 30
   },
   {
+    "id": "n1 catriona coutts",
+    "name": "Catriona Coutts",
+    "zone": "N1",
+    "club": "1BA",
+    "rating": 1771,
+    "k": 30
+  },
+  {
     "id": "e1 louise woodcock",
     "name": "Louise Woodcock",
     "zone": "E1",
     "club": "2EG",
     "rating": 1771,
+    "k": 30
+  },
+  {
+    "id": "e1 kevin stephens",
+    "name": "Kevin Stephens",
+    "zone": "E1",
+    "club": "2PP",
+    "rating": 1769,
     "k": 30
   },
   {
@@ -2127,11 +2135,43 @@
     "k": 30
   },
   {
+    "id": "d1 matthew francis",
+    "name": "Matthew Francis",
+    "zone": "D1",
+    "club": "4AB",
+    "rating": 1768,
+    "k": 30
+  },
+  {
+    "id": "e1 justin morgans",
+    "name": "Justin Morgans",
+    "zone": "E1",
+    "club": "2CP",
+    "rating": 1767,
+    "k": 30
+  },
+  {
+    "id": "n1 stephen williams (tre)",
+    "name": "Stephen Williams (Tre)",
+    "zone": "N1",
+    "club": "1BM",
+    "rating": 1767,
+    "k": 30
+  },
+  {
     "id": "g1 steve horrell",
     "name": "Steve Horrell",
     "zone": "G1",
     "club": "3AG",
-    "rating": 1768,
+    "rating": 1767,
+    "k": 30
+  },
+  {
+    "id": "n1 quentin rh dodd",
+    "name": "Quentin RH Dodd",
+    "zone": "N1",
+    "club": "1BM",
+    "rating": 1766,
     "k": 30
   },
   {
@@ -2143,35 +2183,19 @@
     "k": 30
   },
   {
-    "id": "d1 peter windows",
-    "name": "Peter Windows",
-    "zone": "D1",
-    "club": "4AB",
-    "rating": 1765,
-    "k": 30
-  },
-  {
     "id": "n1 david fernandez-arias",
     "name": "David Fernandez-Arias",
     "zone": "N1",
     "club": "1CB",
-    "rating": 1764,
+    "rating": 1763,
     "k": 30
   },
   {
-    "id": "w1 joseph durk",
-    "name": "Joseph Durk",
-    "zone": "W1",
-    "club": "5NY",
-    "rating": 1764,
-    "k": 30
-  },
-  {
-    "id": "d1 matthew francis",
-    "name": "Matthew Francis",
+    "id": "d1 peter windows",
+    "name": "Peter Windows",
     "zone": "D1",
     "club": "4AB",
-    "rating": 1764,
+    "rating": 1763,
     "k": 30
   },
   {
@@ -2179,14 +2203,6 @@
     "name": "Steve Williams (Cwm)",
     "zone": "G1",
     "club": "3CB",
-    "rating": 1764,
-    "k": 30
-  },
-  {
-    "id": "g1 dennis jones",
-    "name": "Dennis Jones",
-    "zone": "G1",
-    "club": "3PL",
     "rating": 1763,
     "k": 30
   },
@@ -2207,18 +2223,26 @@
     "k": 30
   },
   {
+    "id": "g1 dennis jones",
+    "name": "Dennis Jones",
+    "zone": "G1",
+    "club": "3PL",
+    "rating": 1761,
+    "k": 30
+  },
+  {
     "id": "g1 paul scott",
     "name": "Paul Scott",
     "zone": "G1",
     "club": "3AG",
-    "rating": 1762,
+    "rating": 1761,
     "k": 30
   },
   {
-    "id": "e1 emyr roberts",
-    "name": "Emyr Roberts",
-    "zone": "E1",
-    "club": "2NC",
+    "id": "w1 joseph durk",
+    "name": "Joseph Durk",
+    "zone": "W1",
+    "club": "5NY",
     "rating": 1759,
     "k": 30
   },
@@ -2231,14 +2255,6 @@
     "k": 30
   },
   {
-    "id": "e1 govind anandkumar",
-    "name": "Govind Anandkumar",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1757,
-    "k": 30
-  },
-  {
     "id": "e1 michael arribas-ayllon",
     "name": "Michael Arribas-Ayllon",
     "zone": "E1",
@@ -2247,35 +2263,43 @@
     "k": 30
   },
   {
-    "id": "e1 sergio esteves",
-    "name": "Sergio Esteves",
-    "zone": "E1",
-    "club": "2PP",
-    "rating": 1756,
-    "k": 30
-  },
-  {
-    "id": "n1 stephen williams (tre)",
-    "name": "Stephen Williams (Tre)",
-    "zone": "N1",
-    "club": "1BM",
-    "rating": 1756,
-    "k": 30
-  },
-  {
-    "id": "e1 mike maguire",
-    "name": "Mike Maguire",
-    "zone": "E1",
-    "club": "2PR",
-    "rating": 1755,
-    "k": 30
-  },
-  {
     "id": "e1 oliver van helden",
     "name": "Oliver Van Helden",
     "zone": "E1",
     "club": "2CU",
+    "rating": 1756,
+    "k": 30
+  },
+  {
+    "id": "e1 govind anandkumar",
+    "name": "Govind Anandkumar",
+    "zone": "E1",
+    "club": "2NC",
     "rating": 1755,
+    "k": 30
+  },
+  {
+    "id": "e1 sergio esteves",
+    "name": "Sergio Esteves",
+    "zone": "E1",
+    "club": "2PP",
+    "rating": 1754,
+    "k": 30
+  },
+  {
+    "id": "d1 yaroslav sharhorodsky",
+    "name": "Yaroslav Sharhorodsky",
+    "zone": "D1",
+    "club": "4PB",
+    "rating": 1754,
+    "k": 30
+  },
+  {
+    "id": "e1 emyr roberts",
+    "name": "Emyr Roberts",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1753,
     "k": 30
   },
   {
@@ -2283,7 +2307,7 @@
     "name": "Joshua Richards",
     "zone": "W1",
     "club": "5CN",
-    "rating": 1753,
+    "rating": 1752,
     "k": 30
   },
   {
@@ -2311,19 +2335,11 @@
     "k": 30
   },
   {
-    "id": "d1 yaroslav sharhorodsky",
-    "name": "Yaroslav Sharhorodsky",
-    "zone": "D1",
-    "club": "4PB",
+    "id": "n1 huw davies",
+    "name": "Huw Davies",
+    "zone": "N1",
+    "club": "1BA",
     "rating": 1750,
-    "k": 30
-  },
-  {
-    "id": "w1 chris daniel",
-    "name": "Chris Daniel",
-    "zone": "W1",
-    "club": "5WK",
-    "rating": 1748,
     "k": 30
   },
   {
@@ -2335,26 +2351,10 @@
     "k": 30
   },
   {
-    "id": "w1 anthony beck",
-    "name": "Anthony Beck",
-    "zone": "W1",
-    "club": "5CN",
-    "rating": 1746,
-    "k": 30
-  },
-  {
     "id": "d1 kevin heady",
     "name": "Kevin Heady",
     "zone": "D1",
     "club": "4FG",
-    "rating": 1746,
-    "k": 30
-  },
-  {
-    "id": "n1 richard owens",
-    "name": "Richard Owens",
-    "zone": "N1",
-    "club": "1BM",
     "rating": 1746,
     "k": 30
   },
@@ -2367,11 +2367,11 @@
     "k": 30
   },
   {
-    "id": "n1 quentin rh dodd",
-    "name": "Quentin RH Dodd",
-    "zone": "N1",
-    "club": "1BM",
-    "rating": 1745,
+    "id": "w1 chris daniel",
+    "name": "Chris Daniel",
+    "zone": "W1",
+    "club": "5WK",
+    "rating": 1744,
     "k": 30
   },
   {
@@ -2383,19 +2383,19 @@
     "k": 30
   },
   {
-    "id": "e1 jeff rowland",
-    "name": "Jeff Rowland",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1744,
+    "id": "w1 anthony beck",
+    "name": "Anthony Beck",
+    "zone": "W1",
+    "club": "5CN",
+    "rating": 1741,
     "k": 30
   },
   {
-    "id": "e1 samuele scarpignato",
-    "name": "Samuele Scarpignato",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1743,
+    "id": "d1 toby bates",
+    "name": "Toby Bates",
+    "zone": "D1",
+    "club": "4AU",
+    "rating": 1741,
     "k": 30
   },
   {
@@ -2407,51 +2407,19 @@
     "k": 30
   },
   {
-    "id": "e1 bill harle",
-    "name": "Bill Harle",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1739,
-    "k": 30
-  },
-  {
     "id": "e1 miltos zoumekas",
     "name": "Miltos Zoumekas",
     "zone": "E1",
     "club": "2CD",
-    "rating": 1739,
+    "rating": 1740,
     "k": 30
   },
   {
-    "id": "w1 guto llywelyn",
-    "name": "Guto Llywelyn",
-    "zone": "W1",
-    "club": "5WK",
-    "rating": 1738,
-    "k": 30
-  },
-  {
-    "id": "e1 cyril ley",
-    "name": "Cyril Ley",
+    "id": "e1 bill harle",
+    "name": "Bill Harle",
     "zone": "E1",
     "club": "2CD",
-    "rating": 1737,
-    "k": 30
-  },
-  {
-    "id": "w1 evan whitehouse",
-    "name": "Evan Whitehouse",
-    "zone": "W1",
-    "club": "5NY",
-    "rating": 1735,
-    "k": 30
-  },
-  {
-    "id": "g1 gerry carolan",
-    "name": "Gerry Carolan",
-    "zone": "G1",
-    "club": "3AG",
-    "rating": 1735,
+    "rating": 1738,
     "k": 30
   },
   {
@@ -2459,6 +2427,22 @@
     "name": "John Arnold",
     "zone": "W1",
     "club": "5WK",
+    "rating": 1737,
+    "k": 30
+  },
+  {
+    "id": "w1 guto llywelyn",
+    "name": "Guto Llywelyn",
+    "zone": "W1",
+    "club": "5WK",
+    "rating": 1736,
+    "k": 30
+  },
+  {
+    "id": "w1 evan whitehouse",
+    "name": "Evan Whitehouse",
+    "zone": "W1",
+    "club": "5NY",
     "rating": 1735,
     "k": 30
   },
@@ -2471,18 +2455,18 @@
     "k": 30
   },
   {
-    "id": "e1 will elworthy",
-    "name": "Will Elworthy",
+    "id": "e1 samuele scarpignato",
+    "name": "Samuele Scarpignato",
     "zone": "E1",
-    "club": "2PR",
-    "rating": 1734,
+    "club": "2CD",
+    "rating": 1735,
     "k": 30
   },
   {
-    "id": "w1 luke williams",
-    "name": "Luke Williams",
-    "zone": "W1",
-    "club": "5MO",
+    "id": "e1 jeff rowland",
+    "name": "Jeff Rowland",
+    "zone": "E1",
+    "club": "2CD",
     "rating": 1733,
     "k": 30
   },
@@ -2491,7 +2475,23 @@
     "name": "Matthew Lunnon",
     "zone": "E1",
     "club": "2PR",
-    "rating": 1728,
+    "rating": 1732,
+    "k": 30
+  },
+  {
+    "id": "n1 paul taylor",
+    "name": "Paul Taylor",
+    "zone": "N1",
+    "club": "1BM",
+    "rating": 1730,
+    "k": 30
+  },
+  {
+    "id": "e1 cyril ley",
+    "name": "Cyril Ley",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1725,
     "k": 30
   },
   {
@@ -2503,27 +2503,67 @@
     "k": 30
   },
   {
-    "id": "g1 ganesh kadalarasan",
-    "name": "Ganesh Kadalarasan",
-    "zone": "G1",
-    "club": "3NP",
-    "rating": 1724,
-    "k": 30
-  },
-  {
     "id": "w1 danny ashburner",
     "name": "Danny Ashburner",
     "zone": "W1",
     "club": "5UK",
-    "rating": 1723,
+    "rating": 1724,
     "k": 30
   },
   {
-    "id": "e1 ken hannah",
-    "name": "Ken Hannah",
+    "id": "e1 marcell vesz",
+    "name": "Marcell Vesz",
     "zone": "E1",
-    "club": "2BY",
-    "rating": 1723,
+    "club": "2EG",
+    "rating": 1724,
+    "k": 30
+  },
+  {
+    "id": "g1 adam jenkins",
+    "name": "Adam Jenkins",
+    "zone": "G1",
+    "club": "3MA",
+    "rating": 1722,
+    "k": 30
+  },
+  {
+    "id": "g1 ganesh kadalarasan",
+    "name": "Ganesh Kadalarasan",
+    "zone": "G1",
+    "club": "3NP",
+    "rating": 1722,
+    "k": 30
+  },
+  {
+    "id": "e1 simon blackmore",
+    "name": "Simon Blackmore",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1722,
+    "k": 30
+  },
+  {
+    "id": "n1 mike blake",
+    "name": "Mike Blake",
+    "zone": "N1",
+    "club": "1CF",
+    "rating": 1721,
+    "k": 30
+  },
+  {
+    "id": "w1 ben rowlands",
+    "name": "Ben Rowlands",
+    "zone": "W1",
+    "club": "5DB",
+    "rating": 1720,
+    "k": 30
+  },
+  {
+    "id": "g1 gerry carolan",
+    "name": "Gerry Carolan",
+    "zone": "G1",
+    "club": "3AG",
+    "rating": 1720,
     "k": 30
   },
   {
@@ -2535,19 +2575,11 @@
     "k": 30
   },
   {
-    "id": "e1 simon blackmore",
-    "name": "Simon Blackmore",
+    "id": "e1 ken hannah",
+    "name": "Ken Hannah",
     "zone": "E1",
-    "club": "2NC",
+    "club": "2BY",
     "rating": 1719,
-    "k": 30
-  },
-  {
-    "id": "e1 lucas zheng",
-    "name": "Lucas Zheng",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1718,
     "k": 30
   },
   {
@@ -2559,10 +2591,10 @@
     "k": 30
   },
   {
-    "id": "e1 suraj prabhu",
-    "name": "Suraj Prabhu",
+    "id": "e1 lucas zheng",
+    "name": "Lucas Zheng",
     "zone": "E1",
-    "club": "2CP",
+    "club": "2NC",
     "rating": 1717,
     "k": 30
   },
@@ -2571,55 +2603,15 @@
     "name": "Zack Wilkins",
     "zone": "E1",
     "club": "2CD",
-    "rating": 1715,
+    "rating": 1717,
     "k": 30
   },
   {
-    "id": "e1 marcell vesz",
-    "name": "Marcell Vesz",
-    "zone": "E1",
-    "club": "2EG",
-    "rating": 1714,
-    "k": 30
-  },
-  {
-    "id": "e1 bob hurn",
-    "name": "Bob Hurn",
+    "id": "e1 suraj prabhu",
+    "name": "Suraj Prabhu",
     "zone": "E1",
     "club": "2CP",
-    "rating": 1713,
-    "k": 30
-  },
-  {
-    "id": "e1 jeremy ryan",
-    "name": "Jeremy Ryan",
-    "zone": "E1",
-    "club": "2PP",
-    "rating": 1713,
-    "k": 30
-  },
-  {
-    "id": "n1 joshua mullineux",
-    "name": "Joshua Mullineux",
-    "zone": "N1",
-    "club": "1BA",
-    "rating": 1713,
-    "k": 30
-  },
-  {
-    "id": "e1 martin blackman-siegler",
-    "name": "Martin Blackman-Siegler",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1713,
-    "k": 30
-  },
-  {
-    "id": "g1 adam jenkins",
-    "name": "Adam Jenkins",
-    "zone": "G1",
-    "club": "3MA",
-    "rating": 1712,
+    "rating": 1716,
     "k": 30
   },
   {
@@ -2627,7 +2619,47 @@
     "name": "Les Philpin",
     "zone": "W1",
     "club": "5MO",
+    "rating": 1715,
+    "k": 30
+  },
+  {
+    "id": "n1 joshua mullineux",
+    "name": "Joshua Mullineux",
+    "zone": "N1",
+    "club": "1BA",
+    "rating": 1714,
+    "k": 30
+  },
+  {
+    "id": "n1 barrie wells",
+    "name": "Barrie Wells",
+    "zone": "N1",
+    "club": "1CB",
     "rating": 1712,
+    "k": 30
+  },
+  {
+    "id": "e1 bob hurn",
+    "name": "Bob Hurn",
+    "zone": "E1",
+    "club": "2CP",
+    "rating": 1712,
+    "k": 30
+  },
+  {
+    "id": "e1 ken wardle",
+    "name": "Ken Wardle",
+    "zone": "E1",
+    "club": "2EG",
+    "rating": 1711,
+    "k": 30
+  },
+  {
+    "id": "e1 martin blackman-siegler",
+    "name": "Martin Blackman-Siegler",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1711,
     "k": 30
   },
   {
@@ -2639,38 +2671,6 @@
     "k": 30
   },
   {
-    "id": "n1 domantas kirklys",
-    "name": "Domantas Kirklys",
-    "zone": "N1",
-    "club": "1BM",
-    "rating": 1708,
-    "k": 30
-  },
-  {
-    "id": "w1 ben rowlands",
-    "name": "Ben Rowlands",
-    "zone": "W1",
-    "club": "5DB",
-    "rating": 1707,
-    "k": 30
-  },
-  {
-    "id": "n1 frank salt",
-    "name": "Frank Salt",
-    "zone": "N1",
-    "club": "1BM",
-    "rating": 1707,
-    "k": 30
-  },
-  {
-    "id": "n1 mike blake",
-    "name": "Mike Blake",
-    "zone": "N1",
-    "club": "1CF",
-    "rating": 1707,
-    "k": 30
-  },
-  {
     "id": "w1 vlad pintea",
     "name": "Vlad Pintea",
     "zone": "W1",
@@ -2679,59 +2679,27 @@
     "k": 30
   },
   {
-    "id": "e1 dwain jones",
-    "name": "Dwain Jones",
-    "zone": "E1",
-    "club": "2CP",
-    "rating": 1704,
-    "k": 30
-  },
-  {
-    "id": "e1 piotr graczyk",
-    "name": "Piotr Graczyk",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1704,
-    "k": 30
-  },
-  {
-    "id": "e1 steffan mon",
-    "name": "Steffan Mon",
-    "zone": "E1",
-    "club": "2PR",
-    "rating": 1704,
-    "k": 30
-  },
-  {
-    "id": "n1 barrie wells",
-    "name": "Barrie Wells",
-    "zone": "N1",
-    "club": "1CB",
-    "rating": 1703,
-    "k": 30
-  },
-  {
-    "id": "d1 jonathan jones",
-    "name": "Jonathan Jones",
-    "zone": "D1",
-    "club": "4PB",
-    "rating": 1703,
-    "k": 30
-  },
-  {
-    "id": "g1 paul mills",
-    "name": "Paul Mills",
-    "zone": "G1",
-    "club": "3AG",
-    "rating": 1703,
-    "k": 30
-  },
-  {
-    "id": "n1 paul taylor",
-    "name": "Paul Taylor",
+    "id": "n1 frank salt",
+    "name": "Frank Salt",
     "zone": "N1",
     "club": "1BM",
-    "rating": 1703,
+    "rating": 1706,
+    "k": 30
+  },
+  {
+    "id": "e1 jeremy ryan",
+    "name": "Jeremy Ryan",
+    "zone": "E1",
+    "club": "2PP",
+    "rating": 1706,
+    "k": 30
+  },
+  {
+    "id": "e1 edd chwieseni",
+    "name": "Edd Chwieseni",
+    "zone": "E1",
+    "club": "2PR",
+    "rating": 1705,
     "k": 30
   },
   {
@@ -2739,14 +2707,22 @@
     "name": "Yash Dave",
     "zone": "W1",
     "club": "5NY",
-    "rating": 1703,
+    "rating": 1705,
     "k": 30
   },
   {
-    "id": "e1 leon jansen van rensburg",
-    "name": "Leon Jansen van Rensburg",
+    "id": "e1 dwain jones",
+    "name": "Dwain Jones",
     "zone": "E1",
     "club": "2CP",
+    "rating": 1702,
+    "k": 30
+  },
+  {
+    "id": "e1 piotr graczyk",
+    "name": "Piotr Graczyk",
+    "zone": "E1",
+    "club": "2CD",
     "rating": 1702,
     "k": 30
   },
@@ -2767,19 +2743,27 @@
     "k": 30
   },
   {
-    "id": "n1 edward rg swartz",
-    "name": "Edward RG Swartz",
-    "zone": "N1",
-    "club": "1NZ",
-    "rating": 1699,
+    "id": "g1 paul mills",
+    "name": "Paul Mills",
+    "zone": "G1",
+    "club": "3AG",
+    "rating": 1701,
     "k": 30
   },
   {
-    "id": "e1 edd chwieseni",
-    "name": "Edd Chwieseni",
+    "id": "e1 steffan mon",
+    "name": "Steffan Mon",
     "zone": "E1",
     "club": "2PR",
-    "rating": 1698,
+    "rating": 1700,
+    "k": 30
+  },
+  {
+    "id": "e1 peter slater",
+    "name": "Peter Slater",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1699,
     "k": 30
   },
   {
@@ -2791,10 +2775,10 @@
     "k": 30
   },
   {
-    "id": "e1 peter slater",
-    "name": "Peter Slater",
+    "id": "e1 leon jansen van rensburg",
+    "name": "Leon Jansen van Rensburg",
     "zone": "E1",
-    "club": "2NC",
+    "club": "2CP",
     "rating": 1698,
     "k": 30
   },
@@ -2807,11 +2791,27 @@
     "k": 30
   },
   {
-    "id": "e1 julian irving",
-    "name": "Julian Irving",
-    "zone": "E1",
-    "club": "2CD",
+    "id": "d1 jonathan jones",
+    "name": "Jonathan Jones",
+    "zone": "D1",
+    "club": "4PB",
+    "rating": 1697,
+    "k": 30
+  },
+  {
+    "id": "n1 domantas kirklys",
+    "name": "Domantas Kirklys",
+    "zone": "N1",
+    "club": "1BM",
     "rating": 1696,
+    "k": 30
+  },
+  {
+    "id": "n1 edward rg swartz",
+    "name": "Edward RG Swartz",
+    "zone": "N1",
+    "club": "1NZ",
+    "rating": 1695,
     "k": 30
   },
   {
@@ -2819,14 +2819,6 @@
     "name": "Gary Slegg",
     "zone": "N1",
     "club": "1WX",
-    "rating": 1695,
-    "k": 30
-  },
-  {
-    "id": "n1 juan rajagopal",
-    "name": "Juan Rajagopal",
-    "zone": "N1",
-    "club": "1SA",
     "rating": 1695,
     "k": 30
   },
@@ -2843,30 +2835,6 @@
     "name": "Oyvind Ringen",
     "zone": "E1",
     "club": "2PP",
-    "rating": 1694,
-    "k": 30
-  },
-  {
-    "id": "e1 chris green",
-    "name": "Chris Green",
-    "zone": "E1",
-    "club": "2BY",
-    "rating": 1693,
-    "k": 30
-  },
-  {
-    "id": "e1 chris slack",
-    "name": "Chris Slack",
-    "zone": "E1",
-    "club": "2CU",
-    "rating": 1693,
-    "k": 30
-  },
-  {
-    "id": "e1 jack hannigan",
-    "name": "Jack Hannigan",
-    "zone": "E1",
-    "club": "2CP",
     "rating": 1693,
     "k": 30
   },
@@ -2879,19 +2847,11 @@
     "k": 30
   },
   {
-    "id": "e1 cosmin stancu",
-    "name": "Cosmin Stancu",
+    "id": "e1 chris slack",
+    "name": "Chris Slack",
     "zone": "E1",
-    "club": "2BR",
-    "rating": 1691,
-    "k": 30
-  },
-  {
-    "id": "w1 mark wilson",
-    "name": "Mark Wilson",
-    "zone": "W1",
-    "club": "5DB",
-    "rating": 1688,
+    "club": "2CU",
+    "rating": 1692,
     "k": 30
   },
   {
@@ -2899,15 +2859,39 @@
     "name": "Gareth Harding",
     "zone": "E1",
     "club": "2PP",
+    "rating": 1691,
+    "k": 30
+  },
+  {
+    "id": "e1 jack hannigan",
+    "name": "Jack Hannigan",
+    "zone": "E1",
+    "club": "2CP",
+    "rating": 1691,
+    "k": 30
+  },
+  {
+    "id": "e1 cosmin stancu",
+    "name": "Cosmin Stancu",
+    "zone": "E1",
+    "club": "2BR",
+    "rating": 1690,
+    "k": 30
+  },
+  {
+    "id": "d1 mark paffard",
+    "name": "Mark Paffard",
+    "zone": "D1",
+    "club": "4PB",
     "rating": 1687,
     "k": 30
   },
   {
-    "id": "w1 daniel chung",
-    "name": "Daniel Chung",
+    "id": "w1 mark wilson",
+    "name": "Mark Wilson",
     "zone": "W1",
-    "club": "5MO",
-    "rating": 1686,
+    "club": "5DB",
+    "rating": 1687,
     "k": 30
   },
   {
@@ -2915,7 +2899,7 @@
     "name": "Mike Hollyman",
     "zone": "E1",
     "club": "2RH",
-    "rating": 1685,
+    "rating": 1684,
     "k": 30
   },
   {
@@ -2923,7 +2907,15 @@
     "name": "Andrew Sutton",
     "zone": "N1",
     "club": "1CB",
-    "rating": 1684,
+    "rating": 1683,
+    "k": 30
+  },
+  {
+    "id": "e1 chris green",
+    "name": "Chris Green",
+    "zone": "E1",
+    "club": "2BY",
+    "rating": 1683,
     "k": 30
   },
   {
@@ -2939,14 +2931,6 @@
     "name": "Tomas Forsey",
     "zone": "G1",
     "club": "3NP",
-    "rating": 1683,
-    "k": 30
-  },
-  {
-    "id": "e1 clive crowley",
-    "name": "Clive Crowley",
-    "zone": "E1",
-    "club": "2NE",
     "rating": 1682,
     "k": 30
   },
@@ -2963,7 +2947,15 @@
     "name": "Wale Oladejo",
     "zone": "E1",
     "club": "2CD",
-    "rating": 1679,
+    "rating": 1680,
+    "k": 30
+  },
+  {
+    "id": "n1 juan rajagopal",
+    "name": "Juan Rajagopal",
+    "zone": "N1",
+    "club": "1SA",
+    "rating": 1677,
     "k": 30
   },
   {
@@ -2971,7 +2963,7 @@
     "name": "Malcolm Probert",
     "zone": "W1",
     "club": "5WK",
-    "rating": 1677,
+    "rating": 1676,
     "k": 30
   },
   {
@@ -2979,23 +2971,15 @@
     "name": "Robert Muza",
     "zone": "G1",
     "club": "3NP",
-    "rating": 1677,
-    "k": 30
-  },
-  {
-    "id": "g1 dave connolly",
-    "name": "Dave Connolly",
-    "zone": "G1",
-    "club": "3NP",
     "rating": 1676,
     "k": 30
   },
   {
-    "id": "d1 mark paffard",
-    "name": "Mark Paffard",
-    "zone": "D1",
-    "club": "4PB",
-    "rating": 1676,
+    "id": "w1 daniel chung",
+    "name": "Daniel Chung",
+    "zone": "W1",
+    "club": "5MO",
+    "rating": 1674,
     "k": 30
   },
   {
@@ -3003,23 +2987,15 @@
     "name": "S Wyn Howells",
     "zone": "E1",
     "club": "2NE",
-    "rating": 1676,
+    "rating": 1673,
     "k": 30
   },
   {
-    "id": "e1 aled roberts",
-    "name": "Aled Roberts",
+    "id": "e1 clive crowley",
+    "name": "Clive Crowley",
     "zone": "E1",
-    "club": "2NC",
+    "club": "2NE",
     "rating": 1672,
-    "k": 30
-  },
-  {
-    "id": "d1 luke mccardle",
-    "name": "Luke McCardle",
-    "zone": "D1",
-    "club": "4AU",
-    "rating": 1670,
     "k": 30
   },
   {
@@ -3031,35 +3007,27 @@
     "k": 30
   },
   {
-    "id": "e1 stefan le roy",
-    "name": "Stefan Le Roy",
-    "zone": "E1",
-    "club": "2CP",
+    "id": "d1 luke mccardle",
+    "name": "Luke McCardle",
+    "zone": "D1",
+    "club": "4AU",
     "rating": 1669,
     "k": 30
   },
   {
-    "id": "n1 deio parri",
-    "name": "Deio Parri",
-    "zone": "N1",
-    "club": "1CF",
-    "rating": 1667,
-    "k": 30
-  },
-  {
-    "id": "w1 jonathan baker",
-    "name": "Jonathan Baker",
-    "zone": "W1",
-    "club": "5WK",
-    "rating": 1667,
-    "k": 30
-  },
-  {
-    "id": "g1 andrew balfe",
-    "name": "Andrew Balfe",
+    "id": "g1 dave connolly",
+    "name": "Dave Connolly",
     "zone": "G1",
     "club": "3NP",
-    "rating": 1666,
+    "rating": 1668,
+    "k": 30
+  },
+  {
+    "id": "e1 stefan le roy",
+    "name": "Stefan Le Roy",
+    "zone": "E1",
+    "club": "2CP",
+    "rating": 1668,
     "k": 30
   },
   {
@@ -3071,26 +3039,34 @@
     "k": 30
   },
   {
-    "id": "e1 andrew jeanes",
-    "name": "Andrew Jeanes",
-    "zone": "E1",
-    "club": "2PP",
+    "id": "n1 deio parri",
+    "name": "Deio Parri",
+    "zone": "N1",
+    "club": "1CF",
+    "rating": 1665,
+    "k": 30
+  },
+  {
+    "id": "g1 andrew balfe",
+    "name": "Andrew Balfe",
+    "zone": "G1",
+    "club": "3NP",
     "rating": 1664,
     "k": 30
   },
   {
-    "id": "e1 chris peters",
-    "name": "Chris Peters",
+    "id": "e1 andrew jeanes",
+    "name": "Andrew Jeanes",
     "zone": "E1",
-    "club": "2BR",
+    "club": "2PP",
     "rating": 1661,
     "k": 30
   },
   {
-    "id": "n1 matthew thomas",
-    "name": "Matthew Thomas",
-    "zone": "N1",
-    "club": "1CB",
+    "id": "w1 jonathan baker",
+    "name": "Jonathan Baker",
+    "zone": "W1",
+    "club": "5WK",
     "rating": 1661,
     "k": 30
   },
@@ -3111,10 +3087,10 @@
     "k": 30
   },
   {
-    "id": "g1 ben tucker",
-    "name": "Ben Tucker",
-    "zone": "G1",
-    "club": "3NP",
+    "id": "e1 chris peters",
+    "name": "Chris Peters",
+    "zone": "E1",
+    "club": "2BR",
     "rating": 1659,
     "k": 30
   },
@@ -3123,22 +3099,6 @@
     "name": "Angus Weir",
     "zone": "N1",
     "club": "1BM",
-    "rating": 1658,
-    "k": 30
-  },
-  {
-    "id": "d1 tom gunn",
-    "name": "Tom Gunn",
-    "zone": "D1",
-    "club": "4AB",
-    "rating": 1658,
-    "k": 30
-  },
-  {
-    "id": "e1 adam christopher",
-    "name": "Adam Christopher",
-    "zone": "E1",
-    "club": "2PR",
     "rating": 1657,
     "k": 30
   },
@@ -3147,15 +3107,7 @@
     "name": "Peter Brain",
     "zone": "E1",
     "club": "2EG",
-    "rating": 1656,
-    "k": 30
-  },
-  {
-    "id": "n1 peter coutts",
-    "name": "Peter Coutts",
-    "zone": "N1",
-    "club": "1BA",
-    "rating": 1656,
+    "rating": 1657,
     "k": 30
   },
   {
@@ -3167,19 +3119,27 @@
     "k": 30
   },
   {
-    "id": "n1 richard drew",
-    "name": "Richard Drew",
-    "zone": "N1",
-    "club": "1BM",
+    "id": "w1 andrew golley",
+    "name": "Andrew Golley",
+    "zone": "W1",
+    "club": "5MO",
     "rating": 1655,
     "k": 30
   },
   {
-    "id": "e1 owain dutfield",
-    "name": "Owain Dutfield",
+    "id": "e1 adam christopher",
+    "name": "Adam Christopher",
     "zone": "E1",
-    "club": "2NC",
-    "rating": 1654,
+    "club": "2PR",
+    "rating": 1653,
+    "k": 30
+  },
+  {
+    "id": "g1 ben tucker",
+    "name": "Ben Tucker",
+    "zone": "G1",
+    "club": "3NP",
+    "rating": 1653,
     "k": 30
   },
   {
@@ -3191,19 +3151,11 @@
     "k": 30
   },
   {
-    "id": "e1 ken wardle",
-    "name": "Ken Wardle",
-    "zone": "E1",
-    "club": "2EG",
-    "rating": 1652,
-    "k": 30
-  },
-  {
-    "id": "e1 milo davies",
-    "name": "Milo Davies",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1652,
+    "id": "n1 robert g hill",
+    "name": "Robert G Hill",
+    "zone": "N1",
+    "club": "1BM",
+    "rating": 1653,
     "k": 30
   },
   {
@@ -3227,71 +3179,15 @@
     "name": "Leo Fernandez-Arias",
     "zone": "N1",
     "club": "1CB",
-    "rating": 1650,
-    "k": 30
-  },
-  {
-    "id": "n1 robert g hill",
-    "name": "Robert G Hill",
-    "zone": "N1",
-    "club": "1BM",
-    "rating": 1650,
-    "k": 30
-  },
-  {
-    "id": "e1 ben bickford",
-    "name": "Ben Bickford",
-    "zone": "E1",
-    "club": "2CP",
     "rating": 1649,
     "k": 30
   },
   {
-    "id": "w1 roger jenkins",
-    "name": "Roger Jenkins",
-    "zone": "W1",
-    "club": "5MO",
-    "rating": 1649,
-    "k": 30
-  },
-  {
-    "id": "w1 andrew golley",
-    "name": "Andrew Golley",
-    "zone": "W1",
-    "club": "5MO",
-    "rating": 1648,
-    "k": 30
-  },
-  {
-    "id": "e1 oliver cumiskey",
-    "name": "Oliver Cumiskey",
+    "id": "e1 owain dutfield",
+    "name": "Owain Dutfield",
     "zone": "E1",
     "club": "2NC",
-    "rating": 1648,
-    "k": 30
-  },
-  {
-    "id": "g1 brian ross",
-    "name": "Brian Ross",
-    "zone": "G1",
-    "club": "3AG",
-    "rating": 1647,
-    "k": 30
-  },
-  {
-    "id": "n1 richard hibbs",
-    "name": "Richard Hibbs",
-    "zone": "N1",
-    "club": "1CB",
-    "rating": 1647,
-    "k": 30
-  },
-  {
-    "id": "w1 paul headon",
-    "name": "Paul Headon",
-    "zone": "W1",
-    "club": "5UK",
-    "rating": 1646,
+    "rating": 1649,
     "k": 30
   },
   {
@@ -3299,6 +3195,46 @@
     "name": "Phil Smith",
     "zone": "G1",
     "club": "3PL",
+    "rating": 1649,
+    "k": 30
+  },
+  {
+    "id": "e1 aled roberts",
+    "name": "Aled Roberts",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1648,
+    "k": 30
+  },
+  {
+    "id": "n1 peter coutts",
+    "name": "Peter Coutts",
+    "zone": "N1",
+    "club": "1BA",
+    "rating": 1648,
+    "k": 30
+  },
+  {
+    "id": "e1 ben bickford",
+    "name": "Ben Bickford",
+    "zone": "E1",
+    "club": "2CP",
+    "rating": 1647,
+    "k": 30
+  },
+  {
+    "id": "e1 oliver cumiskey",
+    "name": "Oliver Cumiskey",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1646,
+    "k": 30
+  },
+  {
+    "id": "d1 sam holman",
+    "name": "Sam Holman",
+    "zone": "D1",
+    "club": "4AB",
     "rating": 1646,
     "k": 30
   },
@@ -3311,19 +3247,35 @@
     "k": 30
   },
   {
-    "id": "w1 angus winter",
-    "name": "Angus Winter",
-    "zone": "W1",
-    "club": "5NY",
+    "id": "d1 tom gunn",
+    "name": "Tom Gunn",
+    "zone": "D1",
+    "club": "4AB",
+    "rating": 1645,
+    "k": 30
+  },
+  {
+    "id": "e1 milo davies",
+    "name": "Milo Davies",
+    "zone": "E1",
+    "club": "2NC",
     "rating": 1644,
     "k": 30
   },
   {
-    "id": "w1 ralph cook",
-    "name": "Ralph Cook",
+    "id": "w1 roger jenkins",
+    "name": "Roger Jenkins",
     "zone": "W1",
-    "club": "5UK",
-    "rating": 1641,
+    "club": "5MO",
+    "rating": 1644,
+    "k": 30
+  },
+  {
+    "id": "w1 angus winter",
+    "name": "Angus Winter",
+    "zone": "W1",
+    "club": "5NY",
+    "rating": 1643,
     "k": 30
   },
   {
@@ -3339,6 +3291,22 @@
     "name": "David Tibbs",
     "zone": "E1",
     "club": "2CD",
+    "rating": 1640,
+    "k": 30
+  },
+  {
+    "id": "w1 paul headon",
+    "name": "Paul Headon",
+    "zone": "W1",
+    "club": "5UK",
+    "rating": 1640,
+    "k": 30
+  },
+  {
+    "id": "w1 ralph cook",
+    "name": "Ralph Cook",
+    "zone": "W1",
+    "club": "5UK",
     "rating": 1640,
     "k": 30
   },
@@ -3363,7 +3331,7 @@
     "name": "Neil Stuart",
     "zone": "W1",
     "club": "5MO",
-    "rating": 1638,
+    "rating": 1637,
     "k": 30
   },
   {
@@ -3371,7 +3339,7 @@
     "name": "Jack Bull",
     "zone": "G1",
     "club": "3MA",
-    "rating": 1637,
+    "rating": 1636,
     "k": 30
   },
   {
@@ -3379,38 +3347,22 @@
     "name": "Sander Den Drijver",
     "zone": "N1",
     "club": "1BM",
-    "rating": 1637,
+    "rating": 1636,
     "k": 30
   },
   {
-    "id": "e1 greg lloyd",
-    "name": "Greg Lloyd",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1635,
-    "k": 30
-  },
-  {
-    "id": "w1 elliott chapman",
-    "name": "Elliott Chapman",
-    "zone": "W1",
-    "club": "5MO",
-    "rating": 1634,
-    "k": 30
-  },
-  {
-    "id": "n1 stephen williams (rp)",
-    "name": "Stephen Williams (RP)",
+    "id": "n1 richard drew",
+    "name": "Richard Drew",
     "zone": "N1",
-    "club": "1RP",
+    "club": "1BM",
     "rating": 1634,
     "k": 30
   },
   {
-    "id": "e1 david belochkin",
-    "name": "David Belochkin",
-    "zone": "E1",
-    "club": "2NC",
+    "id": "g1 brian ross",
+    "name": "Brian Ross",
+    "zone": "G1",
+    "club": "3AG",
     "rating": 1633,
     "k": 30
   },
@@ -3423,10 +3375,18 @@
     "k": 30
   },
   {
-    "id": "e1 sean day",
-    "name": "Sean Day",
+    "id": "n1 stephen williams (rp)",
+    "name": "Stephen Williams (RP)",
+    "zone": "N1",
+    "club": "1RP",
+    "rating": 1633,
+    "k": 30
+  },
+  {
+    "id": "e1 greg lloyd",
+    "name": "Greg Lloyd",
     "zone": "E1",
-    "club": "2BR",
+    "club": "2CD",
     "rating": 1632,
     "k": 30
   },
@@ -3435,6 +3395,22 @@
     "name": "Ian Hayes",
     "zone": "D1",
     "club": "4CG",
+    "rating": 1632,
+    "k": 30
+  },
+  {
+    "id": "e1 sean day",
+    "name": "Sean Day",
+    "zone": "E1",
+    "club": "2BR",
+    "rating": 1632,
+    "k": 30
+  },
+  {
+    "id": "e1 david belochkin",
+    "name": "David Belochkin",
+    "zone": "E1",
+    "club": "2NC",
     "rating": 1631,
     "k": 30
   },
@@ -3447,19 +3423,19 @@
     "k": 30
   },
   {
+    "id": "w1 carl halpin",
+    "name": "Carl Halpin",
+    "zone": "W1",
+    "club": "5CN",
+    "rating": 1624,
+    "k": 30
+  },
+  {
     "id": "g1 ron williams",
     "name": "Ron Williams",
     "zone": "G1",
     "club": "3MA",
-    "rating": 1625,
-    "k": 30
-  },
-  {
-    "id": "n1 tim green",
-    "name": "Tim Green",
-    "zone": "N1",
-    "club": "1BA",
-    "rating": 1625,
+    "rating": 1624,
     "k": 30
   },
   {
@@ -3467,14 +3443,14 @@
     "name": "Kieran Edwards",
     "zone": "D1",
     "club": "4CG",
-    "rating": 1624,
+    "rating": 1623,
     "k": 30
   },
   {
-    "id": "d1 sam holman",
-    "name": "Sam Holman",
-    "zone": "D1",
-    "club": "4AB",
+    "id": "n1 tim green",
+    "name": "Tim Green",
+    "zone": "N1",
+    "club": "1BA",
     "rating": 1623,
     "k": 30
   },
@@ -3483,7 +3459,7 @@
     "name": "Vladyslav Kulikov",
     "zone": "N1",
     "club": "1BA",
-    "rating": 1622,
+    "rating": 1621,
     "k": 30
   },
   {
@@ -3491,23 +3467,15 @@
     "name": "Joe Purden",
     "zone": "W1",
     "club": "5DB",
+    "rating": 1620,
+    "k": 30
+  },
+  {
+    "id": "n1 richard hibbs",
+    "name": "Richard Hibbs",
+    "zone": "N1",
+    "club": "1CB",
     "rating": 1619,
-    "k": 30
-  },
-  {
-    "id": "w1 carl halpin",
-    "name": "Carl Halpin",
-    "zone": "W1",
-    "club": "5CN",
-    "rating": 1618,
-    "k": 30
-  },
-  {
-    "id": "e1 tycho twohig",
-    "name": "Tycho Twohig",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1618,
     "k": 30
   },
   {
@@ -3515,7 +3483,7 @@
     "name": "James Choung",
     "zone": "E1",
     "club": "2NC",
-    "rating": 1617,
+    "rating": 1616,
     "k": 30
   },
   {
@@ -3543,27 +3511,19 @@
     "k": 30
   },
   {
-    "id": "e1 seb hoccom",
-    "name": "Seb Hoccom",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1612,
-    "k": 30
-  },
-  {
-    "id": "e1 csombor hanczar",
-    "name": "Csombor Hanczar",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1611,
-    "k": 30
-  },
-  {
     "id": "e1 joseph sartin",
     "name": "Joseph Sartin",
     "zone": "E1",
     "club": "2CD",
     "rating": 1611,
+    "k": 30
+  },
+  {
+    "id": "w1 jacob pratten",
+    "name": "Jacob Pratten",
+    "zone": "W1",
+    "club": "5NY",
+    "rating": 1610,
     "k": 30
   },
   {
@@ -3583,6 +3543,14 @@
     "k": 30
   },
   {
+    "id": "e1 seb hoccom",
+    "name": "Seb Hoccom",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1610,
+    "k": 30
+  },
+  {
     "id": "e1 haoyu yin",
     "name": "HaoYu Yin",
     "zone": "E1",
@@ -3595,22 +3563,6 @@
     "name": "Andrew Evans",
     "zone": "G1",
     "club": "WCU",
-    "rating": 1608,
-    "k": 30
-  },
-  {
-    "id": "w1 jacob pratten",
-    "name": "Jacob Pratten",
-    "zone": "W1",
-    "club": "5NY",
-    "rating": 1608,
-    "k": 30
-  },
-  {
-    "id": "e1 andy basford",
-    "name": "Andy Basford",
-    "zone": "E1",
-    "club": "2NC",
     "rating": 1607,
     "k": 30
   },
@@ -3623,27 +3575,11 @@
     "k": 30
   },
   {
-    "id": "w1 eugene tee",
-    "name": "Eugene Tee",
-    "zone": "W1",
-    "club": "5NY",
-    "rating": 1607,
-    "k": 30
-  },
-  {
-    "id": "w1 karl wendrich",
-    "name": "Karl Wendrich",
-    "zone": "W1",
-    "club": "5MO",
-    "rating": 1607,
-    "k": 30
-  },
-  {
-    "id": "e1 anshul swamy",
-    "name": "Anshul Swamy",
+    "id": "e1 csombor hanczar",
+    "name": "Csombor Hanczar",
     "zone": "E1",
     "club": "2NC",
-    "rating": 1606,
+    "rating": 1607,
     "k": 30
   },
   {
@@ -3655,11 +3591,35 @@
     "k": 30
   },
   {
+    "id": "e1 andy basford",
+    "name": "Andy Basford",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1605,
+    "k": 30
+  },
+  {
+    "id": "w1 eugene tee",
+    "name": "Eugene Tee",
+    "zone": "W1",
+    "club": "5NY",
+    "rating": 1605,
+    "k": 30
+  },
+  {
+    "id": "d1 sam rummery",
+    "name": "Sam Rummery",
+    "zone": "D1",
+    "club": "4FG",
+    "rating": 1604,
+    "k": 30
+  },
+  {
     "id": "d1 filip zurek",
     "name": "Filip Zurek",
     "zone": "D1",
     "club": "4AU",
-    "rating": 1605,
+    "rating": 1603,
     "k": 30
   },
   {
@@ -3671,42 +3631,11 @@
     "k": 30
   },
   {
-    "id": "d1 sam rummery",
-    "name": "Sam Rummery",
-    "zone": "D1",
-    "club": "4FG",
-    "rating": 1603,
-    "k": 30
-  },
-  {
-    "id": "g1 oliver sapsford",
-    "name": "Oliver Sapsford",
-    "zone": "G1",
-    "rating": 1602,
-    "k": 30
-  },
-  {
     "id": "e1 nathan trickey",
     "name": "Nathan Trickey",
     "zone": "E1",
     "club": "2BR",
-    "rating": 1601,
-    "k": 30
-  },
-  {
-    "id": "e1 robert wallace",
-    "name": "Robert Wallace",
-    "zone": "E1",
-    "club": "2PP",
-    "rating": 1600,
-    "k": 30
-  },
-  {
-    "id": "w1 aaron davies",
-    "name": "Aaron Davies",
-    "zone": "W1",
-    "club": "5WK",
-    "rating": 1598,
+    "rating": 1599,
     "k": 30
   },
   {
@@ -3722,6 +3651,14 @@
     "name": "Gavin P Jones",
     "zone": "N1",
     "club": "1WX",
+    "rating": 1598,
+    "k": 30
+  },
+  {
+    "id": "e1 robert wallace",
+    "name": "Robert Wallace",
+    "zone": "E1",
+    "club": "2PP",
     "rating": 1598,
     "k": 30
   },
@@ -3742,35 +3679,26 @@
     "k": 30
   },
   {
-    "id": "e1 anthony baker",
-    "name": "Anthony Baker",
-    "zone": "E1",
-    "club": "2BR",
-    "rating": 1596,
+    "id": "w1 karl wendrich",
+    "name": "Karl Wendrich",
+    "zone": "W1",
+    "club": "5MO",
+    "rating": 1597,
     "k": 30
   },
   {
-    "id": "g1 ezala beni",
-    "name": "Ezala Beni",
+    "id": "g1 oliver sapsford",
+    "name": "Oliver Sapsford",
     "zone": "G1",
-    "club": "3NP",
-    "rating": 1596,
+    "rating": 1597,
     "k": 30
   },
   {
-    "id": "e1 rohit saseendran",
-    "name": "Rohit Saseendran",
-    "zone": "E1",
-    "club": "2PP",
-    "rating": 1596,
-    "k": 30
-  },
-  {
-    "id": "e1 csege hanczar",
-    "name": "Csege Hanczar",
+    "id": "e1 tycho twohig",
+    "name": "Tycho Twohig",
     "zone": "E1",
     "club": "2NC",
-    "rating": 1595,
+    "rating": 1596,
     "k": 30
   },
   {
@@ -3782,11 +3710,27 @@
     "k": 30
   },
   {
-    "id": "n1 mike leaver",
-    "name": "Mike Leaver",
-    "zone": "N1",
-    "club": "1CF",
-    "rating": 1594,
+    "id": "g1 ezala beni",
+    "name": "Ezala Beni",
+    "zone": "G1",
+    "club": "3NP",
+    "rating": 1595,
+    "k": 30
+  },
+  {
+    "id": "e1 rohit saseendran",
+    "name": "Rohit Saseendran",
+    "zone": "E1",
+    "club": "2PP",
+    "rating": 1595,
+    "k": 30
+  },
+  {
+    "id": "e1 anshul swamy",
+    "name": "Anshul Swamy",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1593,
     "k": 30
   },
   {
@@ -3798,10 +3742,26 @@
     "k": 30
   },
   {
-    "id": "e1 tim whitchurch",
-    "name": "Tim Whitchurch",
+    "id": "n1 mike leaver",
+    "name": "Mike Leaver",
+    "zone": "N1",
+    "club": "1CF",
+    "rating": 1593,
+    "k": 30
+  },
+  {
+    "id": "e1 csege hanczar",
+    "name": "Csege Hanczar",
     "zone": "E1",
-    "club": "2BR",
+    "club": "2NC",
+    "rating": 1592,
+    "k": 30
+  },
+  {
+    "id": "e1 hefin jones",
+    "name": "Hefin Jones",
+    "zone": "E1",
+    "club": "2CD",
     "rating": 1592,
     "k": 30
   },
@@ -3814,18 +3774,18 @@
     "k": 30
   },
   {
-    "id": "e1 jeremy jones",
-    "name": "Jeremy Jones",
+    "id": "e1 tim whitchurch",
+    "name": "Tim Whitchurch",
     "zone": "E1",
-    "club": "2NE",
+    "club": "2BR",
     "rating": 1590,
     "k": 30
   },
   {
-    "id": "e1 erion pici",
-    "name": "Erion Pici",
-    "zone": "E1",
-    "club": "2BY",
+    "id": "w1 aaron davies",
+    "name": "Aaron Davies",
+    "zone": "W1",
+    "club": "5WK",
     "rating": 1589,
     "k": 30
   },
@@ -3838,18 +3798,26 @@
     "k": 30
   },
   {
-    "id": "e1 james evans (cf)",
-    "name": "James Evans (Cf)",
+    "id": "e1 jeremy jones",
+    "name": "Jeremy Jones",
     "zone": "E1",
-    "club": "2NC",
+    "club": "2NE",
     "rating": 1588,
     "k": 30
   },
   {
-    "id": "d1 julie ward",
-    "name": "Julie Ward",
-    "zone": "D1",
-    "club": "4CM",
+    "id": "e1 anthony baker",
+    "name": "Anthony Baker",
+    "zone": "E1",
+    "club": "2BR",
+    "rating": 1587,
+    "k": 30
+  },
+  {
+    "id": "e1 james evans (cf)",
+    "name": "James Evans (Cf)",
+    "zone": "E1",
+    "club": "2NC",
     "rating": 1587,
     "k": 30
   },
@@ -3862,6 +3830,14 @@
     "k": 30
   },
   {
+    "id": "d1 julie ward",
+    "name": "Julie Ward",
+    "zone": "D1",
+    "club": "4CM",
+    "rating": 1586,
+    "k": 30
+  },
+  {
     "id": "g1 kevin lambert",
     "name": "Kevin Lambert",
     "zone": "G1",
@@ -3870,11 +3846,19 @@
     "k": 30
   },
   {
+    "id": "w1 luke williams",
+    "name": "Luke Williams",
+    "zone": "W1",
+    "club": "5MO",
+    "rating": 1586,
+    "k": 30
+  },
+  {
     "id": "n1 steve mccall",
     "name": "Steve McCall",
     "zone": "N1",
     "club": "1CB",
-    "rating": 1586,
+    "rating": 1585,
     "k": 30
   },
   {
@@ -3882,6 +3866,14 @@
     "name": "Bjorn Oliver",
     "zone": "G1",
     "club": "3MA",
+    "rating": 1584,
+    "k": 30
+  },
+  {
+    "id": "e1 erion pici",
+    "name": "Erion Pici",
+    "zone": "E1",
+    "club": "2BY",
     "rating": 1584,
     "k": 30
   },
@@ -3898,7 +3890,7 @@
     "name": "Chris Fox",
     "zone": "E1",
     "club": "2CD",
-    "rating": 1583,
+    "rating": 1582,
     "k": 30
   },
   {
@@ -3906,23 +3898,7 @@
     "name": "David Foster",
     "zone": "W1",
     "club": "5CN",
-    "rating": 1583,
-    "k": 30
-  },
-  {
-    "id": "e1 john ryles",
-    "name": "John Ryles",
-    "zone": "E1",
-    "club": "2BY",
-    "rating": 1580,
-    "k": 30
-  },
-  {
-    "id": "w1 ken huntley",
-    "name": "Ken Huntley",
-    "zone": "W1",
-    "club": "5DB",
-    "rating": 1580,
+    "rating": 1581,
     "k": 30
   },
   {
@@ -3942,27 +3918,11 @@
     "k": 30
   },
   {
-    "id": "e1 john cox",
-    "name": "John Cox",
-    "zone": "E1",
-    "club": "2NE",
+    "id": "w1 steve edwards",
+    "name": "Steve Edwards",
+    "zone": "W1",
+    "club": "5UK",
     "rating": 1579,
-    "k": 30
-  },
-  {
-    "id": "e1 reuben hilliar",
-    "name": "Reuben Hilliar",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1579,
-    "k": 30
-  },
-  {
-    "id": "g1 matthew davies (aber)",
-    "name": "Matthew Davies (Aber)",
-    "zone": "G1",
-    "club": "3AG",
-    "rating": 1578,
     "k": 30
   },
   {
@@ -3974,10 +3934,10 @@
     "k": 30
   },
   {
-    "id": "w1 david battell",
-    "name": "David Battell",
-    "zone": "W1",
-    "club": "5CN",
+    "id": "e1 john ryles",
+    "name": "John Ryles",
+    "zone": "E1",
+    "club": "2BY",
     "rating": 1577,
     "k": 30
   },
@@ -3990,10 +3950,18 @@
     "k": 30
   },
   {
-    "id": "w1 steve edwards",
-    "name": "Steve Edwards",
-    "zone": "W1",
-    "club": "5UK",
+    "id": "g1 matthew davies (aber)",
+    "name": "Matthew Davies (Aber)",
+    "zone": "G1",
+    "club": "3AG",
+    "rating": 1577,
+    "k": 30
+  },
+  {
+    "id": "e1 reuben hilliar",
+    "name": "Reuben Hilliar",
+    "zone": "E1",
+    "club": "2CD",
     "rating": 1577,
     "k": 30
   },
@@ -4006,18 +3974,26 @@
     "k": 30
   },
   {
-    "id": "e1 timur ramzan",
-    "name": "Timur Ramzan",
-    "zone": "E1",
-    "club": "2EG",
+    "id": "w1 ken huntley",
+    "name": "Ken Huntley",
+    "zone": "W1",
+    "club": "5DB",
     "rating": 1575,
     "k": 30
   },
   {
-    "id": "d1 william davies",
-    "name": "William Davies",
-    "zone": "D1",
-    "club": "4AB",
+    "id": "w1 david battell",
+    "name": "David Battell",
+    "zone": "W1",
+    "club": "5CN",
+    "rating": 1574,
+    "k": 30
+  },
+  {
+    "id": "e1 john cox",
+    "name": "John Cox",
+    "zone": "E1",
+    "club": "2NE",
     "rating": 1574,
     "k": 30
   },
@@ -4030,22 +4006,6 @@
     "k": 30
   },
   {
-    "id": "e1 hefin jones",
-    "name": "Hefin Jones",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1573,
-    "k": 30
-  },
-  {
-    "id": "e1 geoff clarke",
-    "name": "Geoff Clarke",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1572,
-    "k": 30
-  },
-  {
     "id": "g1 robert palser",
     "name": "Robert Palser",
     "zone": "G1",
@@ -4054,19 +4014,35 @@
     "k": 30
   },
   {
+    "id": "d1 william davies",
+    "name": "William Davies",
+    "zone": "D1",
+    "club": "4AB",
+    "rating": 1572,
+    "k": 30
+  },
+  {
+    "id": "e1 geoff clarke",
+    "name": "Geoff Clarke",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1570,
+    "k": 30
+  },
+  {
     "id": "w1 louis bathein",
     "name": "Louis Bathein",
     "zone": "W1",
     "club": "5CN",
-    "rating": 1571,
+    "rating": 1569,
     "k": 30
   },
   {
-    "id": "g1 paul moulson",
-    "name": "Paul Moulson",
-    "zone": "G1",
-    "club": "WCU",
-    "rating": 1568,
+    "id": "e1 timur ramzan",
+    "name": "Timur Ramzan",
+    "zone": "E1",
+    "club": "2EG",
+    "rating": 1569,
     "k": 30
   },
   {
@@ -4094,11 +4070,11 @@
     "k": 30
   },
   {
-    "id": "e1 garmon iago",
-    "name": "Garmon Iago",
-    "zone": "E1",
-    "club": "2PP",
-    "rating": 1566,
+    "id": "g1 paul moulson",
+    "name": "Paul Moulson",
+    "zone": "G1",
+    "club": "WCU",
+    "rating": 1567,
     "k": 30
   },
   {
@@ -4106,14 +4082,6 @@
     "name": "Mark Reynolds",
     "zone": "D1",
     "club": "4CM",
-    "rating": 1566,
-    "k": 30
-  },
-  {
-    "id": "e1 martin ilett",
-    "name": "Martin Ilett",
-    "zone": "E1",
-    "club": "2BY",
     "rating": 1566,
     "k": 30
   },
@@ -4126,10 +4094,10 @@
     "k": 30
   },
   {
-    "id": "w1 leon vincent",
-    "name": "Leon Vincent",
-    "zone": "W1",
-    "club": "5CN",
+    "id": "e1 garmon iago",
+    "name": "Garmon Iago",
+    "zone": "E1",
+    "club": "2PP",
     "rating": 1565,
     "k": 30
   },
@@ -4158,34 +4126,10 @@
     "k": 30
   },
   {
-    "id": "e1 khushi bagga",
-    "name": "Khushi Bagga",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1564,
-    "k": 30
-  },
-  {
-    "id": "e1 martin k jones",
-    "name": "Martin K Jones",
-    "zone": "E1",
-    "club": "2CP",
-    "rating": 1564,
-    "k": 30
-  },
-  {
-    "id": "e1 owain groves",
-    "name": "Owain Groves",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1564,
-    "k": 30
-  },
-  {
-    "id": "e1 matt straiton",
-    "name": "Matt Straiton",
-    "zone": "E1",
-    "club": "2PR",
+    "id": "w1 leon vincent",
+    "name": "Leon Vincent",
+    "zone": "W1",
+    "club": "5CN",
     "rating": 1563,
     "k": 30
   },
@@ -4198,10 +4142,34 @@
     "k": 30
   },
   {
+    "id": "e1 matt straiton",
+    "name": "Matt Straiton",
+    "zone": "E1",
+    "club": "2PR",
+    "rating": 1562,
+    "k": 30
+  },
+  {
     "id": "n1 joshua beech",
     "name": "Joshua Beech",
     "zone": "N1",
     "club": "1BM",
+    "rating": 1561,
+    "k": 30
+  },
+  {
+    "id": "e1 martin ilett",
+    "name": "Martin Ilett",
+    "zone": "E1",
+    "club": "2BY",
+    "rating": 1561,
+    "k": 30
+  },
+  {
+    "id": "e1 owain groves",
+    "name": "Owain Groves",
+    "zone": "E1",
+    "club": "2NC",
     "rating": 1561,
     "k": 30
   },
@@ -4214,51 +4182,19 @@
     "k": 30
   },
   {
-    "id": "e1 adam sarwar",
-    "name": "Adam Sarwar",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1559,
-    "k": 30
-  },
-  {
     "id": "n1 adam williams",
     "name": "Adam Williams",
     "zone": "N1",
     "club": "1BA",
-    "rating": 1558,
+    "rating": 1559,
     "k": 30
   },
   {
-    "id": "e1 david jones",
-    "name": "David Jones",
+    "id": "e1 adam sarwar",
+    "name": "Adam Sarwar",
     "zone": "E1",
-    "club": "2BR",
+    "club": "2NC",
     "rating": 1558,
-    "k": 30
-  },
-  {
-    "id": "g1 bob fordham",
-    "name": "Bob Fordham",
-    "zone": "G1",
-    "club": "3NP",
-    "rating": 1557,
-    "k": 30
-  },
-  {
-    "id": "e1 clive silver",
-    "name": "Clive Silver",
-    "zone": "E1",
-    "club": "2CP",
-    "rating": 1556,
-    "k": 30
-  },
-  {
-    "id": "g1 bob stanworth",
-    "name": "Bob Stanworth",
-    "zone": "G1",
-    "club": "3AG",
-    "rating": 1555,
     "k": 30
   },
   {
@@ -4266,7 +4202,7 @@
     "name": "Bronwen Tuson",
     "zone": "D1",
     "club": "4AB",
-    "rating": 1555,
+    "rating": 1557,
     "k": 30
   },
   {
@@ -4278,27 +4214,35 @@
     "k": 30
   },
   {
-    "id": "g1 jake sadler",
-    "name": "Jake Sadler",
-    "zone": "G1",
-    "club": "WCU",
+    "id": "e1 martin k jones",
+    "name": "Martin K Jones",
+    "zone": "E1",
+    "club": "2CP",
     "rating": 1553,
     "k": 30
   },
   {
-    "id": "e1 richard larg",
-    "name": "Richard Larg",
-    "zone": "E1",
-    "club": "2CP",
+    "id": "g1 jake sadler",
+    "name": "Jake Sadler",
+    "zone": "G1",
+    "club": "WCU",
     "rating": 1550,
     "k": 30
   },
   {
-    "id": "n1 aidan jones",
-    "name": "Aidan Jones",
-    "zone": "N1",
-    "club": "1BA",
-    "rating": 1548,
+    "id": "d1 awne osinga",
+    "name": "Awne Osinga",
+    "zone": "D1",
+    "club": "4CG",
+    "rating": 1549,
+    "k": 30
+  },
+  {
+    "id": "e1 clive silver",
+    "name": "Clive Silver",
+    "zone": "E1",
+    "club": "2CP",
+    "rating": 1549,
     "k": 30
   },
   {
@@ -4307,14 +4251,6 @@
     "zone": "N1",
     "club": "1RP",
     "rating": 1548,
-    "k": 30
-  },
-  {
-    "id": "e1 ewan goodjohn",
-    "name": "Ewan Goodjohn",
-    "zone": "E1",
-    "club": "2BY",
-    "rating": 1547,
     "k": 30
   },
   {
@@ -4334,26 +4270,26 @@
     "k": 30
   },
   {
-    "id": "d1 ray greenwood",
-    "name": "Ray Greenwood",
-    "zone": "D1",
-    "club": "4PB",
+    "id": "e1 richard larg",
+    "name": "Richard Larg",
+    "zone": "E1",
+    "club": "2CP",
     "rating": 1547,
     "k": 30
   },
   {
-    "id": "e1 rhys matthews",
-    "name": "Rhys Matthews",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1547,
+    "id": "n1 aidan jones",
+    "name": "Aidan Jones",
+    "zone": "N1",
+    "club": "1BA",
+    "rating": 1546,
     "k": 30
   },
   {
-    "id": "e1 morgan foulkes",
-    "name": "Morgan Foulkes",
+    "id": "e1 ewan goodjohn",
+    "name": "Ewan Goodjohn",
     "zone": "E1",
-    "club": "2NC",
+    "club": "2BY",
     "rating": 1546,
     "k": 30
   },
@@ -4366,10 +4302,10 @@
     "k": 30
   },
   {
-    "id": "d1 awne osinga",
-    "name": "Awne Osinga",
-    "zone": "D1",
-    "club": "4CG",
+    "id": "e1 morgan foulkes",
+    "name": "Morgan Foulkes",
+    "zone": "E1",
+    "club": "2NC",
     "rating": 1545,
     "k": 30
   },
@@ -4382,11 +4318,11 @@
     "k": 30
   },
   {
-    "id": "n1 sandi medagedara",
-    "name": "Sandi Medagedara",
-    "zone": "N1",
-    "club": "1BM",
-    "rating": 1544,
+    "id": "d1 ray greenwood",
+    "name": "Ray Greenwood",
+    "zone": "D1",
+    "club": "4PB",
+    "rating": 1543,
     "k": 30
   },
   {
@@ -4394,15 +4330,7 @@
     "name": "Charlie Gibson",
     "zone": "G1",
     "club": "3AG",
-    "rating": 1543,
-    "k": 30
-  },
-  {
-    "id": "e1 phil jones",
-    "name": "Phil Jones",
-    "zone": "E1",
-    "club": "2BY",
-    "rating": 1543,
+    "rating": 1542,
     "k": 30
   },
   {
@@ -4414,19 +4342,11 @@
     "k": 30
   },
   {
-    "id": "e1 roland humphries",
-    "name": "Roland Humphries",
+    "id": "e1 sam rhydderch",
+    "name": "Sam Rhydderch",
     "zone": "E1",
-    "club": "2RH",
-    "rating": 1542,
-    "k": 30
-  },
-  {
-    "id": "d1 robert narayan-taylor",
-    "name": "Robert Narayan-Taylor",
-    "zone": "D1",
-    "club": "4CM",
-    "rating": 1541,
+    "club": "2CD",
+    "rating": 1540,
     "k": 30
   },
   {
@@ -4438,26 +4358,10 @@
     "k": 30
   },
   {
-    "id": "e1 mike joslin",
-    "name": "Mike Joslin",
-    "zone": "E1",
-    "club": "2CP",
-    "rating": 1539,
-    "k": 30
-  },
-  {
-    "id": "e1 sam rhydderch",
-    "name": "Sam Rhydderch",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1539,
-    "k": 30
-  },
-  {
-    "id": "n1 brian jones",
-    "name": "Brian Jones",
-    "zone": "N1",
-    "club": "1BM",
+    "id": "g1 bob stanworth",
+    "name": "Bob Stanworth",
+    "zone": "G1",
+    "club": "3AG",
     "rating": 1537,
     "k": 30
   },
@@ -4470,26 +4374,18 @@
     "k": 30
   },
   {
-    "id": "e1 sam white",
-    "name": "Sam White",
-    "zone": "E1",
-    "club": "2BY",
-    "rating": 1537,
-    "k": 30
-  },
-  {
     "id": "e1 toby reckless",
     "name": "Toby Reckless",
     "zone": "E1",
     "club": "2NC",
-    "rating": 1537,
+    "rating": 1536,
     "k": 30
   },
   {
-    "id": "w1 sulaiman nasir",
-    "name": "Sulaiman Nasir",
-    "zone": "W1",
-    "club": "5MO",
+    "id": "e1 mike joslin",
+    "name": "Mike Joslin",
+    "zone": "E1",
+    "club": "2CP",
     "rating": 1535,
     "k": 30
   },
@@ -4498,6 +4394,14 @@
     "name": "Jaycie Dyer",
     "zone": "E1",
     "club": "2CD",
+    "rating": 1534,
+    "k": 30
+  },
+  {
+    "id": "e1 sam white",
+    "name": "Sam White",
+    "zone": "E1",
+    "club": "2BY",
     "rating": 1533,
     "k": 30
   },
@@ -4510,27 +4414,35 @@
     "k": 30
   },
   {
+    "id": "e1 phil jones",
+    "name": "Phil Jones",
+    "zone": "E1",
+    "club": "2BY",
+    "rating": 1532,
+    "k": 30
+  },
+  {
+    "id": "w1 sulaiman nasir",
+    "name": "Sulaiman Nasir",
+    "zone": "W1",
+    "club": "5MO",
+    "rating": 1532,
+    "k": 30
+  },
+  {
     "id": "e1 jacob limeslade",
     "name": "Jacob Limeslade",
     "zone": "E1",
     "club": "2BR",
-    "rating": 1531,
-    "k": 30
-  },
-  {
-    "id": "g1 mike stannard",
-    "name": "Mike Stannard",
-    "zone": "G1",
-    "club": "3CB",
-    "rating": 1531,
-    "k": 30
-  },
-  {
-    "id": "d1 gwyn evans",
-    "name": "Gwyn Evans",
-    "zone": "D1",
-    "club": "4PB",
     "rating": 1530,
+    "k": 30
+  },
+  {
+    "id": "e1 rhys matthews",
+    "name": "Rhys Matthews",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1529,
     "k": 30
   },
   {
@@ -4542,35 +4454,19 @@
     "k": 30
   },
   {
-    "id": "w1 robin kerremans",
-    "name": "Robin Kerremans",
-    "zone": "W1",
-    "club": "5NY",
+    "id": "g1 mike stannard",
+    "name": "Mike Stannard",
+    "zone": "G1",
+    "club": "3CB",
     "rating": 1528,
     "k": 30
   },
   {
-    "id": "w1 tony goodchild",
-    "name": "Tony Goodchild",
-    "zone": "W1",
-    "club": "5MO",
-    "rating": 1528,
-    "k": 30
-  },
-  {
-    "id": "e1 ben hannigan",
-    "name": "Ben Hannigan",
-    "zone": "E1",
-    "club": "2CP",
-    "rating": 1526,
-    "k": 30
-  },
-  {
-    "id": "e1 harri davies",
-    "name": "Harri Davies",
-    "zone": "E1",
-    "club": "2CU",
-    "rating": 1526,
+    "id": "g1 bob fordham",
+    "name": "Bob Fordham",
+    "zone": "G1",
+    "club": "3NP",
+    "rating": 1527,
     "k": 30
   },
   {
@@ -4590,11 +4486,27 @@
     "k": 30
   },
   {
-    "id": "w1 alistair bates",
-    "name": "Alistair Bates",
+    "id": "e1 khushi bagga",
+    "name": "Khushi Bagga",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1525,
+    "k": 30
+  },
+  {
+    "id": "w1 tony goodchild",
+    "name": "Tony Goodchild",
     "zone": "W1",
-    "club": "5NY",
-    "rating": 1522,
+    "club": "5MO",
+    "rating": 1524,
+    "k": 30
+  },
+  {
+    "id": "e1 ben hannigan",
+    "name": "Ben Hannigan",
+    "zone": "E1",
+    "club": "2CP",
+    "rating": 1523,
     "k": 30
   },
   {
@@ -4606,35 +4518,35 @@
     "k": 30
   },
   {
-    "id": "e1 john callan",
-    "name": "John Callan",
-    "zone": "E1",
-    "club": "2PP",
-    "rating": 1521,
-    "k": 30
-  },
-  {
     "id": "n1 sam leaney",
     "name": "Sam Leaney",
     "zone": "N1",
     "club": "1BA",
+    "rating": 1522,
+    "k": 30
+  },
+  {
+    "id": "w1 alistair bates",
+    "name": "Alistair Bates",
+    "zone": "W1",
+    "club": "5NY",
     "rating": 1521,
     "k": 30
   },
   {
-    "id": "g1 lyn holland",
-    "name": "Lyn Holland",
-    "zone": "G1",
-    "club": "3PL",
-    "rating": 1520,
+    "id": "d1 robert narayan-taylor",
+    "name": "Robert Narayan-Taylor",
+    "zone": "D1",
+    "club": "4CM",
+    "rating": 1521,
     "k": 30
   },
   {
-    "id": "e1 vince teisar",
-    "name": "Vince Teisar",
+    "id": "e1 roland humphries",
+    "name": "Roland Humphries",
     "zone": "E1",
-    "club": "2BR",
-    "rating": 1520,
+    "club": "2RH",
+    "rating": 1521,
     "k": 30
   },
   {
@@ -4646,27 +4558,19 @@
     "k": 30
   },
   {
-    "id": "g1 elliott head",
-    "name": "Elliott Head",
-    "zone": "G1",
-    "club": "3PL",
-    "rating": 1518,
+    "id": "n1 sandi medagedara",
+    "name": "Sandi Medagedara",
+    "zone": "N1",
+    "club": "1BM",
+    "rating": 1519,
     "k": 30
   },
   {
-    "id": "w1 vianney foglizzo",
-    "name": "Vianney Foglizzo",
-    "zone": "W1",
-    "club": "5NY",
-    "rating": 1518,
-    "k": 30
-  },
-  {
-    "id": "g1 adhvik kadalarasan",
-    "name": "Adhvik Kadalarasan",
-    "zone": "G1",
-    "club": "3NP",
-    "rating": 1517,
+    "id": "e1 vince teisar",
+    "name": "Vince Teisar",
+    "zone": "E1",
+    "club": "2BR",
+    "rating": 1519,
     "k": 30
   },
   {
@@ -4678,22 +4582,6 @@
     "k": 30
   },
   {
-    "id": "e1 ashika shahameeran",
-    "name": "Ashika Shahameeran",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1517,
-    "k": 30
-  },
-  {
-    "id": "e1 clem jones",
-    "name": "Clem Jones",
-    "zone": "E1",
-    "club": "2PP",
-    "rating": 1516,
-    "k": 30
-  },
-  {
     "id": "n1 james will",
     "name": "James Will",
     "zone": "N1",
@@ -4702,42 +4590,50 @@
     "k": 30
   },
   {
+    "id": "g1 adhvik kadalarasan",
+    "name": "Adhvik Kadalarasan",
+    "zone": "G1",
+    "club": "3NP",
+    "rating": 1515,
+    "k": 30
+  },
+  {
+    "id": "e1 clem jones",
+    "name": "Clem Jones",
+    "zone": "E1",
+    "club": "2PP",
+    "rating": 1515,
+    "k": 30
+  },
+  {
+    "id": "e1 john callan",
+    "name": "John Callan",
+    "zone": "E1",
+    "club": "2PP",
+    "rating": 1515,
+    "k": 30
+  },
+  {
+    "id": "g1 lyn holland",
+    "name": "Lyn Holland",
+    "zone": "G1",
+    "club": "3PL",
+    "rating": 1515,
+    "k": 30
+  },
+  {
     "id": "e1 tom jenney",
     "name": "Tom Jenney",
     "zone": "E1",
     "club": "2PP",
-    "rating": 1516,
-    "k": 30
-  },
-  {
-    "id": "w1 andrew powell",
-    "name": "Andrew Powell",
-    "zone": "W1",
-    "club": "5CN",
     "rating": 1514,
     "k": 30
   },
   {
-    "id": "e1 stuart enoch",
-    "name": "Stuart Enoch",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1514,
-    "k": 30
-  },
-  {
-    "id": "e1 curtis reid",
-    "name": "Curtis Reid",
-    "zone": "E1",
-    "club": "2CP",
-    "rating": 1512,
-    "k": 30
-  },
-  {
-    "id": "w1 dylan greenway",
-    "name": "Dylan Greenway",
-    "zone": "W1",
-    "club": "5CN",
+    "id": "n1 brian jones",
+    "name": "Brian Jones",
+    "zone": "N1",
+    "club": "1BM",
     "rating": 1512,
     "k": 30
   },
@@ -4750,18 +4646,18 @@
     "k": 30
   },
   {
-    "id": "n1 stephen paterson",
-    "name": "Stephen Paterson",
-    "zone": "N1",
-    "club": "1CB",
-    "rating": 1512,
-    "k": 30
-  },
-  {
     "id": "n1 steve dawson",
     "name": "Steve Dawson",
     "zone": "N1",
     "club": "1BA",
+    "rating": 1512,
+    "k": 30
+  },
+  {
+    "id": "e1 stuart enoch",
+    "name": "Stuart Enoch",
+    "zone": "E1",
+    "club": "2CD",
     "rating": 1512,
     "k": 30
   },
@@ -4774,19 +4670,19 @@
     "k": 30
   },
   {
-    "id": "w1 daniel attrill",
-    "name": "Daniel Attrill",
+    "id": "w1 andrew powell",
+    "name": "Andrew Powell",
     "zone": "W1",
-    "club": "5MO",
+    "club": "5CN",
     "rating": 1511,
     "k": 30
   },
   {
-    "id": "n1 stuart hamilton",
-    "name": "Stuart Hamilton",
-    "zone": "N1",
-    "club": "1RP",
-    "rating": 1511,
+    "id": "w1 daniel attrill",
+    "name": "Daniel Attrill",
+    "zone": "W1",
+    "club": "5MO",
+    "rating": 1510,
     "k": 30
   },
   {
@@ -4798,11 +4694,19 @@
     "k": 30
   },
   {
-    "id": "g1 harri gilbert",
-    "name": "Harri Gilbert",
+    "id": "g1 elliott head",
+    "name": "Elliott Head",
     "zone": "G1",
-    "club": "3CB",
-    "rating": 1510,
+    "club": "3PL",
+    "rating": 1509,
+    "k": 30
+  },
+  {
+    "id": "w1 vianney foglizzo",
+    "name": "Vianney Foglizzo",
+    "zone": "W1",
+    "club": "5NY",
+    "rating": 1509,
     "k": 30
   },
   {
@@ -4814,11 +4718,35 @@
     "k": 30
   },
   {
+    "id": "d1 gwyn evans",
+    "name": "Gwyn Evans",
+    "zone": "D1",
+    "club": "4PB",
+    "rating": 1507,
+    "k": 30
+  },
+  {
+    "id": "e1 curtis reid",
+    "name": "Curtis Reid",
+    "zone": "E1",
+    "club": "2CP",
+    "rating": 1506,
+    "k": 30
+  },
+  {
     "id": "d1 dave edwards",
     "name": "Dave Edwards",
     "zone": "D1",
     "club": "4CG",
-    "rating": 1507,
+    "rating": 1506,
+    "k": 30
+  },
+  {
+    "id": "w1 steve jeacock",
+    "name": "Steve Jeacock",
+    "zone": "W1",
+    "club": "5UK",
+    "rating": 1506,
     "k": 30
   },
   {
@@ -4830,19 +4758,19 @@
     "k": 30
   },
   {
-    "id": "w1 steve jeacock",
-    "name": "Steve Jeacock",
+    "id": "w1 dylan greenway",
+    "name": "Dylan Greenway",
     "zone": "W1",
-    "club": "5UK",
-    "rating": 1504,
+    "club": "5CN",
+    "rating": 1505,
     "k": 30
   },
   {
-    "id": "g1 james richards",
-    "name": "James Richards",
-    "zone": "G1",
-    "club": "3PL",
-    "rating": 1501,
+    "id": "w1 elliott chapman",
+    "name": "Elliott Chapman",
+    "zone": "W1",
+    "club": "5MO",
+    "rating": 1503,
     "k": 30
   },
   {
@@ -4854,11 +4782,35 @@
     "k": 30
   },
   {
+    "id": "g1 james richards",
+    "name": "James Richards",
+    "zone": "G1",
+    "club": "3PL",
+    "rating": 1500,
+    "k": 30
+  },
+  {
+    "id": "n1 stuart hamilton",
+    "name": "Stuart Hamilton",
+    "zone": "N1",
+    "club": "1RP",
+    "rating": 1500,
+    "k": 30
+  },
+  {
+    "id": "g1 harri gilbert",
+    "name": "Harri Gilbert",
+    "zone": "G1",
+    "club": "3CB",
+    "rating": 1499,
+    "k": 30
+  },
+  {
     "id": "n1 merle field",
     "name": "Merle Field",
     "zone": "N1",
     "club": "1BM",
-    "rating": 1500,
+    "rating": 1499,
     "k": 30
   },
   {
@@ -4878,27 +4830,19 @@
     "k": 30
   },
   {
-    "id": "d1 gethin davies",
-    "name": "Gethin Davies",
-    "zone": "D1",
-    "club": "4CM",
-    "rating": 1497,
-    "k": 30
-  },
-  {
-    "id": "e1 mark reckless",
-    "name": "Mark Reckless",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1497,
-    "k": 30
-  },
-  {
     "id": "g1 mike diamond",
     "name": "Mike Diamond",
     "zone": "G1",
     "club": "3AG",
     "rating": 1497,
+    "k": 30
+  },
+  {
+    "id": "d1 gethin davies",
+    "name": "Gethin Davies",
+    "zone": "D1",
+    "club": "4CM",
+    "rating": 1496,
     "k": 30
   },
   {
@@ -4910,10 +4854,10 @@
     "k": 30
   },
   {
-    "id": "e1 mark chinnick",
-    "name": "Mark Chinnick",
+    "id": "e1 julian irving",
+    "name": "Julian Irving",
     "zone": "E1",
-    "club": "2PP",
+    "club": "2CD",
     "rating": 1496,
     "k": 30
   },
@@ -4934,19 +4878,11 @@
     "k": 30
   },
   {
-    "id": "d1 scott roden",
-    "name": "Scott Roden",
-    "zone": "D1",
-    "club": "4AU",
-    "rating": 1496,
-    "k": 30
-  },
-  {
-    "id": "w1 mike richards",
-    "name": "Mike Richards",
+    "id": "w1 robin kerremans",
+    "name": "Robin Kerremans",
     "zone": "W1",
-    "club": "5WK",
-    "rating": 1495,
+    "club": "5NY",
+    "rating": 1496,
     "k": 30
   },
   {
@@ -4954,22 +4890,46 @@
     "name": "Kristians Gerdens",
     "zone": "D1",
     "club": "4AU",
+    "rating": 1495,
+    "k": 30
+  },
+  {
+    "id": "e1 mark reckless",
+    "name": "Mark Reckless",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1495,
+    "k": 30
+  },
+  {
+    "id": "d1 scott roden",
+    "name": "Scott Roden",
+    "zone": "D1",
+    "club": "4AU",
+    "rating": 1495,
+    "k": 30
+  },
+  {
+    "id": "e1 ashika shahameeran",
+    "name": "Ashika Shahameeran",
+    "zone": "E1",
+    "club": "2CD",
     "rating": 1494,
     "k": 30
   },
   {
-    "id": "n1 karl davies",
-    "name": "Karl Davies",
-    "zone": "N1",
-    "club": "1RP",
-    "rating": 1493,
+    "id": "e1 mark chinnick",
+    "name": "Mark Chinnick",
+    "zone": "E1",
+    "club": "2PP",
+    "rating": 1494,
     "k": 30
   },
   {
-    "id": "w1 paul bevan",
-    "name": "Paul Bevan",
+    "id": "w1 mike richards",
+    "name": "Mike Richards",
     "zone": "W1",
-    "club": "5MO",
+    "club": "5WK",
     "rating": 1493,
     "k": 30
   },
@@ -4986,7 +4946,15 @@
     "name": "Calvin Phang",
     "zone": "W1",
     "club": "5NY",
-    "rating": 1491,
+    "rating": 1490,
+    "k": 30
+  },
+  {
+    "id": "w1 paul bevan",
+    "name": "Paul Bevan",
+    "zone": "W1",
+    "club": "5MO",
+    "rating": 1489,
     "k": 30
   },
   {
@@ -4994,14 +4962,6 @@
     "name": "Andrew Price",
     "zone": "E1",
     "club": "2PP",
-    "rating": 1488,
-    "k": 30
-  },
-  {
-    "id": "w1 ian phillips",
-    "name": "Ian Phillips",
-    "zone": "W1",
-    "club": "5NY",
     "rating": 1488,
     "k": 30
   },
@@ -5014,22 +4974,6 @@
     "k": 30
   },
   {
-    "id": "e1 angus lloyd",
-    "name": "Angus Lloyd",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1487,
-    "k": 30
-  },
-  {
-    "id": "w1 haoran zhu",
-    "name": "Haoran Zhu",
-    "zone": "W1",
-    "club": "5NY",
-    "rating": 1486,
-    "k": 30
-  },
-  {
     "id": "e1 adam bees",
     "name": "Adam Bees",
     "zone": "E1",
@@ -5038,10 +4982,18 @@
     "k": 30
   },
   {
-    "id": "d1 grenville brazener",
-    "name": "Grenville Brazener",
-    "zone": "D1",
-    "club": "4CM",
+    "id": "e1 angus lloyd",
+    "name": "Angus Lloyd",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1485,
+    "k": 30
+  },
+  {
+    "id": "w1 ian phillips",
+    "name": "Ian Phillips",
+    "zone": "W1",
+    "club": "5NY",
     "rating": 1485,
     "k": 30
   },
@@ -5062,14 +5014,6 @@
     "k": 30
   },
   {
-    "id": "g1 robert sequeira",
-    "name": "Robert Sequeira",
-    "zone": "G1",
-    "club": "3NP",
-    "rating": 1484,
-    "k": 30
-  },
-  {
     "id": "d1 christian smith",
     "name": "Christian Smith",
     "zone": "D1",
@@ -5078,11 +5022,19 @@
     "k": 30
   },
   {
-    "id": "e1 patrick civil",
-    "name": "Patrick Civil",
-    "zone": "E1",
-    "club": "2PR",
-    "rating": 1481,
+    "id": "d1 grenville brazener",
+    "name": "Grenville Brazener",
+    "zone": "D1",
+    "club": "4CM",
+    "rating": 1482,
+    "k": 30
+  },
+  {
+    "id": "w1 haoran zhu",
+    "name": "Haoran Zhu",
+    "zone": "W1",
+    "club": "5NY",
+    "rating": 1482,
     "k": 30
   },
   {
@@ -5090,7 +5042,15 @@
     "name": "Evie Harries-Jackson",
     "zone": "N1",
     "club": "1CB",
-    "rating": 1480,
+    "rating": 1479,
+    "k": 30
+  },
+  {
+    "id": "n1 karl davies",
+    "name": "Karl Davies",
+    "zone": "N1",
+    "club": "1RP",
+    "rating": 1479,
     "k": 30
   },
   {
@@ -5102,19 +5062,11 @@
     "k": 30
   },
   {
-    "id": "e1 ieuan thomas",
-    "name": "Ieuan Thomas",
-    "zone": "E1",
-    "club": "2BY",
+    "id": "g1 robert sequeira",
+    "name": "Robert Sequeira",
+    "zone": "G1",
+    "club": "3NP",
     "rating": 1478,
-    "k": 30
-  },
-  {
-    "id": "w1 cain francis",
-    "name": "Cain Francis",
-    "zone": "W1",
-    "club": "5CN",
-    "rating": 1477,
     "k": 30
   },
   {
@@ -5126,11 +5078,11 @@
     "k": 30
   },
   {
-    "id": "w1 jeff boyce",
-    "name": "Jeff Boyce",
+    "id": "w1 cain francis",
+    "name": "Cain Francis",
     "zone": "W1",
-    "club": "5UK",
-    "rating": 1477,
+    "club": "5CN",
+    "rating": 1476,
     "k": 30
   },
   {
@@ -5142,10 +5094,10 @@
     "k": 30
   },
   {
-    "id": "e1 tabitha ryan",
-    "name": "Tabitha Ryan",
-    "zone": "E1",
-    "club": "2PP",
+    "id": "w1 jeff boyce",
+    "name": "Jeff Boyce",
+    "zone": "W1",
+    "club": "5UK",
     "rating": 1476,
     "k": 30
   },
@@ -5166,27 +5118,11 @@
     "k": 30
   },
   {
-    "id": "e1 rob frame",
-    "name": "Rob Frame",
-    "zone": "E1",
-    "club": "2BR",
-    "rating": 1475,
-    "k": 30
-  },
-  {
     "id": "g1 ella green",
     "name": "Ella Green",
     "zone": "G1",
     "club": "3MA",
     "rating": 1474,
-    "k": 30
-  },
-  {
-    "id": "w1 greg goold",
-    "name": "Greg Goold",
-    "zone": "W1",
-    "club": "5UK",
-    "rating": 1473,
     "k": 30
   },
   {
@@ -5198,14 +5134,6 @@
     "k": 30
   },
   {
-    "id": "d1 alan williams",
-    "name": "Alan Williams",
-    "zone": "D1",
-    "club": "4CM",
-    "rating": 1471,
-    "k": 30
-  },
-  {
     "id": "e1 jacob harris",
     "name": "Jacob Harris",
     "zone": "E1",
@@ -5214,26 +5142,18 @@
     "k": 30
   },
   {
-    "id": "e1 martin ricketts",
-    "name": "Martin Ricketts",
+    "id": "e1 ieuan thomas",
+    "name": "Ieuan Thomas",
     "zone": "E1",
     "club": "2BY",
-    "rating": 1471,
-    "k": 30
-  },
-  {
-    "id": "w1 derek bellamy",
-    "name": "Derek Bellamy",
-    "zone": "W1",
-    "club": "5DB",
     "rating": 1470,
     "k": 30
   },
   {
-    "id": "n1 paul rogers",
-    "name": "Paul Rogers",
-    "zone": "N1",
-    "club": "1WX",
+    "id": "e1 patrick civil",
+    "name": "Patrick Civil",
+    "zone": "E1",
+    "club": "2PR",
     "rating": 1470,
     "k": 30
   },
@@ -5246,10 +5166,42 @@
     "k": 30
   },
   {
-    "id": "g1 mark emblem",
-    "name": "Mark Emblem",
-    "zone": "G1",
-    "club": "3MA",
+    "id": "n1 paul rogers",
+    "name": "Paul Rogers",
+    "zone": "N1",
+    "club": "1WX",
+    "rating": 1469,
+    "k": 30
+  },
+  {
+    "id": "e1 tabitha ryan",
+    "name": "Tabitha Ryan",
+    "zone": "E1",
+    "club": "2PP",
+    "rating": 1469,
+    "k": 30
+  },
+  {
+    "id": "e1 david jones",
+    "name": "David Jones",
+    "zone": "E1",
+    "club": "2BR",
+    "rating": 1468,
+    "k": 30
+  },
+  {
+    "id": "w1 derek bellamy",
+    "name": "Derek Bellamy",
+    "zone": "W1",
+    "club": "5DB",
+    "rating": 1468,
+    "k": 30
+  },
+  {
+    "id": "e1 martin ricketts",
+    "name": "Martin Ricketts",
+    "zone": "E1",
+    "club": "2BY",
     "rating": 1468,
     "k": 30
   },
@@ -5262,19 +5214,11 @@
     "k": 30
   },
   {
-    "id": "w1 john davies",
-    "name": "John Davies",
+    "id": "w1 greg goold",
+    "name": "Greg Goold",
     "zone": "W1",
-    "club": "5CN",
+    "club": "5UK",
     "rating": 1467,
-    "k": 30
-  },
-  {
-    "id": "e1 tomos ilett",
-    "name": "Tomos Ilett",
-    "zone": "E1",
-    "club": "2BY",
-    "rating": 1466,
     "k": 30
   },
   {
@@ -5294,19 +5238,27 @@
     "k": 30
   },
   {
+    "id": "e1 tomos ilett",
+    "name": "Tomos Ilett",
+    "zone": "E1",
+    "club": "2BY",
+    "rating": 1465,
+    "k": 30
+  },
+  {
     "id": "g1 jim sadler",
     "name": "Jim Sadler",
     "zone": "G1",
     "club": "3CB",
-    "rating": 1464,
+    "rating": 1463,
     "k": 30
   },
   {
-    "id": "e1 peter watkins",
-    "name": "Peter Watkins",
-    "zone": "E1",
-    "club": "2BY",
-    "rating": 1464,
+    "id": "g1 mark emblem",
+    "name": "Mark Emblem",
+    "zone": "G1",
+    "club": "3MA",
+    "rating": 1463,
     "k": 30
   },
   {
@@ -5314,14 +5266,6 @@
     "name": "Andrii Petriv",
     "zone": "N1",
     "club": "1CB",
-    "rating": 1462,
-    "k": 30
-  },
-  {
-    "id": "e1 gergely hanczar",
-    "name": "Gergely Hanczar",
-    "zone": "E1",
-    "club": "2NC",
     "rating": 1462,
     "k": 30
   },
@@ -5334,6 +5278,14 @@
     "k": 30
   },
   {
+    "id": "e1 peter watkins",
+    "name": "Peter Watkins",
+    "zone": "E1",
+    "club": "2BY",
+    "rating": 1462,
+    "k": 30
+  },
+  {
     "id": "e1 jamie wilson",
     "name": "Jamie Wilson",
     "zone": "E1",
@@ -5342,27 +5294,27 @@
     "k": 30
   },
   {
-    "id": "w1 rajith aithrajui",
-    "name": "Rajith Aithrajui",
-    "zone": "W1",
-    "club": "5NY",
-    "rating": 1461,
+    "id": "e1 gergely hanczar",
+    "name": "Gergely Hanczar",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1460,
     "k": 30
   },
   {
-    "id": "w1 wiliam francis",
-    "name": "Wiliam Francis",
+    "id": "w1 john davies",
+    "name": "John Davies",
     "zone": "W1",
     "club": "5CN",
     "rating": 1460,
     "k": 30
   },
   {
-    "id": "e1 ethan jenkins",
-    "name": "Ethan Jenkins",
-    "zone": "E1",
-    "club": "2RH",
-    "rating": 1459,
+    "id": "w1 rajith aithrajui",
+    "name": "Rajith Aithrajui",
+    "zone": "W1",
+    "club": "5NY",
+    "rating": 1460,
     "k": 30
   },
   {
@@ -5374,11 +5326,11 @@
     "k": 30
   },
   {
-    "id": "e1 david corney",
-    "name": "David Corney",
+    "id": "e1 rob frame",
+    "name": "Rob Frame",
     "zone": "E1",
-    "club": "2PR",
-    "rating": 1458,
+    "club": "2BR",
+    "rating": 1459,
     "k": 30
   },
   {
@@ -5398,6 +5350,14 @@
     "k": 30
   },
   {
+    "id": "w1 wiliam francis",
+    "name": "Wiliam Francis",
+    "zone": "W1",
+    "club": "5CN",
+    "rating": 1458,
+    "k": 30
+  },
+  {
     "id": "g1 chris morton",
     "name": "Chris Morton",
     "zone": "G1",
@@ -5406,26 +5366,34 @@
     "k": 30
   },
   {
+    "id": "e1 david corney",
+    "name": "David Corney",
+    "zone": "E1",
+    "club": "2PR",
+    "rating": 1457,
+    "k": 30
+  },
+  {
+    "id": "n1 stephen paterson",
+    "name": "Stephen Paterson",
+    "zone": "N1",
+    "club": "1CB",
+    "rating": 1457,
+    "k": 30
+  },
+  {
+    "id": "e1 ethan jenkins",
+    "name": "Ethan Jenkins",
+    "zone": "E1",
+    "club": "2RH",
+    "rating": 1456,
+    "k": 30
+  },
+  {
     "id": "g1 gee garel",
     "name": "Gee Garel",
     "zone": "G1",
     "club": "3NP",
-    "rating": 1456,
-    "k": 30
-  },
-  {
-    "id": "w1 paul thomas",
-    "name": "Paul Thomas",
-    "zone": "W1",
-    "club": "5MO",
-    "rating": 1456,
-    "k": 30
-  },
-  {
-    "id": "e1 bill davies",
-    "name": "Bill Davies",
-    "zone": "E1",
-    "club": "2RH",
     "rating": 1455,
     "k": 30
   },
@@ -5438,11 +5406,19 @@
     "k": 30
   },
   {
+    "id": "w1 roger llewellyn",
+    "name": "Roger Llewellyn",
+    "zone": "W1",
+    "club": "5DB",
+    "rating": 1454,
+    "k": 30
+  },
+  {
     "id": "w1 william selby",
     "name": "William Selby",
     "zone": "W1",
     "club": "5NY",
-    "rating": 1455,
+    "rating": 1454,
     "k": 30
   },
   {
@@ -5454,26 +5430,10 @@
     "k": 30
   },
   {
-    "id": "w1 roger llewellyn",
-    "name": "Roger Llewellyn",
-    "zone": "W1",
-    "club": "5DB",
-    "rating": 1453,
-    "k": 30
-  },
-  {
     "id": "e1 james powell",
     "name": "James Powell",
     "zone": "E1",
     "club": "2NC",
-    "rating": 1452,
-    "k": 30
-  },
-  {
-    "id": "w1 vaughan thomas",
-    "name": "Vaughan Thomas",
-    "zone": "W1",
-    "club": "5DB",
     "rating": 1452,
     "k": 30
   },
@@ -5494,18 +5454,18 @@
     "k": 30
   },
   {
-    "id": "g1 tansy fowler",
-    "name": "Tansy Fowler",
-    "zone": "G1",
-    "club": "1NZ",
+    "id": "w1 vaughan thomas",
+    "name": "Vaughan Thomas",
+    "zone": "W1",
+    "club": "5DB",
     "rating": 1449,
     "k": 30
   },
   {
-    "id": "d1 len morris",
-    "name": "Len Morris",
-    "zone": "D1",
-    "club": "4CG",
+    "id": "g1 tansy fowler",
+    "name": "Tansy Fowler",
+    "zone": "G1",
+    "club": "1NZ",
     "rating": 1448,
     "k": 30
   },
@@ -5518,22 +5478,6 @@
     "k": 30
   },
   {
-    "id": "e1 chris kavanagh",
-    "name": "Chris Kavanagh",
-    "zone": "E1",
-    "club": "2CP",
-    "rating": 1446,
-    "k": 30
-  },
-  {
-    "id": "e1 anthony williams",
-    "name": "Anthony Williams",
-    "zone": "E1",
-    "club": "2BR",
-    "rating": 1443,
-    "k": 30
-  },
-  {
     "id": "g1 asifur rahman",
     "name": "Asifur Rahman",
     "zone": "G1",
@@ -5542,18 +5486,18 @@
     "k": 30
   },
   {
-    "id": "g1 joshua abramsky",
-    "name": "Joshua Abramsky",
-    "zone": "G1",
-    "club": "3NP",
+    "id": "e1 chris kavanagh",
+    "name": "Chris Kavanagh",
+    "zone": "E1",
+    "club": "2CP",
     "rating": 1441,
     "k": 30
   },
   {
-    "id": "e1 rhys davies",
-    "name": "Rhys Davies",
-    "zone": "E1",
-    "club": "2NC",
+    "id": "w1 paul thomas",
+    "name": "Paul Thomas",
+    "zone": "W1",
+    "club": "5MO",
     "rating": 1441,
     "k": 30
   },
@@ -5590,11 +5534,11 @@
     "k": 30
   },
   {
-    "id": "n1 susan f parry",
-    "name": "Susan F Parry",
-    "zone": "N1",
-    "club": "1BM",
-    "rating": 1440,
+    "id": "e1 rhys davies",
+    "name": "Rhys Davies",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1438,
     "k": 30
   },
   {
@@ -5602,7 +5546,7 @@
     "name": "Advik Samiaiya",
     "zone": "W1",
     "club": "5MO",
-    "rating": 1438,
+    "rating": 1437,
     "k": 30
   },
   {
@@ -5622,6 +5566,22 @@
     "k": 30
   },
   {
+    "id": "e1 harri davies",
+    "name": "Harri Davies",
+    "zone": "E1",
+    "club": "2CU",
+    "rating": 1437,
+    "k": 30
+  },
+  {
+    "id": "e1 jonathan edwards",
+    "name": "Jonathan Edwards",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1437,
+    "k": 30
+  },
+  {
     "id": "e1 sami hoosein",
     "name": "Sami Hoosein",
     "zone": "E1",
@@ -5630,27 +5590,11 @@
     "k": 30
   },
   {
-    "id": "w1 tony williams",
-    "name": "Tony Williams",
-    "zone": "W1",
-    "club": "5WK",
+    "id": "d1 len morris",
+    "name": "Len Morris",
+    "zone": "D1",
+    "club": "4CG",
     "rating": 1436,
-    "k": 30
-  },
-  {
-    "id": "w1 claire gorman",
-    "name": "Claire Gorman",
-    "zone": "W1",
-    "club": "5CN",
-    "rating": 1435,
-    "k": 30
-  },
-  {
-    "id": "w1 dennis thomas",
-    "name": "Dennis Thomas",
-    "zone": "W1",
-    "club": "5CN",
-    "rating": 1434,
     "k": 30
   },
   {
@@ -5662,6 +5606,38 @@
     "k": 30
   },
   {
+    "id": "w1 tony williams",
+    "name": "Tony Williams",
+    "zone": "W1",
+    "club": "5WK",
+    "rating": 1434,
+    "k": 30
+  },
+  {
+    "id": "e1 anthony williams",
+    "name": "Anthony Williams",
+    "zone": "E1",
+    "club": "2BR",
+    "rating": 1433,
+    "k": 30
+  },
+  {
+    "id": "d1 astra holder",
+    "name": "Astra Holder",
+    "zone": "D1",
+    "club": "4AU",
+    "rating": 1433,
+    "k": 30
+  },
+  {
+    "id": "w1 claire gorman",
+    "name": "Claire Gorman",
+    "zone": "W1",
+    "club": "5CN",
+    "rating": 1433,
+    "k": 30
+  },
+  {
     "id": "g1 michael binding",
     "name": "Michael Binding",
     "zone": "G1",
@@ -5670,26 +5646,10 @@
     "k": 30
   },
   {
-    "id": "e1 bob owen",
-    "name": "Bob Owen",
+    "id": "e1 bill davies",
+    "name": "Bill Davies",
     "zone": "E1",
-    "club": "2BR",
-    "rating": 1431,
-    "k": 30
-  },
-  {
-    "id": "e1 nadi grewal",
-    "name": "Nadi Grewal",
-    "zone": "E1",
-    "club": "2PR",
-    "rating": 1430,
-    "k": 30
-  },
-  {
-    "id": "e1 jonathan edwards",
-    "name": "Jonathan Edwards",
-    "zone": "E1",
-    "club": "2CD",
+    "club": "2RH",
     "rating": 1429,
     "k": 30
   },
@@ -5718,11 +5678,19 @@
     "k": 30
   },
   {
-    "id": "d1 astra holder",
-    "name": "Astra Holder",
-    "zone": "D1",
-    "club": "4AU",
-    "rating": 1424,
+    "id": "e1 nadi grewal",
+    "name": "Nadi Grewal",
+    "zone": "E1",
+    "club": "2PR",
+    "rating": 1425,
+    "k": 30
+  },
+  {
+    "id": "n1 susan f parry",
+    "name": "Susan F Parry",
+    "zone": "N1",
+    "club": "1BM",
+    "rating": 1423,
     "k": 30
   },
   {
@@ -5731,14 +5699,6 @@
     "zone": "E1",
     "club": "2CD",
     "rating": 1422,
-    "k": 30
-  },
-  {
-    "id": "g1 dave hurst",
-    "name": "Dave Hurst",
-    "zone": "G1",
-    "club": "3AG",
-    "rating": 1421,
     "k": 30
   },
   {
@@ -5758,11 +5718,19 @@
     "k": 30
   },
   {
+    "id": "g1 dave hurst",
+    "name": "Dave Hurst",
+    "zone": "G1",
+    "club": "3AG",
+    "rating": 1420,
+    "k": 30
+  },
+  {
     "id": "e1 jai hrithvik adithya are",
     "name": "Jai Hrithvik Adithya Are",
     "zone": "E1",
     "club": "2NC",
-    "rating": 1420,
+    "rating": 1419,
     "k": 30
   },
   {
@@ -5770,31 +5738,7 @@
     "name": "Lucio Nocivelli",
     "zone": "G1",
     "club": "3CB",
-    "rating": 1419,
-    "k": 30
-  },
-  {
-    "id": "e1 steve keable",
-    "name": "Steve Keable",
-    "zone": "E1",
-    "club": "2CP",
     "rating": 1418,
-    "k": 30
-  },
-  {
-    "id": "e1 james williams",
-    "name": "James Williams",
-    "zone": "E1",
-    "club": "2BR",
-    "rating": 1417,
-    "k": 30
-  },
-  {
-    "id": "w1 riley fitzpatrick",
-    "name": "Riley Fitzpatrick",
-    "zone": "W1",
-    "club": "5WK",
-    "rating": 1417,
     "k": 30
   },
   {
@@ -5806,10 +5750,18 @@
     "k": 30
   },
   {
-    "id": "w1 nick hale",
-    "name": "Nick Hale",
+    "id": "w1 riley fitzpatrick",
+    "name": "Riley Fitzpatrick",
     "zone": "W1",
-    "club": "5UK",
+    "club": "5WK",
+    "rating": 1416,
+    "k": 30
+  },
+  {
+    "id": "e1 steve keable",
+    "name": "Steve Keable",
+    "zone": "E1",
+    "club": "2CP",
     "rating": 1416,
     "k": 30
   },
@@ -5818,7 +5770,7 @@
     "name": "Wayne Holland",
     "zone": "E1",
     "club": "2BR",
-    "rating": 1416,
+    "rating": 1415,
     "k": 30
   },
   {
@@ -5826,22 +5778,6 @@
     "name": "Will Parkinson",
     "zone": "E1",
     "club": "2CD",
-    "rating": 1416,
-    "k": 30
-  },
-  {
-    "id": "e1 finley jones",
-    "name": "Finley Jones",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1415,
-    "k": 30
-  },
-  {
-    "id": "e1 raman rajoram",
-    "name": "Raman Rajoram",
-    "zone": "E1",
-    "club": "2NC",
     "rating": 1415,
     "k": 30
   },
@@ -5854,19 +5790,35 @@
     "k": 30
   },
   {
-    "id": "n1 shaun waines",
-    "name": "Shaun Waines",
-    "zone": "N1",
-    "club": "1CF",
+    "id": "e1 raman rajoram",
+    "name": "Raman Rajoram",
+    "zone": "E1",
+    "club": "2NC",
     "rating": 1413,
     "k": 30
   },
   {
-    "id": "w1 spencer ripley",
-    "name": "Spencer Ripley",
-    "zone": "W1",
-    "club": "5UK",
+    "id": "n1 shaun waines",
+    "name": "Shaun Waines",
+    "zone": "N1",
+    "club": "1CF",
+    "rating": 1412,
+    "k": 30
+  },
+  {
+    "id": "e1 james williams",
+    "name": "James Williams",
+    "zone": "E1",
+    "club": "2BR",
     "rating": 1411,
+    "k": 30
+  },
+  {
+    "id": "e1 bob owen",
+    "name": "Bob Owen",
+    "zone": "E1",
+    "club": "2BR",
+    "rating": 1410,
     "k": 30
   },
   {
@@ -5874,23 +5826,23 @@
     "name": "Advik Ram",
     "zone": "W1",
     "club": "5CN",
-    "rating": 1410,
+    "rating": 1409,
     "k": 30
   },
   {
-    "id": "w1 john ward",
-    "name": "John Ward",
+    "id": "w1 spencer ripley",
+    "name": "Spencer Ripley",
     "zone": "W1",
-    "club": "5MO",
-    "rating": 1407,
+    "club": "5UK",
+    "rating": 1409,
     "k": 30
   },
   {
-    "id": "e1 thomas nalej",
-    "name": "Thomas Nalej",
+    "id": "e1 finley jones",
+    "name": "Finley Jones",
     "zone": "E1",
-    "club": "2EG",
-    "rating": 1407,
+    "club": "2CD",
+    "rating": 1408,
     "k": 30
   },
   {
@@ -5910,27 +5862,19 @@
     "k": 30
   },
   {
-    "id": "w1 thomas macdonald-wright",
-    "name": "Thomas Macdonald-Wright",
+    "id": "w1 dennis thomas",
+    "name": "Dennis Thomas",
     "zone": "W1",
-    "club": "5MO",
+    "club": "5CN",
     "rating": 1405,
     "k": 30
   },
   {
-    "id": "e1 clara deng",
-    "name": "Clara Deng",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1403,
-    "k": 30
-  },
-  {
-    "id": "e1 constantine popov",
-    "name": "Constantine Popov",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1403,
+    "id": "w1 nick hale",
+    "name": "Nick Hale",
+    "zone": "W1",
+    "club": "5UK",
+    "rating": 1405,
     "k": 30
   },
   {
@@ -5942,6 +5886,14 @@
     "k": 30
   },
   {
+    "id": "e1 clara deng",
+    "name": "Clara Deng",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1402,
+    "k": 30
+  },
+  {
     "id": "n1 seth livesey",
     "name": "Seth Livesey",
     "zone": "N1",
@@ -5950,10 +5902,10 @@
     "k": 30
   },
   {
-    "id": "e1 ashton grey",
-    "name": "Ashton Grey",
+    "id": "e1 constantine popov",
+    "name": "Constantine Popov",
     "zone": "E1",
-    "club": "2BY",
+    "club": "2NC",
     "rating": 1401,
     "k": 30
   },
@@ -5966,11 +5918,27 @@
     "k": 30
   },
   {
+    "id": "w1 thomas macdonald-wright",
+    "name": "Thomas Macdonald-Wright",
+    "zone": "W1",
+    "club": "5MO",
+    "rating": 1399,
+    "k": 30
+  },
+  {
+    "id": "e1 thomas nalej",
+    "name": "Thomas Nalej",
+    "zone": "E1",
+    "club": "2EG",
+    "rating": 1399,
+    "k": 30
+  },
+  {
     "id": "g1 mikhail saparovich",
     "name": "Mikhail Saparovich",
     "zone": "G1",
     "club": "WCU",
-    "rating": 1399,
+    "rating": 1398,
     "k": 30
   },
   {
@@ -5990,19 +5958,27 @@
     "k": 30
   },
   {
+    "id": "e1 ashton grey",
+    "name": "Ashton Grey",
+    "zone": "E1",
+    "club": "2BY",
+    "rating": 1396,
+    "k": 30
+  },
+  {
+    "id": "w1 john ward",
+    "name": "John Ward",
+    "zone": "W1",
+    "club": "5MO",
+    "rating": 1396,
+    "k": 30
+  },
+  {
     "id": "g1 rowan ridge",
     "name": "Rowan Ridge",
     "zone": "G1",
     "club": "3AG",
     "rating": 1396,
-    "k": 30
-  },
-  {
-    "id": "e1 joshua phillips",
-    "name": "Joshua Phillips",
-    "zone": "E1",
-    "club": "2BR",
-    "rating": 1395,
     "k": 30
   },
   {
@@ -6014,11 +5990,11 @@
     "k": 30
   },
   {
-    "id": "w1 jack mason",
-    "name": "Jack Mason",
-    "zone": "W1",
-    "club": "5MO",
-    "rating": 1393,
+    "id": "e1 joshua phillips",
+    "name": "Joshua Phillips",
+    "zone": "E1",
+    "club": "2BR",
+    "rating": 1394,
     "k": 30
   },
   {
@@ -6026,6 +6002,14 @@
     "name": "Charmaine Munyoso",
     "zone": "G1",
     "club": "3NP",
+    "rating": 1392,
+    "k": 30
+  },
+  {
+    "id": "w1 jack mason",
+    "name": "Jack Mason",
+    "zone": "W1",
+    "club": "5MO",
     "rating": 1392,
     "k": 30
   },
@@ -6046,6 +6030,14 @@
     "k": 30
   },
   {
+    "id": "g1 joshua abramsky",
+    "name": "Joshua Abramsky",
+    "zone": "G1",
+    "club": "3NP",
+    "rating": 1391,
+    "k": 30
+  },
+  {
     "id": "n1 gwyn jones",
     "name": "Gwyn Jones",
     "zone": "N1",
@@ -6054,35 +6046,11 @@
     "k": 30
   },
   {
-    "id": "e1 joshua lee morgan",
-    "name": "Joshua Lee Morgan",
-    "zone": "E1",
-    "club": "2RH",
-    "rating": 1388,
-    "k": 30
-  },
-  {
     "id": "e1 nathaniel ekermawi",
     "name": "Nathaniel Ekermawi",
     "zone": "E1",
     "club": "2EG",
     "rating": 1388,
-    "k": 30
-  },
-  {
-    "id": "n1 ian regan",
-    "name": "Ian Regan",
-    "zone": "N1",
-    "club": "1CB",
-    "rating": 1387,
-    "k": 30
-  },
-  {
-    "id": "w1 steffani dimitrova",
-    "name": "Steffani Dimitrova",
-    "zone": "W1",
-    "club": "5CN",
-    "rating": 1387,
     "k": 30
   },
   {
@@ -6102,11 +6070,35 @@
     "k": 30
   },
   {
+    "id": "n1 ian regan",
+    "name": "Ian Regan",
+    "zone": "N1",
+    "club": "1CB",
+    "rating": 1386,
+    "k": 30
+  },
+  {
     "id": "d1 mark ferrey",
     "name": "Mark Ferrey",
     "zone": "D1",
     "club": "4CG",
     "rating": 1386,
+    "k": 30
+  },
+  {
+    "id": "w1 steffani dimitrova",
+    "name": "Steffani Dimitrova",
+    "zone": "W1",
+    "club": "5CN",
+    "rating": 1386,
+    "k": 30
+  },
+  {
+    "id": "e1 joshua lee morgan",
+    "name": "Joshua Lee Morgan",
+    "zone": "E1",
+    "club": "2RH",
+    "rating": 1385,
     "k": 30
   },
   {
@@ -6134,19 +6126,11 @@
     "k": 30
   },
   {
-    "id": "w1 peter merrifield",
-    "name": "Peter Merrifield",
-    "zone": "W1",
-    "club": "WCU",
-    "rating": 1384,
-    "k": 30
-  },
-  {
-    "id": "w1 gary harber",
-    "name": "Gary Harber",
-    "zone": "W1",
-    "club": "5DB",
-    "rating": 1381,
+    "id": "e1 james pryce",
+    "name": "James Pryce",
+    "zone": "E1",
+    "club": "2BR",
+    "rating": 1380,
     "k": 30
   },
   {
@@ -6154,22 +6138,6 @@
     "name": "Liam Hayles",
     "zone": "E1",
     "club": "2PP",
-    "rating": 1381,
-    "k": 30
-  },
-  {
-    "id": "w1 bradley parfitt",
-    "name": "Bradley Parfitt",
-    "zone": "W1",
-    "club": "5MO",
-    "rating": 1380,
-    "k": 30
-  },
-  {
-    "id": "e1 james pryce",
-    "name": "James Pryce",
-    "zone": "E1",
-    "club": "2BR",
     "rating": 1380,
     "k": 30
   },
@@ -6190,6 +6158,14 @@
     "k": 30
   },
   {
+    "id": "w1 gary harber",
+    "name": "Gary Harber",
+    "zone": "W1",
+    "club": "5DB",
+    "rating": 1378,
+    "k": 30
+  },
+  {
     "id": "d1 jack poole",
     "name": "Jack Poole",
     "zone": "D1",
@@ -6198,18 +6174,18 @@
     "k": 30
   },
   {
-    "id": "n1 harry wood",
-    "name": "Harry Wood",
-    "zone": "N1",
-    "club": "1BM",
-    "rating": 1376,
+    "id": "w1 peter merrifield",
+    "name": "Peter Merrifield",
+    "zone": "W1",
+    "club": "WCU",
+    "rating": 1377,
     "k": 30
   },
   {
-    "id": "e1 tomos bryant",
-    "name": "Tomos Bryant",
-    "zone": "E1",
-    "club": "2BR",
+    "id": "w1 bradley parfitt",
+    "name": "Bradley Parfitt",
+    "zone": "W1",
+    "club": "5MO",
     "rating": 1376,
     "k": 30
   },
@@ -6219,6 +6195,22 @@
     "zone": "G1",
     "club": "3AG",
     "rating": 1375,
+    "k": 30
+  },
+  {
+    "id": "n1 harry wood",
+    "name": "Harry Wood",
+    "zone": "N1",
+    "club": "1BM",
+    "rating": 1375,
+    "k": 30
+  },
+  {
+    "id": "e1 tomos bryant",
+    "name": "Tomos Bryant",
+    "zone": "E1",
+    "club": "2BR",
+    "rating": 1374,
     "k": 30
   },
   {
@@ -6250,7 +6242,7 @@
     "name": "Mal Llewellyn",
     "zone": "E1",
     "club": "2BR",
-    "rating": 1369,
+    "rating": 1368,
     "k": 30
   },
   {
@@ -6286,11 +6278,11 @@
     "k": 30
   },
   {
-    "id": "e1 dave mahoney",
-    "name": "Dave Mahoney",
+    "id": "e1 elijah rhoden",
+    "name": "Elijah Rhoden",
     "zone": "E1",
-    "club": "2BY",
-    "rating": 1364,
+    "club": "2BR",
+    "rating": 1361,
     "k": 30
   },
   {
@@ -6298,15 +6290,15 @@
     "name": "Mike Smith",
     "zone": "E1",
     "club": "2PP",
-    "rating": 1363,
+    "rating": 1361,
     "k": 30
   },
   {
-    "id": "e1 elijah rhoden",
-    "name": "Elijah Rhoden",
+    "id": "e1 dave mahoney",
+    "name": "Dave Mahoney",
     "zone": "E1",
-    "club": "2BR",
-    "rating": 1361,
+    "club": "2BY",
+    "rating": 1359,
     "k": 30
   },
   {
@@ -6318,14 +6310,6 @@
     "k": 30
   },
   {
-    "id": "e1 angel srivastava",
-    "name": "Angel Srivastava",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1358,
-    "k": 30
-  },
-  {
     "id": "e1 phil barlow",
     "name": "Phil Barlow",
     "zone": "E1",
@@ -6334,11 +6318,19 @@
     "k": 30
   },
   {
+    "id": "e1 angel srivastava",
+    "name": "Angel Srivastava",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1357,
+    "k": 30
+  },
+  {
     "id": "w1 cameron ferguson",
     "name": "Cameron Ferguson",
     "zone": "W1",
     "club": "5CN",
-    "rating": 1357,
+    "rating": 1356,
     "k": 30
   },
   {
@@ -6346,7 +6338,7 @@
     "name": "Ieuan Din",
     "zone": "D1",
     "club": "4CM",
-    "rating": 1357,
+    "rating": 1356,
     "k": 30
   },
   {
@@ -6366,14 +6358,6 @@
     "k": 30
   },
   {
-    "id": "e1 antony phillips",
-    "name": "Antony Phillips",
-    "zone": "E1",
-    "club": "2BR",
-    "rating": 1354,
-    "k": 30
-  },
-  {
     "id": "e1 chun hin tang",
     "name": "Chun Hin Tang",
     "zone": "E1",
@@ -6390,6 +6374,14 @@
     "k": 30
   },
   {
+    "id": "e1 antony phillips",
+    "name": "Antony Phillips",
+    "zone": "E1",
+    "club": "2BR",
+    "rating": 1353,
+    "k": 30
+  },
+  {
     "id": "e1 brendan lee",
     "name": "Brendan Lee",
     "zone": "E1",
@@ -6398,10 +6390,10 @@
     "k": 30
   },
   {
-    "id": "e1 steve maguire",
-    "name": "Steve Maguire",
-    "zone": "E1",
-    "club": "2BY",
+    "id": "g1 charlie smith",
+    "name": "Charlie Smith",
+    "zone": "G1",
+    "club": "3NP",
     "rating": 1353,
     "k": 30
   },
@@ -6430,11 +6422,11 @@
     "k": 30
   },
   {
-    "id": "n1 gareth williams",
-    "name": "Gareth Williams",
-    "zone": "N1",
-    "club": "1CF",
-    "rating": 1346,
+    "id": "e1 steve maguire",
+    "name": "Steve Maguire",
+    "zone": "E1",
+    "club": "2BY",
+    "rating": 1347,
     "k": 30
   },
   {
@@ -6470,14 +6462,6 @@
     "k": 30
   },
   {
-    "id": "e1 mabon hanczar",
-    "name": "Mabon Hanczar",
-    "zone": "E1",
-    "club": "2NC",
-    "rating": 1341,
-    "k": 30
-  },
-  {
     "id": "d1 sunny scordino",
     "name": "Sunny Scordino",
     "zone": "D1",
@@ -6502,6 +6486,14 @@
     "k": 30
   },
   {
+    "id": "e1 mabon hanczar",
+    "name": "Mabon Hanczar",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1340,
+    "k": 30
+  },
+  {
     "id": "e1 connor swart",
     "name": "Connor Swart",
     "zone": "E1",
@@ -6518,24 +6510,24 @@
     "k": 30
   },
   {
-    "id": "e1 iolo coles",
-    "name": "Iolo Coles",
-    "zone": "E1",
-    "club": "2EG",
-    "rating": 1339,
-    "k": 30
-  },
-  {
-    "id": "e1 william roberts",
-    "name": "William Roberts",
-    "zone": "E1",
-    "club": "2NC",
+    "id": "n1 matthew thomas",
+    "name": "Matthew Thomas",
+    "zone": "N1",
+    "club": "1CB",
     "rating": 1339,
     "k": 30
   },
   {
     "id": "e1 harrison salisbury",
     "name": "Harrison Salisbury",
+    "zone": "E1",
+    "club": "2EG",
+    "rating": 1338,
+    "k": 30
+  },
+  {
+    "id": "e1 iolo coles",
+    "name": "Iolo Coles",
     "zone": "E1",
     "club": "2EG",
     "rating": 1338,
@@ -6598,22 +6590,6 @@
     "k": 30
   },
   {
-    "id": "g1 charlie smith",
-    "name": "Charlie Smith",
-    "zone": "G1",
-    "club": "3NP",
-    "rating": 1326,
-    "k": 30
-  },
-  {
-    "id": "e1 harri llwyd dafydd",
-    "name": "Harri Llwyd Dafydd",
-    "zone": "E1",
-    "club": "2NE",
-    "rating": 1326,
-    "k": 30
-  },
-  {
     "id": "e1 samuel kerry",
     "name": "Samuel Kerry",
     "zone": "E1",
@@ -6622,10 +6598,18 @@
     "k": 30
   },
   {
-    "id": "d1 dan richards",
-    "name": "Dan Richards",
-    "zone": "D1",
-    "club": "4CG",
+    "id": "e1 william roberts",
+    "name": "William Roberts",
+    "zone": "E1",
+    "club": "2NC",
+    "rating": 1326,
+    "k": 30
+  },
+  {
+    "id": "e1 harri llwyd dafydd",
+    "name": "Harri Llwyd Dafydd",
+    "zone": "E1",
+    "club": "2NE",
     "rating": 1325,
     "k": 30
   },
@@ -6678,6 +6662,14 @@
     "k": 30
   },
   {
+    "id": "d1 dan richards",
+    "name": "Dan Richards",
+    "zone": "D1",
+    "club": "4CG",
+    "rating": 1324,
+    "k": 30
+  },
+  {
     "id": "e1 danni ramayead",
     "name": "Danni Ramayead",
     "zone": "E1",
@@ -6714,14 +6706,6 @@
     "name": "Emyr-Wyn Francis",
     "zone": "W1",
     "club": "5CN",
-    "rating": 1322,
-    "k": 30
-  },
-  {
-    "id": "e1 mike white",
-    "name": "Mike White",
-    "zone": "E1",
-    "club": "2BY",
     "rating": 1322,
     "k": 30
   },
@@ -6766,6 +6750,14 @@
     "k": 30
   },
   {
+    "id": "e1 mike white",
+    "name": "Mike White",
+    "zone": "E1",
+    "club": "2BY",
+    "rating": 1319,
+    "k": 30
+  },
+  {
     "id": "e1 amir jamil",
     "name": "Amir Jamil",
     "zone": "E1",
@@ -6790,14 +6782,6 @@
     "k": 30
   },
   {
-    "id": "g1 charlie cooper",
-    "name": "Charlie Cooper",
-    "zone": "G1",
-    "club": "3CB",
-    "rating": 1316,
-    "k": 30
-  },
-  {
     "id": "e1 darcy beck",
     "name": "Darcy Beck",
     "zone": "E1",
@@ -6806,11 +6790,27 @@
     "k": 30
   },
   {
+    "id": "g1 charlie cooper",
+    "name": "Charlie Cooper",
+    "zone": "G1",
+    "club": "3CB",
+    "rating": 1315,
+    "k": 30
+  },
+  {
     "id": "e1 gabriel roberts",
     "name": "Gabriel Roberts",
     "zone": "E1",
     "club": "2EG",
     "rating": 1314,
+    "k": 30
+  },
+  {
+    "id": "n1 gareth williams",
+    "name": "Gareth Williams",
+    "zone": "N1",
+    "club": "1CF",
+    "rating": 1313,
     "k": 30
   },
   {
@@ -7602,7 +7602,7 @@
     "name": "Janet Evans",
     "zone": "W1",
     "club": "5UK",
-    "rating": 1302,
+    "rating": 1301,
     "k": 30
   },
   {
@@ -7730,7 +7730,7 @@
     "name": "Sion Davies",
     "zone": "E1",
     "club": "2EG",
-    "rating": 1291,
+    "rating": 1290,
     "k": 30
   },
   {
@@ -7738,7 +7738,7 @@
     "name": "Sion Davies",
     "zone": "W1",
     "club": "5MO",
-    "rating": 1291,
+    "rating": 1290,
     "k": 30
   },
   {
@@ -7746,7 +7746,7 @@
     "name": "Daniel Katchi",
     "zone": "E1",
     "club": "2BY",
-    "rating": 1289,
+    "rating": 1288,
     "k": 30
   },
   {
@@ -7786,7 +7786,7 @@
     "name": "Ramesh Arjunan",
     "zone": "W1",
     "club": "5CN",
-    "rating": 1282,
+    "rating": 1281,
     "k": 30
   },
   {
@@ -7802,7 +7802,7 @@
     "name": "Cameron Taylor",
     "zone": "E1",
     "club": "2BY",
-    "rating": 1278,
+    "rating": 1277,
     "k": 30
   },
   {
@@ -7830,18 +7830,18 @@
     "k": 30
   },
   {
-    "id": "e1 mark bernhardt",
-    "name": "Mark Bernhardt",
-    "zone": "E1",
-    "club": "2BY",
-    "rating": 1271,
-    "k": 30
-  },
-  {
     "id": "w1 mariya sony",
     "name": "Mariya Sony",
     "zone": "W1",
     "club": "5MO",
+    "rating": 1270,
+    "k": 30
+  },
+  {
+    "id": "e1 mark bernhardt",
+    "name": "Mark Bernhardt",
+    "zone": "E1",
+    "club": "2BY",
     "rating": 1270,
     "k": 30
   },
@@ -7874,7 +7874,7 @@
     "name": "Tom Ferries",
     "zone": "E1",
     "club": "2BY",
-    "rating": 1253,
+    "rating": 1252,
     "k": 30
   }
 ]
