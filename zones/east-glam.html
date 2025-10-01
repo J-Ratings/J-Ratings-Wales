@@ -223,7 +223,7 @@ async function buildComparison(players) {
     x:hist.map(d=>d.date),
     y:hist.map(d=>d.rating),
     mode:'lines',
-    hovertemplate:'%{x} → %{y}<extra>'+p.name+'</extra>'
+    hovertemplate: '%{x} → %{y:d}<extra>' + p.name + '</extra>'
   }));
   const cs = getComputedStyle(document.body);
   const layout = {

@@ -220,7 +220,7 @@ async function buildComparison(players) {
     } else {
       return {
         name: p.name, x: hist.map(d=>d.date), y: hist.map(d=>d.rating),
-        mode:'lines', hovertemplate:'%{x} → %{y}<extra>'+p.name+'</extra>'
+        mode:'lines', hovertemplate: '%{x} → %{y:d}<extra>' + p.name + '</extra>'
       };
     }
   });

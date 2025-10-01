@@ -254,7 +254,7 @@ async function buildComparison(players) {
         mode:(mode==='daily'?'lines':'lines+markers'),
         marker:(mode==='daily'?{size:0}:{size:4}),
         line:{width:2},
-        hovertemplate:'%{x} => %{y}<extra>'+p.name+'</extra>'
+        hovertemplate: '%{x} → %{y:d}<extra>' + p.name + '</extra>'
       };
     }
   });

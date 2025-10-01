@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
-    /* Let the page scroll vertically over the chart on touch devices */
     #compare-chart { touch-action: pan-y; }
   </style>
 </head>
@@ -33,7 +32,6 @@
 <main class="wrap">
   <section class="panel" id="players-panel">
     <h2 id="zone-title">Dyfed</h2>
-
     <div class="toolbar">
       <input id="q" type="search" placeholder="Filter by name…">
       <span id="count" class="muted"></span>
@@ -41,6 +39,15 @@
     </div>
 
     <div id="compare-wrap" style="display:none; padding:16px">
+      <div id="agg-wrap" style="margin-bottom:10px; display:none">
+        <label for="agg">View: </label>
+        <select id="agg">
+          <option value="daily" selected>Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+        </select>
+      </div>
       <div id="compare-chart" style="height:450px"></div>
     </div>
 
@@ -59,36 +66,17 @@
 
   <!-- Compare Selection Modal -->
   <div id="compare-modal" style="
-    display:none; 
-    position:fixed; 
-    top:0; left:0; 
-    width:100%; height:100%; 
-    background:rgba(0,0,0,0.6); 
-    justify-content:center; 
-    align-items:center;
-    z-index:9999;
-  ">
+    display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+    background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:9999;">
     <div style="
-      background:#1a1a1a;
-      padding:20px;
-      border-radius:8px;
-      max-width:500px;
-      width:90%;
-      max-height:80%;
-      overflow:auto;
-      color:#fff;
-    ">
+      background:#1a1a1a; padding:20px; border-radius:8px;
+      max-width:500px; width:90%; max-height:80%; overflow:auto; color:#fff;">
       <h3>Select players to view:</h3>
-
-      <!-- Top button group -->
       <div class="compare-actions" style="margin-bottom:12px;">
         <button class="compare-show" style="margin-right:10px">Show Selected</button>
         <button class="compare-cancel">Cancel</button>
       </div>
-
       <div id="compare-list" style="margin:20px 0;"></div>
-
-      <!-- Bottom button group -->
       <div class="compare-actions" style="margin-top:12px;">
         <button class="compare-show" style="margin-right:10px">Show Selected</button>
         <button class="compare-cancel">Cancel</button>
@@ -113,9 +101,35 @@ const clubNames = {
   "4AU": "Aberystwyth University"
 };
 
-/* ---------- STATE & RENDER ---------- */
 const state = { rows: [], filtered: [], selectedClub: null };
 
+/* ---------- AGGREGATION ---------- */
+function aggregateExpanded(hist, mode) {
+  if (mode === 'daily') return hist;
+  const buckets = new Map();
+  for (const d of hist) {
+    const dt = new Date(d.date);
+    let key;
+    if (mode === 'weekly') {
+      const tmp = new Date(Date.UTC(dt.getUTCFullYear(), dt.getUTCMonth(), dt.getUTCDate()));
+      const day = tmp.getUTCDay();
+      const diff = (day === 0 ? -6 : 1) - day;
+      tmp.setUTCDate(tmp.getUTCDate() + diff);
+      key = tmp.toISOString().slice(0,10);
+    } else if (mode === 'monthly') {
+      key = dt.getUTCFullYear() + '-' + String(dt.getUTCMonth()+1).padStart(2,'0');
+    } else if (mode === 'yearly') {
+      key = String(dt.getUTCFullYear());
+    }
+    buckets.set(key,d);
+  }
+  return [...buckets.entries()].map(([k,v])=>({
+    date: k.length===4 ? k+'-01-01' : (k.length===7 ? k+'-01' : k),
+    rating: v.rating
+  }));
+}
+
+/* ---------- TABLE ---------- */
 function renderTable() {
   const tbody = document.querySelector('#players tbody');
   tbody.innerHTML = '';
@@ -149,7 +163,6 @@ function applyFilter() {
 
 /* ---------- COMPARE CHART ---------- */
 const histCache = new Map();
-
 async function fetchHistoryFor(id) {
   if (histCache.has(id)) return histCache.get(id);
   async function tryUrl(url) {
@@ -163,166 +176,133 @@ async function fetchHistoryFor(id) {
   histCache.set(id, hist ?? null);
   return hist ?? null;
 }
-
 function hideCompare() {
   document.getElementById('compare-wrap').style.display = 'none';
   document.getElementById('compare-chart').innerHTML = '';
+  document.getElementById('agg-wrap').style.display = 'none';
 }
-
 async function buildComparison(players) {
   const wrap = document.getElementById('compare-wrap');
   const chart = document.getElementById('compare-chart');
+  const aggMode = document.getElementById('agg').value;
   wrap.style.display = 'block';
+  document.getElementById('agg-wrap').style.display = 'block';
   chart.innerHTML = 'Loading…';
-
   const withHist = [];
   await Promise.all(players.map(async p => {
     const hist = await fetchHistoryFor(p.id);
     if (!hist) return;
-    const use = COMPARE_SINCE ? hist.filter(d => d.date >= COMPARE_SINCE) : hist;
-    if (use.length) withHist.push({ p, hist: use });
+    const use = COMPARE_SINCE ? hist.filter(d=>d.date>=COMPARE_SINCE) : hist;
+    if (use.length) withHist.push({ p, hist: aggregateExpanded(use, aggMode) });
   }));
-
   if (!withHist.length) {
     chart.innerHTML = COMPARE_SINCE
       ? `No rating history since ${COMPARE_SINCE}.`
       : 'No rating history found.';
     return;
   }
-
-  withHist.sort((a, b) =>
-    b.hist[b.hist.length - 1].date.localeCompare(a.hist[a.hist.length - 1].date)
+  withHist.sort((a,b)=>
+    b.hist[b.hist.length-1].date.localeCompare(a.hist[a.hist.length-1].date)
   );
   const picked = withHist.slice(0, MAX_SERIES);
-
   const isTouch = window.matchMedia('(pointer: coarse)').matches;
-  const traces = picked.map(({ p, hist }) => {
+  const traces = picked.map(({ p,hist })=>{
     if (isTouch) {
       const n = hist.length;
-      const text = hist.map((_, i) => (i === n - 1 ? p.name : ''));
-      return {
-        name: p.name,
-        x: hist.map(d => d.date),
-        y: hist.map(d => d.rating),
-        mode: 'lines+text',
-        text,
-        textposition: 'middle right',
-        textfont: { size: 10 },
-        cliponaxis: false,
-        hoverinfo: 'skip'
-      };
+      const text = hist.map((_,i)=>(i===n-1?p.name:''));
+      return { name:p.name,x:hist.map(d=>d.date),y:hist.map(d=>d.rating),
+        mode:'lines+text',text,textposition:'middle right',
+        textfont:{size:10},cliponaxis:false,hoverinfo:'skip' };
     } else {
-      return {
-        name: p.name,
-        x: hist.map(d => d.date),
-        y: hist.map(d => d.rating),
-        mode: 'lines',
-        hovertemplate: '%{x} => %{y}<extra>' + p.name + '</extra>'
-      };
+      return { name:p.name,x:hist.map(d=>d.date),y:hist.map(d=>d.rating),
+        mode:'lines',hovertemplate: '%{x} → %{y:d}<extra>' + p.name + '</extra>'
+         };
     }
   });
-
   const cs = getComputedStyle(document.body);
   const layout = {
-    margin: { l: 50, r: (isTouch ? 110 : 20), t: 10, b: 40 },
-    xaxis: { type: 'date', title: '' },
-    yaxis: { title: 'Rating' },
-    legend: { orientation: 'h' },
-    paper_bgcolor: cs.backgroundColor,
-    plot_bgcolor: cs.backgroundColor,
-    font: { color: cs.color }
+    margin:{l:50,r:(isTouch?110:20),t:10,b:40},xaxis:{type:'date'},yaxis:{title:'Rating'},
+    legend:{orientation:'h'},paper_bgcolor:cs.backgroundColor,plot_bgcolor:cs.backgroundColor,
+    font:{color:cs.color}
   };
-
   const config = isTouch
-    ? { displayModeBar: false, responsive: true, staticPlot: true }
-    : { displayModeBar: false, responsive: true, scrollZoom: false, doubleClick: false, dragMode: false };
-
-  Plotly.newPlot(chart, traces, layout, config);
+    ? {displayModeBar:false,responsive:true,staticPlot:true}
+    : {displayModeBar:false,responsive:true,scrollZoom:false,doubleClick:false,dragMode:false};
+  Plotly.newPlot(chart,traces,layout,config);
 }
 
+/* ---------- MODAL ---------- */
 function setupCompareButton() {
   const modal = document.getElementById('compare-modal');
   const listDiv = document.getElementById('compare-list');
   const showBtns = modal.querySelectorAll('.compare-show');
   const cancelBtns = modal.querySelectorAll('.compare-cancel');
-
-  document.getElementById('compare-btn').addEventListener('click', () => {
-    listDiv.innerHTML = '';
-    state.filtered.forEach(p => {
-      const id = `chk-${p.id}`;
-      const wrapper = document.createElement('div');
-      wrapper.style.marginBottom = '6px';
-      wrapper.innerHTML = `
+  document.getElementById('compare-btn').addEventListener('click',()=>{
+    listDiv.innerHTML='';
+    state.filtered.forEach(p=>{
+      const id=`chk-${p.id}`;
+      const wrapper=document.createElement('div');
+      wrapper.style.marginBottom='6px';
+      wrapper.innerHTML=`
         <label style="cursor:pointer">
           <input type="checkbox" id="${id}" value="${p.id}" style="margin-right:6px">
           ${p.name} (${Math.round(p.rating)})
-        </label>
-      `;
+        </label>`;
       listDiv.appendChild(wrapper);
     });
-    modal.style.display = 'flex';
+    modal.style.display='flex';
   });
-
-  cancelBtns.forEach(btn =>
-    btn.addEventListener('click', () => { modal.style.display = 'none'; })
+  cancelBtns.forEach(btn=>
+    btn.addEventListener('click',()=>{ modal.style.display='none'; })
   );
-
-  showBtns.forEach(btn =>
-    btn.addEventListener('click', async () => {
-      const selectedIds = Array.from(listDiv.querySelectorAll('input[type=checkbox]:checked'))
-        .map(cb => cb.value);
-      if (!selectedIds.length) {
-        alert('Please select at least one player.');
-        return;
-      }
-      modal.style.display = 'none';
-      const chosenPlayers = state.filtered.filter(p => selectedIds.includes(p.id));
+  showBtns.forEach(btn=>
+    btn.addEventListener('click',async()=>{
+      const selectedIds=[...listDiv.querySelectorAll('input[type=checkbox]:checked')]
+        .map(cb=>cb.value);
+      if (!selectedIds.length) { alert('Please select at least one player.'); return; }
+      modal.style.display='none';
+      const chosenPlayers=state.filtered.filter(p=>selectedIds.includes(p.id));
       await buildComparison(chosenPlayers);
     })
   );
+  document.getElementById('agg').addEventListener('change',()=>{
+    const selectedIds=[...document.querySelectorAll('#compare-list input[type=checkbox]:checked')]
+      .map(cb=>cb.value);
+    if (!selectedIds.length) return;
+    const chosenPlayers=state.filtered.filter(p=>selectedIds.includes(p.id));
+    buildComparison(chosenPlayers);
+  });
 }
 
 /* ---------- LOAD ---------- */
 async function load() {
-  const res = await fetch(DATA_URL, { cache: 'no-cache' });
+  const res = await fetch(DATA_URL,{cache:'no-cache'});
   if (!res.ok) throw new Error('Failed to load players.json');
   const data = await res.json();
-
-  state.rows = data
-    .filter(d => d.zone === ZONE_CODE)
-    .sort((a, b) => b.rating - a.rating);
-
+  state.rows = data.filter(d=>d.zone===ZONE_CODE).sort((a,b)=>b.rating-a.rating);
   state.filtered = state.rows.slice();
-
   const clubsNav = document.querySelector('.clubs-nav');
-  const clubs = [...new Set(
-    state.rows.map(r => r.club).filter(c => /^\d/.test(c) && clubNames[c])
-  )].sort();
-
+  const clubs = [...new Set(state.rows.map(r=>r.club).filter(c=>/^\d/.test(c)&&clubNames[c]))].sort();
   clubsNav.innerHTML =
     `<button class="club-btn active-club" data-code="">All</button>` +
-    clubs.map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
-
-  document.getElementById('compare-btn').style.display = 'none';
-
-  clubsNav.addEventListener('click', e => {
+    clubs.map(c=>`<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
+  document.getElementById('compare-btn').style.display='none';
+  clubsNav.addEventListener('click',e=>{
     if (!e.target.classList.contains('club-btn')) return;
-    document.querySelectorAll('.club-btn').forEach(b => b.classList.remove('active-club'));
+    document.querySelectorAll('.club-btn').forEach(b=>b.classList.remove('active-club'));
     e.target.classList.add('active-club');
-    const code = e.target.dataset.code;
-    state.selectedClub = code || null;
-    document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
-    document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
+    const code=e.target.dataset.code;
+    state.selectedClub=code||null;
+    document.getElementById('zone-title').textContent=code?clubNames[code]:ZONE_NAME;
+    document.getElementById('compare-btn').style.display=code?'inline-block':'none';
     applyFilter();
   });
-
   renderTable();
   setupCompareButton();
 }
-
-document.getElementById('q').addEventListener('input', applyFilter);
-load().catch(err => {
-  document.querySelector('#players tbody').innerHTML =
+document.getElementById('q').addEventListener('input',applyFilter);
+load().catch(err=>{
+  document.querySelector('#players tbody').innerHTML=
     `<tr><td colspan="2">Error loading data: ${err.message}</td></tr>`;
 });
 </script>
