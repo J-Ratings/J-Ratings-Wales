@@ -211,7 +211,7 @@ function createChart(){
         mode: (mode==='daily'?'lines':'lines+markers'),
         marker: (mode==='daily'?{size:0}:{size:4}),
         line: { width:2 },
-        hovertemplate: '%{x} → %{y:d}<extra>' + name + '</extra>'
+        hovertemplate: '%{x} → %{y:.0f}<extra>' + name + '</extra>'
       };
     });
   })).then(series=>{
@@ -224,7 +224,7 @@ function createChart(){
       paper_bgcolor:'#0f1623', plot_bgcolor:'#0f1623',
       font:{color:'#ccc'},
       xaxis:{gridcolor:'#222',zeroline:false},
-      yaxis:{title:'Rating',gridcolor:'#222',zeroline:false},
+      yaxis:{title:'Rating',gridcolor:'#222',zeroline:false, tickformat: '.0f'},
       legend:{x:1,y:0,bgcolor:'rgba(0,0,0,0)'},
       shapes: majorGridShapes(ymin,ymax)
     };

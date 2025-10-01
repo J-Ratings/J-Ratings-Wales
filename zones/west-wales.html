@@ -218,10 +218,15 @@ async function buildComparison(players) {
         textfont:{size:10}, cliponaxis:false, hoverinfo:'skip'
       };
     } else {
-      return {
-        name: p.name, x: hist.map(d=>d.date), y: hist.map(d=>d.rating),
-        mode:'lines', hovertemplate: '%{x} → %{y:d}<extra>' + p.name + '</extra>'
-      };
+return {
+  name: p.name,
+  x: series.map(d => d.x),
+  y: series.map(d => d.y),
+  mode: (mode === 'daily' ? 'lines' : 'lines+markers'),
+  marker: (mode === 'daily' ? { size: 0 } : { size: 4 }),
+  line: { width: 2 },
+  hovertemplate: '%{x} → %{y:.0f}<extra>' + p.name + '</extra>'
+};
     }
   });
   const cs = getComputedStyle(document.body);

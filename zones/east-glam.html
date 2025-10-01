@@ -194,13 +194,16 @@ function hideCompare() {
   document.getElementById('compare-chart').innerHTML = '';
   document.getElementById('agg-wrap').style.display = 'none';
 }
+
 async function buildComparison(players) {
   const wrap = document.getElementById('compare-wrap');
   const chart = document.getElementById('compare-chart');
   const aggMode = document.getElementById('agg').value;
+
   wrap.style.display = 'block';
   document.getElementById('agg-wrap').style.display = 'block';
   chart.innerHTML = 'Loading…';
+
   const withHist = [];
   await Promise.all(players.map(async p => {
     const hist = await fetchHistoryFor(p.id);
@@ -208,23 +211,29 @@ async function buildComparison(players) {
     const use = COMPARE_SINCE ? hist.filter(d=>d.date>=COMPARE_SINCE) : hist;
     if (use.length) withHist.push({ p, hist: aggregateExpanded(use, aggMode) });
   }));
+
   if (!withHist.length) {
     chart.innerHTML = COMPARE_SINCE
       ? `No rating history since ${COMPARE_SINCE}.`
       : 'No rating history found.';
     return;
   }
+
   withHist.sort((a,b)=>
     b.hist[b.hist.length-1].date.localeCompare(a.hist[a.hist.length-1].date)
   );
   const picked = withHist.slice(0, MAX_SERIES);
+
   const traces = picked.map(({ p,hist })=>({
-    name:p.name,
-    x:hist.map(d=>d.date),
-    y:hist.map(d=>d.rating),
-    mode:'lines',
-    hovertemplate: '%{x} → %{y:d}<extra>' + p.name + '</extra>'
+    name: p.name,
+    x: hist.map(d=>d.date),
+    y: hist.map(d=>d.rating),
+    mode: (aggMode === 'daily' ? 'lines' : 'lines+markers'),
+    marker: (aggMode === 'daily' ? { size: 0 } : { size: 4 }),
+    line: { width: 2 },
+    hovertemplate: '%{x} → %{y:.0f}<extra>' + p.name + '</extra>'
   }));
+
   const cs = getComputedStyle(document.body);
   const layout = {
     margin:{l:50,r:20,t:10,b:40},
@@ -234,6 +243,7 @@ async function buildComparison(players) {
     plot_bgcolor:cs.backgroundColor,
     font:{color:cs.color}
   };
+
   Plotly.newPlot(chart,traces,layout,{displayModeBar:false,responsive:true});
 }
 
