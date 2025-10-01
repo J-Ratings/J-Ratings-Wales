@@ -65,7 +65,7 @@
         </select>
       </div>
 
-      <div class="muted-note">Up to 6 players. Start typing a name, pick a suggestion, then Create.</div>
+      <div class="muted-note">Start typing a name, pick a suggestion, then Create.</div>
     </div>
 
     <div style="padding:16px">
@@ -77,7 +77,7 @@
 <script>
 const PLAYERS_URL = './data/players.json';
 const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;
-const MAX_PLAYERS = 6;
+const MAX_PLAYERS = 20;
 
 const state = { players: [], inputs: [] };
 
