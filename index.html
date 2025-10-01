@@ -1,121 +1,110 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <title>J-Ratings</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { margin-bottom: 10px; }
+    .tabs { margin-bottom: 15px; }
+    .tab-btn {
+      padding: 8px 16px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      background: #f0f0f0;
+      margin-right: 5px;
+    }
+    .tab-btn.active { background: #ddd; font-weight: bold; }
+    table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
+    th { background: #f9f9f9; cursor: pointer; }
+    .hidden { display: none; }
+  </style>
 </head>
 <body>
-<header>
-  <div class="wrap">
-    <div class="title">
-  <h1 class="site-title"><a href="index.html">J-Ratings</a></h1>
-  <span class="muted subtitle"></span>
-</div>
-    <nav class="zones" aria-label="Zones">
-<a href="zones/dyfed.html">Dyfed</a>
-<a href="zones/east-glam.html">East Glamorgan</a>
-<a href="zones/gwent.html">Gwent</a>
-<a href="zones/north-wales.html">North Wales</a>
-<a href="zones/west-wales.html">West Wales</a>
-      <a href="compare.html">Compare</a>
+  <h1>J-Ratings</h1>
 
-    </nav>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTable('live')">Live Ratings</button>
+    <button class="tab-btn" onclick="showTable('peak')">Peak Ratings</button>
   </div>
-</header>
 
-<div class="wrap intro">
-<p class="muted">Last Scraped: 01/10/2025</p>
-<p>Here you’ll find unofficial WCU ratings calculated with a live batch system, which updates continuously after each game rather than waiting for the 6-month update. </p>
-<p>I built this mainly for players who play a large number of games each season, as they are most affected when results are tied to their initial ratings from the start of a batch. For them, the official system can produce overshoots, undershoots, and even a yo-yo effect where ratings struggle to stabilise, while live batches give a steadier and more realistic picture of current strength.</p>
-<p>A player's WCU rating before their first game will be be taken as the starting point for their J-Ratings, with all live calculations applied from there.</p>
-<p>The <strong>official</strong> ratings are those published on the <a href="https://www.welshchessunion.uk/Grading/index.php">WCU grading site</a>. That site does all the work of collecting results, maintaining records, and producing the official rating lists. J-Ratings simply copies those published results and applies a different calculation method. From time to time I run some code to refresh the numbers. There’s no separate database or ongoing manual work involved here. </p>
+  <div id="live" class="tab">
+    <table id="liveTable">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>Zone</th>
+          <th>Club</th>
+          <th>Live</th>
+          <th>K</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
+  <div id="peak" class="tab hidden">
+    <table id="peakTable">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>Zone</th>
+          <th>Club</th>
+          <th>Peak</th>
+          <th>K</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
-<main class="wrap">
-  <section class="panel" id="players-panel">
-    <h2>All players</h2>
-    <div class="toolbar">
-      <input id="q" type="search" placeholder="Filter by name…">
-      <span id="count" class="muted"></span>
-    </div>
-    <div class="table-wrap">
-      <table id="players">
-        <thead>
-          <tr>
-            <th style="min-width:240px">Player</th>
-            <th class="right" style="min-width:120px">Live rating</th>
-          </tr>
-        </thead>
-        <tbody><!-- filled by JS --></tbody>
-      </table>
-    </div>
-  </section>
-</main>
+  <script>
+    async function loadData() {
+      const response = await fetch('data/players.json');
+      const players = await response.json();
 
-<script>
-  // Expected file: ./data/players.json
-  // Example element: { "id":"e1%20oliviasmith", "name":"Olivia Smith", "zone":"E1", "club":"2CD", "rating":2202 }
-  const DATA_URL = 'data/players.json';
+      // Live: sort by rating
+      const liveSorted = [...players].sort((a, b) => b.rating - a.rating);
+      const liveBody = document.querySelector('#liveTable tbody');
+      liveSorted.forEach((p, i) => {
+        const row = `<tr>
+          <td>${i + 1}</td>
+          <td><a href="player.html?id=${encodeURIComponent(p.id)}">${p.name}</a></td>
+          <td>${p.zone || ''}</td>
+          <td>${p.club || ''}</td>
+          <td>${p.rating ?? ''}</td>
+          <td>${p.k ?? ''}</td>
+        </tr>`;
+        liveBody.insertAdjacentHTML('beforeend', row);
+      });
 
-  const state = { rows: [], filtered: [] };
-
-  function render() {
-    const tbody = document.querySelector('#players tbody');
-    tbody.innerHTML = '';
-    for (const r of state.filtered) {
-      const tr = document.createElement('tr');
-      const tdName = document.createElement('td');
-      const a = document.createElement('a');
-      a.href = `player.html?id=${encodeURIComponent(r.id)}`;
-      a.textContent = r.name;
-      tdName.appendChild(a);
-
-      const tdRt = document.createElement('td');
-      tdRt.className = 'right';
-      tdRt.textContent = Math.round(r.rating);
-
-      tr.appendChild(tdName);
-      tr.appendChild(tdRt);
-      tbody.appendChild(tr);
+      // Peak: sort by peak
+      const peakSorted = [...players].sort((a, b) => (b.peak ?? -1) - (a.peak ?? -1));
+      const peakBody = document.querySelector('#peakTable tbody');
+      peakSorted.forEach((p, i) => {
+        const row = `<tr>
+          <td>${i + 1}</td>
+          <td><a href="player.html?id=${encodeURIComponent(p.id)}">${p.name}</a></td>
+          <td>${p.zone || ''}</td>
+          <td>${p.club || ''}</td>
+          <td>${p.peak ?? ''}</td>
+          <td>${p.k ?? ''}</td>
+        </tr>`;
+        peakBody.insertAdjacentHTML('beforeend', row);
+      });
     }
-    document.getElementById('count').textContent =
-      `${state.filtered.length.toLocaleString()} players`;
-  }
 
-  function applyFilter() {
-    const q = document.getElementById('q').value.trim().toLowerCase();
-    if (!q) {
-      state.filtered = state.rows.slice();
-    } else {
-      state.filtered = state.rows.filter(r => r.name.toLowerCase().includes(q));
+    function showTable(tab) {
+      document.querySelectorAll('.tab').forEach(div => div.classList.add('hidden'));
+      document.getElementById(tab).classList.remove('hidden');
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.tab-btn[onclick="showTable('${tab}')"]`).classList.add('active');
     }
-    render();
-  }
 
-  async function load() {
-    try {
-      const res = await fetch(DATA_URL, { cache: 'no-cache' });
-      if (!res.ok) throw new Error('Failed to load players.json');
-      const data = await res.json();
-
-      // minimal shape & sort by name
-      state.rows = data
-        .filter(d => d && d.name && Number.isFinite(+d.rating))
-        .map(d => ({ id: d.id, name: d.name, rating: +d.rating }))
-      .sort((a,b) => b.rating - a.rating);
-
-      state.filtered = state.rows.slice();
-      render();
-    } catch (err) {
-      document.querySelector('#players tbody').innerHTML =
-        `<tr><td colspan="2">Error loading data: ${err.message}</td></tr>`;
-    }
-  }
-
-  document.getElementById('q').addEventListener('input', applyFilter);
-  load();
-</script>
+    loadData();
+  </script>
 </body>
 </html>
