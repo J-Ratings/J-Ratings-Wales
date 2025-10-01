@@ -4,60 +4,48 @@
   <meta charset="utf-8">
   <title>J-Ratings</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* Minimal styling for the Live/Peak toggle; won't affect your theme */
-    .tabs { display:inline-flex; gap:6px; margin:6px 0 0; }
-    .tabs button { padding:6px 10px; border:1px solid var(--border,#ccc); background:transparent; color:inherit; cursor:pointer; }
-    .tabs button.active { font-weight:600; background:rgba(255,255,255,0.06); }
-  </style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header>
   <div class="wrap">
     <div class="title">
-      <h1 class="site-title"><a href="index.html">J-Ratings</a></h1>
-      <span class="muted subtitle"></span>
-    </div>
+  <h1 class="site-title"><a href="index.html">J-Ratings</a></h1>
+  <span class="muted subtitle"></span>
+</div>
     <nav class="zones" aria-label="Zones">
-      <a href="zones/dyfed.html">Dyfed</a>
-      <a href="zones/east-glam.html">East Glamorgan</a>
-      <a href="zones/gwent.html">Gwent</a>
-      <a href="zones/north-wales.html">North Wales</a>
-      <a href="zones/west-wales.html">West Wales</a>
+<a href="zones/dyfed.html">Dyfed</a>
+<a href="zones/east-glam.html">East Glamorgan</a>
+<a href="zones/gwent.html">Gwent</a>
+<a href="zones/north-wales.html">North Wales</a>
+<a href="zones/west-wales.html">West Wales</a>
       <a href="compare.html">Compare</a>
+
     </nav>
   </div>
 </header>
 
 <div class="wrap intro">
-  <p class="muted">Last Scraped: 01/10/2025</p>
-  <p>Here you’ll find unofficial WCU ratings calculated with a live batch system, which updates continuously after each game rather than waiting for the 6-month update. </p>
-  <p>I built this mainly for players who play a large number of games each season, as they are most affected when results are tied to their initial ratings from the start of a batch. For them, the official system can produce overshoots, undershoots, and even a yo-yo effect where ratings struggle to stabilise, while live batches give a steadier and more realistic picture of current strength.</p>
-  <p>A player's WCU rating before their first game will be be taken as the starting point for their J-Ratings, with all live calculations applied from there.</p>
-  <p>The <strong>official</strong> ratings are those published on the <a href="https://www.welshchessunion.uk/Grading/index.php">WCU grading site</a>. That site does all the work of collecting results, maintaining records, and producing the official rating lists. J-Ratings simply copies those published results and applies a different calculation method. From time to time I run some code to refresh the numbers. There’s no separate database or ongoing manual work involved here. </p>
+<p class="muted">Last Scraped: 01/10/2025</p>
+<p>Here you’ll find unofficial WCU ratings calculated with a live batch system, which updates continuously after each game rather than waiting for the 6-month update. </p>
+<p>I built this mainly for players who play a large number of games each season, as they are most affected when results are tied to their initial ratings from the start of a batch. For them, the official system can produce overshoots, undershoots, and even a yo-yo effect where ratings struggle to stabilise, while live batches give a steadier and more realistic picture of current strength.</p>
+<p>A player's WCU rating before their first game will be be taken as the starting point for their J-Ratings, with all live calculations applied from there.</p>
+<p>The <strong>official</strong> ratings are those published on the <a href="https://www.welshchessunion.uk/Grading/index.php">WCU grading site</a>. That site does all the work of collecting results, maintaining records, and producing the official rating lists. J-Ratings simply copies those published results and applies a different calculation method. From time to time I run some code to refresh the numbers. There’s no separate database or ongoing manual work involved here. </p>
+
 
 <main class="wrap">
   <section class="panel" id="players-panel">
     <h2>All players</h2>
-
-    <!-- Live / Peak toggle (new) -->
-    <div class="tabs" role="tablist" aria-label="Rating view">
-      <button id="tab-live" class="active" type="button" role="tab" aria-selected="true">Live</button>
-      <button id="tab-peak" type="button" role="tab" aria-selected="false">Peak</button>
-    </div>
-
     <div class="toolbar">
       <input id="q" type="search" placeholder="Filter by name…">
       <span id="count" class="muted"></span>
     </div>
-
     <div class="table-wrap">
       <table id="players">
         <thead>
           <tr>
             <th style="min-width:240px">Player</th>
-            <th id="rating-col" class="right" style="min-width:120px">Live rating</th>
+            <th class="right" style="min-width:120px">Live rating</th>
           </tr>
         </thead>
         <tbody><!-- filled by JS --></tbody>
@@ -68,10 +56,10 @@
 
 <script>
   // Expected file: ./data/players.json
-  // Example element now supports "peak": { id, name, zone, club, rating, peak, k }
+  // Example element: { "id":"e1%20oliviasmith", "name":"Olivia Smith", "zone":"E1", "club":"2CD", "rating":2202 }
   const DATA_URL = 'data/players.json';
 
-  const state = { rows: [], filtered: [], mode: 'live' }; // mode: 'live' | 'peak'
+  const state = { rows: [], filtered: [] };
 
   function render() {
     const tbody = document.querySelector('#players tbody');
@@ -86,27 +74,23 @@
 
       const tdRt = document.createElement('td');
       tdRt.className = 'right';
-      const val = state.mode === 'live' ? r.rating : r.peak;
-      tdRt.textContent = Math.round(val);
+      tdRt.textContent = Math.round(r.rating);
 
       tr.appendChild(tdName);
       tr.appendChild(tdRt);
       tbody.appendChild(tr);
     }
-    document.getElementById('rating-col').textContent =
-      state.mode === 'live' ? 'Live rating' : 'Peak rating';
     document.getElementById('count').textContent =
       `${state.filtered.length.toLocaleString()} players`;
   }
 
   function applyFilter() {
     const q = document.getElementById('q').value.trim().toLowerCase();
-    const list = !q ? state.rows.slice()
-                    : state.rows.filter(r => r.name.toLowerCase().includes(q));
-    // sort by current mode
-    state.filtered = list.sort((a,b) =>
-      (state.mode === 'live' ? b.rating - a.rating : b.peak - a.peak)
-    );
+    if (!q) {
+      state.filtered = state.rows.slice();
+    } else {
+      state.filtered = state.rows.filter(r => r.name.toLowerCase().includes(q));
+    }
     render();
   }
 
@@ -116,16 +100,11 @@
       if (!res.ok) throw new Error('Failed to load players.json');
       const data = await res.json();
 
-      // keep both live and peak (fallback: peak -> rating if missing)
+      // minimal shape & sort by name
       state.rows = data
         .filter(d => d && d.name && Number.isFinite(+d.rating))
-        .map(d => ({
-          id: d.id,
-          name: d.name,
-          rating: +d.rating,
-          peak: Number.isFinite(+d.peak) ? +d.peak : +d.rating
-        }))
-        .sort((a,b) => b.rating - a.rating);
+        .map(d => ({ id: d.id, name: d.name, rating: +d.rating }))
+      .sort((a,b) => b.rating - a.rating);
 
       state.filtered = state.rows.slice();
       render();
@@ -134,22 +113,6 @@
         `<tr><td colspan="2">Error loading data: ${err.message}</td></tr>`;
     }
   }
-
-  // Toggle handlers (new)
-  document.getElementById('tab-live').addEventListener('click', () => {
-    if (state.mode === 'live') return;
-    state.mode = 'live';
-    document.getElementById('tab-live').classList.add('active');
-    document.getElementById('tab-peak').classList.remove('active');
-    applyFilter();
-  });
-  document.getElementById('tab-peak').addEventListener('click', () => {
-    if (state.mode === 'peak') return;
-    state.mode = 'peak';
-    document.getElementById('tab-peak').classList.add('active');
-    document.getElementById('tab-live').classList.remove('active');
-    applyFilter();
-  });
 
   document.getElementById('q').addEventListener('input', applyFilter);
   load();
