@@ -54,6 +54,17 @@
         <button id="create" class="btn" type="button">Create</button>
         <button id="clear" class="btn" type="button">Clear</button>
       </div>
+
+      <div style="display:flex;align-items:center;gap:8px">
+        <label for="agg">View:</label>
+        <select id="agg">
+          <option value="daily" selected>Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+        </select>
+      </div>
+
       <div class="muted-note">Up to 6 players. Start typing a name, pick a suggestion, then Create.</div>
     </div>
 
@@ -68,174 +79,164 @@ const PLAYERS_URL = './data/players.json';
 const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;
 const MAX_PLAYERS = 6;
 
-const state = {
-  players: [],
-  inputs: []
-};
+const state = { players: [], inputs: [] };
+
+/* --------- helpers for aggregation --------- */
+function normalise(series){
+  return series
+    .filter(p => p && p.x && Number.isFinite(p.y))
+    .map(p => ({ x: p.x, y: +p.y }))
+    .sort((a,b) => new Date(a.x) - new Date(b.x));
+}
+
+function aggregateExpanded(series, mode){
+  if (mode === 'daily') return normalise(series);
+  const buckets = {};
+  for (const p of series){
+    const d = new Date(p.x);
+    let key;
+    if (mode === 'weekly'){
+      const tmp = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      const dayNum = tmp.getUTCDay() || 7;
+      tmp.setUTCDate(tmp.getUTCDate() + 4 - dayNum);
+      const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(),0,1));
+      const weekNo = Math.ceil((((tmp - yearStart)/86400000)+1)/7);
+      key = `${tmp.getUTCFullYear()}-W${String(weekNo).padStart(2,'0')}`;
+    } else if (mode === 'monthly'){
+      key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    } else {
+      key = `${d.getFullYear()}`;
+    }
+    (buckets[key] ||= []).push(p.y);
+  }
+  const out = Object.keys(buckets).sort().map(k=>{
+    const ys = buckets[k].filter(Number.isFinite);
+    const avg = ys.reduce((a,b)=>a+b,0)/ys.length;
+    let x;
+    if (k.includes('W')){
+      const [y,w]=k.split('-W'); const year=+y, week=+w;
+      const simple=new Date(Date.UTC(year,0,1+(week-1)*7));
+      const dow=simple.getUTCDay();
+      if(dow<=4) simple.setUTCDate(simple.getUTCDate()-dow+1);
+      else simple.setUTCDate(simple.getUTCDate()+8-dow);
+      x=simple.toISOString().slice(0,10);
+    } else if (k.length===7){
+      x=`${k}-01`;
+    } else {
+      x=`${k}-01-01`;
+    }
+    return { x, y: avg };
+  });
+  return normalise(out);
+}
 
 function attachAutocomplete(input){
-  const wrap = document.createElement('div');
-  wrap.className = 'suggest';
-  input.parentNode.insertBefore(wrap, input);
+  const wrap=document.createElement('div');
+  wrap.className='suggest';
+  input.parentNode.insertBefore(wrap,input);
   wrap.appendChild(input);
-
-  const list = document.createElement('div');
-  list.className = 'suggest-list';
+  const list=document.createElement('div');
+  list.className='suggest-list';
   wrap.appendChild(list);
 
   function render(items){
-    if (!items.length){ list.style.display='none'; list.innerHTML=''; return; }
-    list.innerHTML = items.map(n => `<div class="suggest-item" data-name="${n}">${n}</div>`).join('');
+    if(!items.length){ list.style.display='none'; list.innerHTML=''; return; }
+    list.innerHTML=items.map(n=>`<div class="suggest-item" data-name="${n}">${n}</div>`).join('');
     list.style.display='block';
   }
 
-  input.addEventListener('input', () => {
-    const q = input.value.trim().toLowerCase();
-    if (!q){ render([]); return; }
-    const names = state.players.map(p => p.name);
-    const starts = names.filter(n => n.toLowerCase().startsWith(q));
-    const contains = names.filter(n => !n.toLowerCase().startsWith(q) && n.toLowerCase().includes(q));
-    render(starts.concat(contains).slice(0, 12));
+  input.addEventListener('input',()=>{
+    const q=input.value.trim().toLowerCase();
+    if(!q){ render([]); return; }
+    const names=state.players.map(p=>p.name);
+    const starts=names.filter(n=>n.toLowerCase().startsWith(q));
+    const contains=names.filter(n=>!n.toLowerCase().startsWith(q) && n.toLowerCase().includes(q));
+    render(starts.concat(contains).slice(0,12));
   });
 
-  list.addEventListener('mousedown', e => {
-    const item = e.target.closest('.suggest-item');
-    if (!item) return;
-    input.value = item.dataset.name;
-    list.style.display='none';
+  list.addEventListener('mousedown',e=>{
+    const item=e.target.closest('.suggest-item'); if(!item) return;
+    input.value=item.dataset.name; list.style.display='none';
   });
 
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter'){
-      const first = list.querySelector('.suggest-item');
-      if (first){ input.value = first.dataset.name; list.style.display='none'; }
-    }
-    if (e.key === 'Escape') list.style.display='none';
+  input.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){ const first=list.querySelector('.suggest-item');
+      if(first){ input.value=first.dataset.name; list.style.display='none'; } }
+    if(e.key==='Escape') list.style.display='none';
   });
 
-  input.addEventListener('blur', () => setTimeout(() => { list.style.display='none'; }, 120));
+  input.addEventListener('blur',()=>setTimeout(()=>{ list.style.display='none'; },120));
 }
 
 function makeRow(){
-  if (state.inputs.length >= MAX_PLAYERS) return;
-  const rows = document.getElementById('rows');
-
-  const wrap = document.createElement('div');
-  wrap.className = 'row';
-
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.placeholder = 'Search player…';
-  wrap.appendChild(input);
+  if(state.inputs.length>=MAX_PLAYERS) return;
+  const rows=document.getElementById('rows');
+  const wrap=document.createElement('div'); wrap.className='row';
+  const input=document.createElement('input');
+  input.type='text'; input.placeholder='Search player…'; wrap.appendChild(input);
   attachAutocomplete(input);
-
-  const remove = document.createElement('button');
-  remove.className = 'btn';
-  remove.type = 'button';
-  remove.textContent = 'Remove';
-  remove.addEventListener('click', () => {
-    rows.removeChild(wrap);
-    state.inputs = state.inputs.filter(r => r.el !== wrap);
-    document.getElementById('add').disabled = state.inputs.length >= MAX_PLAYERS;
-  });
-
-  wrap.appendChild(remove);
-  rows.appendChild(wrap);
-
-  state.inputs.push({ el: wrap, input });
-  document.getElementById('add').disabled = state.inputs.length >= MAX_PLAYERS;
+  const remove=document.createElement('button'); remove.className='btn'; remove.type='button'; remove.textContent='Remove';
+  remove.addEventListener('click',()=>{ rows.removeChild(wrap); state.inputs=state.inputs.filter(r=>r.el!==wrap); document.getElementById('add').disabled=state.inputs.length>=MAX_PLAYERS; });
+  wrap.appendChild(remove); rows.appendChild(wrap);
+  state.inputs.push({ el: wrap, input }); document.getElementById('add').disabled=state.inputs.length>=MAX_PLAYERS;
 }
 
 function clearAll(){
-  const rows = document.getElementById('rows');
-  rows.innerHTML = '';
-  state.inputs = [];
-  document.getElementById('add').disabled = false;
+  document.getElementById('rows').innerHTML=''; state.inputs=[]; document.getElementById('add').disabled=false;
 }
 
 async function load(){
-  const res = await fetch(PLAYERS_URL);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  state.players = await res.json();
+  const res=await fetch(PLAYERS_URL); if(!res.ok) throw new Error(`HTTP ${res.status}`); state.players=await res.json();
 }
 
-// --- helper to make thicker horizontal lines every 100 rating points -------
-function majorGridShapes(ymin, ymax){
-  const shapes = [];
-  for (let v = ymin; v <= ymax; v += 100){
-    shapes.push({
-      type: 'line',
-      xref: 'paper', x0: 0, x1: 1,
-      y0: v, y1: v,
-      line: { width: 2, color: 'rgba(128,128,128,0.35)' },
-      layer: 'below'
-    });
-  }
+function majorGridShapes(ymin,ymax){
+  const shapes=[]; for(let v=ymin; v<=ymax; v+=100){ shapes.push({type:'line',xref:'paper',x0:0,x1:1,y0:v,y1:v,line:{width:2,color:'rgba(128,128,128,0.35)'},layer:'below'}); }
   return shapes;
 }
 
 function createChart(){
-  const names = state.inputs.map(r => r.input.value.trim()).filter(Boolean);
-  if (!names.length) return alert('Please add at least one player');
+  const names=state.inputs.map(r=>r.input.value.trim()).filter(Boolean);
+  if(!names.length) return alert('Please add at least one player');
+  const mode=document.getElementById('agg').value;
 
-  Promise.all(names.map(name => {
-    const player = state.players.find(p => p.name === name);
-    if (!player) return null;
-    return fetch(HIST_URL(player.id)).then(r => r.json()).then(hist => ({
-      name,
-      x: hist.map(h => h.date),
-      y: hist.map(h => h.rating),
-      mode: 'lines',
-      marker: { size: 6 },
-      line: { width: 2 }
-    }));
-  })).then(series => {
-    series = series.filter(Boolean);
-    if (!series.length) return;
-
-    // compute bounds for major lines from all displayed series
-    const allY = series.flatMap(s => s.y).filter(Number.isFinite);
-    const ymin = Math.floor(Math.min(...allY) / 100) * 100;
-    const ymax = Math.ceil(Math.max(...allY) / 100) * 100;
-
-    const layout = {
-      margin: { t: 30, r: 20, l: 50, b: 50 },
-      paper_bgcolor: '#0f1623',
-      plot_bgcolor: '#0f1623',
-      font: { color: '#ccc' },
-      xaxis: {
-        gridcolor: '#222',
-        zeroline: false
-      },
-      yaxis: {
-        title: 'Rating',
-        gridcolor: '#222',
-        zeroline: false
-      },
-      legend: {
-        x: 1,
-        y: 0,
-        bgcolor: 'rgba(0,0,0,0)'
-      },
-      // thicker horizontal lines every 100
-      shapes: majorGridShapes(ymin, ymax)
+  Promise.all(names.map(name=>{
+    const player=state.players.find(p=>p.name===name); if(!player) return null;
+    return fetch(HIST_URL(player.id)).then(r=>r.json()).then(hist=>{
+      const raw=hist.map(h=>({x:h.date,y:+h.rating}));
+      const series=aggregateExpanded(raw,mode);
+      return {
+        name,
+        x: series.map(p=>p.x),
+        y: series.map(p=>p.y),
+        mode: (mode==='daily'?'lines':'lines+markers'),
+        marker: (mode==='daily'?{size:0}:{size:4}),
+        line: { width:2 }
+      };
+    });
+  })).then(series=>{
+    series=series.filter(Boolean); if(!series.length) return;
+    const allY=series.flatMap(s=>s.y).filter(Number.isFinite);
+    const ymin=Math.floor(Math.min(...allY)/100)*100;
+    const ymax=Math.ceil(Math.max(...allY)/100)*100;
+    const layout={
+      margin:{t:30,r:20,l:50,b:50},
+      paper_bgcolor:'#0f1623', plot_bgcolor:'#0f1623',
+      font:{color:'#ccc'},
+      xaxis:{gridcolor:'#222',zeroline:false},
+      yaxis:{title:'Rating',gridcolor:'#222',zeroline:false},
+      legend:{x:1,y:0,bgcolor:'rgba(0,0,0,0)'},
+      shapes: majorGridShapes(ymin,ymax)
     };
-
-    Plotly.newPlot('chart', series, layout, { responsive: true });
+    Plotly.newPlot('chart',series,layout,{responsive:true});
   });
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('add').addEventListener('click', makeRow);
-  document.getElementById('clear').addEventListener('click', clearAll);
-  document.getElementById('create').addEventListener('click', createChart);
-
-  load().then(makeRow).catch(e => {
-    console.error(e);
-    document.querySelector('.muted-note').textContent =
-      'Could not load player list. Check data path or run via a local server.';
-    makeRow();
-  });
+window.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('add').addEventListener('click',makeRow);
+  document.getElementById('clear').addEventListener('click',clearAll);
+  document.getElementById('create').addEventListener('click',createChart);
+  document.getElementById('agg').addEventListener('change',createChart);
+  load().then(makeRow).catch(e=>{ console.error(e); document.querySelector('.muted-note').textContent='Could not load player list.'; makeRow(); });
 });
 </script>
 </body>
