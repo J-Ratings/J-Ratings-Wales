@@ -1,110 +1,149 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>J-Ratings</title>
+  <meta charset="utf-8">
+  <title>Dyfed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../style.css">
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    h1 { margin-bottom: 10px; }
-    .tabs { margin-bottom: 15px; }
-    .tab-btn {
-      padding: 8px 16px;
-      border: 1px solid #ccc;
-      cursor: pointer;
-      background: #f0f0f0;
-      margin-right: 5px;
-    }
-    .tab-btn.active { background: #ddd; font-weight: bold; }
-    table { border-collapse: collapse; width: 100%; margin-top: 10px; }
-    th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
-    th { background: #f9f9f9; cursor: pointer; }
-    .hidden { display: none; }
+    /* extra tab styling only */
+    .tabs { display: flex; margin-top: 10px; border-bottom: 1px solid #444; }
+    .tabs button { background:none; border:none; color:inherit; padding:8px 16px; cursor:pointer; }
+    .tabs button.active { border-bottom:2px solid #fff; font-weight:bold; }
   </style>
 </head>
 <body>
-  <h1>J-Ratings</h1>
-
-  <div class="tabs">
-    <button class="tab-btn active" onclick="showTable('live')">Live Ratings</button>
-    <button class="tab-btn" onclick="showTable('peak')">Peak Ratings</button>
+<header>
+  <div class="wrap">
+    <div class="title">
+      <h1 class="site-title"><a href="../index.html">J-Ratings</a></h1>
+      <span class="muted subtitle"></span>
+    </div>
+    <nav class="zones" aria-label="Zones">
+      <a href="dyfed.html" class="active-zone">Dyfed</a>
+      <a href="east-glam.html">East Glamorgan</a>
+      <a href="gwent.html">Gwent</a>
+      <a href="north-wales.html">North Wales</a>
+      <a href="west-wales.html">West Wales</a>
+      <a href="../compare.html">Compare</a>
+    </nav>
+    <div class="clubs-nav"></div>
   </div>
+</header>
 
-  <div id="live" class="tab">
-    <table id="liveTable">
-      <thead>
-        <tr>
-          <th>Rank</th>
-          <th>Name</th>
-          <th>Zone</th>
-          <th>Club</th>
-          <th>Live</th>
-          <th>K</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+<main class="wrap">
+  <section class="panel" id="players-panel">
+    <h2 id="zone-title">Dyfed</h2>
+    <div class="toolbar">
+      <input id="q" type="search" placeholder="Filter by name…">
+      <span id="count" class="muted"></span>
+      <button id="compare-btn" class="club-btn" type="button" style="margin-left:auto">Compare</button>
+    </div>
+
+    <!-- tabs for Live vs Peak -->
+    <div class="tabs">
+      <button id="tab-live" class="active">Live</button>
+      <button id="tab-peak">Peak</button>
+    </div>
+
+    <div class="table-wrap">
+      <table id="players">
+        <thead>
+          <tr>
+            <th style="min-width:240px">Player</th>
+            <th id="rating-col" class="right" style="min-width:120px">Live rating</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- compare modal unchanged -->
+  <div id="compare-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+    background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:9999;">
+    <div style="background:#1a1a1a; padding:20px; border-radius:8px;
+      max-width:500px; width:90%; max-height:80%; overflow:auto; color:#fff;">
+      <h3>Select players to view:</h3>
+      <div class="compare-actions" style="margin-bottom:12px;">
+        <button class="compare-show" style="margin-right:10px">Show Selected</button>
+        <button class="compare-cancel">Cancel</button>
+      </div>
+      <div id="compare-list" style="margin:20px 0;"></div>
+      <div class="compare-actions" style="margin-top:12px;">
+        <button class="compare-show" style="margin-right:10px">Show Selected</button>
+        <button class="compare-cancel">Cancel</button>
+      </div>
+    </div>
   </div>
+</main>
 
-  <div id="peak" class="tab hidden">
-    <table id="peakTable">
-      <thead>
-        <tr>
-          <th>Rank</th>
-          <th>Name</th>
-          <th>Zone</th>
-          <th>Club</th>
-          <th>Peak</th>
-          <th>K</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
+<script>
+const ZONE_CODE = 'D1';
+const ZONE_NAME = 'Dyfed';
+const DATA_URL  = '../data/players.json';
+let currentMode = 'live'; // 'live' or 'peak'
 
-  <script>
-    async function loadData() {
-      const response = await fetch('data/players.json');
-      const players = await response.json();
+const state = { rows: [], filtered: [], selectedClub: null };
 
-      // Live: sort by rating
-      const liveSorted = [...players].sort((a, b) => b.rating - a.rating);
-      const liveBody = document.querySelector('#liveTable tbody');
-      liveSorted.forEach((p, i) => {
-        const row = `<tr>
-          <td>${i + 1}</td>
-          <td><a href="player.html?id=${encodeURIComponent(p.id)}">${p.name}</a></td>
-          <td>${p.zone || ''}</td>
-          <td>${p.club || ''}</td>
-          <td>${p.rating ?? ''}</td>
-          <td>${p.k ?? ''}</td>
-        </tr>`;
-        liveBody.insertAdjacentHTML('beforeend', row);
-      });
+function renderTable() {
+  const tbody = document.querySelector('#players tbody');
+  tbody.innerHTML = '';
+  for (const r of state.filtered) {
+    const tr = document.createElement('tr');
+    const tdName = document.createElement('td');
+    const a = document.createElement('a');
+    a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
+    a.textContent = r.name;
+    tdName.appendChild(a);
+    const tdRt = document.createElement('td');
+    tdRt.className = 'right';
+    tdRt.textContent = Math.round(currentMode==='live' ? r.rating : r.peak);
+    tr.appendChild(tdName);
+    tr.appendChild(tdRt);
+    tbody.appendChild(tr);
+  }
+  document.getElementById('count').textContent =
+    `${state.filtered.length.toLocaleString()} players`;
+  document.getElementById('rating-col').textContent =
+    currentMode==='live' ? 'Live rating' : 'Peak rating';
+}
 
-      // Peak: sort by peak
-      const peakSorted = [...players].sort((a, b) => (b.peak ?? -1) - (a.peak ?? -1));
-      const peakBody = document.querySelector('#peakTable tbody');
-      peakSorted.forEach((p, i) => {
-        const row = `<tr>
-          <td>${i + 1}</td>
-          <td><a href="player.html?id=${encodeURIComponent(p.id)}">${p.name}</a></td>
-          <td>${p.zone || ''}</td>
-          <td>${p.club || ''}</td>
-          <td>${p.peak ?? ''}</td>
-          <td>${p.k ?? ''}</td>
-        </tr>`;
-        peakBody.insertAdjacentHTML('beforeend', row);
-      });
-    }
+function applyFilter() {
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  let list = state.rows;
+  if (state.selectedClub) list = list.filter(r=>r.club===state.selectedClub);
+  if (q) list = list.filter(r=>r.name.toLowerCase().includes(q));
+  list = list.slice().sort((a,b)=>
+    currentMode==='live' ? b.rating - a.rating : b.peak - a.peak
+  );
+  state.filtered = list;
+  renderTable();
+}
 
-    function showTable(tab) {
-      document.querySelectorAll('.tab').forEach(div => div.classList.add('hidden'));
-      document.getElementById(tab).classList.remove('hidden');
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelector(`.tab-btn[onclick="showTable('${tab}')"]`).classList.add('active');
-    }
+// tabs
+document.getElementById('tab-live').addEventListener('click',()=>{
+  currentMode='live';
+  document.getElementById('tab-live').classList.add('active');
+  document.getElementById('tab-peak').classList.remove('active');
+  applyFilter();
+});
+document.getElementById('tab-peak').addEventListener('click',()=>{
+  currentMode='peak';
+  document.getElementById('tab-peak').classList.add('active');
+  document.getElementById('tab-live').classList.remove('active');
+  applyFilter();
+});
 
-    loadData();
-  </script>
+async function load() {
+  const res = await fetch(DATA_URL,{cache:'no-cache'});
+  const data = await res.json();
+  state.rows = data.filter(d=>d.zone===ZONE_CODE);
+  applyFilter();
+}
+document.getElementById('q').addEventListener('input',applyFilter);
+load();
+</script>
 </body>
 </html>
