@@ -8,6 +8,10 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
     #compare-chart { touch-action: pan-y; }
+    /* centred Live/Peak tabs – minimal, keeps your existing theme */
+    .tabs { display:flex; justify-content:center; gap:6px; margin:6px 0 12px; }
+    .tabs button { padding:6px 10px; border:1px solid var(--border,#3a3a3a); background:transparent; color:inherit; cursor:pointer; }
+    .tabs button.active { font-weight:600; background:rgba(255,255,255,0.06); }
   </style>
 </head>
 <body>
@@ -33,6 +37,12 @@
   <section class="panel" id="players-panel">
     <h2 id="zone-title">East Glamorgan</h2>
 
+    <!-- Live / Peak toggle -->
+    <div class="tabs" role="tablist" aria-label="Rating view">
+      <button id="tab-live" class="active" type="button" role="tab" aria-selected="true">Live</button>
+      <button id="tab-peak" type="button" role="tab" aria-selected="false">Peak</button>
+    </div>
+
     <div class="toolbar">
       <input id="q" type="search" placeholder="Filter by name…">
       <span id="count" class="muted"></span>
@@ -57,7 +67,7 @@
         <thead>
           <tr>
             <th style="min-width:240px">Player</th>
-            <th class="right" style="min-width:120px">Live rating</th>
+            <th class="right" id="rating-col" style="min-width:120px">Live rating</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -114,7 +124,7 @@ const clubNames = {
   "2SJ": "St John's College"
 };
 
-const state = { rows: [], filtered: [], selectedClub: null };
+const state = { rows: [], filtered: [], selectedClub: null, mode: 'live' };
 
 /* ---------- AGGREGATION ---------- */
 function aggregateExpanded(hist, mode) {
@@ -153,15 +163,20 @@ function renderTable() {
     a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
     a.textContent = r.name;
     tdName.appendChild(a);
+
     const tdRt = document.createElement('td');
     tdRt.className = 'right';
-    tdRt.textContent = Math.round(r.rating);
+    const val = state.mode === 'live' ? r.rating : r.peak;
+    tdRt.textContent = Math.round(val);
+
     tr.appendChild(tdName);
     tr.appendChild(tdRt);
     tbody.appendChild(tr);
   }
   document.getElementById('count').textContent =
     `${state.filtered.length.toLocaleString()} players`;
+  document.getElementById('rating-col').textContent =
+    state.mode === 'live' ? 'Live rating' : 'Peak rating';
 }
 
 function applyFilter() {
@@ -169,7 +184,11 @@ function applyFilter() {
   let list = state.rows;
   if (state.selectedClub) list = list.filter(r => r.club === state.selectedClub);
   if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
-  state.filtered = list;
+
+  const key = state.mode === 'live' ? 'rating' : 'peak';
+  state.filtered = list.filter(r => Number.isFinite(r[key]))
+                       .sort((a,b) => b[key] - a[key]);
+
   renderTable();
   hideCompare();
 }
@@ -262,7 +281,7 @@ function setupCompareButton() {
       wrapper.innerHTML=`
         <label style="cursor:pointer">
           <input type="checkbox" id="${id}" value="${p.id}" style="margin-right:6px">
-          ${p.name} (${Math.round(p.rating)})
+          ${p.name} (${Math.round(state.mode==='live'?p.rating:p.peak)})
         </label>`;
       listDiv.appendChild(wrapper);
     });
@@ -315,6 +334,22 @@ async function load() {
   });
   renderTable();
   setupCompareButton();
+
+  // tabs
+  document.getElementById('tab-live').addEventListener('click', () => {
+    if (state.mode === 'live') return;
+    state.mode = 'live';
+    document.getElementById('tab-live').classList.add('active');
+    document.getElementById('tab-peak').classList.remove('active');
+    applyFilter();
+  });
+  document.getElementById('tab-peak').addEventListener('click', () => {
+    if (state.mode === 'peak') return;
+    state.mode = 'peak';
+    document.getElementById('tab-peak').classList.add('active');
+    document.getElementById('tab-live').classList.remove('active');
+    applyFilter();
+  });
 }
 document.getElementById('q').addEventListener('input',applyFilter);
 load().catch(err=>{
