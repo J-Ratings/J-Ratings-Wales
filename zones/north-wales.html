@@ -43,6 +43,15 @@
     </div>
 
     <div id="compare-wrap" style="display:none; padding:16px">
+      <div id="agg-wrap" style="margin-bottom:10px; display:none">
+        <label for="agg">View: </label>
+        <select id="agg">
+          <option value="daily" selected>Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+        </select>
+      </div>
       <div id="compare-chart" style="height:450px"></div>
     </div>
 
@@ -82,7 +91,6 @@
     ">
       <h3>Select players to view:</h3>
 
-      <!-- Button group at the top -->
       <div class="compare-actions" style="margin-bottom:12px;">
         <button class="compare-show" style="margin-right:10px">Show Selected</button>
         <button class="compare-cancel">Cancel</button>
@@ -90,7 +98,6 @@
 
       <div id="compare-list" style="margin:20px 0;"></div>
 
-      <!-- Button group at the bottom -->
       <div class="compare-actions" style="margin-top:12px;">
         <button class="compare-show" style="margin-right:10px">Show Selected</button>
         <button class="compare-cancel">Cancel</button>
@@ -119,6 +126,39 @@ const clubNames = {
 
 const state = { rows: [], filtered: [], selectedClub: null };
 
+/* ---------- HELPERS FOR AGGREGATION ---------- */
+function normalise(d) {
+  const dt = new Date(d);
+  return new Date(Date.UTC(dt.getUTCFullYear(), dt.getUTCMonth(), dt.getUTCDate()));
+}
+
+function aggregateExpanded(hist, mode) {
+  if (mode === 'daily') return hist;
+
+  const buckets = new Map();
+  for (const d of hist) {
+    const dt = new Date(d.date);
+    let key;
+    if (mode === 'weekly') {
+      const tmp = new Date(Date.UTC(dt.getUTCFullYear(), dt.getUTCMonth(), dt.getUTCDate()));
+      const day = tmp.getUTCDay();
+      const diff = (day === 0 ? -6 : 1) - day;
+      tmp.setUTCDate(tmp.getUTCDate() + diff);
+      key = tmp.toISOString().slice(0, 10);
+    } else if (mode === 'monthly') {
+      key = dt.getUTCFullYear() + '-' + String(dt.getUTCMonth()+1).padStart(2,'0');
+    } else if (mode === 'yearly') {
+      key = String(dt.getUTCFullYear());
+    }
+    buckets.set(key, d);
+  }
+  return [...buckets.entries()].map(([k,v]) => ({
+    date: k.length===4 ? k+'-01-01' : (k.length===7 ? k+'-01' : k),
+    rating: v.rating
+  }));
+}
+
+/* ---------- TABLE RENDER ---------- */
 function renderTable() {
   const tbody = document.querySelector('#players tbody');
   tbody.innerHTML = '';
@@ -170,12 +210,15 @@ async function fetchHistoryFor(id) {
 function hideCompare() {
   document.getElementById('compare-wrap').style.display = 'none';
   document.getElementById('compare-chart').innerHTML = '';
+  document.getElementById('agg-wrap').style.display = 'none';
 }
 
 async function buildComparison(players) {
   const wrap = document.getElementById('compare-wrap');
   const chart = document.getElementById('compare-chart');
+  const aggMode = document.getElementById('agg').value;
   wrap.style.display = 'block';
+  document.getElementById('agg-wrap').style.display = 'block';
   chart.innerHTML = 'Loading…';
 
   const withHist = [];
@@ -183,7 +226,7 @@ async function buildComparison(players) {
     const hist = await fetchHistoryFor(p.id);
     if (!hist) return;
     const use = COMPARE_SINCE ? hist.filter(d => d.date >= COMPARE_SINCE) : hist;
-    if (use.length) withHist.push({ p, hist: use });
+    if (use.length) withHist.push({ p, hist: aggregateExpanded(use, aggMode) });
   }));
 
   if (!withHist.length) {
@@ -244,6 +287,7 @@ async function buildComparison(players) {
   Plotly.newPlot(chart, traces, layout, config);
 }
 
+/* ---------- COMPARE MODAL ---------- */
 function setupCompareButton() {
   const modal = document.getElementById('compare-modal');
   const listDiv = document.getElementById('compare-list');
@@ -284,6 +328,14 @@ function setupCompareButton() {
       await buildComparison(chosenPlayers);
     })
   );
+
+  document.getElementById('agg').addEventListener('change', () => {
+    const selectedIds = Array.from(document.querySelectorAll('#compare-list input[type=checkbox]:checked'))
+      .map(cb => cb.value);
+    if (!selectedIds.length) return;
+    const chosenPlayers = state.filtered.filter(p => selectedIds.includes(p.id));
+    buildComparison(chosenPlayers);
+  });
 }
 
 /* ---------- LOAD ---------- */

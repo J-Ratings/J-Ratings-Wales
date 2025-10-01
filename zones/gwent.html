@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
-    /* Allow vertical scroll on touch devices without zoom */
     #compare-chart { touch-action: pan-y; }
   </style>
 </head>
@@ -39,6 +38,17 @@
       <button id="compare-btn" class="club-btn" type="button" style="margin-left:auto">Compare</button>
     </div>
 
+    <!-- Aggregation selector -->
+    <div style="margin:10px 0; display:none" id="agg-wrap">
+      <label for="agg">View: </label>
+      <select id="agg">
+        <option value="daily" selected>Daily</option>
+        <option value="weekly">Weekly</option>
+        <option value="monthly">Monthly</option>
+        <option value="yearly">Yearly</option>
+      </select>
+    </div>
+
     <div id="compare-wrap" style="display:none; padding:16px">
       <div id="compare-chart" style="height:450px"></div>
     </div>
@@ -58,36 +68,18 @@
 
   <!-- Compare Selection Modal -->
   <div id="compare-modal" style="
-    display:none; 
-    position:fixed; 
-    top:0; left:0; 
-    width:100%; height:100%; 
-    background:rgba(0,0,0,0.6); 
-    justify-content:center; 
-    align-items:center;
-    z-index:9999;
-  ">
+    display:none; position:fixed; top:0; left:0;
+    width:100%; height:100%; background:rgba(0,0,0,0.6);
+    justify-content:center; align-items:center; z-index:9999;">
     <div style="
-      background:#1a1a1a;
-      padding:20px;
-      border-radius:8px;
-      max-width:500px;
-      width:90%;
-      max-height:80%;
-      overflow:auto;
-      color:#fff;
-    ">
+      background:#1a1a1a; padding:20px; border-radius:8px;
+      max-width:500px; width:90%; max-height:80%; overflow:auto; color:#fff;">
       <h3>Select players to view:</h3>
-
-      <!-- Top button group -->
       <div class="compare-actions" style="margin-bottom:12px;">
         <button class="compare-show" style="margin-right:10px">Show Selected</button>
         <button class="compare-cancel">Cancel</button>
       </div>
-
       <div id="compare-list" style="margin:20px 0;"></div>
-
-      <!-- Bottom button group -->
       <div class="compare-actions" style="margin-top:12px;">
         <button class="compare-show" style="margin-right:10px">Show Selected</button>
         <button class="compare-cancel">Cancel</button>
@@ -117,6 +109,52 @@ const clubNames = {
 /* ---------- STATE ---------- */
 const state = { rows: [], filtered: [], selectedClub: null };
 
+/* ---------- helpers for aggregation ---------- */
+function normalise(series){
+  return series
+    .filter(p => p && p.x && Number.isFinite(p.y))
+    .map(p => ({ x: p.x, y: +p.y }))
+    .sort((a,b) => new Date(a.x) - new Date(b.x));
+}
+
+function aggregateExpanded(series, mode){
+  if (mode === 'daily') return normalise(series);
+  const buckets = {};
+  for (const p of series){
+    const d = new Date(p.x); let key;
+    if (mode === 'weekly'){
+      const tmp=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+      const dayNum=tmp.getUTCDay()||7;
+      tmp.setUTCDate(tmp.getUTCDate()+4-dayNum);
+      const yearStart=new Date(Date.UTC(tmp.getUTCFullYear(),0,1));
+      const weekNo=Math.ceil((((tmp-yearStart)/86400000)+1)/7);
+      key=`${tmp.getUTCFullYear()}-W${String(weekNo).padStart(2,'0')}`;
+    } else if (mode==='monthly'){
+      key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    } else {
+      key=`${d.getFullYear()}`;
+    }
+    (buckets[key] ||= []).push(p.y);
+  }
+  const out=Object.keys(buckets).sort().map(k=>{
+    const ys=buckets[k].filter(Number.isFinite);
+    const avg=ys.reduce((a,b)=>a+b,0)/ys.length;
+    let x;
+    if(k.includes('W')){
+      const [y,w]=k.split('-W'); const year=+y, week=+w;
+      const simple=new Date(Date.UTC(year,0,1+(week-1)*7));
+      const dow=simple.getUTCDay();
+      if(dow<=4) simple.setUTCDate(simple.getUTCDate()-dow+1);
+      else simple.setUTCDate(simple.getUTCDate()+8-dow);
+      x=simple.toISOString().slice(0,10);
+    } else if(k.length===7){ x=`${k}-01`; }
+    else { x=`${k}-01-01`; }
+    return {x,y:avg};
+  });
+  return normalise(out);
+}
+
+/* ---------- table / filter ---------- */
 function renderTable() {
   const tbody = document.querySelector('#players tbody');
   tbody.innerHTML = '';
@@ -166,24 +204,25 @@ async function fetchHistoryFor(id) {
 }
 
 function hideCompare() {
-  const wrap = document.getElementById('compare-wrap');
-  const chart = document.getElementById('compare-chart');
-  wrap.style.display = 'none';
-  chart.innerHTML = '';
+  document.getElementById('compare-wrap').style.display = 'none';
+  document.getElementById('compare-chart').innerHTML = '';
+  document.getElementById('agg-wrap').style.display = 'none';
 }
 
 async function buildComparison(players) {
   const wrap = document.getElementById('compare-wrap');
   const chart = document.getElementById('compare-chart');
   wrap.style.display = 'block';
+  document.getElementById('agg-wrap').style.display = 'block';
   chart.innerHTML = 'Loading…';
 
+  const mode=document.getElementById('agg').value;
   const withHist = [];
   await Promise.all(players.map(async p => {
     const hist = await fetchHistoryFor(p.id);
     if (!hist) return;
     const use = COMPARE_SINCE ? hist.filter(d => d.date >= COMPARE_SINCE) : hist;
-    if (use.length) withHist.push({ p, hist: use });
+    if (use.length) withHist.push({ p, hist: use.map(d=>({x:d.date,y:+d.rating})) });
   }));
 
   if (!withHist.length) {
@@ -194,52 +233,49 @@ async function buildComparison(players) {
   }
 
   withHist.sort((a, b) =>
-    b.hist[b.hist.length - 1].date.localeCompare(a.hist[a.hist.length - 1].date)
+    b.hist[b.hist.length - 1].x.localeCompare(a.hist[a.hist.length - 1].x)
   );
   const picked = withHist.slice(0, MAX_SERIES);
   const isTouch = window.matchMedia('(pointer: coarse)').matches;
 
   const traces = picked.map(({ p, hist }) => {
+    const series=aggregateExpanded(hist,mode);
     if (isTouch) {
-      const n = hist.length;
-      const text = hist.map((_, i) => (i === n - 1 ? p.name : ''));
+      const n=series.length;
+      const text=series.map((_,i)=>(i===n-1?p.name:''));
       return {
-        name: p.name,
-        x: hist.map(d => d.date),
-        y: hist.map(d => d.rating),
-        mode: 'lines+text',
-        text,
-        textposition: 'middle right',
-        textfont: { size: 10 },
-        cliponaxis: false,
-        hoverinfo: 'skip'
+        name:p.name, x:series.map(d=>d.x), y:series.map(d=>d.y),
+        mode:'lines+text', text,textposition:'middle right',
+        textfont:{size:10}, cliponaxis:false, hoverinfo:'skip'
       };
     } else {
       return {
-        name: p.name,
-        x: hist.map(d => d.date),
-        y: hist.map(d => d.rating),
-        mode: 'lines',
-        hovertemplate: '%{x} => %{y}<extra>' + p.name + '</extra>'
+        name:p.name, x:series.map(d=>d.x), y:series.map(d=>d.y),
+        mode:(mode==='daily'?'lines':'lines+markers'),
+        marker:(mode==='daily'?{size:0}:{size:4}),
+        line:{width:2},
+        hovertemplate:'%{x} => %{y}<extra>'+p.name+'</extra>'
       };
     }
   });
 
-  const cs = getComputedStyle(document.body);
-  const layout = {
+  const cs=getComputedStyle(document.body);
+  const allY=traces.flatMap(t=>t.y).filter(Number.isFinite);
+  const ymin=Math.floor(Math.min(...allY)/100)*100;
+  const ymax=Math.ceil(Math.max(...allY)/100)*100;
+
+  const layout={
     margin:{l:50,r:(isTouch?110:20),t:10,b:40},
-    xaxis:{type:'date', title:''},
+    xaxis:{type:'date'},
     yaxis:{title:'Rating'},
     legend:{orientation:'h'},
-    paper_bgcolor: cs.backgroundColor,
-    plot_bgcolor: cs.backgroundColor,
-    font:{color: cs.color}
+    paper_bgcolor:cs.backgroundColor,
+    plot_bgcolor:cs.backgroundColor,
+    font:{color:cs.color}
   };
-  const config = isTouch
-    ? { displayModeBar:false, responsive:true, staticPlot:true }
-    : { displayModeBar:false, responsive:true, scrollZoom:false, doubleClick:false, dragMode:false };
-
-  Plotly.newPlot(chart, traces, layout, config);
+  Plotly.newPlot(chart,traces,layout,
+    isTouch ? {staticPlot:true,responsive:true,displayModeBar:false}
+            : {responsive:true,displayModeBar:false});
 }
 
 function setupCompareButton() {
@@ -258,25 +294,18 @@ function setupCompareButton() {
         <label style="cursor:pointer">
           <input type="checkbox" id="${id}" value="${p.id}" style="margin-right:6px">
           ${p.name} (${Math.round(p.rating)})
-        </label>
-      `;
+        </label>`;
       listDiv.appendChild(wrapper);
     });
     modal.style.display = 'flex';
   });
 
-  cancelBtns.forEach(btn =>
-    btn.addEventListener('click', () => { modal.style.display = 'none'; })
-  );
+  cancelBtns.forEach(btn => btn.addEventListener('click', () => { modal.style.display = 'none'; }));
 
   showBtns.forEach(btn =>
     btn.addEventListener('click', async () => {
-      const selectedIds = Array.from(listDiv.querySelectorAll('input[type=checkbox]:checked'))
-        .map(cb => cb.value);
-      if (!selectedIds.length) {
-        alert('Please select at least one player.');
-        return;
-      }
+      const selectedIds = Array.from(listDiv.querySelectorAll('input[type=checkbox]:checked')).map(cb => cb.value);
+      if (!selectedIds.length) { alert('Please select at least one player.'); return; }
       modal.style.display = 'none';
       const chosenPlayers = state.filtered.filter(p => selectedIds.includes(p.id));
       await buildComparison(chosenPlayers);
@@ -290,38 +319,43 @@ async function load() {
   if (!res.ok) throw new Error('Failed to load players.json');
   const data = await res.json();
 
-  state.rows = data
-    .filter(d => d.zone === ZONE_CODE)
-    .sort((a, b) => b.rating - a.rating);
+  state.rows = data.filter(d => d.zone === ZONE_CODE).sort((a, b) => b.rating - a.rating);
   state.filtered = state.rows.slice();
 
-  const clubsNav = document.querySelector('.clubs-nav');
-  const clubs = [...new Set(
-    state.rows.map(r => r.club).filter(c => /^\d/.test(c) && clubNames[c])
-  )].sort();
+  const clubsNav=document.querySelector('.clubs-nav');
+  const clubs=[...new Set(state.rows.map(r=>r.club).filter(c=>/^\d/.test(c)&&clubNames[c]))].sort();
   clubsNav.innerHTML =
     `<button class="club-btn active-club" data-code="">All</button>` +
-    clubs.map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
+    clubs.map(c=>`<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
 
-  document.getElementById('compare-btn').style.display = 'none';
+  document.getElementById('compare-btn').style.display='none';
 
   clubsNav.addEventListener('click', e => {
     if (!e.target.classList.contains('club-btn')) return;
-    document.querySelectorAll('.club-btn').forEach(b => b.classList.remove('active-club'));
+    document.querySelectorAll('.club-btn').forEach(b=>b.classList.remove('active-club'));
     e.target.classList.add('active-club');
-    const code = e.target.dataset.code;
-    state.selectedClub = code || null;
-    document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
-    document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
+    const code=e.target.dataset.code;
+    state.selectedClub=code||null;
+    document.getElementById('zone-title').textContent=code?clubNames[code]:ZONE_NAME;
+    document.getElementById('compare-btn').style.display=code?'inline-block':'none';
     applyFilter();
   });
 
   renderTable();
   setupCompareButton();
+
+  document.getElementById('agg').addEventListener('change',()=>{
+    const check=document.getElementById('compare-wrap').style.display!=='none';
+    if(check){
+      const selectedIds=[...document.querySelectorAll('#compare-list input[type=checkbox]:checked')].map(cb=>cb.value);
+      const chosenPlayers=state.filtered.filter(p=>selectedIds.includes(p.id));
+      buildComparison(chosenPlayers);
+    }
+  });
 }
 
 document.getElementById('q').addEventListener('input', applyFilter);
-load().catch(err => {
+load().catch(err=>{
   document.querySelector('#players tbody').innerHTML =
     `<tr><td colspan="2">Error loading data: ${err.message}</td></tr>`;
 });
