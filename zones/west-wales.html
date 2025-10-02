@@ -224,34 +224,27 @@ async function buildComparison(players) {
   );
   const picked = withHist.slice(0, MAX_SERIES);
   const isTouch = window.matchMedia('(pointer: coarse)').matches;
-const traces = picked.map(({ p, hist }) => {
-  if (isTouch) {
-    const n = hist.length;
-    const text = hist.map((_, i) => (i === n - 1 ? p.name : ''));
-    return {
-      name: p.name,
-      x: hist.map(d => d.date),
-      y: hist.map(d => d.rating),
-      mode: 'lines+text',
-      text,
-      textposition: 'middle right',
-      textfont: { size: 10 },
-      cliponaxis: false,
-      hoverinfo: 'skip'
-    };
-  } else {
-    return {
-      name: p.name,
-      x: hist.map(d => d.date),
-      y: hist.map(d => d.rating),
-      mode: (aggMode === 'daily' ? 'lines' : 'lines+markers'),
-      marker: (aggMode === 'daily' ? { size: 0 } : { size: 4 }),
-      line: { width: 2 },
-      hovertemplate: '%{x} → %{y:.0f}<extra>' + p.name + '</extra>'
-    };
-  }
-});
-
+  const traces = picked.map(({ p, hist }) => {
+    if (isTouch) {
+      const n = hist.length;
+      const text = hist.map((_,i)=>(i===n-1?p.name:''));
+      return {
+        name: p.name, x: hist.map(d=>d.date), y: hist.map(d=>d.rating),
+        mode:'lines+text', text, textposition:'middle right',
+        textfont:{size:10}, cliponaxis:false, hoverinfo:'skip'
+      };
+    } else {
+return {
+  name: p.name,
+  x: series.map(d => d.x),
+  y: series.map(d => d.y),
+  mode: (mode === 'daily' ? 'lines' : 'lines+markers'),
+  marker: (mode === 'daily' ? { size: 0 } : { size: 4 }),
+  line: { width: 2 },
+  hovertemplate: '%{x} → %{y:.0f}<extra>' + p.name + '</extra>'
+};
+    }
+  });
   const cs = getComputedStyle(document.body);
   const layout = {
     margin:{l:50,r:(isTouch?110:20),t:10,b:40}, xaxis:{type:'date'}, yaxis:{title:'Rating'},
