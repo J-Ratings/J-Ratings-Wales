@@ -87,6 +87,7 @@
         <option value="daily" selected>Daily</option>
         <option value="weekly">Weekly</option>
         <option value="monthly">Monthly</option>
+        <option value="quarterly">Quarterly</option>
         <option value="yearly">Yearly</option>
       </select>
     </div>
@@ -130,7 +131,6 @@ function normalise(series){
     .sort((a,b) => new Date(a.x) - new Date(b.x));
 }
 
-// diagonal aggregation (1 point per bucket; flat across gaps)
 function aggregateExpanded(series, mode){
   if (mode === 'daily') return normalise(series);
 
@@ -147,6 +147,9 @@ function aggregateExpanded(series, mode){
       key = `${tmp.getUTCFullYear()}-W${String(weekNo).padStart(2,'0')}`;
     } else if (mode === 'monthly') {
       key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    } else if (mode === 'quarterly') {
+      const q = Math.floor(d.getMonth() / 3) + 1;
+      key = `${d.getFullYear()}-Q${q}`;
     } else {
       key = `${d.getFullYear()}`;
     }
@@ -164,6 +167,10 @@ function aggregateExpanded(series, mode){
       if (dow <= 4) simple.setUTCDate(simple.getUTCDate() - dow + 1);
       else simple.setUTCDate(simple.getUTCDate() + 8 - dow);
       x = simple.toISOString().slice(0,10);
+    } else if (k.includes('Q')) {
+      const [y,q] = k.split('-Q'); const year = +y, quarter = +q;
+      const month = (quarter - 1) * 3; // 0,3,6,9
+      x = new Date(Date.UTC(year, month, 1)).toISOString().slice(0,10);
     } else if (k.length === 7) {
       x = `${k}-01`;
     } else {
