@@ -16,7 +16,7 @@
     .suggest{position:relative;flex:1}
     .suggest-list{
       position:absolute;left:0;right:0;top:100%;
-      max-height:220px;overflow:auto;margin-top:4px;
+      max-height:300px;overflow:auto;margin-top:4px;
       border:1px solid var(--border);background:#0f1623;border-radius:6px;
       display:none;z-index:20
     }
@@ -223,7 +223,7 @@ function createChart(){
         gridcolor:'#222',zeroline:false,
         rangeslider:{visible:true,thickness:0.12},
       },
-      yaxis:{title:'Rating',gridcolor:'#222',zeroline:false,tickformat:'.0f'},
+      yaxis:{title:"Rating",autorange:true,gridcolor:'#222',zeroline:false,tickformat:'.0f'},
       legend:{x:1,y:0,bgcolor:'rgba(0,0,0,0)'},
       shapes:majorGridShapes(ymin,ymax)
     };
