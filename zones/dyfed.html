@@ -5,14 +5,44 @@
   <title>Dyfed</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js">
+<script>
+function extentFromTraces(traces){
+  const xs=[]; traces.forEach(t=>{ (t.x||[]).forEach(x=>{ if(x) xs.push(new Date(x)); }); });
+  if(!xs.length) return {min:null,max:null};
+  return {min:new Date(Math.min(...xs)), max:new Date(Math.max(...xs))};
+}
+
+function setXRange(start,end){
+  if(!dataMin||!dataMax) return;
+  const s=new Date(Math.max(new Date(start),dataMin));
+  const e=new Date(Math.min(new Date(end),dataMax));
+  Plotly.relayout('compare-chart',{'xaxis.range':[iso(s),iso(e)]});
+}
+
+function setPreset(which){
+  const now=new Date();
+  if(which==='ALL'){ setXRange(dataMin,dataMax); return; }
+  if(which==='YTD'){ const yStart=new Date(Date.UTC(now.getUTCFullYear(),0,1)); setXRange(yStart,dataMax); return; }
+  const y=parseInt(which,10); const start=new Date(Date.UTC(y,0,1)); setXRange(start,dataMax);
+}
+
+</script>
+
   <style>
     #compare-chart { touch-action: pan-y; }
     /* added: centred Live/Peak tabs */
     .tabs { display:flex; justify-content:center; gap:6px; margin:6px 0 12px; }
     .tabs button { padding:6px 10px; border:1px solid var(--border,#ccc); background:transparent; color:inherit; cursor:pointer; }
     .tabs button.active { font-weight:600; background:rgba(255,255,255,0.06); }
-  </style>
+  
+    .range-buttons{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.5rem 0}
+    .range-buttons .seg{
+      background:#0f1623;border:1px solid var(--border);color:var(--text);
+      padding:6px 10px;border-radius:6px;cursor:pointer;font-size:.9rem;
+    }
+    .range-buttons .seg:hover{background:rgba(255,255,255,.05)}
+    </style>
 </head>
 <body>
 <header>
@@ -56,8 +86,15 @@
           <option value="daily" selected>Daily</option>
           <option value="weekly">Weekly</option>
           <option value="monthly">Monthly</option>
+          <option value="quarterly">Quarterly</option>
           <option value="yearly">Yearly</option>
         </select>
+      </div>
+      <div id="range-buttons" class="range-buttons" style="display:none">
+        <button class="seg" data-range="ALL">ALL</button>
+        <button class="seg" data-range="2015">2015–Present</button>
+        <button class="seg" data-range="2022">2022–Present</button>
+        <button class="seg" data-range="YTD">YTD</button>
       </div>
       <div id="compare-chart" style="height:450px"></div>
     </div>
@@ -97,6 +134,10 @@
 </main>
 
 <script>
+function iso(d){ return new Date(d).toISOString().slice(0,10); }
+
+let dataMin=null, dataMax=null, initialRangeSet=false;
+
 /* ---------- CONFIG ---------- */
 const ZONE_CODE = 'D1';
 const ZONE_NAME = 'Dyfed';
@@ -129,7 +170,7 @@ function aggregateExpanded(hist, mode) {
       key = tmp.toISOString().slice(0,10);
     } else if (mode === 'monthly') {
       key = dt.getUTCFullYear() + '-' + String(dt.getUTCMonth()+1).padStart(2,'0');
-    } else if (mode === 'yearly') {
+    } else if (mode === 'quarterly') { key = dt.getUTCFullYear() + '-' + 'Q' + (Math.floor(dt.getUTCMonth()/3)+1); } else if (mode === 'yearly') {
       key = String(dt.getUTCFullYear());
     }
     buckets.set(key,d);
@@ -201,7 +242,8 @@ async function buildComparison(players) {
   const wrap = document.getElementById('compare-wrap');
   const chart = document.getElementById('compare-chart');
   const aggMode = document.getElementById('agg').value;
-  wrap.style.display = 'block';
+  \1
+  const rb=document.getElementById('range-buttons'); if(rb) rb.style.display='block';
   document.getElementById('agg-wrap').style.display = 'block';
   chart.innerHTML = 'Loading…';
   const withHist = [];
@@ -242,14 +284,22 @@ return {
     }
   });
   const cs = getComputedStyle(document.body);
-  const layout = {
-    margin:{l:50,r:(isTouch?110:20),t:10,b:40},xaxis:{type:'date'},yaxis:{title:'Rating'},
-    legend:{orientation:'h'},paper_bgcolor:cs.backgroundColor,plot_bgcolor:cs.backgroundColor,
-    font:{color:cs.color}
-  };
-  const config = isTouch
-    ? {displayModeBar:false,responsive:true,staticPlot:true}
-    : {displayModeBar:false,responsive:true,scrollZoom:false,doubleClick:false,dragMode:false};
+  \1
+  // compute global extent over traces
+  (function(){
+    const ext = (function(){ const xs=[]; traces.forEach(t=>{ (t.x||[]).forEach(x=>{ if(x) xs.push(new Date(x)); }); }); if(!xs.length) return {min:null,max:null}; return {min:new Date(Math.min(...xs)), max:new Date(Math.max(...xs))}; })();
+    dataMin = ext.min; dataMax = ext.max;
+    if(!initialRangeSet && dataMin && dataMax){
+      const defStart = new Date(Date.UTC(2024,0,1));
+      const start = (dataMin>defStart) ? dataMin : defStart;
+      layout.xaxis = Object.assign({type:'date'}, layout.xaxis || {});
+      layout.xaxis.range = [ iso(start), iso(dataMax) ];
+      initialRangeSet = true;
+    }
+    // hook buttons once
+    const rb=document.getElementById('range-buttons');
+    if(rb && !rb.dataset.wired){ rb.dataset.wired='1'; rb.querySelectorAll('.seg').forEach(btn=>btn.addEventListener('click',()=>setPreset(btn.dataset.range))); }
+  })();
   Plotly.newPlot(chart,traces,layout,config);
 }
 
