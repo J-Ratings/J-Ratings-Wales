@@ -7,12 +7,17 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
-    /* Hide the preview graph inside the Plotly range slider */
-#chart .rangeslider .rangeplot,
-#chart .rangeslider .plot,
-#chart .rangeslider .bg-rect + .rangeplot { 
+/* Hide the miniature plot inside the Plotly range slider */
+#chart g.rangeslider .plot > g { 
+  display: none !important; 
+}
+/* Also hide any ticks/grid that can appear in the slider */
+#chart g.rangeslider .xaxis,
+#chart g.rangeslider .yaxis,
+#chart g.rangeslider .gridlayer {
   display: none !important;
 }
+
 
     .player-head{
       display:flex;justify-content:space-between;align-items:flex-end;
