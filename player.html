@@ -107,6 +107,7 @@
         <button class="seg" data-range="ALL">ALL</button>
         <button class="seg" data-range="2015">2015–Present</button>
         <button class="seg" data-range="2022">2022–Present</button>
+        <button class="seg" data-range="LY">Last Year</button>
         <button class="seg" data-range="YTD">YTD</button>
       </div>
     </div>
@@ -234,12 +235,43 @@ function extentFrom(...seriesList){
   return {min:new Date(Math.min(...xs)), max:new Date(Math.max(...xs))};
 }
 
+/* ---- NEW: recompute y-axis from visible window ---- */
+function getVisibleYValues(x0, x1){
+  const s = new Date(x0), e = new Date(x1);
+  const take = (series) => (series ?? [])
+    .filter(p => p && p.x && Number.isFinite(p.y))
+    .filter(p => {
+      const d = new Date(p.x);
+      return d >= s && d <= e;
+    })
+    .map(p => p.y);
+
+  const ys = [...take(seriesLive), ...(showWCU && seriesWCU ? take(seriesWCU) : [])];
+  return ys;
+}
+
+function adjustYToVisible(x0, x1){
+  const ys = getVisibleYValues(x0, x1);
+  if (!ys.length) return; // nothing in window; keep existing range
+
+  const ymin = Math.floor(Math.min(...ys) / 100) * 100;
+  const ymax = Math.ceil (Math.max(...ys) / 100) * 100;
+
+  Plotly.relayout('chart', {
+    'yaxis.autorange': false,
+    'yaxis.range': [ymin, ymax],
+    'shapes': majorGridShapes(ymin, ymax)
+  });
+}
+/* ---- /NEW ---- */
+
 /* --------- range controls --------- */
 function setXRange(start, end){
   if(!dataMin || !dataMax) return;
   const s = new Date(Math.max(new Date(start), dataMin));
   const e = new Date(Math.min(new Date(end),   dataMax));
-  Plotly.relayout('chart', {'xaxis.range':[iso(s), iso(e)]});
+  const x0 = iso(s), x1 = iso(e);
+  Plotly.relayout('chart', {'xaxis.range':[x0, x1]}).then(()=> adjustYToVisible(x0, x1));
 }
 
 function setPreset(which){
@@ -248,6 +280,12 @@ function setPreset(which){
   if(which==='YTD'){
     const yStart = new Date(Date.UTC(now.getUTCFullYear(),0,1));
     setXRange(yStart, dataMax); return;
+  }
+  if(which==='LY'){
+    const lastYear = now.getUTCFullYear() - 1;
+    const start = new Date(Date.UTC(lastYear,0,1));
+    const end   = new Date(Date.UTC(lastYear,11,31));
+    setXRange(start, end); return;
   }
   // numeric year e.g. "2015", "2022"
   const y = parseInt(which,10);
@@ -264,12 +302,6 @@ function draw(){
   const traces = [ makeTrace(seriesLive, 'J-Ratings', COLORS.J, mode) ];
   if (showWCU && seriesWCU) traces.push(makeTrace(seriesWCU, 'WCU', COLORS.WCU, mode));
 
-  const ys = [...seriesLive.map(p=>p.y), ...(showWCU&&seriesWCU ? seriesWCU.map(p=>p.y) : [])];
-  if (!ys.length) { document.getElementById('chart').textContent='No Games'; return; }
-  const ymin = Math.floor(Math.min(...ys)/100)*100;
-  const ymax = Math.ceil(Math.max(...ys)/100)*100;
-
-  // full data extent across visible series (for presets/slider clamps)
   const ext = extentFrom(seriesLive, seriesWCU);
   dataMin = ext.min; dataMax = ext.max;
 
@@ -285,7 +317,7 @@ function draw(){
     paper_bgcolor:bg, plot_bgcolor:bg,
     font:{color:getComputedStyle(document.body).color},
     legend:{orientation:'h',x:0,y:1.1},
-    shapes: majorGridShapes(ymin,ymax)
+    shapes: [] // will be set after first y-range computation
   };
 
   // default view: 2024–present, clamped to data (or from first point if later)
@@ -301,6 +333,20 @@ function draw(){
     scrollZoom:false,
     displayModeBar:false,
     responsive:true
+  }).then(gd => {
+    // 1) set y from the current (possibly default) x-range
+    const xr = gd.layout.xaxis.range || gd._fullLayout.xaxis.range;
+    if (xr && xr.length === 2) adjustYToVisible(xr[0], xr[1]);
+
+    // 2) re-compute y whenever the x-range changes (slider or programmatic)
+    if (!gd._jrYHandlerAttached){
+      gd.on('plotly_relayout', ev => {
+        const x0 = ev['xaxis.range[0]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][0]);
+        const x1 = ev['xaxis.range[1]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][1]);
+        if (x0 && x1) adjustYToVisible(x0, x1);
+      });
+      gd._jrYHandlerAttached = true;
+    }
   });
 }
 
