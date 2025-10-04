@@ -7,6 +7,13 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
+    /* Hide the preview graph inside the Plotly range slider */
+#chart .rangeslider .rangeplot,
+#chart .rangeslider .plot,
+#chart .rangeslider .bg-rect + .rangeplot { 
+  display: none !important;
+}
+
     .player-head{
       display:flex;justify-content:space-between;align-items:flex-end;
       margin:12px 0;padding-right:12px;
