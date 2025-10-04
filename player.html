@@ -7,17 +7,13 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
-/* Hide the miniature plot inside the Plotly range slider */
-#chart g.rangeslider .plot > g { 
-  display: none !important; 
-}
-/* Also hide any ticks/grid that can appear in the slider */
-#chart g.rangeslider .xaxis,
-#chart g.rangeslider .yaxis,
-#chart g.rangeslider .gridlayer {
-  display: none !important;
-}
-
+    /* Hide the miniature plot inside the Plotly range slider */
+    #chart g.rangeslider .plot > g,
+    #chart g.rangeslider .xaxis,
+    #chart g.rangeslider .yaxis,
+    #chart g.rangeslider .gridlayer {
+      display: none !important;
+    }
 
     .player-head{
       display:flex;justify-content:space-between;align-items:flex-end;
@@ -30,20 +26,15 @@
     }
     .badge .stack{display:flex;flex-direction:column;gap:.25rem}
     .badge strong{font-variant-numeric:tabular-nums}
-    /* Bold coloured labels; numbers stay default */
     #stats-j .muted{color:#1f77b4;font-weight:bold}
     #stats-wcu .muted{color:#ff7f0e;font-weight:bold}
-
     .btn-mini{
       background:#0f1623;border:1px solid var(--border);color:var(--text);
       padding:4px 8px;border-radius:6px;cursor:pointer;font-size:.9rem;
     }
     .btn-mini[disabled]{opacity:.5;cursor:default}
     .btn-mini:hover:not([disabled]){background:rgba(255,255,255,.05)}
-
     #chart{height:420px;touch-action:pan-y}
-
-    /* Range buttons (like lichess presets) */
     .range-buttons{
       display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.5rem 0 0.25rem 0;
     }
@@ -52,7 +43,6 @@
       padding:6px 10px;border-radius:6px;cursor:pointer;font-size:.9rem;
     }
     .range-buttons .seg:hover{background:rgba(255,255,255,.05)}
-
     #games{margin-top:1.5rem;width:100%;border-collapse:collapse}
     #games th,#games td{
       padding:6px 10px;border-bottom:1px solid #333;text-align:center!important;
@@ -158,17 +148,9 @@ let initialRangeSet=false;
 
 /* ---------- helpers ---------- */
 function iso(d){ return new Date(d).toISOString().slice(0,10); }
-
-function normalise(series){
-  return series
-    .filter(p => p && p.x && Number.isFinite(p.y))
-    .map(p => ({ x: p.x, y: +p.y }))
-    .sort((a,b) => new Date(a.x) - new Date(b.x));
-}
-
+function normalise(series){ return series.filter(p => p && p.x && Number.isFinite(p.y)).map(p => ({ x: p.x, y: +p.y })).sort((a,b) => new Date(a.x) - new Date(b.x)); }
 function aggregateExpanded(series, mode){
   if (mode === 'daily') return normalise(series);
-
   const buckets = Object.create(null);
   for (const p of series) {
     const d = new Date(p.x);
@@ -190,7 +172,6 @@ function aggregateExpanded(series, mode){
     }
     (buckets[key] ||= []).push(p.y);
   }
-
   const out = Object.keys(buckets).sort().map(k => {
     const ys = buckets[k].filter(Number.isFinite);
     const avg = ys.reduce((a,b)=>a+b,0)/ys.length;
@@ -217,7 +198,7 @@ function aggregateExpanded(series, mode){
   return normalise(out);
 }
 
-/* snap/grid every 50 */
+/* grid lines every 50 */
 function majorGridShapes(ymin,ymax){
   const s=[]; for(let v=ymin; v<=ymax; v+=50){
     s.push({type:'line', xref:'paper', x0:0, x1:1, y0:v, y1:v,
@@ -225,7 +206,6 @@ function majorGridShapes(ymin,ymax){
   } return s;
 }
 
-/* recompute y range for visible window */
 function getVisibleYValues(x0,x1){
   const s=new Date(x0), e=new Date(x1);
   const take=(series)=>(series??[])
@@ -248,7 +228,6 @@ function adjustYToVisible(x0,x1){
   });
 }
 
-/* range controls */
 function setXRange(start,end){
   if(!dataMin||!dataMax)return;
   const s=new Date(Math.max(new Date(start),dataMin));
@@ -267,15 +246,13 @@ function setPreset(which){
   setXRange(start,dataMax);
 }
 
-/* draw chart */
+/* main chart */
 function draw(){
   const mode=document.getElementById('agg').value;
   seriesLive=aggregateExpanded(rawLive,mode);
   seriesWCU=rawWCU.length?aggregateExpanded(rawWCU,mode):null;
-
   const traces=[{...makeTrace(seriesLive,'J-Ratings',COLORS.J,mode)}];
   if(showWCU&&seriesWCU)traces.push(makeTrace(seriesWCU,'WCU',COLORS.WCU,mode));
-
   const ext=extentFrom(seriesLive,seriesWCU);
   dataMin=ext.min;dataMax=ext.max;
 
@@ -320,10 +297,24 @@ function draw(){
       });
       gd._jrYHandlerAttached=true;
     }
+
+    /* --- NEW: ensure the mini-graph is hidden even after redraws --- */
+    const hideMini = () => {
+      document.querySelectorAll(
+        '#chart g.rangeslider .plot > g, ' +
+        '#chart g.rangeslider .xaxis, ' +
+        '#chart g.rangeslider .yaxis, ' +
+        '#chart g.rangeslider .gridlayer'
+      ).forEach(el => el.style.display = 'none');
+    };
+    hideMini();
+    gd.on('plotly_relayout', hideMini);
+    window.addEventListener('resize', hideMini);
+    const mo = new MutationObserver(hideMini);
+    mo.observe(document.getElementById('chart'), { childList:true, subtree:true });
   });
 }
 
-/* metrics and table loading remain unchanged */
 function makeTrace(series,name,colour,mode){
   return{
     x:series.map(p=>p.x),y:series.map(p=>p.y),
@@ -337,8 +328,7 @@ function makeTrace(series,name,colour,mode){
 }
 
 function extentFrom(...seriesList){
-  const xs=[];
-  for(const s of seriesList){if(!s)continue;for(const p of s){if(p?.x)xs.push(new Date(p.x));}}
+  const xs=[]; for(const s of seriesList){if(!s)continue;for(const p of s){if(p?.x)xs.push(new Date(p.x));}}
   if(!xs.length)return{min:null,max:null};
   return{min:new Date(Math.min(...xs)),max:new Date(Math.max(...xs))};
 }
