@@ -77,6 +77,7 @@
           <button class="seg" data-range="ALL">ALL</button>
           <button class="seg" data-range="2015">2015–Present</button>
           <button class="seg" data-range="2022">2022–Present</button>
+          <button class="seg" data-range="LY">Last Year</button>
           <button class="seg" data-range="YTD">YTD</button>
         </div>
       </div>
@@ -158,11 +159,50 @@ function extentFrom(seriesList){
   return {min:new Date(Math.min(...xs)), max:new Date(Math.max(...xs))};
 }
 
+/* ---- recompute y-axis from visible window (snap to 50) ---- */
+function getVisibleYValues(x0, x1){
+  const s=new Date(x0), e=new Date(x1);
+  const take=series => (series??[])
+    .filter(p=>p && p.x && Number.isFinite(p.y))
+    .filter(p=>{ const d=new Date(p.x); return d>=s && d<=e; })
+    .map(p=>p.y);
+  // Pull current chart data (multiple players)
+  const gd=document.getElementById('chart');
+  const ys=[];
+  if(gd && gd.data){
+    for(const trace of gd.data){
+      const pts=trace.x.map((x,i)=>({x:trace.x[i],y:trace.y[i]}));
+      ys.push(...take(pts));
+    }
+  }
+  return ys;
+}
+
+function majorGridShapes(ymin,ymax){
+  const shapes=[]; for(let v=ymin; v<=ymax; v+=50){
+    shapes.push({type:'line',xref:'paper',x0:0,x1:1,y0:v,y1:v,line:{width:1,color:'rgba(128,128,128,0.35)'},layer:'below'});
+  } return shapes;
+}
+
+function adjustYToVisible(x0, x1){
+  const ys=getVisibleYValues(x0,x1);
+  if(!ys.length) return;
+  const ymin=Math.floor(Math.min(...ys)/50)*50;
+  const ymax=Math.ceil (Math.max(...ys)/50)*50;
+  Plotly.relayout('chart',{
+    'yaxis.autorange':false,
+    'yaxis.range':[ymin,ymax],
+    'shapes':majorGridShapes(ymin,ymax)
+  });
+}
+/* ---- /recompute ---- */
+
 function setXRange(start,end){
   if(!state.dataMin||!state.dataMax) return;
   const s=new Date(Math.max(new Date(start),state.dataMin));
   const e=new Date(Math.min(new Date(end),state.dataMax));
-  Plotly.relayout('chart',{'xaxis.range':[iso(s),iso(e)]});
+  const x0=iso(s), x1=iso(e);
+  Plotly.relayout('chart',{'xaxis.range':[x0,x1]}).then(()=>adjustYToVisible(x0,x1));
 }
 
 function setPreset(which){
@@ -172,18 +212,18 @@ function setPreset(which){
     const yStart=new Date(Date.UTC(now.getUTCFullYear(),0,1));
     setXRange(yStart,state.dataMax); return;
   }
+  if(which==='LY'){
+    // last 365 days ending at latest data point
+    const end = state.dataMax ? new Date(state.dataMax) : now;
+    const start = new Date(end.getTime() - 365*24*60*60*1000);
+    setXRange(start, end); return;
+  }
   const y=parseInt(which,10);
   const start=new Date(Date.UTC(y,0,1));
   setXRange(start,state.dataMax);
 }
 
 /* --------- chart --------- */
-function majorGridShapes(ymin,ymax){
-  const shapes=[]; for(let v=ymin;v<=ymax;v+=100){
-    shapes.push({type:'line',xref:'paper',x0:0,x1:1,y0:v,y1:v,line:{width:1,color:'rgba(128,128,128,0.35)'},layer:'below'});
-  } return shapes;
-}
-
 function createChart(){
   const names=state.inputs.map(r=>r.input.value.trim()).filter(Boolean);
   if(!names.length) return alert('Please add at least one player');
@@ -208,8 +248,9 @@ function createChart(){
     series=series.filter(Boolean); if(!series.length) return;
 
     const allY=series.flatMap(s=>s.y).filter(Number.isFinite);
-    const ymin=Math.floor(Math.min(...allY)/100)*100;
-    const ymax=Math.ceil(Math.max(...allY)/100)*100;
+    // initialise grid with 50 snap; final y-range will be set after x-range is applied
+    const ymin=Math.floor(Math.min(...allY)/50)*50;
+    const ymax=Math.ceil (Math.max(...allY)/50)*50;
 
     const ext=extentFrom(series.map(s=>s.x.map((x,i)=>({x:s.x[i],y:s.y[i]}))));
     state.dataMin=ext.min; state.dataMax=ext.max;
@@ -221,21 +262,38 @@ function createChart(){
       xaxis:{
         type:'date',
         gridcolor:'#222',zeroline:false,
+        fixedrange:true,
         rangeslider:{visible:true,thickness:0.12},
       },
-      yaxis:{title:"Rating",autorange:true,gridcolor:'#222',zeroline:false,tickformat:'.0f'},
+      yaxis:{title:"Rating",fixedrange:true,gridcolor:'#222',zeroline:false,tickformat:'.0f'},
       legend:{x:1,y:0,bgcolor:'rgba(0,0,0,0)'},
       shapes:majorGridShapes(ymin,ymax)
     };
 
+    // default view: Last Year (last 365 days up to latest data point), clamped to data
     if(!state.initialRangeSet && state.dataMin && state.dataMax){
-      const defStart=new Date(Date.UTC(2024,0,1));
-      const start=(state.dataMin>defStart)?state.dataMin:defStart;
-      layout.xaxis.range=[iso(start),iso(state.dataMax)];
+      const end=new Date(state.dataMax);
+      const start=new Date(end.getTime()-365*24*60*60*1000);
+      layout.xaxis.range=[ iso(new Date(Math.max(start,state.dataMin))), iso(end) ];
       state.initialRangeSet=true;
     }
 
-    Plotly.newPlot('chart',series,layout,{responsive:true,displayModeBar:false});
+    Plotly.newPlot('chart',series,layout,{responsive:true,displayModeBar:false,scrollZoom:false})
+      .then(gd=>{
+        // set y from the current x-range (visible window)
+        const xr=gd.layout.xaxis.range || gd._fullLayout.xaxis.range;
+        if(xr && xr.length===2) adjustYToVisible(xr[0],xr[1]);
+
+        // recompute y whenever the x-range changes (slider or programmatic)
+        if(!gd._jrYHandlerAttached){
+          gd.on('plotly_relayout',ev=>{
+            const x0 = ev['xaxis.range[0]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][0]);
+            const x1 = ev['xaxis.range[1]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][1]);
+            if(x0 && x1) adjustYToVisible(x0,x1);
+          });
+          gd._jrYHandlerAttached=true;
+        }
+      });
   });
 }
 
