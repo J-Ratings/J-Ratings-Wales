@@ -218,8 +218,9 @@ function makeTrace(series, name, colour, mode){
   };
 }
 
+/* snap/grid every 50 */
 function majorGridShapes(ymin,ymax){
-  const s=[]; for(let v=ymin; v<=ymax; v+=100){
+  const s=[]; for(let v=ymin; v<=ymax; v+=50){
     s.push({type:'line', xref:'paper', x0:0, x1:1, y0:v, y1:v,
       line:{width:1, color:'rgba(128,128,128,0.35)'}, layer:'below'});
   } return s;
@@ -235,7 +236,7 @@ function extentFrom(...seriesList){
   return {min:new Date(Math.min(...xs)), max:new Date(Math.max(...xs))};
 }
 
-/* ---- NEW: recompute y-axis from visible window ---- */
+/* ---- recompute y-axis from visible window (snap to 50) ---- */
 function getVisibleYValues(x0, x1){
   const s = new Date(x0), e = new Date(x1);
   const take = (series) => (series ?? [])
@@ -254,8 +255,8 @@ function adjustYToVisible(x0, x1){
   const ys = getVisibleYValues(x0, x1);
   if (!ys.length) return; // nothing in window; keep existing range
 
-  const ymin = Math.floor(Math.min(...ys) / 100) * 100;
-  const ymax = Math.ceil (Math.max(...ys) / 100) * 100;
+  const ymin = Math.floor(Math.min(...ys) / 50) * 50;
+  const ymax = Math.ceil (Math.max(...ys) / 50) * 50;
 
   Plotly.relayout('chart', {
     'yaxis.autorange': false,
@@ -263,7 +264,7 @@ function adjustYToVisible(x0, x1){
     'shapes': majorGridShapes(ymin, ymax)
   });
 }
-/* ---- /NEW ---- */
+/* ---- /recompute ---- */
 
 /* --------- range controls --------- */
 function setXRange(start, end){
@@ -282,9 +283,9 @@ function setPreset(which){
     setXRange(yStart, dataMax); return;
   }
   if(which==='LY'){
-    const lastYear = now.getUTCFullYear() - 1;
-    const start = new Date(Date.UTC(lastYear,0,1));
-    const end   = new Date(Date.UTC(lastYear,11,31));
+    // last 365 days ending at latest data point
+    const end = dataMax ? new Date(dataMax) : now;
+    const start = new Date(end.getTime() - 365*24*60*60*1000);
     setXRange(start, end); return;
   }
   // numeric year e.g. "2015", "2022"
@@ -320,11 +321,11 @@ function draw(){
     shapes: [] // will be set after first y-range computation
   };
 
-  // default view: 2024–present, clamped to data (or from first point if later)
+  // default view: Last Year (last 365 days up to latest data point), clamped to data
   if(!initialRangeSet && dataMin && dataMax){
-    const defStart = new Date(Date.UTC(2024,0,1));
-    const start = (dataMin > defStart) ? dataMin : defStart;
-    layout.xaxis.range = [ iso(start), iso(dataMax) ];
+    const end = new Date(dataMax);
+    const start = new Date(end.getTime() - 365*24*60*60*1000);
+    layout.xaxis.range = [ iso(new Date(Math.max(start, dataMin))), iso(end) ];
     initialRangeSet = true;
   }
 
