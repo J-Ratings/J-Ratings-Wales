@@ -142,7 +142,7 @@ const kFromRating = r => (r>=2200?10:r>=1800?20:30);
 
 let me=null, rawLive=[], rawWCU=[], seriesLive=null, seriesWCU=null, showWCU=false;
 let dataMin=null, dataMax=null;
-let initialRangeSet=false; // ensure we only set the default once
+let initialRangeSet=false;
 
 /* ---------- helpers ---------- */
 function iso(d){ return new Date(d).toISOString().slice(0,10); }
@@ -154,7 +154,6 @@ function normalise(series){
     .sort((a,b) => new Date(a.x) - new Date(b.x));
 }
 
-// diagonal aggregation (1 point per bucket; flat across gaps)
 function aggregateExpanded(series, mode){
   if (mode === 'daily') return normalise(series);
 
@@ -174,7 +173,7 @@ function aggregateExpanded(series, mode){
     } else if (mode === 'quarterly') {
       const q = Math.floor(d.getMonth() / 3) + 1;
       key = `${d.getFullYear()}-Q${q}`;
-    } else { // yearly
+    } else {
       key = `${d.getFullYear()}`;
     }
     (buckets[key] ||= []).push(p.y);
@@ -185,7 +184,8 @@ function aggregateExpanded(series, mode){
     const avg = ys.reduce((a,b)=>a+b,0)/ys.length;
     let x;
     if (k.includes('W')) {
-      const [y,w] = k.split('-W'); const year = +y, week = +w;
+      const [y,w] = k.split('-W');
+      const year = +y, week = +w;
       const simple = new Date(Date.UTC(year,0,1+(week-1)*7));
       const dow = simple.getUTCDay();
       if (dow <= 4) simple.setUTCDate(simple.getUTCDate() - dow + 1);
@@ -202,20 +202,7 @@ function aggregateExpanded(series, mode){
     }
     return { x, y: avg };
   });
-
   return normalise(out);
-}
-
-function makeTrace(series, name, colour, mode){
-  return {
-    x: series.map(p=>p.x), y: series.map(p=>p.y),
-    mode: (mode==='daily' ? 'lines' : 'lines+markers'),
-    line: { width:2, shape:'linear', color:colour },
-    marker: (mode==='daily' ? {size:0} : {size:4}),
-    name,
-    hovertemplate: '%{x}<br>%{y:.0f}<extra>'+name+'</extra>',
-    connectgaps: true
-  };
 }
 
 /* snap/grid every 50 */
@@ -226,226 +213,203 @@ function majorGridShapes(ymin,ymax){
   } return s;
 }
 
-function extentFrom(...seriesList){
-  const xs=[];
-  for(const s of seriesList){
-    if(!s) continue;
-    for(const p of s){ if(p?.x) xs.push(new Date(p.x)); }
-  }
-  if(!xs.length) return {min:null,max:null};
-  return {min:new Date(Math.min(...xs)), max:new Date(Math.max(...xs))};
-}
-
-/* ---- recompute y-axis from visible window (snap to 50) ---- */
-function getVisibleYValues(x0, x1){
-  const s = new Date(x0), e = new Date(x1);
-  const take = (series) => (series ?? [])
-    .filter(p => p && p.x && Number.isFinite(p.y))
-    .filter(p => {
-      const d = new Date(p.x);
-      return d >= s && d <= e;
-    })
-    .map(p => p.y);
-
-  const ys = [...take(seriesLive), ...(showWCU && seriesWCU ? take(seriesWCU) : [])];
+/* recompute y range for visible window */
+function getVisibleYValues(x0,x1){
+  const s=new Date(x0), e=new Date(x1);
+  const take=(series)=>(series??[])
+    .filter(p=>p && p.x && Number.isFinite(p.y))
+    .filter(p=>{const d=new Date(p.x);return d>=s&&d<=e;})
+    .map(p=>p.y);
+  const ys=[...take(seriesLive),...(showWCU&&seriesWCU?take(seriesWCU):[])];
   return ys;
 }
 
-function adjustYToVisible(x0, x1){
-  const ys = getVisibleYValues(x0, x1);
-  if (!ys.length) return; // nothing in window; keep existing range
-
-  const ymin = Math.floor(Math.min(...ys) / 50) * 50;
-  const ymax = Math.ceil (Math.max(...ys) / 50) * 50;
-
-  Plotly.relayout('chart', {
-    'yaxis.autorange': false,
-    'yaxis.range': [ymin, ymax],
-    'shapes': majorGridShapes(ymin, ymax)
+function adjustYToVisible(x0,x1){
+  const ys=getVisibleYValues(x0,x1);
+  if(!ys.length) return;
+  const ymin=Math.floor(Math.min(...ys)/50)*50;
+  const ymax=Math.ceil(Math.max(...ys)/50)*50;
+  Plotly.relayout('chart',{
+    'yaxis.autorange':false,
+    'yaxis.range':[ymin,ymax],
+    'shapes':majorGridShapes(ymin,ymax)
   });
 }
-/* ---- /recompute ---- */
 
-/* --------- range controls --------- */
-function setXRange(start, end){
-  if(!dataMin || !dataMax) return;
-  const s = new Date(Math.max(new Date(start), dataMin));
-  const e = new Date(Math.min(new Date(end),   dataMax));
-  const x0 = iso(s), x1 = iso(e);
-  Plotly.relayout('chart', {'xaxis.range':[x0, x1]}).then(()=> adjustYToVisible(x0, x1));
+/* range controls */
+function setXRange(start,end){
+  if(!dataMin||!dataMax)return;
+  const s=new Date(Math.max(new Date(start),dataMin));
+  const e=new Date(Math.min(new Date(end),dataMax));
+  const x0=iso(s),x1=iso(e);
+  Plotly.relayout('chart',{'xaxis.range':[x0,x1]}).then(()=>adjustYToVisible(x0,x1));
 }
 
 function setPreset(which){
-  const now = new Date();
-  if(which==='ALL'){ setXRange(dataMin, dataMax); return; }
-  if(which==='YTD'){
-    const yStart = new Date(Date.UTC(now.getUTCFullYear(),0,1));
-    setXRange(yStart, dataMax); return;
-  }
-  if(which==='LY'){
-    // last 365 days ending at latest data point
-    const end = dataMax ? new Date(dataMax) : now;
-    const start = new Date(end.getTime() - 365*24*60*60*1000);
-    setXRange(start, end); return;
-  }
-  // numeric year e.g. "2015", "2022"
-  const y = parseInt(which,10);
-  const start = new Date(Date.UTC(y,0,1));
-  setXRange(start, dataMax);
+  const now=new Date();
+  if(which==='ALL'){setXRange(dataMin,dataMax);return;}
+  if(which==='YTD'){const yStart=new Date(Date.UTC(now.getUTCFullYear(),0,1));setXRange(yStart,dataMax);return;}
+  if(which==='LY'){const end=dataMax?new Date(dataMax):now;const start=new Date(end.getTime()-365*24*60*60*1000);setXRange(start,end);return;}
+  const y=parseInt(which,10);
+  const start=new Date(Date.UTC(y,0,1));
+  setXRange(start,dataMax);
 }
 
-/* --------- draw --------- */
+/* draw chart */
 function draw(){
-  const mode = document.getElementById('agg').value;
-  seriesLive = aggregateExpanded(rawLive, mode);
-  seriesWCU  = rawWCU.length ? aggregateExpanded(rawWCU, mode) : null;
+  const mode=document.getElementById('agg').value;
+  seriesLive=aggregateExpanded(rawLive,mode);
+  seriesWCU=rawWCU.length?aggregateExpanded(rawWCU,mode):null;
 
-  const traces = [ makeTrace(seriesLive, 'J-Ratings', COLORS.J, mode) ];
-  if (showWCU && seriesWCU) traces.push(makeTrace(seriesWCU, 'WCU', COLORS.WCU, mode));
+  const traces=[{...makeTrace(seriesLive,'J-Ratings',COLORS.J,mode)}];
+  if(showWCU&&seriesWCU)traces.push(makeTrace(seriesWCU,'WCU',COLORS.WCU,mode));
 
-  const ext = extentFrom(seriesLive, seriesWCU);
-  dataMin = ext.min; dataMax = ext.max;
+  const ext=extentFrom(seriesLive,seriesWCU);
+  dataMin=ext.min;dataMax=ext.max;
 
-  const bg = getComputedStyle(document.body).backgroundColor;
-  const layout = {
+  const bg=getComputedStyle(document.body).backgroundColor;
+  const layout={
     margin:{l:50,r:20,t:10,b:40},
     xaxis:{
       type:'date',
-      fixedrange:true,              // no drag-zoom; slider still works
-      rangeslider:{visible:true, thickness:0.12},
+      fixedrange:true,
+      rangeslider:{
+        visible:true,
+        thickness:0.12,
+        borderwidth:0,
+        bgcolor:'#0f1623',
+        bordercolor:'#0f1623'
+      }
     },
-    yaxis:{title:'Rating', fixedrange:true},
-    paper_bgcolor:bg, plot_bgcolor:bg,
+    yaxis:{title:'Rating',fixedrange:true},
+    paper_bgcolor:bg,plot_bgcolor:bg,
     font:{color:getComputedStyle(document.body).color},
     legend:{orientation:'h',x:0,y:1.1},
-    shapes: [] // will be set after first y-range computation
+    shapes:[]
   };
 
-  // default view: Last Year (last 365 days up to latest data point), clamped to data
-  if(!initialRangeSet && dataMin && dataMax){
-    const end = new Date(dataMax);
-    const start = new Date(end.getTime() - 365*24*60*60*1000);
-    layout.xaxis.range = [ iso(new Date(Math.max(start, dataMin))), iso(end) ];
-    initialRangeSet = true;
+  if(!initialRangeSet&&dataMin&&dataMax){
+    const end=new Date(dataMax);
+    const start=new Date(end.getTime()-365*24*60*60*1000);
+    layout.xaxis.range=[iso(new Date(Math.max(start,dataMin))),iso(end)];
+    initialRangeSet=true;
   }
 
-  Plotly.newPlot('chart', traces, layout, {
-    staticPlot:false,               // keep interactions for slider
-    scrollZoom:false,
-    displayModeBar:false,
-    responsive:true
-  }).then(gd => {
-    // 1) set y from the current (possibly default) x-range
-    const xr = gd.layout.xaxis.range || gd._fullLayout.xaxis.range;
-    if (xr && xr.length === 2) adjustYToVisible(xr[0], xr[1]);
-
-    // 2) re-compute y whenever the x-range changes (slider or programmatic)
-    if (!gd._jrYHandlerAttached){
-      gd.on('plotly_relayout', ev => {
-        const x0 = ev['xaxis.range[0]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][0]);
-        const x1 = ev['xaxis.range[1]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][1]);
-        if (x0 && x1) adjustYToVisible(x0, x1);
+  Plotly.newPlot('chart',traces,layout,{
+    staticPlot:false,scrollZoom:false,displayModeBar:false,responsive:true
+  }).then(gd=>{
+    const xr=gd.layout.xaxis.range||gd._fullLayout.xaxis.range;
+    if(xr&&xr.length===2)adjustYToVisible(xr[0],xr[1]);
+    if(!gd._jrYHandlerAttached){
+      gd.on('plotly_relayout',ev=>{
+        const x0=ev['xaxis.range[0]']??(ev['xaxis.range']&&ev['xaxis.range'][0]);
+        const x1=ev['xaxis.range[1]']??(ev['xaxis.range']&&ev['xaxis.range'][1]);
+        if(x0&&x1)adjustYToVisible(x0,x1);
       });
-      gd._jrYHandlerAttached = true;
+      gd._jrYHandlerAttached=true;
     }
   });
 }
 
+/* metrics and table loading remain unchanged */
+function makeTrace(series,name,colour,mode){
+  return{
+    x:series.map(p=>p.x),y:series.map(p=>p.y),
+    mode:(mode==='daily'?'lines':'lines+markers'),
+    line:{width:2,shape:'linear',color:colour},
+    marker:(mode==='daily'?{size:0}:{size:4}),
+    name,
+    hovertemplate:'%{x}<br>%{y:.0f}<extra>'+name+'</extra>',
+    connectgaps:true
+  };
+}
+
+function extentFrom(...seriesList){
+  const xs=[];
+  for(const s of seriesList){if(!s)continue;for(const p of s){if(p?.x)xs.push(new Date(p.x));}}
+  if(!xs.length)return{min:null,max:null};
+  return{min:new Date(Math.min(...xs)),max:new Date(Math.max(...xs))};
+}
+
 function computeMetrics(series){
-  const y = series?.map(p=>p.y) ?? [];
-  const live = y.length ? Math.round(y[y.length-1]) : null;
-  const peak = y.length ? Math.round(Math.max(...y)) : null;
-  const kval = Number.isFinite(live) ? kFromRating(live) : null;
-  return { live, peak, kval };
+  const y=series?.map(p=>p.y)??[];
+  const live=y.length?Math.round(y[y.length-1]):null;
+  const peak=y.length?Math.round(Math.max(...y)):null;
+  const kval=Number.isFinite(live)?kFromRating(live):null;
+  return{live,peak,kval};
 }
 
 function refreshBadge(){
-  const j = computeMetrics(seriesLive);
-  document.getElementById('live-j').textContent = j.live ?? '–';
-  document.getElementById('peak-j').textContent = j.peak ?? '–';
-  document.getElementById('kval-j').textContent = (typeof me?.k==='number') ? me.k : (j.kval ?? '–');
-
-  const wcuRow = document.getElementById('stats-wcu');
-  if (showWCU && seriesWCU) {
-    const w = computeMetrics(seriesWCU);
-    document.getElementById('live-wcu').textContent = w.live ?? '–';
-    document.getElementById('peak-wcu').textContent = w.peak ?? '–';
-    document.getElementById('kval-wcu').textContent = w.kval ?? '–';
-    wcuRow.style.display = '';
-  } else {
-    wcuRow.style.display = 'none';
-  }
-  document.getElementById('toggle').textContent = showWCU ? 'Hide WCU' : 'Show WCU';
+  const j=computeMetrics(seriesLive);
+  document.getElementById('live-j').textContent=j.live??'–';
+  document.getElementById('peak-j').textContent=j.peak??'–';
+  document.getElementById('kval-j').textContent=(typeof me?.k==='number')?me.k:(j.kval??'–');
+  const wcuRow=document.getElementById('stats-wcu');
+  if(showWCU&&seriesWCU){
+    const w=computeMetrics(seriesWCU);
+    document.getElementById('live-wcu').textContent=w.live??'–';
+    document.getElementById('peak-wcu').textContent=w.peak??'–';
+    document.getElementById('kval-wcu').textContent=w.kval??'–';
+    wcuRow.style.display='';
+  }else wcuRow.style.display='none';
+  document.getElementById('toggle').textContent=showWCU?'Hide WCU':'Show WCU';
 }
 
-/* link only if an ID exists (support snake_case and camelCase) */
-function getId(g, base){
-  return g[base+'Id'] ?? g[base+'_id'] ?? g[base+'ID'] ?? null;
-}
-
-function resultClass(r){ if(r==='Win')return'result-win'; if(r==='Draw')return'result-draw'; if(r==='Loss')return'result-loss'; return''; }
-function deltaClass(d){ if(!d)return''; if(d.startsWith('+'))return'delta-pos'; if(d.startsWith('-'))return'delta-neg'; return'delta-zero'; }
+function getId(g,base){return g[base+'Id']??g[base+'_id']??g[base+'ID']??null;}
+function resultClass(r){if(r==='Win')return'result-win';if(r==='Draw')return'result-draw';if(r==='Loss')return'result-loss';return'';}
+function deltaClass(d){if(!d)return'';if(d.startsWith('+'))return'delta-pos';if(d.startsWith('-'))return'delta-neg';return'delta-zero';}
 
 async function load(){
   try{
-    const [playersRes, liveRes, wcuRes, gamesRes] = await Promise.all([
+    const[playersRes,liveRes,wcuRes,gamesRes]=await Promise.all([
       fetch(PLAYERS_URL,{cache:'no-cache'}),
       fetch(HIST_URL(idRaw),{cache:'no-cache'}),
       fetch(HIST_WCU(idRaw),{cache:'no-cache'}).catch(()=>null),
       fetch(GAMES_URL(idRaw),{cache:'no-cache'}).catch(()=>null)
     ]);
-    if(!playersRes.ok) throw new Error('players.json not found');
-    if(!liveRes.ok) throw new Error('live history not found');
+    if(!playersRes.ok)throw new Error('players.json not found');
+    if(!liveRes.ok)throw new Error('live history not found');
 
-    const players = await playersRes.json();
-    me = players.find(p=>p.id===idRaw);
-    if(!me) throw new Error('player id not in players.json');
-    document.getElementById('pname').textContent = me.name;
+    const players=await playersRes.json();
+    me=players.find(p=>p.id===idRaw);
+    if(!me)throw new Error('player id not in players.json');
+    document.getElementById('pname').textContent=me.name;
 
-    rawLive = (await liveRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
-    if (wcuRes && wcuRes.ok) {
-      rawWCU = (await wcuRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
-      document.getElementById('toggle').disabled = false;
-    } else {
-      rawWCU = [];
-      document.getElementById('toggle').disabled = true;
-      document.getElementById('toggle').textContent = 'WCU N/A';
+    rawLive=(await liveRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
+    if(wcuRes&&wcuRes.ok){
+      rawWCU=(await wcuRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
+      document.getElementById('toggle').disabled=false;
+    }else{
+      rawWCU=[];document.getElementById('toggle').disabled=true;
+      document.getElementById('toggle').textContent='WCU N/A';
     }
 
-    draw(); refreshBadge();
-    document.getElementById('agg').addEventListener('change',()=>{ draw(); refreshBadge(); });
-
-    // range preset buttons
+    draw();refreshBadge();
+    document.getElementById('agg').addEventListener('change',()=>{draw();refreshBadge();});
     document.querySelectorAll('.range-buttons .seg').forEach(btn=>{
-      btn.addEventListener('click', ()=> setPreset(btn.dataset.range));
+      btn.addEventListener('click',()=>setPreset(btn.dataset.range));
     });
 
-    if (gamesRes && gamesRes.ok) {
-      const games = await gamesRes.json();
-      const tbody = document.getElementById('games-body');
+    if(gamesRes&&gamesRes.ok){
+      const games=await gamesRes.json();
+      const tbody=document.getElementById('games-body');
       games.forEach(g=>{
-        const tr = document.createElement('tr');
-        const cols = ["date","player","playerElo","opponent","opponentElo","result","delta"];
+        const tr=document.createElement('tr');
+        const cols=["date","player","playerElo","opponent","opponentElo","result","delta"];
         cols.forEach(col=>{
-          const td = document.createElement("td");
-
-          if (col==="player" || col==="opponent") {
-            const name = g[col] ?? "";
-            const id   = getId(g, col); // playerId / player_id / opponentId / opponent_id
-            if (id) {
+          const td=document.createElement("td");
+          if(col==="player"||col==="opponent"){
+            const name=g[col]??"";
+            const id=getId(g,col);
+            if(id){
               const a=document.createElement("a");
               a.href=`player.html?id=${encodeURIComponent(id)}`;
               a.textContent=name;
               td.appendChild(a);
-            } else {
-              td.textContent=name;
-            }
-          } else {
-            td.textContent = g[col] ?? "";
-          }
-
-          if (col==="result") td.className=resultClass(g[col]);
-          if (col==="delta")  td.className=deltaClass(g[col]);
+            }else td.textContent=name;
+          }else td.textContent=g[col]??"";
+          if(col==="result")td.className=resultClass(g[col]);
+          if(col==="delta")td.className=deltaClass(g[col]);
           tr.appendChild(td);
         });
         tbody.appendChild(tr);
@@ -457,8 +421,8 @@ async function load(){
   }
 }
 
-document.addEventListener('click', e=>{
-  if (e.target.id==='toggle' && !e.target.disabled) { showWCU=!showWCU; draw(); refreshBadge(); }
+document.addEventListener('click',e=>{
+  if(e.target.id==='toggle'&&!e.target.disabled){showWCU=!showWCU;draw();refreshBadge();}
 });
 
 load();
