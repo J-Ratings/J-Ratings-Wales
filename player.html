@@ -394,6 +394,7 @@ async function load(){
 
     if(gamesRes&&gamesRes.ok){
       const games=await gamesRes.json();
+      games.sort((a,b) => new Date(b.date) - new Date(a.date));
       const tbody=document.getElementById('games-body');
       games.forEach(g=>{
         const tr=document.createElement('tr');
