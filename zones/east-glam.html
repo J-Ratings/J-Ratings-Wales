@@ -124,7 +124,7 @@ const clubNames = {
   "2SJ": "St John's College"
 };
 
-const state = { rows: [], filtered: [], selectedClub: null, mode: 'live' };
+const state = { rows: [], filtered: [], selectedClub: null };
 
 /* ---------- AGGREGATION ---------- */
 function aggregateExpanded(hist, mode) {
@@ -166,8 +166,7 @@ function renderTable() {
 
     const tdRt = document.createElement('td');
     tdRt.className = 'right';
-    const val = state.mode === 'live' ? r.rating : r.peak;
-    tdRt.textContent = Math.round(val);
+    tdRt.textContent = Math.round(r.rating);
 
     tr.appendChild(tdName);
     tr.appendChild(tdRt);
@@ -175,8 +174,7 @@ function renderTable() {
   }
   document.getElementById('count').textContent =
     `${state.filtered.length.toLocaleString()} players`;
-  document.getElementById('rating-col').textContent =
-    state.mode === 'live' ? 'Live rating' : 'Peak rating';
+  document.getElementById('rating-col').textContent = 'Rating';
 }
 
 function applyFilter() {
@@ -184,11 +182,8 @@ function applyFilter() {
   let list = state.rows;
   if (state.selectedClub) list = list.filter(r => r.club === state.selectedClub);
   if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
-
-  const key = state.mode === 'live' ? 'rating' : 'peak';
-  state.filtered = list.filter(r => Number.isFinite(r[key]))
-                       .sort((a,b) => b[key] - a[key]);
-
+  state.filtered = list.filter(r => Number.isFinite(r.rating))
+                       .sort((a,b) => b.rating - a.rating);
   renderTable();
   hideCompare();
 }
@@ -281,7 +276,7 @@ function setupCompareButton() {
       wrapper.innerHTML=`
         <label style="cursor:pointer">
           <input type="checkbox" id="${id}" value="${p.id}" style="margin-right:6px">
-          ${p.name} (${Math.round(state.mode==='live'?p.rating:p.peak)})
+          ${p.name} (${Math.round(p.rating)})
         </label>`;
       listDiv.appendChild(wrapper);
     });
@@ -334,23 +329,8 @@ async function load() {
   });
   renderTable();
   setupCompareButton();
-
-  // tabs
-  document.getElementById('tab-live').addEventListener('click', () => {
-    if (state.mode === 'live') return;
-    state.mode = 'live';
-    document.getElementById('tab-live').classList.add('active');
-    document.getElementById('tab-peak').classList.remove('active');
-    applyFilter();
-  });
-  document.getElementById('tab-peak').addEventListener('click', () => {
-    if (state.mode === 'peak') return;
-    state.mode = 'peak';
-    document.getElementById('tab-peak').classList.add('active');
-    document.getElementById('tab-live').classList.remove('active');
-    applyFilter();
-  });
 }
+
 document.getElementById('q').addEventListener('input',applyFilter);
 load().catch(err=>{
   document.querySelector('#players tbody').innerHTML=
