@@ -118,7 +118,7 @@ const clubNames = {
 };
 
 /* ---------- STATE ---------- */
-const state = { rows: [], filtered: [], selectedClub: null, mode: 'live' };
+const state = { rows: [], filtered: [], selectedClub: null };
 
 /* ---------- helpers for aggregation ---------- */
 function normalise(series){
@@ -178,16 +178,14 @@ function renderTable() {
     tdName.appendChild(a);
     const tdRt = document.createElement('td');
     tdRt.className = 'right';
-    const val = state.mode === 'live' ? r.rating : r.peak;
-    tdRt.textContent = Math.round(val);
+    tdRt.textContent = Math.round(r.rating);
     tr.appendChild(tdName);
     tr.appendChild(tdRt);
     tbody.appendChild(tr);
   }
   document.getElementById('count').textContent =
     `${state.filtered.length.toLocaleString()} players`;
-  document.getElementById('rating-col').textContent =
-    state.mode === 'live' ? 'Live rating' : 'Peak rating';
+  document.getElementById('rating-col').textContent = 'Rating';
 }
 
 function applyFilter() {
@@ -195,9 +193,8 @@ function applyFilter() {
   let list = state.rows;
   if (state.selectedClub) list = list.filter(r => r.club === state.selectedClub);
   if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
-  const key = state.mode === 'live' ? 'rating' : 'peak';
-  state.filtered = list.filter(r => Number.isFinite(r[key]))
-                       .sort((a,b) => b[key] - a[key]);
+  state.filtered = list.filter(r => Number.isFinite(r.rating))
+                       .sort((a,b) => b.rating - a.rating);
   renderTable();
   hideCompare();
 }
@@ -258,22 +255,22 @@ async function buildComparison(players) {
     const series=aggregateExpanded(hist,mode);
     if (isTouch) {
       const n=series.length;
-      const text=series.map((_,i)=>(i===n-1?p.name:''));
+      const text=series.map((_,i)=>(i===n-1?p.name:'')); 
       return {
         name:p.name, x:series.map(d=>d.x), y:series.map(d=>d.y),
         mode:'lines+text', text,textposition:'middle right',
         textfont:{size:10}, cliponaxis:false, hoverinfo:'skip'
       };
     } else {
-return {
-  name: p.name,
-  x: series.map(d => d.x),
-  y: series.map(d => d.y),
-  mode: (mode === 'daily' ? 'lines' : 'lines+markers'),
-  marker: (mode === 'daily' ? { size: 0 } : { size: 4 }),
-  line: { width: 2 },
-  hovertemplate: '%{x} → %{y:.0f}<extra>' + p.name + '</extra>'
-};
+      return {
+        name: p.name,
+        x: series.map(d => d.x),
+        y: series.map(d => d.y),
+        mode: (mode === 'daily' ? 'lines' : 'lines+markers'),
+        marker: (mode === 'daily' ? { size: 0 } : { size: 4 }),
+        line: { width: 2 },
+        hovertemplate: '%{x} → %{y:.0f}<extra>' + p.name + '</extra>'
+      };
     }
   });
 
@@ -358,29 +355,13 @@ async function load() {
   renderTable();
   setupCompareButton();
 
-  document.getElementById('agg').addEventListener('change',()=>{
+  document.getElementById('agg').addEventListener('change',()=> {
     const open = document.getElementById('compare-wrap').style.display!=='none';
     if(open){
       const selectedIds=[...document.querySelectorAll('#compare-list input[type=checkbox]:checked')].map(cb=>cb.value);
       const chosenPlayers=state.filtered.filter(p=>selectedIds.includes(p.id));
       buildComparison(chosenPlayers);
     }
-  });
-
-  // tabs
-  document.getElementById('tab-live').addEventListener('click', () => {
-    if (state.mode === 'live') return;
-    state.mode = 'live';
-    document.getElementById('tab-live').classList.add('active');
-    document.getElementById('tab-peak').classList.remove('active');
-    applyFilter();
-  });
-  document.getElementById('tab-peak').addEventListener('click', () => {
-    if (state.mode === 'peak') return;
-    state.mode = 'peak';
-    document.getElementById('tab-peak').classList.add('active');
-    document.getElementById('tab-live').classList.remove('active');
-    applyFilter();
   });
 }
 

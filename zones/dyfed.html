@@ -112,7 +112,7 @@ const clubNames = {
   "4AU": "Aberystwyth University"
 };
 
-const state = { rows: [], filtered: [], selectedClub: null, mode: 'live' };
+const state = { rows: [], filtered: [], selectedClub: null };
 
 /* ---------- AGGREGATION ---------- */
 function aggregateExpanded(hist, mode) {
@@ -151,18 +151,18 @@ function renderTable() {
     a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
     a.textContent = r.name;
     tdName.appendChild(a);
+
     const tdRt = document.createElement('td');
     tdRt.className = 'right';
-    const val = state.mode === 'live' ? r.rating : r.peak;
-    tdRt.textContent = Math.round(val);
+    tdRt.textContent = Math.round(r.rating);
+
     tr.appendChild(tdName);
     tr.appendChild(tdRt);
     tbody.appendChild(tr);
   }
   document.getElementById('count').textContent =
     `${state.filtered.length.toLocaleString()} players`;
-  document.getElementById('rating-col').textContent =
-    state.mode === 'live' ? 'Live rating' : 'Peak rating';
+  document.getElementById('rating-col').textContent = 'Rating';
 }
 
 function applyFilter() {
@@ -170,9 +170,8 @@ function applyFilter() {
   let list = state.rows;
   if (state.selectedClub) list = list.filter(r => r.club === state.selectedClub);
   if (q) list = list.filter(r => r.name.toLowerCase().includes(q));
-  const key = state.mode === 'live' ? 'rating' : 'peak';
-  state.filtered = list.filter(r => Number.isFinite(r[key]))
-                       .sort((a,b) => b[key] - a[key]);
+  state.filtered = list.filter(r => Number.isFinite(r.rating))
+                       .sort((a,b) => b.rating - a.rating);
   renderTable();
   hideCompare();
 }
@@ -192,11 +191,13 @@ async function fetchHistoryFor(id) {
   histCache.set(id, hist ?? null);
   return hist ?? null;
 }
+
 function hideCompare() {
   document.getElementById('compare-wrap').style.display = 'none';
   document.getElementById('compare-chart').innerHTML = '';
   document.getElementById('agg-wrap').style.display = 'none';
 }
+
 async function buildComparison(players) {
   const wrap = document.getElementById('compare-wrap');
   const chart = document.getElementById('compare-chart');
@@ -204,6 +205,7 @@ async function buildComparison(players) {
   wrap.style.display = 'block';
   document.getElementById('agg-wrap').style.display = 'block';
   chart.innerHTML = 'Loading…';
+
   const withHist = [];
   await Promise.all(players.map(async p => {
     const hist = await fetchHistoryFor(p.id);
@@ -211,40 +213,50 @@ async function buildComparison(players) {
     const use = COMPARE_SINCE ? hist.filter(d=>d.date>=COMPARE_SINCE) : hist;
     if (use.length) withHist.push({ p, hist: aggregateExpanded(use, aggMode) });
   }));
+
   if (!withHist.length) {
     chart.innerHTML = COMPARE_SINCE
       ? `No rating history since ${COMPARE_SINCE}.`
       : 'No rating history found.';
     return;
   }
+
   withHist.sort((a,b)=>
     b.hist[b.hist.length-1].date.localeCompare(a.hist[a.hist.length-1].date)
   );
   const picked = withHist.slice(0, MAX_SERIES);
   const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
   const traces = picked.map(({ p,hist })=>{
     if (isTouch) {
       const n = hist.length;
-      const text = hist.map((_,i)=>(i===n-1?p.name:''));
-      return { name:p.name,x:hist.map(d=>d.date),y:hist.map(d=>d.rating),
-        mode:'lines+text',text,textposition:'middle right',
-        textfont:{size:10},cliponaxis:false,hoverinfo:'skip' };
+      const text = hist.map((_,i)=>(i===n-1?p.name:'')); 
+      return { 
+        name:p.name, x:hist.map(d=>d.date), y:hist.map(d=>d.rating),
+        mode:'lines+text', text, textposition:'middle right',
+        textfont:{size:10}, cliponaxis:false, hoverinfo:'skip'
+      };
     } else {
-return {
-  name: p.name,
-  x: series.map(d => d.x),
-  y: series.map(d => d.y),
-  mode: (mode === 'daily' ? 'lines' : 'lines+markers'),
-  marker: (mode === 'daily' ? { size: 0 } : { size: 4 }),
-  line: { width: 2 },
-  hovertemplate: '%{x} → %{y:.0f}<extra>' + p.name + '</extra>'
-};
+      return {
+        name:p.name,
+        x:hist.map(d=>d.date),
+        y:hist.map(d=>d.rating),
+        mode:(aggMode==='daily'?'lines':'lines+markers'),
+        marker:(aggMode==='daily'?{size:0}:{size:4}),
+        line:{width:2},
+        hovertemplate:'%{x} → %{y:.0f}<extra>'+p.name+'</extra>'
+      };
     }
   });
+
   const cs = getComputedStyle(document.body);
   const layout = {
-    margin:{l:50,r:(isTouch?110:20),t:10,b:40},xaxis:{type:'date'},yaxis:{title:'Rating'},
-    legend:{orientation:'h'},paper_bgcolor:cs.backgroundColor,plot_bgcolor:cs.backgroundColor,
+    margin:{l:50,r:(isTouch?110:20),t:10,b:40},
+    xaxis:{type:'date'},
+    yaxis:{title:'Rating'},
+    legend:{orientation:'h'},
+    paper_bgcolor:cs.backgroundColor,
+    plot_bgcolor:cs.backgroundColor,
     font:{color:cs.color}
   };
   const config = isTouch
@@ -259,6 +271,7 @@ function setupCompareButton() {
   const listDiv = document.getElementById('compare-list');
   const showBtns = modal.querySelectorAll('.compare-show');
   const cancelBtns = modal.querySelectorAll('.compare-cancel');
+
   document.getElementById('compare-btn').addEventListener('click',()=>{
     listDiv.innerHTML='';
     state.filtered.forEach(p=>{
@@ -274,10 +287,12 @@ function setupCompareButton() {
     });
     modal.style.display='flex';
   });
-  cancelBtns.forEach(btn=>
+
+  cancelBtns.forEach(btn =>
     btn.addEventListener('click',()=>{ modal.style.display='none'; })
   );
-  showBtns.forEach(btn=>
+
+  showBtns.forEach(btn =>
     btn.addEventListener('click',async()=>{
       const selectedIds=[...listDiv.querySelectorAll('input[type=checkbox]:checked')]
         .map(cb=>cb.value);
@@ -287,6 +302,7 @@ function setupCompareButton() {
       await buildComparison(chosenPlayers);
     })
   );
+
   document.getElementById('agg').addEventListener('change',()=>{
     const selectedIds=[...document.querySelectorAll('#compare-list input[type=checkbox]:checked')]
       .map(cb=>cb.value);
@@ -301,14 +317,18 @@ async function load() {
   const res = await fetch(DATA_URL,{cache:'no-cache'});
   if (!res.ok) throw new Error('Failed to load players.json');
   const data = await res.json();
+
   state.rows = data.filter(d=>d.zone===ZONE_CODE).sort((a,b)=>b.rating-a.rating);
   state.filtered = state.rows.slice();
+
   const clubsNav = document.querySelector('.clubs-nav');
   const clubs = [...new Set(state.rows.map(r=>r.club).filter(c=>/^\d/.test(c)&&clubNames[c]))].sort();
   clubsNav.innerHTML =
     `<button class="club-btn active-club" data-code="">All</button>` +
     clubs.map(c=>`<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
+
   document.getElementById('compare-btn').style.display='none';
+
   clubsNav.addEventListener('click',e=>{
     if (!e.target.classList.contains('club-btn')) return;
     document.querySelectorAll('.club-btn').forEach(b=>b.classList.remove('active-club'));
@@ -319,26 +339,13 @@ async function load() {
     document.getElementById('compare-btn').style.display=code?'inline-block':'none';
     applyFilter();
   });
+
   renderTable();
   setupCompareButton();
-
-  // added: tab switching
-  document.getElementById('tab-live').addEventListener('click',()=>{
-    if (state.mode==='live') return;
-    state.mode='live';
-    document.getElementById('tab-live').classList.add('active');
-    document.getElementById('tab-peak').classList.remove('active');
-    applyFilter();
-  });
-  document.getElementById('tab-peak').addEventListener('click',()=>{
-    if (state.mode==='peak') return;
-    state.mode='peak';
-    document.getElementById('tab-peak').classList.add('active');
-    document.getElementById('tab-live').classList.remove('active');
-    applyFilter();
-  });
 }
+
 document.getElementById('q').addEventListener('input',applyFilter);
+
 load().catch(err=>{
   document.querySelector('#players tbody').innerHTML=
     `<tr><td colspan="2">Error loading data: ${err.message}</td></tr>`;
