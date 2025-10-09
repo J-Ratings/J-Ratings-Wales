@@ -254,7 +254,7 @@ async function buildComparison(players) {
     mode: (aggMode === 'daily' ? 'lines' : 'lines+markers'),
     marker: (aggMode === 'daily' ? { size: 0 } : { size: 4 }),
     line: { width: 2 },
-    hovertemplate: '%{x} → %{y:.0f}<extra>' + p.name + '</extra>'
+    hovertemplate:'%{y:.0f}<extra>'+name+'</extra>',
   }));
 
   const cs = getComputedStyle(document.body);
