@@ -322,7 +322,7 @@ function makeTrace(series,name,colour,mode){
     line:{width:2,shape:'linear',color:colour},
     marker:(mode==='daily'?{size:0}:{size:4}),
     name,
-    hovertemplate:'%{x}<br>%{y:.0f}<extra>'+name+'</extra>',
+    hovertemplate:'%{y:.0f}<extra>'+name+'</extra>',
     connectgaps:true
   };
 }
