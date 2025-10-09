@@ -231,7 +231,7 @@ function createChart(){
         mode:(mode==='daily'?'lines':'lines+markers'),
         marker:(mode==='daily'?{size:0}:{size:4}),
         line:{width:2},
-        hovertemplate:'%{x} → %{y:.0f}<extra>'+name+'</extra>'
+        hovertemplate:name+'</extra>'
       };
     });
   })).then(series=>{
