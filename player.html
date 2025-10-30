@@ -414,37 +414,39 @@ if (!isNaN(delta)) currentElo += delta;
   const tbody = document.getElementById('games-body');
   tbody.innerHTML = ""; // clear old rows if any
 
-  games.forEach(g => {
-    const tr = document.createElement('tr');
-    const cols = ["date", "player", "playerElo", "opponent", "opponentElo", "result", "delta"];
+games.forEach(g => {
+  const tr = document.createElement('tr');
+  // const cols = ["date", "player", "playerElo", "opponent", "opponentElo", "result", "delta"];
+  // Temporarily remove Opponent and first Elo from display
+  const cols = ["date", "player", /*"playerElo", "opponent",*/ "opponentElo", "result", "delta"];
 
-    cols.forEach(col => {
-      const td = document.createElement("td");
+  cols.forEach(col => {
+    const td = document.createElement("td");
 
-      if (col === "player" || col === "opponent") {
-        const name = g[col] ?? "";
-        const id = getId(g, col);
-        if (id) {
-          const a = document.createElement("a");
-          a.href = `player.html?id=${encodeURIComponent(id)}`;
-          a.textContent = name;
-          td.appendChild(a);
-        } else {
-          td.textContent = name;
-        }
+    if (col === "player" || col === "opponent") {
+      const name = g[col] ?? "";
+      const id = getId(g, col);
+      if (id) {
+        const a = document.createElement("a");
+        a.href = `player.html?id=${encodeURIComponent(id)}`;
+        a.textContent = name;
+        td.appendChild(a);
       } else {
-        td.textContent = (col === "playerElo") ? Math.round(g[col]) : (g[col] ?? "");
-
+        td.textContent = name;
       }
+    } else {
+      // Round Elo when displaying, keep decimals internally
+      td.textContent = (col === "playerElo") ? Math.round(g[col]) : (g[col] ?? "");
+    }
 
-      if (col === "result") td.className = resultClass(g[col]);
-      if (col === "delta") td.className = deltaClass(g[col]);
+    if (col === "result") td.className = resultClass(g[col]);
+    if (col === "delta") td.className = deltaClass(g[col]);
 
-      tr.appendChild(td);
-    });
-
-    tbody.appendChild(tr);
+    tr.appendChild(td);
   });
+
+  tbody.appendChild(tr);
+});
 }
 
   }catch(e){
