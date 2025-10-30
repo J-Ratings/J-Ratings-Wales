@@ -404,8 +404,8 @@ if (gamesRes && gamesRes.ok) {
   // Compute the Elo before each game using Δ values
   for (const g of games) {
     const delta = parseFloat(g.delta);
-    g.playerElo = Math.round(currentElo);
-    if (!isNaN(delta)) currentElo += delta;
+g.playerElo = currentElo; // keep the exact value internally
+if (!isNaN(delta)) currentElo += delta;
   }
 
   // Now display most recent games first (reverse chronological)
@@ -433,7 +433,8 @@ if (gamesRes && gamesRes.ok) {
           td.textContent = name;
         }
       } else {
-        td.textContent = g[col] ?? "";
+        td.textContent = (col === "playerElo") ? Math.round(g[col]) : (g[col] ?? "");
+
       }
 
       if (col === "result") td.className = resultClass(g[col]);
