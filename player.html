@@ -415,9 +415,10 @@ if (!isNaN(delta)) currentElo += delta;
 
 games.forEach(g => {
   const tr = document.createElement('tr');
+  // Original columns:
   // const cols = ["date", "player", "playerElo", "opponent", "opponentElo", "result", "delta"];
-  // Temporarily remove Opponent and first Elo from display
-  const cols = ["date", "player", /*"playerElo", "opponent",*/ "opponentElo", "result", "delta"];
+  // Temporarily remove Player and the first Elo
+  const cols = ["date", /*"player", "playerElo",*/ "opponent", "opponentElo", "result", "delta"];
 
   cols.forEach(col => {
     const td = document.createElement("td");
@@ -434,7 +435,6 @@ games.forEach(g => {
         td.textContent = name;
       }
     } else {
-      // Round Elo when displaying, keep decimals internally
       td.textContent = (col === "playerElo") ? Math.round(g[col]) : (g[col] ?? "");
     }
 
