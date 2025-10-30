@@ -48,16 +48,21 @@
       padding:6px 10px;border-bottom:1px solid #333;text-align:center!important;
       vertical-align:middle;white-space:nowrap
     }
-    #games th{background:#111;position:sticky;top:0}
-    #games th:nth-child(1),#games td:nth-child(1),
-#games th:nth-child(3),
-#games td:nth-child(3) {
+/* Add double borders between all columns */
+#games th, 
+#games td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #333;
+  text-align: center !important;
+  vertical-align: middle;
+  white-space: nowrap;
   border-right: 3px double rgba(255, 255, 255, 0.25);
 }
-/* Hard border between Result and Δ */
-#games th:nth-child(4),
-#games td:nth-child(4) {
-  border-right: 3px double rgba(255, 255, 255, 0.25);
+
+/* Remove the final right border for tidiness */
+#games th:last-child,
+#games td:last-child {
+  border-right: none;
 }
     #games th:nth-child(6),#games td:nth-child(6){
       border-right:3px double rgba(128,128,128,0.6)
