@@ -19,51 +19,108 @@
       display:flex;justify-content:space-between;align-items:flex-end;
       margin:12px 0;padding-right:12px;
     }
-    .badge{
-      border:1px solid var(--border);background:#0f1623;border-radius:8px;
-      padding:6px 10px;margin-right:4px;white-space:nowrap;
-      display:flex;align-items:flex-start;flex-direction:column;gap:.5rem;
+        .badge{
+      border:1px solid var(--border);
+      background:#0f1623;
+      border-radius:8px;
+      padding:6px 10px;
+      margin-right:4px;
+      white-space:nowrap;
+      display:flex;
+      align-items:flex-start;
+      flex-direction:column;
+      gap:.5rem;
     }
-    .badge .stack{display:flex;flex-direction:column;gap:.25rem}
-    .badge strong{font-variant-numeric:tabular-nums}
-    #stats-j .muted{color:#1f77b4;font-weight:bold}
-    #stats-wcu .muted{color:#ff7f0e;font-weight:bold}
-    .btn-mini{
-      background:#0f1623;border:1px solid var(--border);color:var(--text);
-      padding:4px 8px;border-radius:6px;cursor:pointer;font-size:.9rem;
-    }
-    .btn-mini[disabled]{opacity:.5;cursor:default}
-    .btn-mini:hover:not([disabled]){background:rgba(255,255,255,.05)}
-    #chart{height:420px;touch-action:pan-y}
-    .range-buttons{
-      display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.5rem 0 0.25rem 0;
-    }
-    .range-buttons .seg{
-      background:#0f1623;border:1px solid var(--border);color:var(--text);
-      padding:6px 10px;border-radius:6px;cursor:pointer;font-size:.9rem;
-    }
-    .range-buttons .seg:hover{background:rgba(255,255,255,.05)}
-    #games{margin-top:1.5rem;width:100%;border-collapse:collapse}
-    #games th,#games td{
-      padding:6px 10px;border-bottom:1px solid #333;text-align:center!important;
-      vertical-align:middle;white-space:nowrap
-    }
-/* Add double borders between all columns */
-#games th, 
-#games td {
-  padding: 6px 10px;
-  border-bottom: 1px solid #333;
-  text-align: center !important;
-  vertical-align: middle;
-  white-space: nowrap;
-  border-right: 3px double rgba(255, 255, 255, 0.25);
-}
 
-/* Remove the final right border for tidiness */
-#games th:last-child,
-#games td:last-child {
-  border-right: none;
-}
+    .badge .stack{
+      display:flex;
+      flex-direction:column;
+      gap:.25rem;
+    }
+
+    .badge strong{
+      font-variant-numeric:tabular-nums;
+    }
+
+    #stats-j .muted{
+      color:#1f77b4;
+      font-weight:bold;
+    }
+
+    #stats-wcu .muted{
+      color:#ff7f0e;
+      font-weight:bold;
+    }
+
+    .btn-mini{
+      background:#0f1623;
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:4px 8px;
+      border-radius:6px;
+      cursor:pointer;
+      font-size:.9rem;
+    }
+
+    .btn-mini[disabled]{
+      opacity:.5;
+      cursor:default;
+    }
+
+    .btn-mini:hover:not([disabled]){
+      background:rgba(255,255,255,.05);
+    }
+
+    #chart{
+      height:420px;
+      touch-action:pan-y;
+    }
+
+    .range-buttons{
+      display:flex;
+      gap:.5rem;
+      flex-wrap:wrap;
+      align-items:center;
+      margin:.5rem 0 0.25rem 0;
+    }
+
+    .range-buttons .seg{
+      background:#0f1623;
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:6px 10px;
+      border-radius:6px;
+      cursor:pointer;
+      font-size:.9rem;
+    }
+
+    .range-buttons .seg:hover{
+      background:rgba(255,255,255,.05);
+    }
+
+    #games{
+      margin-top:1.5rem;
+      width:100%;
+      border-collapse:collapse;
+    }
+
+    /* Add double borders between all columns */
+    #games th,
+    #games td{
+      padding:6px 10px;
+      border-bottom:1px solid #333;
+      text-align:center!important;
+      vertical-align:middle;
+      white-space:nowrap;
+      border-right:3px double rgba(255,255,255,0.25);
+    }
+
+    /* Remove the final right border for tidiness */
+    #games th:last-child,
+    #games td:last-child{
+      border-right:none;
+    }
+
     #games th:nth-child(6),#games td:nth-child(6){
       border-right:3px double rgba(128,128,128,0.6)
     }
