@@ -341,11 +341,11 @@ function draw(){
   const bg=getComputedStyle(document.body).backgroundColor;
   const baseLayout={
     margin:{l:50,r:20,t:10,b:40},
-    xaxis:{
-      type:'date',
-      fixedrange:true,
-      rangeslider:{visible:true,thickness:0.12,borderwidth:0,bgcolor:'#0f1623',bordercolor:'#0f1623'}
-    },
+xaxis: {
+  type: 'date',
+  fixedrange: true,
+  rangeslider: { visible: true, thickness: 0.04, borderwidth: 0, bgcolor: '#0f1623' }
+},
     yaxis:{title:'Rating',fixedrange:true},
     paper_bgcolor:bg,plot_bgcolor:bg,
     font:{color:getComputedStyle(document.body).color},
