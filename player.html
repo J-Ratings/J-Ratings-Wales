@@ -8,8 +8,12 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
 /* Strip the mini-graph out of the Plotly range slider */
-#chart g.rangeslider .plot > g,        /* traces & layers (most versions) */
-#chart g.rangeslider .rangeplot > g,   /* traces (some versions) */
+#chart g.rangeslider .plot,
+#chart g.rangeslider .rangeplot {
+  opacity: 0 !important;       /* hides all the tiny traces at once */
+}
+
+/* Hide axes and grid inside the rangeslider */
 #chart g.rangeslider .gridlayer,
 #chart g.rangeslider .zerolinelayer,
 #chart g.rangeslider [class^="xaxislayer"],
@@ -381,8 +385,10 @@ function draw(){
 // keep the mini chart hidden after any internal redraws
 const hideMini = () => {
   document.querySelectorAll(
-    '#chart g.rangeslider .plot > g, ' +
-    '#chart g.rangeslider .rangeplot > g, ' +
+    '#chart g.rangeslider .plot, #chart g.rangeslider .rangeplot'
+  ).forEach(el => { el.style.opacity = '0'; });
+
+  document.querySelectorAll(
     '#chart g.rangeslider .gridlayer, ' +
     '#chart g.rangeslider .zerolinelayer, ' +
     '#chart g.rangeslider [class^="xaxislayer"], ' +
