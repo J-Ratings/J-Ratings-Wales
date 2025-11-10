@@ -7,17 +7,16 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
-/* Make Plotly's range slider look like a plain slider (no mini graph) */
-#chart g.rangeslider .rangeplot,
-#chart g.rangeslider .cartesianlayer,
-#chart g.rangeslider .subplot,
-#chart g.rangeslider .overplot,
+/* Strip the mini-graph out of the Plotly range slider */
+#chart g.rangeslider .plot > g,        /* traces & layers (most versions) */
+#chart g.rangeslider .rangeplot > g,   /* traces (some versions) */
 #chart g.rangeslider .gridlayer,
 #chart g.rangeslider .zerolinelayer,
-#chart g.rangeslider .xaxis,
-#chart g.rangeslider .yaxis {
+#chart g.rangeslider [class^="xaxislayer"],
+#chart g.rangeslider [class^="yaxislayer"] {
   display: none !important;
 }
+
 
 
 
@@ -382,16 +381,15 @@ function draw(){
 // keep the mini chart hidden after any internal redraws
 const hideMini = () => {
   document.querySelectorAll(
-    '#chart g.rangeslider .rangeplot, ' +
-    '#chart g.rangeslider .cartesianlayer, ' +
-    '#chart g.rangeslider .subplot, ' +
-    '#chart g.rangeslider .overplot, ' +
+    '#chart g.rangeslider .plot > g, ' +
+    '#chart g.rangeslider .rangeplot > g, ' +
     '#chart g.rangeslider .gridlayer, ' +
     '#chart g.rangeslider .zerolinelayer, ' +
-    '#chart g.rangeslider .xaxis, ' +
-    '#chart g.rangeslider .yaxis'
-  ).forEach(el => el.style.display = 'none');
+    '#chart g.rangeslider [class^="xaxislayer"], ' +
+    '#chart g.rangeslider [class^="yaxislayer"]'
+  ).forEach(el => { el.style.display = 'none'; });
 };
+
 
 // Hide immediately after this render
 hideMini();
