@@ -7,23 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
-/* Strip the mini-graph out of the Plotly range slider */
-#chart g.rangeslider .plot,
-#chart g.rangeslider .rangeplot {
-  opacity: 0 !important;       /* hides all the tiny traces at once */
-}
-
-/* Hide axes and grid inside the rangeslider */
-#chart g.rangeslider .gridlayer,
-#chart g.rangeslider .zerolinelayer,
-#chart g.rangeslider [class^="xaxislayer"],
-#chart g.rangeslider [class^="yaxislayer"] {
-  display: none !important;
-}
-
-
-
-
+    /* General UI (unchanged) */
     .player-head{
       display:flex;justify-content:space-between;align-items:flex-end;
       margin:12px 0;padding-right:12px;
@@ -42,26 +26,21 @@
     }
     .badge .stack{display:flex;flex-direction:column;gap:.25rem;}
     .badge strong{font-variant-numeric:tabular-nums;}
-
     #stats-j .muted{color:#1f77b4;font-weight:bold;}
     #stats-wcu .muted{color:#ff7f0e;font-weight:bold;}
-
     .btn-mini{
       background:#0f1623;border:1px solid var(--border);color:var(--text);
       padding:4px 8px;border-radius:6px;cursor:pointer;font-size:.9rem;
     }
     .btn-mini[disabled]{opacity:.5;cursor:default;}
     .btn-mini:hover:not([disabled]){background:rgba(255,255,255,.05);}
-
     #chart{height:420px;touch-action:pan-y;}
-
     .range-buttons{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.5rem 0 0.25rem 0;}
     .range-buttons .seg{
       background:#0f1623;border:1px solid var(--border);color:var(--text);
       padding:6px 10px;border-radius:6px;cursor:pointer;font-size:.9rem;
     }
     .range-buttons .seg:hover{background:rgba(255,255,255,.05);}
-
     #games{margin-top:1.5rem;width:100%;border-collapse:collapse;}
     #games th,#games td{
       padding:6px 10px;border-bottom:1px solid #333;text-align:center!important;
@@ -317,11 +296,11 @@ function refreshBadge(){
   document.getElementById('toggle').textContent=showWCU?'Hide WCU':'Show WCU';
 }
 
-/* Preserve current range across redraws */
+/* Preserve current range across redraws + strip mini-graph */
 function draw(){
   const mode=document.getElementById('agg').value;
 
-  // remember current range before changing anything
+  // remember current x-range before changing anything
   const gd=document.getElementById('chart');
   const liveLayout = gd && gd._fullLayout ? gd._fullLayout.xaxis : null;
   if (liveLayout && liveLayout.range) {
@@ -341,11 +320,11 @@ function draw(){
   const bg=getComputedStyle(document.body).backgroundColor;
   const baseLayout={
     margin:{l:50,r:20,t:10,b:40},
-xaxis: {
-  type: 'date',
-  fixedrange: true,
-  rangeslider: { visible: true, thickness: 0.04, borderwidth: 0, bgcolor: '#0f1623' }
-},
+    xaxis:{
+      type:'date',
+      fixedrange:true,
+      rangeslider:{visible:true,thickness:0.12,borderwidth:0,bgcolor:'#0f1623',bordercolor:'#0f1623'}
+    },
     yaxis:{title:'Rating',fixedrange:true},
     paper_bgcolor:bg,plot_bgcolor:bg,
     font:{color:getComputedStyle(document.body).color},
@@ -361,7 +340,6 @@ xaxis: {
     initialRangeApplied = true;
   }
 
-  // Draw/update without resetting layout state
   Plotly.react('chart', traces, baseLayout, {
     staticPlot:false,scrollZoom:false,displayModeBar:false,responsive:true
   }).then(() => {
@@ -371,8 +349,19 @@ xaxis: {
       Plotly.relayout('chart', {'xaxis.range':[x0,x1]}).then(()=>adjustYToVisible(x0,x1));
     }
 
-    // attach once: keep rememberedXRange in sync with user interactions
     const gd2=document.getElementById('chart');
+
+    // --- Permanently remove the mini-graph inside the range slider ---
+    function stripMini() {
+      // Remove any mini-plot groups Plotly inserts (can be multiple after redraws)
+      gd2.querySelectorAll('g.rangeslider g.rangeplot').forEach(el => el.remove());
+    }
+    stripMini();                                   // right now
+    gd2.on('plotly_afterplot', stripMini);         // after internal renders
+    gd2.on('plotly_relayout', stripMini);          // after range changes
+    new MutationObserver(stripMini).observe(gd2, { childList:true, subtree:true }); // if DOM mutates later
+
+    // keep rememberedXRange in sync with user interactions + adjust Y on zoom
     if (!gd2._jrHandlersAttached) {
       gd2.on('plotly_relayout', ev => {
         const x0=ev['xaxis.range[0]']??(ev['xaxis.range'] && ev['xaxis.range'][0]);
@@ -382,50 +371,15 @@ xaxis: {
           adjustYToVisible(x0,x1);
         }
       });
-// keep the mini chart hidden after any internal redraws
-const hideMini = () => {
-  document.querySelectorAll(
-    '#chart g.rangeslider .plot, #chart g.rangeslider .rangeplot'
-  ).forEach(el => { el.style.opacity = '0'; });
-
-  document.querySelectorAll(
-    '#chart g.rangeslider .gridlayer, ' +
-    '#chart g.rangeslider .zerolinelayer, ' +
-    '#chart g.rangeslider [class^="xaxislayer"], ' +
-    '#chart g.rangeslider [class^="yaxislayer"]'
-  ).forEach(el => { el.style.display = 'none'; });
-};
-
-
-// Hide immediately after this render
-hideMini();
-recolourMiniToBackground();
-
-gd2.on('plotly_relayout', hideMini);
-window.addEventListener('resize', hideMini);
-new MutationObserver(() => {
-  hideMini();
-  recolourMiniToBackground();
-}).observe(document.getElementById('chart'), {
-  childList: true,
-  subtree: true
-});
-} 
-}); 
-} 
+      gd2._jrHandlersAttached = true;
+    }
+  });
+}
 
 /* ---------- table helpers ---------- */
 function getId(g,base){return g[base+'Id']??g[base+'_id']??g[base+'ID']??null;}
 function resultClass(r){if(r==='Win')return'result-win';if(r==='Draw')return'result-draw';if(r==='Loss')return'result-loss';return'';}
 function deltaClass(d){if(!d)return'';if(d.startsWith('+'))return'delta-pos';if(d.startsWith('-'))return'delta-neg';return'delta-zero';}
-function recolourMiniToBackground() {
-  const bg = getComputedStyle(document.body).backgroundColor;
-  document.querySelectorAll('#chart g.rangeslider .plot path').forEach(el => {
-    el.style.stroke = bg;
-    el.style.fill = bg;
-  });
-}
-
 
 /* ---------- load ---------- */
 async function load(){
