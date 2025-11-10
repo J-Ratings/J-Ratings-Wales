@@ -8,7 +8,7 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
 /* Make Plotly's range slider look like a plain slider (no mini graph) */
-#chart g.rangeslider .plot,
+#chart g.rangeslider .rangeplot,
 #chart g.rangeslider .cartesianlayer,
 #chart g.rangeslider .subplot,
 #chart g.rangeslider .overplot,
@@ -18,6 +18,7 @@
 #chart g.rangeslider .yaxis {
   display: none !important;
 }
+
 
 
     .player-head{
@@ -378,11 +379,10 @@ function draw(){
           adjustYToVisible(x0,x1);
         }
       });
-      // keep the mini chart hidden after any internal redraws
-
-      const hideMini = () => {
+// keep the mini chart hidden after any internal redraws
+const hideMini = () => {
   document.querySelectorAll(
-    '#chart g.rangeslider .plot, ' +
+    '#chart g.rangeslider .rangeplot, ' +
     '#chart g.rangeslider .cartesianlayer, ' +
     '#chart g.rangeslider .subplot, ' +
     '#chart g.rangeslider .overplot, ' +
@@ -393,14 +393,18 @@ function draw(){
   ).forEach(el => el.style.display = 'none');
 };
 
-      gd2.on('plotly_relayout', hideMini);
-      window.addEventListener('resize', hideMini);
-      new MutationObserver(hideMini).observe(document.getElementById('chart'), { childList:true, subtree:true });
+// Hide immediately after this render
+hideMini();
 
-      gd2._jrHandlersAttached = true;
-    }
-  });
-}
+gd2.on('plotly_relayout', hideMini);
+window.addEventListener('resize', hideMini);
+new MutationObserver(hideMini).observe(document.getElementById('chart'), {
+  childList: true,
+  subtree: true
+});
+} 
+}); 
+} 
 
 /* ---------- table helpers ---------- */
 function getId(g,base){return g[base+'Id']??g[base+'_id']??g[base+'ID']??null;}
