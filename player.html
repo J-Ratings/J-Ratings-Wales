@@ -399,10 +399,14 @@ const hideMini = () => {
 
 // Hide immediately after this render
 hideMini();
+recolourMiniToBackground();
 
 gd2.on('plotly_relayout', hideMini);
 window.addEventListener('resize', hideMini);
-new MutationObserver(hideMini).observe(document.getElementById('chart'), {
+new MutationObserver(() => {
+  hideMini();
+  recolourMiniToBackground();
+}).observe(document.getElementById('chart'), {
   childList: true,
   subtree: true
 });
@@ -414,6 +418,14 @@ new MutationObserver(hideMini).observe(document.getElementById('chart'), {
 function getId(g,base){return g[base+'Id']??g[base+'_id']??g[base+'ID']??null;}
 function resultClass(r){if(r==='Win')return'result-win';if(r==='Draw')return'result-draw';if(r==='Loss')return'result-loss';return'';}
 function deltaClass(d){if(!d)return'';if(d.startsWith('+'))return'delta-pos';if(d.startsWith('-'))return'delta-neg';return'delta-zero';}
+function recolourMiniToBackground() {
+  const bg = getComputedStyle(document.body).backgroundColor;
+  document.querySelectorAll('#chart g.rangeslider .plot path').forEach(el => {
+    el.style.stroke = bg;
+    el.style.fill = bg;
+  });
+}
+
 
 /* ---------- load ---------- */
 async function load(){
