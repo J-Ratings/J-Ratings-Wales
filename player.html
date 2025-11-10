@@ -19,7 +19,7 @@
       display:flex;justify-content:space-between;align-items:flex-end;
       margin:12px 0;padding-right:12px;
     }
-        .badge{
+    .badge{
       border:1px solid var(--border);
       background:#0f1623;
       border-radius:8px;
@@ -31,99 +31,35 @@
       flex-direction:column;
       gap:.5rem;
     }
+    .badge .stack{display:flex;flex-direction:column;gap:.25rem;}
+    .badge strong{font-variant-numeric:tabular-nums;}
 
-    .badge .stack{
-      display:flex;
-      flex-direction:column;
-      gap:.25rem;
-    }
-
-    .badge strong{
-      font-variant-numeric:tabular-nums;
-    }
-
-    #stats-j .muted{
-      color:#1f77b4;
-      font-weight:bold;
-    }
-
-    #stats-wcu .muted{
-      color:#ff7f0e;
-      font-weight:bold;
-    }
+    #stats-j .muted{color:#1f77b4;font-weight:bold;}
+    #stats-wcu .muted{color:#ff7f0e;font-weight:bold;}
 
     .btn-mini{
-      background:#0f1623;
-      border:1px solid var(--border);
-      color:var(--text);
-      padding:4px 8px;
-      border-radius:6px;
-      cursor:pointer;
-      font-size:.9rem;
+      background:#0f1623;border:1px solid var(--border);color:var(--text);
+      padding:4px 8px;border-radius:6px;cursor:pointer;font-size:.9rem;
     }
+    .btn-mini[disabled]{opacity:.5;cursor:default;}
+    .btn-mini:hover:not([disabled]){background:rgba(255,255,255,.05);}
 
-    .btn-mini[disabled]{
-      opacity:.5;
-      cursor:default;
-    }
+    #chart{height:420px;touch-action:pan-y;}
 
-    .btn-mini:hover:not([disabled]){
-      background:rgba(255,255,255,.05);
-    }
-
-    #chart{
-      height:420px;
-      touch-action:pan-y;
-    }
-
-    .range-buttons{
-      display:flex;
-      gap:.5rem;
-      flex-wrap:wrap;
-      align-items:center;
-      margin:.5rem 0 0.25rem 0;
-    }
-
+    .range-buttons{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.5rem 0 0.25rem 0;}
     .range-buttons .seg{
-      background:#0f1623;
-      border:1px solid var(--border);
-      color:var(--text);
-      padding:6px 10px;
-      border-radius:6px;
-      cursor:pointer;
-      font-size:.9rem;
+      background:#0f1623;border:1px solid var(--border);color:var(--text);
+      padding:6px 10px;border-radius:6px;cursor:pointer;font-size:.9rem;
     }
+    .range-buttons .seg:hover{background:rgba(255,255,255,.05);}
 
-    .range-buttons .seg:hover{
-      background:rgba(255,255,255,.05);
+    #games{margin-top:1.5rem;width:100%;border-collapse:collapse;}
+    #games th,#games td{
+      padding:6px 10px;border-bottom:1px solid #333;text-align:center!important;
+      vertical-align:middle;white-space:nowrap;border-right:3px double rgba(255,255,255,0.25);
     }
-
-    #games{
-      margin-top:1.5rem;
-      width:100%;
-      border-collapse:collapse;
-    }
-
-    /* Add double borders between all columns */
-    #games th,
-    #games td{
-      padding:6px 10px;
-      border-bottom:1px solid #333;
-      text-align:center!important;
-      vertical-align:middle;
-      white-space:nowrap;
-      border-right:3px double rgba(255,255,255,0.25);
-    }
-
-    /* Remove the final right border for tidiness */
-    #games th:last-child,
-    #games td:last-child{
-      border-right:none;
-    }
-
-    #games th:nth-child(6),#games td:nth-child(6){
-      border-right:3px double rgba(128,128,128,0.6)
-    }
+    #games th:last-child,#games td:last-child{border-right:none;}
+    #games th:nth-child(6),#games td:nth-child(6){border-right:3px double rgba(128,128,128,0.6)}
     .result-win{color:#34c759;font-weight:bold}
     .result-draw{color:#ffb833;font-weight:bold}
     .result-loss{color:#e53935;font-weight:bold}
@@ -198,6 +134,7 @@
 </main>
 
 <script>
+/* ---------- constants ---------- */
 const params = new URLSearchParams(location.search);
 const idRaw = params.get('id');
 if (!idRaw) { document.getElementById('chart').textContent = 'Missing player id.'; throw new Error('no id'); }
@@ -210,13 +147,22 @@ const GAMES_URL   = id => `data/games/${encodeURIComponent(id)}.json`;
 const COLORS = { J:'#1f77b4', WCU:'#ff7f0e' };
 const kFromRating = r => (r>=2200?10:r>=1800?20:30);
 
+/* ---------- state ---------- */
 let me=null, rawLive=[], rawWCU=[], seriesLive=null, seriesWCU=null, showWCU=false;
 let dataMin=null, dataMax=null;
-let initialRangeSet=false;
+let initialRangeApplied=false;
+let rememberedXRange=null; // [x0,x1] strings yyyy-mm-dd
 
 /* ---------- helpers ---------- */
-function iso(d){ return new Date(d).toISOString().slice(0,10); }
-function normalise(series){ return series.filter(p => p && p.x && Number.isFinite(p.y)).map(p => ({ x: p.x, y: +p.y })).sort((a,b) => new Date(a.x) - new Date(b.x)); }
+const iso = d => new Date(d).toISOString().slice(0,10);
+
+function normalise(series){
+  return series
+    .filter(p => p && p.x && Number.isFinite(+p.y))
+    .map(p => ({ x: p.x, y: +p.y }))
+    .sort((a,b) => new Date(a.x) - new Date(b.x));
+}
+
 function aggregateExpanded(series, mode){
   if (mode === 'daily') return normalise(series);
   const buckets = Object.create(null);
@@ -238,15 +184,14 @@ function aggregateExpanded(series, mode){
     } else {
       key = `${d.getFullYear()}`;
     }
-    (buckets[key] ||= []).push(p.y);
+    (buckets[key] ||= []).push(+p.y);
   }
   const out = Object.keys(buckets).sort().map(k => {
     const ys = buckets[k].filter(Number.isFinite);
     const avg = ys.reduce((a,b)=>a+b,0)/ys.length;
     let x;
     if (k.includes('W')) {
-      const [y,w] = k.split('-W');
-      const year = +y, week = +w;
+      const [y,w] = k.split('-W'); const year = +y, week = +w;
       const simple = new Date(Date.UTC(year,0,1+(week-1)*7));
       const dow = simple.getUTCDay();
       if (dow <= 4) simple.setUTCDate(simple.getUTCDate() - dow + 1);
@@ -296,11 +241,17 @@ function adjustYToVisible(x0,x1){
   });
 }
 
+function clampToData([x0,x1]){
+  if(!dataMin||!dataMax) return [x0,x1];
+  const s=new Date(Math.max(new Date(x0),dataMin));
+  const e=new Date(Math.min(new Date(x1),dataMax));
+  return [iso(s), iso(e)];
+}
+
 function setXRange(start,end){
   if(!dataMin||!dataMax)return;
-  const s=new Date(Math.max(new Date(start),dataMin));
-  const e=new Date(Math.min(new Date(end),dataMax));
-  const x0=iso(s),x1=iso(e);
+  const [x0,x1]=clampToData([start,end]);
+  rememberedXRange=[x0,x1];
   Plotly.relayout('chart',{'xaxis.range':[x0,x1]}).then(()=>adjustYToVisible(x0,x1));
 }
 
@@ -314,75 +265,7 @@ function setPreset(which){
   setXRange(start,dataMax);
 }
 
-/* main chart */
-function draw(){
-  const mode=document.getElementById('agg').value;
-  seriesLive=aggregateExpanded(rawLive,mode);
-  seriesWCU=rawWCU.length?aggregateExpanded(rawWCU,mode):null;
-  const traces=[{...makeTrace(seriesLive,'J-Ratings',COLORS.J,mode)}];
-  if(showWCU&&seriesWCU)traces.push(makeTrace(seriesWCU,'WCU',COLORS.WCU,mode));
-  const ext=extentFrom(seriesLive,seriesWCU);
-  dataMin=ext.min;dataMax=ext.max;
-
-  const bg=getComputedStyle(document.body).backgroundColor;
-  const layout={
-    margin:{l:50,r:20,t:10,b:40},
-    xaxis:{
-      type:'date',
-      fixedrange:true,
-      rangeslider:{
-        visible:true,
-        thickness:0.12,
-        borderwidth:0,
-        bgcolor:'#0f1623',
-        bordercolor:'#0f1623'
-      }
-    },
-    yaxis:{title:'Rating',fixedrange:true},
-    paper_bgcolor:bg,plot_bgcolor:bg,
-    font:{color:getComputedStyle(document.body).color},
-    legend:{orientation:'h',x:0,y:1.1},
-    shapes:[]
-  };
-
-  if(!initialRangeSet&&dataMin&&dataMax){
-    const end=new Date(dataMax);
-    const start=new Date(end.getTime()-365*24*60*60*1000);
-    layout.xaxis.range=[iso(new Date(Math.max(start,dataMin))),iso(end)];
-    initialRangeSet=true;
-  }
-
-  Plotly.newPlot('chart',traces,layout,{
-    staticPlot:false,scrollZoom:false,displayModeBar:false,responsive:true
-  }).then(gd=>{
-    const xr=gd.layout.xaxis.range||gd._fullLayout.xaxis.range;
-    if(xr&&xr.length===2)adjustYToVisible(xr[0],xr[1]);
-    if(!gd._jrYHandlerAttached){
-      gd.on('plotly_relayout',ev=>{
-        const x0=ev['xaxis.range[0]']??(ev['xaxis.range']&&ev['xaxis.range'][0]);
-        const x1=ev['xaxis.range[1]']??(ev['xaxis.range']&&ev['xaxis.range'][1]);
-        if(x0&&x1)adjustYToVisible(x0,x1);
-      });
-      gd._jrYHandlerAttached=true;
-    }
-
-    /* --- NEW: ensure the mini-graph is hidden even after redraws --- */
-    const hideMini = () => {
-      document.querySelectorAll(
-        '#chart g.rangeslider .plot > g, ' +
-        '#chart g.rangeslider .xaxis, ' +
-        '#chart g.rangeslider .yaxis, ' +
-        '#chart g.rangeslider .gridlayer'
-      ).forEach(el => el.style.display = 'none');
-    };
-    hideMini();
-    gd.on('plotly_relayout', hideMini);
-    window.addEventListener('resize', hideMini);
-    const mo = new MutationObserver(hideMini);
-    mo.observe(document.getElementById('chart'), { childList:true, subtree:true });
-  });
-}
-
+/* ---------- chart ---------- */
 function makeTrace(series,name,colour,mode){
   return{
     x:series.map(p=>p.x),y:series.map(p=>p.y),
@@ -425,10 +308,96 @@ function refreshBadge(){
   document.getElementById('toggle').textContent=showWCU?'Hide WCU':'Show WCU';
 }
 
+/* Preserve current range across redraws */
+function draw(){
+  const mode=document.getElementById('agg').value;
+
+  // remember current range before changing anything
+  const gd=document.getElementById('chart');
+  const liveLayout = gd && gd._fullLayout ? gd._fullLayout.xaxis : null;
+  if (liveLayout && liveLayout.range) {
+    rememberedXRange = [liveLayout.range[0], liveLayout.range[1]];
+  }
+
+  // build series for chosen aggregation
+  seriesLive=aggregateExpanded(rawLive,mode);
+  seriesWCU=rawWCU.length?aggregateExpanded(rawWCU,mode):null;
+
+  const traces=[makeTrace(seriesLive,'J-Ratings',COLORS.J,mode)];
+  if(showWCU&&seriesWCU) traces.push(makeTrace(seriesWCU,'WCU',COLORS.WCU,mode));
+
+  const ext=extentFrom(seriesLive,seriesWCU);
+  dataMin=ext.min; dataMax=ext.max;
+
+  const bg=getComputedStyle(document.body).backgroundColor;
+  const baseLayout={
+    margin:{l:50,r:20,t:10,b:40},
+    xaxis:{
+      type:'date',
+      fixedrange:true,
+      rangeslider:{visible:true,thickness:0.12,borderwidth:0,bgcolor:'#0f1623',bordercolor:'#0f1623'}
+    },
+    yaxis:{title:'Rating',fixedrange:true},
+    paper_bgcolor:bg,plot_bgcolor:bg,
+    font:{color:getComputedStyle(document.body).color},
+    legend:{orientation:'h',x:0,y:1.1},
+    shapes:[]
+  };
+
+  // If first render, default to last-year window; otherwise keep remembered
+  if (!initialRangeApplied && dataMin && dataMax) {
+    const end=new Date(dataMax);
+    const start=new Date(end.getTime()-365*24*60*60*1000);
+    rememberedXRange = [iso(new Date(Math.max(start,dataMin))), iso(end)];
+    initialRangeApplied = true;
+  }
+
+  // Draw/update without resetting layout state
+  Plotly.react('chart', traces, baseLayout, {
+    staticPlot:false,scrollZoom:false,displayModeBar:false,responsive:true
+  }).then(() => {
+    // apply the remembered range if we have one
+    if (rememberedXRange) {
+      const [x0,x1]=clampToData(rememberedXRange);
+      Plotly.relayout('chart', {'xaxis.range':[x0,x1]}).then(()=>adjustYToVisible(x0,x1));
+    }
+
+    // attach once: keep rememberedXRange in sync with user interactions
+    const gd2=document.getElementById('chart');
+    if (!gd2._jrHandlersAttached) {
+      gd2.on('plotly_relayout', ev => {
+        const x0=ev['xaxis.range[0]']??(ev['xaxis.range'] && ev['xaxis.range'][0]);
+        const x1=ev['xaxis.range[1]']??(ev['xaxis.range'] && ev['xaxis.range'][1]);
+        if (x0 && x1) {
+          rememberedXRange=[x0,x1];
+          adjustYToVisible(x0,x1);
+        }
+      });
+      // keep the mini chart hidden after any internal redraws
+      const hideMini = () => {
+        document.querySelectorAll(
+          '#chart g.rangeslider .plot > g, ' +
+          '#chart g.rangeslider .xaxis, ' +
+          '#chart g.rangeslider .yaxis, ' +
+          '#chart g.rangeslider .gridlayer'
+        ).forEach(el => el.style.display = 'none');
+      };
+      hideMini();
+      gd2.on('plotly_relayout', hideMini);
+      window.addEventListener('resize', hideMini);
+      new MutationObserver(hideMini).observe(document.getElementById('chart'), { childList:true, subtree:true });
+
+      gd2._jrHandlersAttached = true;
+    }
+  });
+}
+
+/* ---------- table helpers ---------- */
 function getId(g,base){return g[base+'Id']??g[base+'_id']??g[base+'ID']??null;}
 function resultClass(r){if(r==='Win')return'result-win';if(r==='Draw')return'result-draw';if(r==='Loss')return'result-loss';return'';}
 function deltaClass(d){if(!d)return'';if(d.startsWith('+'))return'delta-pos';if(d.startsWith('-'))return'delta-neg';return'delta-zero';}
 
+/* ---------- load ---------- */
 async function load(){
   try{
     const[playersRes,liveRes,wcuRes,gamesRes]=await Promise.all([
@@ -460,71 +429,69 @@ async function load(){
       btn.addEventListener('click',()=>setPreset(btn.dataset.range));
     });
 
-if (gamesRes && gamesRes.ok) {
-  const games = await gamesRes.json();
+    if (gamesRes && gamesRes.ok) {
+      const games = await gamesRes.json();
 
-  // Sort games from oldest to newest to accumulate ratings properly
-  games.sort((a, b) => new Date(a.date) - new Date(b.date));
+      // Sort games from oldest to newest to accumulate ratings properly
+      games.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-  // Starting rating — use your first known rating or fallback
-  let currentElo = rawLive.length ? rawLive[0].y : 2000;
+      // Starting rating — use your first known rating or fallback
+      let currentElo = rawLive.length ? rawLive[0].y : 2000;
 
-  // Compute the Elo before each game using Δ values
-  for (const g of games) {
-    const delta = parseFloat(g.delta);
-g.playerElo = currentElo; // keep the exact value internally
-if (!isNaN(delta)) currentElo += delta;
-  }
-
-  // Now display most recent games first (reverse chronological)
-  games.reverse();
-
-  const tbody = document.getElementById('games-body');
-  tbody.innerHTML = ""; // clear old rows if any
-
-games.forEach(g => {
-  const tr = document.createElement('tr');
-  // Original columns:
-  // const cols = ["date", "player", "playerElo", "opponent", "opponentElo", "result", "delta"];
-  // Temporarily remove Player and the first Elo
-  const cols = ["date", /*"player", "playerElo",*/ "opponent", "opponentElo", "result", "delta"];
-
-  cols.forEach(col => {
-    const td = document.createElement("td");
-
-    if (col === "player" || col === "opponent") {
-      const name = g[col] ?? "";
-      const id = getId(g, col);
-      if (id) {
-        const a = document.createElement("a");
-        a.href = `player.html?id=${encodeURIComponent(id)}`;
-        a.textContent = name;
-        td.appendChild(a);
-      } else {
-        td.textContent = name;
+      // Compute the Elo before each game using Δ values
+      for (const g of games) {
+        const delta = parseFloat(g.delta);
+        g.playerElo = currentElo;
+        if (!isNaN(delta)) currentElo += delta;
       }
-    } else {
-      td.textContent = (col === "playerElo") ? Math.round(g[col]) : (g[col] ?? "");
+
+      // Display most recent games first
+      games.reverse();
+
+      const tbody = document.getElementById('games-body');
+      tbody.innerHTML = "";
+
+      games.forEach(g => {
+        const tr = document.createElement('tr');
+        const cols = ["date", "opponent", "opponentElo", "result", "delta"];
+        cols.forEach(col => {
+          const td = document.createElement("td");
+          if (col === "opponent") {
+            const name = g[col] ?? "";
+            const id = getId(g, col);
+            if (id) {
+              const a = document.createElement("a");
+              a.href = `player.html?id=${encodeURIComponent(id)}`;
+              a.textContent = name;
+              td.appendChild(a);
+            } else {
+              td.textContent = name;
+            }
+          } else {
+            td.textContent = (col === "playerElo" || col === "opponentElo")
+              ? Math.round(g[col])
+              : (g[col] ?? "");
+          }
+          if (col === "result") td.className = resultClass(g[col]);
+          if (col === "delta") td.className = deltaClass(g[col]);
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
     }
-
-    if (col === "result") td.className = resultClass(g[col]);
-    if (col === "delta") td.className = deltaClass(g[col]);
-
-    tr.appendChild(td);
-  });
-
-  tbody.appendChild(tr);
-});
-}
-
   }catch(e){
     console.error(e);
     document.getElementById('chart').textContent='No Games';
   }
 }
 
+/* ---------- interactions ---------- */
 document.addEventListener('click',e=>{
-  if(e.target.id==='toggle'&&!e.target.disabled){showWCU=!showWCU;draw();refreshBadge();}
+  if(e.target.id==='toggle'&&!e.target.disabled){
+    showWCU=!showWCU;
+    draw();
+    refreshBadge();
+  }
 });
 
 load();
