@@ -445,14 +445,18 @@ async function load(){
     if(!me)throw new Error('player id not in players.json');
     document.getElementById('pname').textContent=me.name;
 
-    rawLive=(await liveRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
-    if(wcuRes&&wcuRes.ok){
-      rawWCU=(await wcuRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
-      document.getElementById('toggle').disabled=false;
-    }else{
-      rawWCU=[];document.getElementById('toggle').disabled=true;
-      document.getElementById('toggle').textContent='WCU N/A';
-    }
+if (wcuRes && wcuRes.ok) {
+  rawWCU = (await wcuRes.json())
+    .map(d => ({ x: d.date, y: +d.rating }))
+    .filter(p => Number.isFinite(p.y))
+    .sort((a, b) => new Date(a.x) - new Date(b.x));  // ensure chronological order
+  document.getElementById('toggle').disabled = false;
+} else {
+  rawWCU = [];
+  document.getElementById('toggle').disabled = true;
+  document.getElementById('toggle').textContent = 'WCU N/A';
+}
+
 
     draw();refreshBadge();
     document.getElementById('agg').addEventListener('change',()=>{draw();refreshBadge();});
