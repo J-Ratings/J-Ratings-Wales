@@ -7,13 +7,18 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
-    /* Hide the miniature plot inside the Plotly range slider */
-    #chart g.rangeslider .plot > g,
-    #chart g.rangeslider .xaxis,
-    #chart g.rangeslider .yaxis,
-    #chart g.rangeslider .gridlayer {
-      display: none !important;
-    }
+/* Make Plotly's range slider look like a plain slider (no mini graph) */
+#chart g.rangeslider .plot,
+#chart g.rangeslider .cartesianlayer,
+#chart g.rangeslider .subplot,
+#chart g.rangeslider .overplot,
+#chart g.rangeslider .gridlayer,
+#chart g.rangeslider .zerolinelayer,
+#chart g.rangeslider .xaxis,
+#chart g.rangeslider .yaxis {
+  display: none !important;
+}
+
 
     .player-head{
       display:flex;justify-content:space-between;align-items:flex-end;
@@ -374,15 +379,20 @@ function draw(){
         }
       });
       // keep the mini chart hidden after any internal redraws
+
       const hideMini = () => {
-        document.querySelectorAll(
-          '#chart g.rangeslider .plot > g, ' +
-          '#chart g.rangeslider .xaxis, ' +
-          '#chart g.rangeslider .yaxis, ' +
-          '#chart g.rangeslider .gridlayer'
-        ).forEach(el => el.style.display = 'none');
-      };
-      hideMini();
+  document.querySelectorAll(
+    '#chart g.rangeslider .plot, ' +
+    '#chart g.rangeslider .cartesianlayer, ' +
+    '#chart g.rangeslider .subplot, ' +
+    '#chart g.rangeslider .overplot, ' +
+    '#chart g.rangeslider .gridlayer, ' +
+    '#chart g.rangeslider .zerolinelayer, ' +
+    '#chart g.rangeslider .xaxis, ' +
+    '#chart g.rangeslider .yaxis'
+  ).forEach(el => el.style.display = 'none');
+};
+
       gd2.on('plotly_relayout', hideMini);
       window.addEventListener('resize', hideMini);
       new MutationObserver(hideMini).observe(document.getElementById('chart'), { childList:true, subtree:true });
