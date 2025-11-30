@@ -673,11 +673,11 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('create').addEventListener('click', createChart);
   document.getElementById('agg').addEventListener('change', createChart);
 
-  // you presumably already have a "Reveal" button wired – keep using startReveal()
-  const revealBtn = document.getElementById('reveal');
-  if (revealBtn){
-    revealBtn.addEventListener('click', startReveal);
-  }
+  // animation buttons
+  const revealBtn = document.getElementById('anim-reveal');
+  const stopBtn   = document.getElementById('anim-stop');
+  if (revealBtn) revealBtn.addEventListener('click', startReveal);
+  if (stopBtn)   stopBtn.addEventListener('click', stopReveal);
 
   load().then(makeRow).catch(e => {
     console.error(e);
