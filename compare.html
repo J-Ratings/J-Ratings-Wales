@@ -171,68 +171,78 @@ const state = {
   dataMin: null,
   dataMax: null,
   initialRangeSet: false,
-  fullSeries: []  // for reveal animation
+  fullSeries: []      // smoothed series for animation
 };
 
 let revealTimer = null;
 
-/* -------- basic helpers -------- */
-
-function iso(d){
-  return new Date(d).toISOString().slice(0, 10);
-}
+function iso(d){ return new Date(d).toISOString().slice(0,10); }
 
 function normalise(series){
   return series
     .filter(p => p && p.x && Number.isFinite(p.y))
     .map(p => ({ x: p.x, y: +p.y }))
-    .sort((a, b) => new Date(a.x) - new Date(b.x));
+    .sort((a,b) => new Date(a.x) - new Date(b.x));
 }
 
-/* aggregate to weekly / monthly / etc. */
+/* simple centred moving average */
+function smoothSeries(points, window = 3){
+  const n = points.length;
+  if (!n || window <= 1) return points.slice();
+  const half = Math.floor(window / 2);
+  const out  = [];
+  for (let i = 0; i < n; i++){
+    let s = 0, c = 0;
+    for (let j = i - half; j <= i + half; j++){
+      if (j >= 0 && j < n && Number.isFinite(points[j].y)){
+        s += points[j].y;
+        c++;
+      }
+    }
+    out.push({ x: points[i].x, y: c ? s / c : points[i].y });
+  }
+  return out;
+}
+
 function aggregateExpanded(series, mode){
   if (mode === 'daily') return normalise(series);
-
   const buckets = {};
   for (const p of series){
     const d = new Date(p.x);
     let key;
-
     if (mode === 'weekly'){
       const tmp = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
       const dayNum = tmp.getUTCDay() || 7;
       tmp.setUTCDate(tmp.getUTCDate() + 4 - dayNum);
       const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(), 0, 1));
       const weekNo = Math.ceil((((tmp - yearStart) / 86400000) + 1) / 7);
-      key = `${tmp.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+      key = `${tmp.getUTCFullYear()}-W${String(weekNo).padStart(2,'0')}`;
     } else if (mode === 'monthly'){
-      key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
     } else if (mode === 'quarterly'){
-      const q = Math.floor(d.getMonth() / 3) + 1;
+      const q = Math.floor(d.getMonth()/3) + 1;
       key = `${d.getFullYear()}-Q${q}`;
     } else {
       key = `${d.getFullYear()}`;
     }
-
     (buckets[key] ||= []).push(p.y);
   }
-
   const out = Object.keys(buckets).sort().map(k => {
-    const ys = buckets[k].filter(Number.isFinite);
-    const avg = ys.reduce((a, b) => a + b, 0) / ys.length;
+    const ys  = buckets[k].filter(Number.isFinite);
+    const avg = ys.reduce((a,b)=>a+b,0) / ys.length;
     let x;
     if (k.includes('W')){
-      const [y, w] = k.split('-W');
-      const year = +y, week = +w;
-      const simple = new Date(Date.UTC(year, 0, 1 + (week - 1) * 7));
+      const [y,w] = k.split('-W');
+      const year  = +y, week = +w;
+      const simple = new Date(Date.UTC(year,0,1 + (week-1)*7));
       const dow = simple.getUTCDay();
       if (dow <= 4) simple.setUTCDate(simple.getUTCDate() - dow + 1);
-      else simple.setUTCDate(simple.getUTCDate() + 8 - dow);
+      else         simple.setUTCDate(simple.getUTCDate() + 8 - dow);
       x = iso(simple);
     } else if (k.includes('Q')){
-      const [y, q] = k.split('-Q');
-      const year = +y, quarter = +q;
-      const month = (quarter - 1) * 3;
+      const [y,q] = k.split('-Q');
+      const year  = +y, quarter = +q;
+      const month = (quarter-1)*3;
       x = iso(new Date(Date.UTC(year, month, 1)));
     } else if (k.length === 7){
       x = `${k}-01`;
@@ -241,34 +251,7 @@ function aggregateExpanded(series, mode){
     }
     return { x, y: avg };
   });
-
   return normalise(out);
-}
-
-/* moving average smoothing for animation & static lines */
-function movingAverage(values, windowSize){
-  if (windowSize <= 1) return values.slice();
-  const out = [];
-  for (let i = 0; i < values.length; i++){
-    const start = Math.max(0, i - windowSize + 1);
-    const slice = values.slice(start, i + 1).filter(Number.isFinite);
-    if (!slice.length) out.push(values[i]);
-    else out.push(slice.reduce((a, b) => a + b, 0) / slice.length);
-  }
-  return out;
-}
-
-function smoothSeries(series, mode){
-  // Slightly stronger smoothing for daily; lighter for coarser views
-  const w =
-    mode === 'daily'    ? 5 :
-    mode === 'weekly'   ? 3 :
-    mode === 'monthly'  ? 3 :
-    mode === 'quarterly'? 2 :
-                          2;
-  const ys = series.map(p => p.y);
-  const ysSmooth = movingAverage(ys, w);
-  return series.map((p, i) => ({ x: p.x, y: ysSmooth[i] }));
 }
 
 function extentFrom(seriesList){
@@ -276,58 +259,46 @@ function extentFrom(seriesList){
   for (const s of seriesList){
     if (!s) continue;
     for (const p of s){
-      if (p && p.x) xs.push(new Date(p.x));
+      if (p?.x) xs.push(new Date(p.x));
     }
   }
-  if (!xs.length) return { min: null, max: null };
-  return {
-    min: new Date(Math.min(...xs)),
-    max: new Date(Math.max(...xs))
-  };
-}
-
-/* ---- recompute y-axis from visible window when user zooms ---- */
-
-function getVisibleYValues(x0, x1){
-  const s = new Date(x0), e = new Date(x1);
-  const take = series => (series ?? [])
-    .filter(p => p && p.x && Number.isFinite(p.y))
-    .filter(p => {
-      const d = new Date(p.x);
-      return d >= s && d <= e;
-    })
-    .map(p => p.y);
-
-  const gd = document.getElementById('chart');
-  const ys = [];
-  if (gd && gd.data){
-    for (const trace of gd.data){
-      const pts = trace.x.map((x, i) => ({ x: trace.x[i], y: trace.y[i] }));
-      ys.push(...take(pts));
-    }
-  }
-  return ys;
+  if (!xs.length) return { min:null, max:null };
+  return { min: new Date(Math.min(...xs)), max: new Date(Math.max(...xs)) };
 }
 
 function majorGridShapes(ymin, ymax){
   const shapes = [];
   for (let v = ymin; v <= ymax; v += 50){
     shapes.push({
-      type: 'line',
-      xref: 'paper',
-      x0: 0, x1: 1,
-      y0: v, y1: v,
-      line: { width: 1, color: 'rgba(128,128,128,0.35)' },
-      layer: 'below'
+      type:'line', xref:'paper', x0:0, x1:1, y0:v, y1:v,
+      line:{ width:1, color:'rgba(128,128,128,0.35)' },
+      layer:'below'
     });
   }
   return shapes;
 }
 
-function adjustYToVisible(x0, x1){
-  // Do not move Y during reveal animation
-  if (revealTimer !== null) return;
+/* ---- visible-window y-axis ---- */
+function getVisibleYValues(x0, x1){
+  const s = new Date(x0), e = new Date(x1);
+  const ys = [];
+  const gd = document.getElementById('chart');
+  if (gd && gd.data){
+    for (const trace of gd.data){
+      const n = trace.x.length;
+      for (let i = 0; i < n; i++){
+        const x = trace.x[i], y = trace.y[i];
+        if (!x || !Number.isFinite(y)) continue;
+        const d = new Date(x);
+        if (d >= s && d <= e) ys.push(y);
+      }
+    }
+  }
+  return ys;
+}
 
+function adjustYToVisible(x0, x1){
+  if (revealTimer !== null) return;  // fixed during reveal
   const ys = getVisibleYValues(x0, x1);
   if (!ys.length) return;
   const ymin = Math.floor(Math.min(...ys) / 50) * 50;
@@ -339,43 +310,50 @@ function adjustYToVisible(x0, x1){
   });
 }
 
-/* ---- range presets ---- */
-
-function setXRange(start, end){
-  if (!state.dataMin || !state.dataMax) return;
-  const s = new Date(Math.max(new Date(start), state.dataMin));
-  const e = new Date(Math.min(new Date(end), state.dataMax));
-  const x0 = iso(s), x1 = iso(e);
-  Plotly.relayout('chart', { 'xaxis.range': [x0, x1] })
-    .then(() => adjustYToVisible(x0, x1));
+/* ---- right-hand labels ---- */
+function buildRightLabels(x0, x1){
+  const s = new Date(x0), e = new Date(x1);
+  const gd = document.getElementById('chart');
+  if (!gd || !gd.data) return [];
+  const ann = [];
+  gd.data.forEach(trace => {
+    if (!trace.x || !trace.y || !trace.name) return;
+    const n = trace.x.length;
+    let lastX = null, lastY = null;
+    for (let i = 0; i < n; i++){
+      const x = trace.x[i], y = trace.y[i];
+      if (!x || !Number.isFinite(y)) continue;
+      const d = new Date(x);
+      if (d >= s && d <= e){
+        lastX = x;
+        lastY = y;
+      }
+    }
+    if (lastX !== null){
+      const txt = `${Math.round(lastY)} ${trace.name}`;
+      ann.push({
+        x: lastX,
+        y: lastY,
+        xref: 'x',
+        yref: 'y',
+        showarrow: false,
+        xanchor: 'left',
+        align: 'left',
+        xshift: 6,
+        font: { size: 12, colour: '#fff' },
+        text: txt
+      });
+    }
+  });
+  return ann;
 }
 
-function setPreset(which){
-  stopReveal();
-
-  const now = new Date();
-  if (which === 'ALL'){
-    setXRange(state.dataMin, state.dataMax);
-    return;
-  }
-  if (which === 'YTD'){
-    const yStart = new Date(Date.UTC(now.getUTCFullYear(), 0, 1));
-    setXRange(yStart, state.dataMax);
-    return;
-  }
-  if (which === 'LY'){
-    const end = state.dataMax ? new Date(state.dataMax) : now;
-    const start = new Date(end.getTime() - 365 * 24 * 60 * 60 * 1000);
-    setXRange(start, end);
-    return;
-  }
-  const y = parseInt(which, 10);
-  const start = new Date(Date.UTC(y, 0, 1));
-  setXRange(start, state.dataMax);
+function updateRightLabels(x0, x1){
+  const annotations = buildRightLabels(x0, x1);
+  Plotly.relayout('chart', { annotations });
 }
 
-/* --------- reveal animation --------- */
-
+/* ---- animation helpers ---- */
 function stopReveal(){
   if (revealTimer !== null){
     clearInterval(revealTimer);
@@ -389,7 +367,21 @@ function startReveal(){
 
   stopReveal();
 
-  // Reset traces to their first point before starting
+  // fix y-axis for whole animation based on all players
+  const allY = state.fullSeries
+    .flatMap(s => s.y)
+    .filter(Number.isFinite);
+  if (allY.length){
+    const ymin = Math.floor(Math.min(...allY) / 50) * 50;
+    const ymax = Math.ceil (Math.max(...allY) / 50) * 50;
+    Plotly.relayout(gd, {
+      'yaxis.autorange': false,
+      'yaxis.range': [ymin, ymax],
+      'shapes': majorGridShapes(ymin, ymax)
+    });
+  }
+
+  // reset traces to first point
   const init = { x: [], y: [] };
   state.fullSeries.forEach(s => {
     if (s.x.length > 0){
@@ -405,12 +397,12 @@ function startReveal(){
   const maxLen = Math.max(...state.fullSeries.map(s => s.x.length));
   if (!maxLen || maxLen <= 1) return;
 
-  const WINDOW_DAYS = 365;              // 1-year window
+  const WINDOW_DAYS = 365;
   const MS_PER_DAY  = 24 * 60 * 60 * 1000;
 
-  let k = 2;                            // we already showed the first point
-  const fps   = 15;                     // frame rate
-  const step  = 1;                      // one “time step” per frame
+  let k = 2;
+  const fps   = 15;
+  const step  = 1;
   const delay = Math.round(1000 / fps);
 
   revealTimer = setInterval(() => {
@@ -433,156 +425,31 @@ function startReveal(){
       }
     });
 
-    // Restyle the data
     Plotly.restyle(gd, update);
 
-    // Compute current "time" as the latest visible date in any series
     if (lastDates.length){
       const currentDate = new Date(Math.max(...lastDates.map(d => d.getTime())));
       const rawStart    = new Date(currentDate.getTime() - WINDOW_DAYS * MS_PER_DAY);
-
-      // Clamp start so we never go before the true min date
       const startClamped = state.dataMin
         ? new Date(Math.max(rawStart.getTime(), state.dataMin.getTime()))
         : rawStart;
 
       const xr = [iso(startClamped), iso(currentDate)];
-      Plotly.relayout(gd, { 'xaxis.range': xr });
+      Plotly.relayout(gd, { 'xaxis.range': xr }).then(() => {
+        updateRightLabels(xr[0], xr[1]);
+      });
     }
 
     k += step;
   }, delay);
 }
 
-/* --------- chart creation --------- */
-
-function createChart(){
-  stopReveal();
-
-  const names = state.inputs.map(r => r.input.value.trim()).filter(Boolean);
-  if (!names.length){
-    alert('Please add at least one player');
-    return;
-  }
-  const mode = document.getElementById('agg').value;
-
-  Promise.all(names.map(name => {
-    const player = state.players.find(p => p.name === name);
-    if (!player) return null;
-    return fetch(HIST_URL(player.id))
-      .then(r => r.json())
-      .then(hist => {
-        const raw = hist.map(h => ({ x: h.date, y: +h.rating }));
-        const aggregated = aggregateExpanded(raw, mode);
-        const series = smoothSeries(aggregated, mode); // smoothed for line + animation
-
-        return {
-          _rawSeries: series, // keep for state.fullSeries
-          name,
-          x: series.map(p => p.x),
-          y: series.map(p => p.y),
-          mode: (mode === 'daily' ? 'lines' : 'lines+markers'),
-          marker: (mode === 'daily' ? { size: 0 } : { size: 4 }),
-          line: { width: 2 },
-          hovertemplate: '%{y:.0f}<extra>' + name + '</extra>'
-        };
-      });
-  })).then(series => {
-    series = series.filter(Boolean);
-    if (!series.length) return;
-
-    // store full series for reveal animation
-    state.fullSeries = series.map(tr => ({
-      name: tr.name,
-      x: tr._rawSeries.map(p => p.x),
-      y: tr._rawSeries.map(p => p.y)
-    }));
-
-    const allY = state.fullSeries
-      .flatMap(s => s.y)
-      .filter(Number.isFinite);
-    const ymin = Math.floor(Math.min(...allY) / 50) * 50;
-    const ymax = Math.ceil (Math.max(...allY) / 50) * 50;
-
-    const ext = extentFrom(
-      state.fullSeries.map(s => s.x.map((x, i) => ({ x: s.x[i], y: s.y[i] })))
-    );
-    state.dataMin = ext.min;
-    state.dataMax = ext.max;
-
-    const layout = {
-      margin: { t: 30, r: 20, l: 50, b: 50 },
-      paper_bgcolor: '#0f1623',
-      plot_bgcolor: '#0f1623',
-      font: { color: '#ccc' },
-      xaxis: {
-        type: 'date',
-        gridcolor: '#222',
-        zeroline: false,
-        fixedrange: true,
-        rangeslider: {
-          visible: true,
-          thickness: 0.12,
-          borderwidth: 0,
-          bgcolor: '#0f1623',
-          bordercolor: '#0f1623'
-        }
-      },
-      yaxis: {
-        title: 'Rating',
-        fixedrange: true,
-        gridcolor: '#222',
-        zeroline: false,
-        tickformat: '.0f',
-        range: [ymin, ymax]
-      },
-      legend: { x: 1, y: 0, bgcolor: 'rgba(0,0,0,0)' },
-      shapes: majorGridShapes(ymin, ymax)
-    };
-
-    if (!state.initialRangeSet && state.dataMin && state.dataMax){
-      const end = new Date(state.dataMax);
-      const start = new Date(end.getTime() - 365 * 24 * 60 * 60 * 1000);
-      layout.xaxis.range = [
-        iso(new Date(Math.max(start, state.dataMin))),
-        iso(end)
-      ];
-      state.initialRangeSet = true;
-    }
-
-    // remove the internal helper from traces before plotting
-    const plotTraces = series.map(tr => {
-      const { _rawSeries, ...rest } = tr;
-      return rest;
-    });
-
-    Plotly.newPlot('chart', plotTraces, layout, {
-      responsive: true,
-      displayModeBar: false,
-      scrollZoom: false
-    }).then(gd => {
-      const xr = gd.layout.xaxis.range || gd._fullLayout.xaxis.range;
-      if (xr && xr.length === 2) adjustYToVisible(xr[0], xr[1]);
-      if (!gd._jrYHandlerAttached){
-        gd.on('plotly_relayout', ev => {
-          const x0 = ev['xaxis.range[0]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][0]);
-          const x1 = ev['xaxis.range[1]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][1]);
-          if (x0 && x1) adjustYToVisible(x0, x1);
-        });
-        gd._jrYHandlerAttached = true;
-      }
-    });
-  });
-}
-
-/* --------- UI helpers --------- */
-
+/* ---- UI helpers ---- */
 function attachAutocomplete(input){
   const wrap = document.createElement('div');
   wrap.className = 'suggest';
   input.parentNode.insertBefore(wrap, input);
   wrap.appendChild(input);
-
   const list = document.createElement('div');
   list.className = 'suggest-list';
   wrap.appendChild(list);
@@ -601,12 +468,9 @@ function attachAutocomplete(input){
 
   input.addEventListener('input', () => {
     const q = input.value.trim().toLowerCase();
-    if (!q){
-      render([]);
-      return;
-    }
-    const names = state.players.map(p => p.name);
-    const starts = names.filter(n => n.toLowerCase().startsWith(q));
+    if (!q){ render([]); return; }
+    const names   = state.players.map(p => p.name);
+    const starts  = names.filter(n => n.toLowerCase().startsWith(q));
     const contains = names.filter(
       n => !n.toLowerCase().startsWith(q) && n.toLowerCase().includes(q)
     );
@@ -641,13 +505,11 @@ function makeRow(){
   const rows = document.getElementById('rows');
   const wrap = document.createElement('div');
   wrap.className = 'row';
-
   const input = document.createElement('input');
   input.type = 'text';
   input.placeholder = 'Search player…';
   wrap.appendChild(input);
   attachAutocomplete(input);
-
   const remove = document.createElement('button');
   remove.className = 'btn';
   remove.type = 'button';
@@ -659,7 +521,6 @@ function makeRow(){
       state.inputs.length >= MAX_PLAYERS;
   });
   wrap.appendChild(remove);
-
   rows.appendChild(wrap);
   state.inputs.push({ el: wrap, input });
   document.getElementById('add').disabled =
@@ -670,31 +531,153 @@ function clearAll(){
   document.getElementById('rows').innerHTML = '';
   state.inputs = [];
   state.initialRangeSet = false;
-  state.fullSeries = [];
   document.getElementById('add').disabled = false;
   stopReveal();
 }
 
+/* ---- chart creation ---- */
+function createChart(){
+  stopReveal();
+
+  const names = state.inputs
+    .map(r => r.input.value.trim())
+    .filter(Boolean);
+  if (!names.length){
+    alert('Please add at least one player');
+    return;
+  }
+  const mode = document.getElementById('agg').value;
+
+  Promise.all(names.map(name => {
+    const player = state.players.find(p => p.name === name);
+    if (!player) return null;
+    return fetch(HIST_URL(player.id))
+      .then(r => r.json())
+      .then(hist => {
+        const raw   = hist.map(h => ({ x: h.date, y: +h.rating }));
+        const smooth = smoothSeries(normalise(raw), 3);
+        const series = aggregateExpanded(smooth, mode);
+        return {
+          name,
+          x: series.map(p => p.x),
+          y: series.map(p => p.y),
+          mode: (mode === 'daily' ? 'lines' : 'lines+markers'),
+          marker: (mode === 'daily' ? { size:0 } : { size:4 }),
+          line: { width: 2 },
+          hovertemplate: '%{y:.0f}<extra>' + name + '</extra>'
+        };
+      });
+  })).then(series => {
+    series = series.filter(Boolean);
+    if (!series.length) return;
+
+    state.fullSeries = series.map(s => ({
+      name: s.name,
+      x: s.x.slice(),
+      y: s.y.slice()
+    }));
+
+    const ext = extentFrom(series.map(s => s.x.map((x,i)=>({x:s.x[i],y:s.y[i]}))));
+    state.dataMin = ext.min;
+    state.dataMax = ext.max;
+
+    const allY = series.flatMap(s => s.y).filter(Number.isFinite);
+    const ymin = Math.floor(Math.min(...allY) / 50) * 50;
+    const ymax = Math.ceil (Math.max(...allY) / 50) * 50;
+
+    const layout = {
+      margin:{ t:30, r:20, l:50, b:50 },
+      paper_bgcolor:'#0f1623',
+      plot_bgcolor:'#0f1623',
+      font:{ colour:'#ccc' },
+      xaxis:{
+        type:'date',
+        gridcolor:'#222',
+        zeroline:false,
+        fixedrange:true,
+        rangeslider:{
+          visible:true,
+          thickness:0.12,
+          borderwidth:0,
+          bgcolor:'#0f1623',
+          bordercolor:'#0f1623'
+        }
+      },
+      yaxis:{
+        title:'Rating',
+        fixedrange:true,
+        gridcolor:'#222',
+        zeroline:false,
+        tickformat:'.0f',
+        range:[ymin, ymax]
+      },
+      legend:{
+        orientation:'h',
+        x:0.5,
+        xanchor:'center',
+        y:1.12,
+        yanchor:'bottom',
+        bgcolor:'rgba(0,0,0,0)'
+      },
+      shapes: majorGridShapes(ymin, ymax),
+      annotations: []
+    };
+
+    if (!state.initialRangeSet && state.dataMin && state.dataMax){
+      const end   = new Date(state.dataMax);
+      const start = new Date(end.getTime() - 365*24*60*60*1000);
+      layout.xaxis.range = [
+        iso(new Date(Math.max(start, state.dataMin))),
+        iso(end)
+      ];
+      state.initialRangeSet = true;
+    }
+
+    Plotly.newPlot('chart', series, layout,
+                   { responsive:true, displayModeBar:false, scrollZoom:false })
+      .then(gd => {
+        const xr = gd.layout.xaxis.range || gd._fullLayout.xaxis.range;
+        if (xr && xr.length === 2){
+          adjustYToVisible(xr[0], xr[1]);
+          updateRightLabels(xr[0], xr[1]);
+        }
+        if (!gd._jrHandlerAttached){
+          gd.on('plotly_relayout', ev => {
+            const x0 = ev['xaxis.range[0]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][0]);
+            const x1 = ev['xaxis.range[1]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][1]);
+            if (x0 && x1 && revealTimer === null){
+              adjustYToVisible(x0, x1);
+              updateRightLabels(x0, x1);
+            }
+          });
+          gd._jrHandlerAttached = true;
+        }
+      });
+  }).catch(err => {
+    console.error(err);
+    alert('Could not create chart.');
+  });
+}
+
+/* ---- data load ---- */
 async function load(){
   const res = await fetch(PLAYERS_URL);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   state.players = await res.json();
 }
 
-/* --------- bootstrap --------- */
-
+/* ---- bootstrap ---- */
 window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('add').addEventListener('click', makeRow);
   document.getElementById('clear').addEventListener('click', clearAll);
   document.getElementById('create').addEventListener('click', createChart);
   document.getElementById('agg').addEventListener('change', createChart);
 
-  document.querySelectorAll('.range-buttons .seg').forEach(btn => {
-    btn.addEventListener('click', () => setPreset(btn.dataset.range));
-  });
-
-  document.getElementById('anim-reveal').addEventListener('click', startReveal);
-  document.getElementById('anim-stop').addEventListener('click', stopReveal);
+  // you presumably already have a "Reveal" button wired – keep using startReveal()
+  const revealBtn = document.getElementById('reveal');
+  if (revealBtn){
+    revealBtn.addEventListener('click', startReveal);
+  }
 
   load().then(makeRow).catch(e => {
     console.error(e);
