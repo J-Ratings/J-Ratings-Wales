@@ -278,6 +278,43 @@ function majorGridShapes(ymin, ymax){
   return shapes;
 }
 
+function setXRange(start, end){
+  if (!state.dataMin || !state.dataMax) return;
+  const s = new Date(Math.max(start.getTime(), state.dataMin.getTime()));
+  const e = new Date(Math.min(end.getTime(), state.dataMax.getTime()));
+  const x0 = iso(s), x1 = iso(e);
+  Plotly.relayout('chart', {'xaxis.range':[x0,x1]}).then(() => {
+    adjustYToVisible(x0,x1);
+    updateRightLabels(x0,x1);
+  });
+}
+
+function setPreset(which){
+  if (!state.dataMin || !state.dataMax) return;
+  const now = new Date();
+  if (which === 'ALL'){
+    setXRange(state.dataMin, state.dataMax);
+    return;
+  }
+  if (which === 'YTD'){
+    const yStart = new Date(Date.UTC(now.getUTCFullYear(),0,1));
+    setXRange(yStart, state.dataMax);
+    return;
+  }
+  if (which === 'LY'){
+    const end = state.dataMax;
+    const start = new Date(end.getTime() - 365*24*60*60*1000);
+    setXRange(start, end);
+    return;
+  }
+  const y = parseInt(which,10);
+  if (!Number.isNaN(y)){
+    const start = new Date(Date.UTC(y,0,1));
+    setXRange(start, state.dataMax);
+  }
+}
+
+
 /* ---- visible-window y-axis ---- */
 function getVisibleYValues(x0, x1){
   const s = new Date(x0), e = new Date(x1);
@@ -672,6 +709,11 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('clear').addEventListener('click', clearAll);
   document.getElementById('create').addEventListener('click', createChart);
   document.getElementById('agg').addEventListener('change', createChart);
+
+  document.querySelectorAll('.range-buttons .seg').forEach(btn => {
+    btn.addEventListener('click', () => setPreset(btn.dataset.range));
+  });
+
 
   // animation buttons
   const revealBtn = document.getElementById('anim-reveal');
