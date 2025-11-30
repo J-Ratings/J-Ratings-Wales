@@ -325,6 +325,9 @@ function majorGridShapes(ymin, ymax){
 }
 
 function adjustYToVisible(x0, x1){
+  // Do not move Y during reveal animation
+  if (revealTimer !== null) return;
+
   const ys = getVisibleYValues(x0, x1);
   if (!ys.length) return;
   const ymin = Math.floor(Math.min(...ys) / 50) * 50;
@@ -402,9 +405,12 @@ function startReveal(){
   const maxLen = Math.max(...state.fullSeries.map(s => s.x.length));
   if (!maxLen || maxLen <= 1) return;
 
-  let k = 2;                // we already showed the first point
-  const fps   = 15;         // slower so it is easier to follow
-  const step  = 1;          // one time step per frame
+  const WINDOW_DAYS = 365;              // 1-year window
+  const MS_PER_DAY  = 24 * 60 * 60 * 1000;
+
+  let k = 2;                            // we already showed the first point
+  const fps   = 15;                     // frame rate
+  const step  = 1;                      // one “time step” per frame
   const delay = Math.round(1000 / fps);
 
   revealTimer = setInterval(() => {
@@ -413,14 +419,37 @@ function startReveal(){
       return;
     }
 
-    const update = { x: [], y: [] };
+    const update    = { x: [], y: [] };
+    const lastDates = [];
+
     state.fullSeries.forEach(s => {
-      const n = Math.min(k, s.x.length);
-      update.x.push(s.x.slice(0, n));
-      update.y.push(s.y.slice(0, n));
+      const n  = Math.min(k, s.x.length);
+      const xs = s.x.slice(0, n);
+      const ys = s.y.slice(0, n);
+      update.x.push(xs);
+      update.y.push(ys);
+      if (xs.length){
+        lastDates.push(new Date(xs[xs.length - 1]));
+      }
     });
 
+    // Restyle the data
     Plotly.restyle(gd, update);
+
+    // Compute current "time" as the latest visible date in any series
+    if (lastDates.length){
+      const currentDate = new Date(Math.max(...lastDates.map(d => d.getTime())));
+      const rawStart    = new Date(currentDate.getTime() - WINDOW_DAYS * MS_PER_DAY);
+
+      // Clamp start so we never go before the true min date
+      const startClamped = state.dataMin
+        ? new Date(Math.max(rawStart.getTime(), state.dataMin.getTime()))
+        : rawStart;
+
+      const xr = [iso(startClamped), iso(currentDate)];
+      Plotly.relayout(gd, { 'xaxis.range': xr });
+    }
+
     k += step;
   }, delay);
 }
