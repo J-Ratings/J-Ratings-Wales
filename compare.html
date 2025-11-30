@@ -70,7 +70,6 @@
       background:rgba(255,255,255,.05);
     }
 
-    /* Range buttons */
     .range-buttons{
       display:flex;
       gap:.5rem;
@@ -144,11 +143,15 @@
       </div>
 
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
-        <button id="anim-start" class="btn" type="button">Play animation</button>
-        <button id="anim-stop"  class="btn" type="button">Stop</button>
+        <button id="anim-reveal" class="btn" type="button">Reveal animation</button>
+        <button id="anim-stop"   class="btn" type="button">Stop</button>
       </div>
 
-      <div class="muted-note">Start typing a name, pick a suggestion, then Create. Use Play to see the rating history slide through time.</div>
+      <div class="muted-note">
+        Start typing a name, pick a suggestion, then Create.
+        “Reveal animation” gradually draws the lines from left to right
+        (smoothed with a small moving average).
+      </div>
     </div>
 
     <div style="padding:16px">
@@ -167,10 +170,13 @@ const state = {
   inputs: [],
   dataMin: null,
   dataMax: null,
-  initialRangeSet: false
+  initialRangeSet: false,
+  fullSeries: []  // for reveal animation
 };
 
-let animTimer = null;
+let revealTimer = null;
+
+/* -------- basic helpers -------- */
 
 function iso(d){
   return new Date(d).toISOString().slice(0, 10);
@@ -183,6 +189,7 @@ function normalise(series){
     .sort((a, b) => new Date(a.x) - new Date(b.x));
 }
 
+/* aggregate to weekly / monthly / etc. */
 function aggregateExpanded(series, mode){
   if (mode === 'daily') return normalise(series);
 
@@ -238,6 +245,32 @@ function aggregateExpanded(series, mode){
   return normalise(out);
 }
 
+/* moving average smoothing for animation & static lines */
+function movingAverage(values, windowSize){
+  if (windowSize <= 1) return values.slice();
+  const out = [];
+  for (let i = 0; i < values.length; i++){
+    const start = Math.max(0, i - windowSize + 1);
+    const slice = values.slice(start, i + 1).filter(Number.isFinite);
+    if (!slice.length) out.push(values[i]);
+    else out.push(slice.reduce((a, b) => a + b, 0) / slice.length);
+  }
+  return out;
+}
+
+function smoothSeries(series, mode){
+  // Slightly stronger smoothing for daily; lighter for coarser views
+  const w =
+    mode === 'daily'    ? 5 :
+    mode === 'weekly'   ? 3 :
+    mode === 'monthly'  ? 3 :
+    mode === 'quarterly'? 2 :
+                          2;
+  const ys = series.map(p => p.y);
+  const ysSmooth = movingAverage(ys, w);
+  return series.map((p, i) => ({ x: p.x, y: ysSmooth[i] }));
+}
+
 function extentFrom(seriesList){
   const xs = [];
   for (const s of seriesList){
@@ -253,7 +286,8 @@ function extentFrom(seriesList){
   };
 }
 
-/* ---- recompute y-axis from visible window (snap to 50) ---- */
+/* ---- recompute y-axis from visible window when user zooms ---- */
+
 function getVisibleYValues(x0, x1){
   const s = new Date(x0), e = new Date(x1);
   const take = series => (series ?? [])
@@ -283,7 +317,7 @@ function majorGridShapes(ymin, ymax){
       xref: 'paper',
       x0: 0, x1: 1,
       y0: v, y1: v,
-      line: { width: 1, colour: 'rgba(128,128,128,0.35)' },
+      line: { width: 1, color: 'rgba(128,128,128,0.35)' },
       layer: 'below'
     });
   }
@@ -301,7 +335,8 @@ function adjustYToVisible(x0, x1){
     'shapes': majorGridShapes(ymin, ymax)
   });
 }
-/* ---- /recompute ---- */
+
+/* ---- range presets ---- */
 
 function setXRange(start, end){
   if (!state.dataMin || !state.dataMax) return;
@@ -313,6 +348,8 @@ function setXRange(start, end){
 }
 
 function setPreset(which){
+  stopReveal();
+
   const now = new Date();
   if (which === 'ALL'){
     setXRange(state.dataMin, state.dataMax);
@@ -334,60 +371,64 @@ function setPreset(which){
   setXRange(start, state.dataMax);
 }
 
-/* --------- animation --------- */
+/* --------- reveal animation --------- */
 
-function stopAnimation(){
-  if (animTimer !== null){
-    clearInterval(animTimer);
-    animTimer = null;
+function stopReveal(){
+  if (revealTimer !== null){
+    clearInterval(revealTimer);
+    revealTimer = null;
   }
 }
 
-// slide a fixed-width window from left to right
-function startAnimation(){
+function startReveal(){
   const gd = document.getElementById('chart');
-  if (!gd || !state.dataMin || !state.dataMax) return;
+  if (!gd || !state.fullSeries || !state.fullSeries.length) return;
 
-  stopAnimation();
+  stopReveal();
 
-  const oneDayMs  = 24 * 60 * 60 * 1000;
-  const startFull = new Date(state.dataMin);
-  const endFull   = new Date(state.dataMax);
-  const spanDays  = Math.max(1, Math.round((endFull - startFull) / oneDayMs));
+  // Reset traces to their first point before starting
+  const init = { x: [], y: [] };
+  state.fullSeries.forEach(s => {
+    if (s.x.length > 0){
+      init.x.push([s.x[0]]);
+      init.y.push([s.y[0]]);
+    } else {
+      init.x.push([]);
+      init.y.push([]);
+    }
+  });
+  Plotly.restyle(gd, init);
 
-  // visible window width (in days)
-  const windowDays = Math.min(365, spanDays); // cap at 1 year
-  const stepDays   = 7;                       // move one week per tick
-  const fps        = 20;
-  const stepMs     = 1000 / fps;
+  const maxLen = Math.max(...state.fullSeries.map(s => s.x.length));
+  if (!maxLen || maxLen <= 1) return;
 
-  let offsetDays = 0;
+  let k = 2;                // we already showed the first point
+  const fps   = 15;         // slower so it is easier to follow
+  const step  = 1;          // one time step per frame
+  const delay = Math.round(1000 / fps);
 
-  animTimer = setInterval(() => {
-    const maxOffset = Math.max(0, spanDays - windowDays);
-    if (offsetDays > maxOffset){
-      stopAnimation();
+  revealTimer = setInterval(() => {
+    if (k > maxLen){
+      stopReveal();
       return;
     }
 
-    const x0 = new Date(startFull.getTime() + offsetDays * oneDayMs);
-    const x1 = new Date(x0.getTime() + windowDays * oneDayMs);
+    const update = { x: [], y: [] };
+    state.fullSeries.forEach(s => {
+      const n = Math.min(k, s.x.length);
+      update.x.push(s.x.slice(0, n));
+      update.y.push(s.y.slice(0, n));
+    });
 
-    const x0iso = iso(x0);
-    const x1iso = iso(x1);
-
-    Plotly.relayout(gd, { 'xaxis.range': [x0iso, x1iso] })
-      .then(() => adjustYToVisible(x0iso, x1iso));
-
-    offsetDays += stepDays;
-  }, stepMs);
+    Plotly.restyle(gd, update);
+    k += step;
+  }, delay);
 }
 
-/* --------- chart --------- */
+/* --------- chart creation --------- */
 
 function createChart(){
-  // stop any running animation when the chart is rebuilt
-  stopAnimation();
+  stopReveal();
 
   const names = state.inputs.map(r => r.input.value.trim()).filter(Boolean);
   if (!names.length){
@@ -403,8 +444,11 @@ function createChart(){
       .then(r => r.json())
       .then(hist => {
         const raw = hist.map(h => ({ x: h.date, y: +h.rating }));
-        const series = aggregateExpanded(raw, mode);
+        const aggregated = aggregateExpanded(raw, mode);
+        const series = smoothSeries(aggregated, mode); // smoothed for line + animation
+
         return {
+          _rawSeries: series, // keep for state.fullSeries
           name,
           x: series.map(p => p.x),
           y: series.map(p => p.y),
@@ -418,13 +462,22 @@ function createChart(){
     series = series.filter(Boolean);
     if (!series.length) return;
 
-    const allY = series.flatMap(s => s.y).filter(Number.isFinite);
+    // store full series for reveal animation
+    state.fullSeries = series.map(tr => ({
+      name: tr.name,
+      x: tr._rawSeries.map(p => p.x),
+      y: tr._rawSeries.map(p => p.y)
+    }));
+
+    const allY = state.fullSeries
+      .flatMap(s => s.y)
+      .filter(Number.isFinite);
     const ymin = Math.floor(Math.min(...allY) / 50) * 50;
     const ymax = Math.ceil (Math.max(...allY) / 50) * 50;
 
-    const ext = extentFrom(series.map(
-      s => s.x.map((x, i) => ({ x: s.x[i], y: s.y[i] }))
-    ));
+    const ext = extentFrom(
+      state.fullSeries.map(s => s.x.map((x, i) => ({ x: s.x[i], y: s.y[i] })))
+    );
     state.dataMin = ext.min;
     state.dataMax = ext.max;
 
@@ -432,10 +485,10 @@ function createChart(){
       margin: { t: 30, r: 20, l: 50, b: 50 },
       paper_bgcolor: '#0f1623',
       plot_bgcolor: '#0f1623',
-      font: { colour: '#ccc' },
+      font: { color: '#ccc' },
       xaxis: {
         type: 'date',
-        gridcolour: '#222',
+        gridcolor: '#222',
         zeroline: false,
         fixedrange: true,
         rangeslider: {
@@ -443,13 +496,13 @@ function createChart(){
           thickness: 0.12,
           borderwidth: 0,
           bgcolor: '#0f1623',
-          bordercolour: '#0f1623'
+          bordercolor: '#0f1623'
         }
       },
       yaxis: {
         title: 'Rating',
         fixedrange: true,
-        gridcolour: '#222',
+        gridcolor: '#222',
         zeroline: false,
         tickformat: '.0f',
         range: [ymin, ymax]
@@ -468,7 +521,13 @@ function createChart(){
       state.initialRangeSet = true;
     }
 
-    Plotly.newPlot('chart', series, layout, {
+    // remove the internal helper from traces before plotting
+    const plotTraces = series.map(tr => {
+      const { _rawSeries, ...rest } = tr;
+      return rest;
+    });
+
+    Plotly.newPlot('chart', plotTraces, layout, {
       responsive: true,
       displayModeBar: false,
       scrollZoom: false
@@ -582,8 +641,9 @@ function clearAll(){
   document.getElementById('rows').innerHTML = '';
   state.inputs = [];
   state.initialRangeSet = false;
+  state.fullSeries = [];
   document.getElementById('add').disabled = false;
-  stopAnimation();
+  stopReveal();
 }
 
 async function load(){
@@ -604,8 +664,8 @@ window.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => setPreset(btn.dataset.range));
   });
 
-  document.getElementById('anim-start').addEventListener('click', startAnimation);
-  document.getElementById('anim-stop').addEventListener('click', stopAnimation);
+  document.getElementById('anim-reveal').addEventListener('click', startReveal);
+  document.getElementById('anim-stop').addEventListener('click', stopReveal);
 
   load().then(makeRow).catch(e => {
     console.error(e);
