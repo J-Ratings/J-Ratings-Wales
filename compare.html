@@ -7,29 +7,89 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
-    .controls{display:flex;flex-direction:column;gap:8px;padding:14px 18px;border-bottom:1px solid var(--border)}
-    .row{display:flex;gap:8px;align-items:center;width:100%}
-    .row input[type="text"]{flex:1;min-width:220px;padding:10px;border-radius:8px;border:1px solid var(--border);background:#0f1623;color:var(--text)}
-    .btn{background:#0f1623;border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:6px;cursor:pointer}
-    .btn:hover{background:rgba(255,255,255,0.05)}
-    .muted-note{color:var(--muted);font-size:.9rem}
-    .suggest{position:relative;flex:1}
-    .suggest-list{
-      position:absolute;left:0;right:0;top:100%;
-      max-height:300px;overflow:auto;margin-top:4px;
-      border:1px solid var(--border);background:#0f1623;border-radius:6px;
-      display:none;z-index:20
+    .controls{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      padding:14px 18px;
+      border-bottom:1px solid var(--border);
     }
-    .suggest-item{padding:8px 10px;cursor:pointer}
-    .suggest-item:hover{background:rgba(255,255,255,.05)}
+    .row{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      width:100%;
+    }
+    .row input[type="text"]{
+      flex:1;
+      min-width:220px;
+      padding:10px;
+      border-radius:8px;
+      border:1px solid var(--border);
+      background:#0f1623;
+      color:var(--text);
+    }
+    .btn{
+      background:#0f1623;
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:8px 12px;
+      border-radius:6px;
+      cursor:pointer;
+    }
+    .btn:hover{
+      background:rgba(255,255,255,0.05);
+    }
+    .muted-note{
+      color:var(--muted);
+      font-size:.9rem;
+    }
+    .suggest{
+      position:relative;
+      flex:1;
+    }
+    .suggest-list{
+      position:absolute;
+      left:0;
+      right:0;
+      top:100%;
+      max-height:300px;
+      overflow:auto;
+      margin-top:4px;
+      border:1px solid var(--border);
+      background:#0f1623;
+      border-radius:6px;
+      display:none;
+      z-index:20;
+    }
+    .suggest-item{
+      padding:8px 10px;
+      cursor:pointer;
+    }
+    .suggest-item:hover{
+      background:rgba(255,255,255,.05);
+    }
 
     /* Range buttons */
-    .range-buttons{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:.5rem}
-    .range-buttons .seg{
-      background:#0f1623;border:1px solid var(--border);color:var(--text);
-      padding:6px 10px;border-radius:6px;cursor:pointer;font-size:.9rem;
+    .range-buttons{
+      display:flex;
+      gap:.5rem;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top:.5rem;
     }
-    .range-buttons .seg:hover{background:rgba(255,255,255,.05)}
+    .range-buttons .seg{
+      background:#0f1623;
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:6px 10px;
+      border-radius:6px;
+      cursor:pointer;
+      font-size:.9rem;
+    }
+    .range-buttons .seg:hover{
+      background:rgba(255,255,255,.05);
+    }
   </style>
 </head>
 <body>
@@ -58,6 +118,7 @@
       <div id="rows"></div>
 
       <button id="add" class="btn" type="button">Add player</button>
+
       <div style="display:flex;gap:8px">
         <button id="create" class="btn" type="button">Create</button>
         <button id="clear" class="btn" type="button">Clear</button>
@@ -82,7 +143,12 @@
         </div>
       </div>
 
-      <div class="muted-note">Start typing a name, pick a suggestion, then Create.</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
+        <button id="anim-start" class="btn" type="button">Play animation</button>
+        <button id="anim-stop"  class="btn" type="button">Stop</button>
+      </div>
+
+      <div class="muted-note">Start typing a name, pick a suggestion, then Create. Use Play to see the rating history slide through time.</div>
     </div>
 
     <div style="padding:16px">
@@ -92,266 +158,459 @@
 </main>
 
 <script>
-const PLAYERS_URL='./data/players.json';
-const HIST_URL=id=>`data/history/${encodeURIComponent(id)}.json`;
-const MAX_PLAYERS=20;
+const PLAYERS_URL = './data/players.json';
+const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;
+const MAX_PLAYERS = 20;
 
-const state={players:[],inputs:[],dataMin:null,dataMax:null,initialRangeSet:false};
+const state = {
+  players: [],
+  inputs: [],
+  dataMin: null,
+  dataMax: null,
+  initialRangeSet: false
+};
 
-function iso(d){return new Date(d).toISOString().slice(0,10);}
-function normalise(series){
-  return series.filter(p=>p&&p.x&&Number.isFinite(p.y))
-    .map(p=>({x:p.x,y:+p.y}))
-    .sort((a,b)=>new Date(a.x)-new Date(b.x));
+let animTimer = null;
+
+function iso(d){
+  return new Date(d).toISOString().slice(0, 10);
 }
 
-function aggregateExpanded(series,mode){
-  if(mode==='daily')return normalise(series);
-  const buckets={};
-  for(const p of series){
-    const d=new Date(p.x);
+function normalise(series){
+  return series
+    .filter(p => p && p.x && Number.isFinite(p.y))
+    .map(p => ({ x: p.x, y: +p.y }))
+    .sort((a, b) => new Date(a.x) - new Date(b.x));
+}
+
+function aggregateExpanded(series, mode){
+  if (mode === 'daily') return normalise(series);
+
+  const buckets = {};
+  for (const p of series){
+    const d = new Date(p.x);
     let key;
-    if(mode==='weekly'){
-      const tmp=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
-      const dayNum=tmp.getUTCDay()||7;
-      tmp.setUTCDate(tmp.getUTCDate()+4-dayNum);
-      const yearStart=new Date(Date.UTC(tmp.getUTCFullYear(),0,1));
-      const weekNo=Math.ceil((((tmp-yearStart)/86400000)+1)/7);
-      key=`${tmp.getUTCFullYear()}-W${String(weekNo).padStart(2,'0')}`;
-    }else if(mode==='monthly'){
-      key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-    }else if(mode==='quarterly'){
-      const q=Math.floor(d.getMonth()/3)+1;
-      key=`${d.getFullYear()}-Q${q}`;
-    }else key=`${d.getFullYear()}`;
+
+    if (mode === 'weekly'){
+      const tmp = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      const dayNum = tmp.getUTCDay() || 7;
+      tmp.setUTCDate(tmp.getUTCDate() + 4 - dayNum);
+      const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(), 0, 1));
+      const weekNo = Math.ceil((((tmp - yearStart) / 86400000) + 1) / 7);
+      key = `${tmp.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+    } else if (mode === 'monthly'){
+      key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    } else if (mode === 'quarterly'){
+      const q = Math.floor(d.getMonth() / 3) + 1;
+      key = `${d.getFullYear()}-Q${q}`;
+    } else {
+      key = `${d.getFullYear()}`;
+    }
+
     (buckets[key] ||= []).push(p.y);
   }
-  const out=Object.keys(buckets).sort().map(k=>{
-    const ys=buckets[k].filter(Number.isFinite);
-    const avg=ys.reduce((a,b)=>a+b,0)/ys.length;
+
+  const out = Object.keys(buckets).sort().map(k => {
+    const ys = buckets[k].filter(Number.isFinite);
+    const avg = ys.reduce((a, b) => a + b, 0) / ys.length;
     let x;
-    if(k.includes('W')){
-      const [y,w]=k.split('-W');const year=+y,week=+w;
-      const simple=new Date(Date.UTC(year,0,1+(week-1)*7));
-      const dow=simple.getUTCDay();
-      if(dow<=4)simple.setUTCDate(simple.getUTCDate()-dow+1);
-      else simple.setUTCDate(simple.getUTCDate()+8-dow);
-      x=iso(simple);
-    }else if(k.includes('Q')){
-      const [y,q]=k.split('-Q');const year=+y,quarter=+q;
-      const month=(quarter-1)*3;
-      x=iso(new Date(Date.UTC(year,month,1)));
-    }else if(k.length===7)x=`${k}-01`;
-    else x=`${k}-01-01`;
-    return {x,y:avg};
+    if (k.includes('W')){
+      const [y, w] = k.split('-W');
+      const year = +y, week = +w;
+      const simple = new Date(Date.UTC(year, 0, 1 + (week - 1) * 7));
+      const dow = simple.getUTCDay();
+      if (dow <= 4) simple.setUTCDate(simple.getUTCDate() - dow + 1);
+      else simple.setUTCDate(simple.getUTCDate() + 8 - dow);
+      x = iso(simple);
+    } else if (k.includes('Q')){
+      const [y, q] = k.split('-Q');
+      const year = +y, quarter = +q;
+      const month = (quarter - 1) * 3;
+      x = iso(new Date(Date.UTC(year, month, 1)));
+    } else if (k.length === 7){
+      x = `${k}-01`;
+    } else {
+      x = `${k}-01-01`;
+    }
+    return { x, y: avg };
   });
+
   return normalise(out);
 }
 
 function extentFrom(seriesList){
-  const xs=[];
-  for(const s of seriesList){if(!s)continue;for(const p of s){if(p?.x)xs.push(new Date(p.x));}}
-  if(!xs.length)return{min:null,max:null};
-  return{min:new Date(Math.min(...xs)),max:new Date(Math.max(...xs))};
+  const xs = [];
+  for (const s of seriesList){
+    if (!s) continue;
+    for (const p of s){
+      if (p && p.x) xs.push(new Date(p.x));
+    }
+  }
+  if (!xs.length) return { min: null, max: null };
+  return {
+    min: new Date(Math.min(...xs)),
+    max: new Date(Math.max(...xs))
+  };
 }
 
 /* ---- recompute y-axis from visible window (snap to 50) ---- */
-function getVisibleYValues(x0,x1){
-  const s=new Date(x0),e=new Date(x1);
-  const take=series=>(series??[])
-    .filter(p=>p&&p.x&&Number.isFinite(p.y))
-    .filter(p=>{const d=new Date(p.x);return d>=s&&d<=e;})
-    .map(p=>p.y);
-  const gd=document.getElementById('chart');
-  const ys=[];
-  if(gd&&gd.data){
-    for(const trace of gd.data){
-      const pts=trace.x.map((x,i)=>({x:trace.x[i],y:trace.y[i]}));
+function getVisibleYValues(x0, x1){
+  const s = new Date(x0), e = new Date(x1);
+  const take = series => (series ?? [])
+    .filter(p => p && p.x && Number.isFinite(p.y))
+    .filter(p => {
+      const d = new Date(p.x);
+      return d >= s && d <= e;
+    })
+    .map(p => p.y);
+
+  const gd = document.getElementById('chart');
+  const ys = [];
+  if (gd && gd.data){
+    for (const trace of gd.data){
+      const pts = trace.x.map((x, i) => ({ x: trace.x[i], y: trace.y[i] }));
       ys.push(...take(pts));
     }
   }
   return ys;
 }
 
-function majorGridShapes(ymin,ymax){
-  const shapes=[];for(let v=ymin;v<=ymax;v+=50){
-    shapes.push({type:'line',xref:'paper',x0:0,x1:1,y0:v,y1:v,line:{width:1,color:'rgba(128,128,128,0.35)'},layer:'below'});
-  }return shapes;
+function majorGridShapes(ymin, ymax){
+  const shapes = [];
+  for (let v = ymin; v <= ymax; v += 50){
+    shapes.push({
+      type: 'line',
+      xref: 'paper',
+      x0: 0, x1: 1,
+      y0: v, y1: v,
+      line: { width: 1, colour: 'rgba(128,128,128,0.35)' },
+      layer: 'below'
+    });
+  }
+  return shapes;
 }
 
-function adjustYToVisible(x0,x1){
-  const ys=getVisibleYValues(x0,x1);
-  if(!ys.length)return;
-  const ymin=Math.floor(Math.min(...ys)/50)*50;
-  const ymax=Math.ceil (Math.max(...ys)/50)*50;
-  Plotly.relayout('chart',{'yaxis.autorange':false,'yaxis.range':[ymin,ymax],'shapes':majorGridShapes(ymin,ymax)});
+function adjustYToVisible(x0, x1){
+  const ys = getVisibleYValues(x0, x1);
+  if (!ys.length) return;
+  const ymin = Math.floor(Math.min(...ys) / 50) * 50;
+  const ymax = Math.ceil (Math.max(...ys) / 50) * 50;
+  Plotly.relayout('chart', {
+    'yaxis.autorange': false,
+    'yaxis.range': [ymin, ymax],
+    'shapes': majorGridShapes(ymin, ymax)
+  });
 }
 /* ---- /recompute ---- */
 
-function setXRange(start,end){
-  if(!state.dataMin||!state.dataMax)return;
-  const s=new Date(Math.max(new Date(start),state.dataMin));
-  const e=new Date(Math.min(new Date(end),state.dataMax));
-  const x0=iso(s),x1=iso(e);
-  Plotly.relayout('chart',{'xaxis.range':[x0,x1]}).then(()=>adjustYToVisible(x0,x1));
+function setXRange(start, end){
+  if (!state.dataMin || !state.dataMax) return;
+  const s = new Date(Math.max(new Date(start), state.dataMin));
+  const e = new Date(Math.min(new Date(end), state.dataMax));
+  const x0 = iso(s), x1 = iso(e);
+  Plotly.relayout('chart', { 'xaxis.range': [x0, x1] })
+    .then(() => adjustYToVisible(x0, x1));
 }
 
 function setPreset(which){
-  const now=new Date();
-  if(which==='ALL'){setXRange(state.dataMin,state.dataMax);return;}
-  if(which==='YTD'){
-    const yStart=new Date(Date.UTC(now.getUTCFullYear(),0,1));
-    setXRange(yStart,state.dataMax);return;
+  const now = new Date();
+  if (which === 'ALL'){
+    setXRange(state.dataMin, state.dataMax);
+    return;
   }
-  if(which==='LY'){
-    const end=state.dataMax?new Date(state.dataMax):now;
-    const start=new Date(end.getTime()-365*24*60*60*1000);
-    setXRange(start,end);return;
+  if (which === 'YTD'){
+    const yStart = new Date(Date.UTC(now.getUTCFullYear(), 0, 1));
+    setXRange(yStart, state.dataMax);
+    return;
   }
-  const y=parseInt(which,10);
-  const start=new Date(Date.UTC(y,0,1));
-  setXRange(start,state.dataMax);
+  if (which === 'LY'){
+    const end = state.dataMax ? new Date(state.dataMax) : now;
+    const start = new Date(end.getTime() - 365 * 24 * 60 * 60 * 1000);
+    setXRange(start, end);
+    return;
+  }
+  const y = parseInt(which, 10);
+  const start = new Date(Date.UTC(y, 0, 1));
+  setXRange(start, state.dataMax);
+}
+
+/* --------- animation --------- */
+
+function stopAnimation(){
+  if (animTimer !== null){
+    clearInterval(animTimer);
+    animTimer = null;
+  }
+}
+
+// slide a fixed-width window from left to right
+function startAnimation(){
+  const gd = document.getElementById('chart');
+  if (!gd || !state.dataMin || !state.dataMax) return;
+
+  stopAnimation();
+
+  const oneDayMs  = 24 * 60 * 60 * 1000;
+  const startFull = new Date(state.dataMin);
+  const endFull   = new Date(state.dataMax);
+  const spanDays  = Math.max(1, Math.round((endFull - startFull) / oneDayMs));
+
+  // visible window width (in days)
+  const windowDays = Math.min(365, spanDays); // cap at 1 year
+  const stepDays   = 7;                       // move one week per tick
+  const fps        = 20;
+  const stepMs     = 1000 / fps;
+
+  let offsetDays = 0;
+
+  animTimer = setInterval(() => {
+    const maxOffset = Math.max(0, spanDays - windowDays);
+    if (offsetDays > maxOffset){
+      stopAnimation();
+      return;
+    }
+
+    const x0 = new Date(startFull.getTime() + offsetDays * oneDayMs);
+    const x1 = new Date(x0.getTime() + windowDays * oneDayMs);
+
+    const x0iso = iso(x0);
+    const x1iso = iso(x1);
+
+    Plotly.relayout(gd, { 'xaxis.range': [x0iso, x1iso] })
+      .then(() => adjustYToVisible(x0iso, x1iso));
+
+    offsetDays += stepDays;
+  }, stepMs);
 }
 
 /* --------- chart --------- */
+
 function createChart(){
-  const names=state.inputs.map(r=>r.input.value.trim()).filter(Boolean);
-  if(!names.length)return alert('Please add at least one player');
-  const mode=document.getElementById('agg').value;
+  // stop any running animation when the chart is rebuilt
+  stopAnimation();
 
-  Promise.all(names.map(name=>{
-    const player=state.players.find(p=>p.name===name);if(!player)return null;
-    return fetch(HIST_URL(player.id)).then(r=>r.json()).then(hist=>{
-      const raw=hist.map(h=>({x:h.date,y:+h.rating}));
-      const series=aggregateExpanded(raw,mode);
-      return{
-        name,
-        x:series.map(p=>p.x),
-        y:series.map(p=>p.y),
-        mode:(mode==='daily'?'lines':'lines+markers'),
-        marker:(mode==='daily'?{size:0}:{size:4}),
-        line:{width:2},
-        hovertemplate:'%{y:.0f}<extra>'+name+'</extra>',
-      };
-    });
-  })).then(series=>{
-    series=series.filter(Boolean);if(!series.length)return;
+  const names = state.inputs.map(r => r.input.value.trim()).filter(Boolean);
+  if (!names.length){
+    alert('Please add at least one player');
+    return;
+  }
+  const mode = document.getElementById('agg').value;
 
-    const allY=series.flatMap(s=>s.y).filter(Number.isFinite);
-    const ymin=Math.floor(Math.min(...allY)/50)*50;
-    const ymax=Math.ceil (Math.max(...allY)/50)*50;
+  Promise.all(names.map(name => {
+    const player = state.players.find(p => p.name === name);
+    if (!player) return null;
+    return fetch(HIST_URL(player.id))
+      .then(r => r.json())
+      .then(hist => {
+        const raw = hist.map(h => ({ x: h.date, y: +h.rating }));
+        const series = aggregateExpanded(raw, mode);
+        return {
+          name,
+          x: series.map(p => p.x),
+          y: series.map(p => p.y),
+          mode: (mode === 'daily' ? 'lines' : 'lines+markers'),
+          marker: (mode === 'daily' ? { size: 0 } : { size: 4 }),
+          line: { width: 2 },
+          hovertemplate: '%{y:.0f}<extra>' + name + '</extra>'
+        };
+      });
+  })).then(series => {
+    series = series.filter(Boolean);
+    if (!series.length) return;
 
-    const ext=extentFrom(series.map(s=>s.x.map((x,i)=>({x:s.x[i],y:s.y[i]}))));
-    state.dataMin=ext.min;state.dataMax=ext.max;
+    const allY = series.flatMap(s => s.y).filter(Number.isFinite);
+    const ymin = Math.floor(Math.min(...allY) / 50) * 50;
+    const ymax = Math.ceil (Math.max(...allY) / 50) * 50;
 
-    const layout={
-      margin:{t:30,r:20,l:50,b:50},
-      paper_bgcolor:'#0f1623',plot_bgcolor:'#0f1623',
-      font:{color:'#ccc'},
-      xaxis:{
-        type:'date',
-        gridcolor:'#222',zeroline:false,
-        fixedrange:true,
-        rangeslider:{
-          visible:true,
-          thickness:0.12,
-          borderwidth:0,
-          bgcolor:'#0f1623',
-          bordercolor:'#0f1623'
+    const ext = extentFrom(series.map(
+      s => s.x.map((x, i) => ({ x: s.x[i], y: s.y[i] }))
+    ));
+    state.dataMin = ext.min;
+    state.dataMax = ext.max;
+
+    const layout = {
+      margin: { t: 30, r: 20, l: 50, b: 50 },
+      paper_bgcolor: '#0f1623',
+      plot_bgcolor: '#0f1623',
+      font: { colour: '#ccc' },
+      xaxis: {
+        type: 'date',
+        gridcolour: '#222',
+        zeroline: false,
+        fixedrange: true,
+        rangeslider: {
+          visible: true,
+          thickness: 0.12,
+          borderwidth: 0,
+          bgcolor: '#0f1623',
+          bordercolour: '#0f1623'
         }
       },
-      yaxis:{title:"Rating",fixedrange:true,gridcolor:'#222',zeroline:false,tickformat:'.0f'},
-      legend:{x:1,y:0,bgcolor:'rgba(0,0,0,0)'},
-      shapes:majorGridShapes(ymin,ymax)
+      yaxis: {
+        title: 'Rating',
+        fixedrange: true,
+        gridcolour: '#222',
+        zeroline: false,
+        tickformat: '.0f',
+        range: [ymin, ymax]
+      },
+      legend: { x: 1, y: 0, bgcolor: 'rgba(0,0,0,0)' },
+      shapes: majorGridShapes(ymin, ymax)
     };
 
-    if(!state.initialRangeSet&&state.dataMin&&state.dataMax){
-      const end=new Date(state.dataMax);
-      const start=new Date(end.getTime()-365*24*60*60*1000);
-      layout.xaxis.range=[iso(new Date(Math.max(start,state.dataMin))),iso(end)];
-      state.initialRangeSet=true;
+    if (!state.initialRangeSet && state.dataMin && state.dataMax){
+      const end = new Date(state.dataMax);
+      const start = new Date(end.getTime() - 365 * 24 * 60 * 60 * 1000);
+      layout.xaxis.range = [
+        iso(new Date(Math.max(start, state.dataMin))),
+        iso(end)
+      ];
+      state.initialRangeSet = true;
     }
 
-    Plotly.newPlot('chart',series,layout,{responsive:true,displayModeBar:false,scrollZoom:false})
-      .then(gd=>{
-        const xr=gd.layout.xaxis.range||gd._fullLayout.xaxis.range;
-        if(xr&&xr.length===2)adjustYToVisible(xr[0],xr[1]);
-        if(!gd._jrYHandlerAttached){
-          gd.on('plotly_relayout',ev=>{
-            const x0=ev['xaxis.range[0]']??(ev['xaxis.range']&&ev['xaxis.range'][0]);
-            const x1=ev['xaxis.range[1]']??(ev['xaxis.range']&&ev['xaxis.range'][1]);
-            if(x0&&x1)adjustYToVisible(x0,x1);
-          });
-          gd._jrYHandlerAttached=true;
-        }
-      });
+    Plotly.newPlot('chart', series, layout, {
+      responsive: true,
+      displayModeBar: false,
+      scrollZoom: false
+    }).then(gd => {
+      const xr = gd.layout.xaxis.range || gd._fullLayout.xaxis.range;
+      if (xr && xr.length === 2) adjustYToVisible(xr[0], xr[1]);
+      if (!gd._jrYHandlerAttached){
+        gd.on('plotly_relayout', ev => {
+          const x0 = ev['xaxis.range[0]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][0]);
+          const x1 = ev['xaxis.range[1]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][1]);
+          if (x0 && x1) adjustYToVisible(x0, x1);
+        });
+        gd._jrYHandlerAttached = true;
+      }
+    });
   });
 }
 
 /* --------- UI helpers --------- */
+
 function attachAutocomplete(input){
-  const wrap=document.createElement('div');wrap.className='suggest';
-  input.parentNode.insertBefore(wrap,input);wrap.appendChild(input);
-  const list=document.createElement('div');list.className='suggest-list';wrap.appendChild(list);
+  const wrap = document.createElement('div');
+  wrap.className = 'suggest';
+  input.parentNode.insertBefore(wrap, input);
+  wrap.appendChild(input);
+
+  const list = document.createElement('div');
+  list.className = 'suggest-list';
+  wrap.appendChild(list);
+
   function render(items){
-    if(!items.length){list.style.display='none';list.innerHTML='';return;}
-    list.innerHTML=items.map(n=>`<div class="suggest-item" data-name="${n}">${n}</div>`).join('');
-    list.style.display='block';
+    if (!items.length){
+      list.style.display = 'none';
+      list.innerHTML = '';
+      return;
+    }
+    list.innerHTML = items
+      .map(n => `<div class="suggest-item" data-name="${n}">${n}</div>`)
+      .join('');
+    list.style.display = 'block';
   }
-  input.addEventListener('input',()=>{
-    const q=input.value.trim().toLowerCase();if(!q){render([]);return;}
-    const names=state.players.map(p=>p.name);
-    const starts=names.filter(n=>n.toLowerCase().startsWith(q));
-    const contains=names.filter(n=>!n.toLowerCase().startsWith(q)&&n.toLowerCase().includes(q));
-    render(starts.concat(contains).slice(0,12));
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    if (!q){
+      render([]);
+      return;
+    }
+    const names = state.players.map(p => p.name);
+    const starts = names.filter(n => n.toLowerCase().startsWith(q));
+    const contains = names.filter(
+      n => !n.toLowerCase().startsWith(q) && n.toLowerCase().includes(q)
+    );
+    render(starts.concat(contains).slice(0, 12));
   });
-  list.addEventListener('mousedown',e=>{
-    const item=e.target.closest('.suggest-item');if(!item)return;
-    input.value=item.dataset.name;list.style.display='none';
+
+  list.addEventListener('mousedown', e => {
+    const item = e.target.closest('.suggest-item');
+    if (!item) return;
+    input.value = item.dataset.name;
+    list.style.display = 'none';
   });
-  input.addEventListener('keydown',e=>{
-    if(e.key==='Enter'){const first=list.querySelector('.suggest-item');if(first){input.value=first.dataset.name;list.style.display='none';}}
-    if(e.key==='Escape')list.style.display='none';
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter'){
+      const first = list.querySelector('.suggest-item');
+      if (first){
+        input.value = first.dataset.name;
+        list.style.display = 'none';
+      }
+    }
+    if (e.key === 'Escape') list.style.display = 'none';
   });
-  input.addEventListener('blur',()=>setTimeout(()=>{list.style.display='none';},120));
+
+  input.addEventListener('blur', () => {
+    setTimeout(() => { list.style.display = 'none'; }, 120);
+  });
 }
 
 function makeRow(){
-  if(state.inputs.length>=MAX_PLAYERS)return;
-  const rows=document.getElementById('rows');
-  const wrap=document.createElement('div');wrap.className='row';
-  const input=document.createElement('input');input.type='text';input.placeholder='Search player…';wrap.appendChild(input);
+  if (state.inputs.length >= MAX_PLAYERS) return;
+  const rows = document.getElementById('rows');
+  const wrap = document.createElement('div');
+  wrap.className = 'row';
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.placeholder = 'Search player…';
+  wrap.appendChild(input);
   attachAutocomplete(input);
-  const remove=document.createElement('button');remove.className='btn';remove.type='button';remove.textContent='Remove';
-  remove.addEventListener('click',()=>{rows.removeChild(wrap);state.inputs=state.inputs.filter(r=>r.el!==wrap);document.getElementById('add').disabled=state.inputs.length>=MAX_PLAYERS;});
-  wrap.appendChild(remove);rows.appendChild(wrap);
-  state.inputs.push({el:wrap,input});document.getElementById('add').disabled=state.inputs.length>=MAX_PLAYERS;
+
+  const remove = document.createElement('button');
+  remove.className = 'btn';
+  remove.type = 'button';
+  remove.textContent = 'Remove';
+  remove.addEventListener('click', () => {
+    rows.removeChild(wrap);
+    state.inputs = state.inputs.filter(r => r.el !== wrap);
+    document.getElementById('add').disabled =
+      state.inputs.length >= MAX_PLAYERS;
+  });
+  wrap.appendChild(remove);
+
+  rows.appendChild(wrap);
+  state.inputs.push({ el: wrap, input });
+  document.getElementById('add').disabled =
+    state.inputs.length >= MAX_PLAYERS;
 }
 
 function clearAll(){
-  document.getElementById('rows').innerHTML='';
-  state.inputs=[];
-  state.initialRangeSet=false;
-  document.getElementById('add').disabled=false;
+  document.getElementById('rows').innerHTML = '';
+  state.inputs = [];
+  state.initialRangeSet = false;
+  document.getElementById('add').disabled = false;
+  stopAnimation();
 }
 
 async function load(){
-  const res=await fetch(PLAYERS_URL);
-  if(!res.ok)throw new Error(`HTTP ${res.status}`);
-  state.players=await res.json();
+  const res = await fetch(PLAYERS_URL);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  state.players = await res.json();
 }
 
-window.addEventListener('DOMContentLoaded',()=>{
-  document.getElementById('add').addEventListener('click',makeRow);
-  document.getElementById('clear').addEventListener('click',clearAll);
-  document.getElementById('create').addEventListener('click',createChart);
-  document.getElementById('agg').addEventListener('change',createChart);
-  document.querySelectorAll('.range-buttons .seg').forEach(btn=>{
-    btn.addEventListener('click',()=>setPreset(btn.dataset.range));
+/* --------- bootstrap --------- */
+
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('add').addEventListener('click', makeRow);
+  document.getElementById('clear').addEventListener('click', clearAll);
+  document.getElementById('create').addEventListener('click', createChart);
+  document.getElementById('agg').addEventListener('change', createChart);
+
+  document.querySelectorAll('.range-buttons .seg').forEach(btn => {
+    btn.addEventListener('click', () => setPreset(btn.dataset.range));
   });
-  load().then(makeRow).catch(e=>{
+
+  document.getElementById('anim-start').addEventListener('click', startAnimation);
+  document.getElementById('anim-stop').addEventListener('click', stopAnimation);
+
+  load().then(makeRow).catch(e => {
     console.error(e);
-    document.querySelector('.muted-note').textContent='Could not load player list.';
+    document.querySelector('.muted-note').textContent =
+      'Could not load player list.';
     makeRow();
   });
 });
