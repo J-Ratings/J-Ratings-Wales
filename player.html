@@ -7,22 +7,19 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
-/* Strip the mini-graph out of the Plotly range slider */
-#chart g.rangeslider .plot,
-#chart g.rangeslider .rangeplot {
-  opacity: 0 !important;       /* hides all the tiny traces at once */
-}
+    /* Strip the mini-graph out of the Plotly range slider */
+    #chart g.rangeslider .plot,
+    #chart g.rangeslider .rangeplot {
+      opacity: 0 !important;       /* hides all the tiny traces at once */
+    }
 
-/* Hide axes and grid inside the rangeslider */
-#chart g.rangeslider .gridlayer,
-#chart g.rangeslider .zerolinelayer,
-#chart g.rangeslider [class^="xaxislayer"],
-#chart g.rangeslider [class^="yaxislayer"] {
-  display: none !important;
-}
-
-
-
+    /* Hide axes and grid inside the rangeslider */
+    #chart g.rangeslider .gridlayer,
+    #chart g.rangeslider .zerolinelayer,
+    #chart g.rangeslider [class^="xaxislayer"],
+    #chart g.rangeslider [class^="yaxislayer"] {
+      display: none !important;
+    }
 
     .player-head{
       display:flex;justify-content:space-between;align-items:flex-end;
@@ -134,7 +131,12 @@
     <table id="games">
       <thead>
         <tr>
-          <th>Date</th><th>Opponent</th><th>Elo</th><th>Result</th><th>Δ</th>
+          <th>Date</th>
+          <th>Opponent</th>
+          <th>Elo</th>
+          <th>Result</th>
+          <th>Δ</th>
+          <th>New</th>
         </tr>
       </thead>
       <tbody id="games-body"></tbody>
@@ -146,7 +148,10 @@
 /* ---------- constants ---------- */
 const params = new URLSearchParams(location.search);
 const idRaw = params.get('id');
-if (!idRaw) { document.getElementById('chart').textContent = 'Missing player id.'; throw new Error('no id'); }
+if (!idRaw) {
+  document.getElementById('chart').textContent = 'Missing player id.';
+  throw new Error('no id');
+}
 
 const PLAYERS_URL = 'data/players.json';
 const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;
@@ -157,10 +162,11 @@ const COLORS = { J:'#1f77b4', WCU:'#ff7f0e' };
 const kFromRating = r => (r>=2200?10:r>=1800?20:30);
 
 /* ---------- state ---------- */
-let me=null, rawLive=[], rawWCU=[], seriesLive=null, seriesWCU=null, showWCU=false;
-let dataMin=null, dataMax=null;
-let initialRangeApplied=false;
-let rememberedXRange=null; // [x0,x1] strings yyyy-mm-dd
+let me = null, rawLive = [], rawWCU = [], seriesLive = null, seriesWCU = null, showWCU = false;
+let dataMin = null, dataMax = null;
+let initialRangeApplied = false;
+let rememberedXRange = null;   // [x0,x1] strings yyyy-mm-dd
+let ratingByDate = Object.create(null); // date -> J-rating from history JSON
 
 /* ---------- helpers ---------- */
 const iso = d => new Date(d).toISOString().slice(0,10);
@@ -222,10 +228,16 @@ function aggregateExpanded(series, mode){
 
 /* grid lines every 50 */
 function majorGridShapes(ymin,ymax){
-  const s=[]; for(let v=ymin; v<=ymax; v+=50){
-    s.push({type:'line', xref:'paper', x0:0, x1:1, y0:v, y1:v,
-      line:{width:1, color:'rgba(128,128,128,0.35)'}, layer:'below'});
-  } return s;
+  const s=[];
+  for(let v=ymin; v<=ymax; v+=50){
+    s.push({
+      type:'line',
+      xref:'paper', x0:0, x1:1, y0:v, y1:v,
+      line:{width:1, color:'rgba(128,128,128,0.35)'},
+      layer:'below'
+    });
+  }
+  return s;
 }
 
 function getVisibleYValues(x0,x1){
@@ -267,14 +279,22 @@ function setXRange(start,end){
 function setPreset(which){
   const now=new Date();
   if(which==='ALL'){setXRange(dataMin,dataMax);return;}
-  if(which==='YTD'){const yStart=new Date(Date.UTC(now.getUTCFullYear(),0,1));setXRange(yStart,dataMax);return;}
-  if(which==='LY'){const end=dataMax?new Date(dataMax):now;const start=new Date(end.getTime()-365*24*60*60*1000);setXRange(start,end);return;}
+  if(which==='YTD'){
+    const yStart=new Date(Date.UTC(now.getUTCFullYear(),0,1));
+    setXRange(yStart,dataMax);
+    return;
+  }
+  if(which==='LY'){
+    const end=dataMax?new Date(dataMax):now;
+    const start=new Date(end.getTime()-365*24*60*60*1000);
+    setXRange(start,end);
+    return;
+  }
   const y=parseInt(which,10);
   const start=new Date(Date.UTC(y,0,1));
   setXRange(start,dataMax);
 }
 
-/* ---------- chart ---------- */
 function makeTrace(series,name,colour,mode){
   return{
     x:series.map(p=>p.x),y:series.map(p=>p.y),
@@ -288,8 +308,14 @@ function makeTrace(series,name,colour,mode){
 }
 
 function extentFrom(...seriesList){
-  const xs=[]; for(const s of seriesList){if(!s)continue;for(const p of s){if(p?.x)xs.push(new Date(p.x));}}
-  if(!xs.length)return{min:null,max:null};
+  const xs=[];
+  for(const s of seriesList){
+    if(!s) continue;
+    for(const p of s){
+      if(p?.x) xs.push(new Date(p.x));
+    }
+  }
+  if(!xs.length) return{min:null,max:null};
   return{min:new Date(Math.min(...xs)),max:new Date(Math.max(...xs))};
 }
 
@@ -306,6 +332,7 @@ function refreshBadge(){
   document.getElementById('live-j').textContent=j.live??'–';
   document.getElementById('peak-j').textContent=j.peak??'–';
   document.getElementById('kval-j').textContent=(typeof me?.k==='number')?me.k:(j.kval??'–');
+
   const wcuRow=document.getElementById('stats-wcu');
   if(showWCU&&seriesWCU){
     const w=computeMetrics(seriesWCU);
@@ -313,24 +340,68 @@ function refreshBadge(){
     document.getElementById('peak-wcu').textContent=w.peak??'–';
     document.getElementById('kval-wcu').textContent=w.kval??'–';
     wcuRow.style.display='';
-  }else wcuRow.style.display='none';
+  } else {
+    wcuRow.style.display='none';
+  }
   document.getElementById('toggle').textContent=showWCU?'Hide WCU':'Show WCU';
 }
 
-/* Preserve current range across redraws */
+/* recolour the tiny line in the rangeslider to match the background */
+function recolourMiniToBackground() {
+  const bg = getComputedStyle(document.body).backgroundColor;
+  document.querySelectorAll('#chart g.rangeslider .plot path').forEach(el => {
+    el.style.stroke = bg;
+    el.style.fill = bg;
+  });
+}
+
+function hideMini() {
+  const chart = document.getElementById('chart');
+  if (!chart) return;
+  chart.querySelectorAll('g.rangeslider .plot, g.rangeslider .rangeplot')
+    .forEach(el => { el.style.opacity = '0'; });
+  chart.querySelectorAll(
+    'g.rangeslider .gridlayer, ' +
+    'g.rangeslider .zerolinelayer, ' +
+    'g.rangeslider [class^="xaxislayer"], ' +
+    'g.rangeslider [class^="yaxislayer"]'
+  ).forEach(el => { el.style.display = 'none'; });
+  recolourMiniToBackground();
+}
+
+/* rating from J history JSON on or before given date */
+function ratingOnOrBefore(dateStr) {
+  if (!dateStr) return null;
+  const key = dateStr.slice(0, 10);
+
+  if (ratingByDate && Object.prototype.hasOwnProperty.call(ratingByDate, key)) {
+    return ratingByDate[key];
+  }
+
+  const target = new Date(key);
+  let best = null;
+  for (const p of rawLive) {
+    if (!p || !p.x) continue;
+    const d = new Date(p.x);
+    if (d <= target && (!best || d > best.d)) {
+      best = { d, r: p.y };
+    }
+  }
+  return best ? best.r : null;
+}
+
+/* ---------- chart ---------- */
 function draw(){
   const mode=document.getElementById('agg').value;
 
-  // remember current range before changing anything
   const gd=document.getElementById('chart');
   const liveLayout = gd && gd._fullLayout ? gd._fullLayout.xaxis : null;
   if (liveLayout && liveLayout.range) {
     rememberedXRange = [liveLayout.range[0], liveLayout.range[1]];
   }
 
-  // build series for chosen aggregation
-  seriesLive=aggregateExpanded(rawLive,mode);
-  seriesWCU=rawWCU.length?aggregateExpanded(rawWCU,mode):null;
+  seriesLive = aggregateExpanded(rawLive,mode);
+  seriesWCU  = rawWCU.length ? aggregateExpanded(rawWCU,mode) : null;
 
   const traces=[makeTrace(seriesLive,'J-Ratings',COLORS.J,mode)];
   if(showWCU&&seriesWCU) traces.push(makeTrace(seriesWCU,'WCU',COLORS.WCU,mode));
@@ -341,11 +412,11 @@ function draw(){
   const bg=getComputedStyle(document.body).backgroundColor;
   const baseLayout={
     margin:{l:50,r:20,t:10,b:40},
-xaxis: {
-  type: 'date',
-  fixedrange: true,
-  rangeslider: { visible: true, thickness: 0.04, borderwidth: 0, bgcolor: '#0f1623' }
-},
+    xaxis: {
+      type: 'date',
+      fixedrange: true,
+      rangeslider: { visible: true, thickness: 0.04, borderwidth: 0, bgcolor: '#0f1623' }
+    },
     yaxis:{title:'Rating',fixedrange:true},
     paper_bgcolor:bg,plot_bgcolor:bg,
     font:{color:getComputedStyle(document.body).color},
@@ -353,7 +424,6 @@ xaxis: {
     shapes:[]
   };
 
-  // If first render, default to last-year window; otherwise keep remembered
   if (!initialRangeApplied && dataMin && dataMax) {
     const end=new Date(dataMax);
     const start=new Date(end.getTime()-365*24*60*60*1000);
@@ -361,17 +431,14 @@ xaxis: {
     initialRangeApplied = true;
   }
 
-  // Draw/update without resetting layout state
   Plotly.react('chart', traces, baseLayout, {
     staticPlot:false,scrollZoom:false,displayModeBar:false,responsive:true
   }).then(() => {
-    // apply the remembered range if we have one
     if (rememberedXRange) {
       const [x0,x1]=clampToData(rememberedXRange);
       Plotly.relayout('chart', {'xaxis.range':[x0,x1]}).then(()=>adjustYToVisible(x0,x1));
     }
 
-    // attach once: keep rememberedXRange in sync with user interactions
     const gd2=document.getElementById('chart');
     if (!gd2._jrHandlersAttached) {
       gd2.on('plotly_relayout', ev => {
@@ -381,51 +448,29 @@ xaxis: {
           rememberedXRange=[x0,x1];
           adjustYToVisible(x0,x1);
         }
+        hideMini();
       });
-// keep the mini chart hidden after any internal redraws
-const hideMini = () => {
-  document.querySelectorAll(
-    '#chart g.rangeslider .plot, #chart g.rangeslider .rangeplot'
-  ).forEach(el => { el.style.opacity = '0'; });
 
-  document.querySelectorAll(
-    '#chart g.rangeslider .gridlayer, ' +
-    '#chart g.rangeslider .zerolinelayer, ' +
-    '#chart g.rangeslider [class^="xaxislayer"], ' +
-    '#chart g.rangeslider [class^="yaxislayer"]'
-  ).forEach(el => { el.style.display = 'none'; });
-};
+      window.addEventListener('resize', hideMini);
 
+      new MutationObserver(() => {
+        hideMini();
+      }).observe(document.getElementById('chart'), {
+        childList: true,
+        subtree: true
+      });
 
-// Hide immediately after this render
-hideMini();
-recolourMiniToBackground();
+      gd2._jrHandlersAttached = true;
+    }
 
-gd2.on('plotly_relayout', hideMini);
-window.addEventListener('resize', hideMini);
-new MutationObserver(() => {
-  hideMini();
-  recolourMiniToBackground();
-}).observe(document.getElementById('chart'), {
-  childList: true,
-  subtree: true
-});
-} 
-}); 
-} 
+    hideMini();
+  });
+}
 
 /* ---------- table helpers ---------- */
 function getId(g,base){return g[base+'Id']??g[base+'_id']??g[base+'ID']??null;}
 function resultClass(r){if(r==='Win')return'result-win';if(r==='Draw')return'result-draw';if(r==='Loss')return'result-loss';return'';}
 function deltaClass(d){if(!d)return'';if(d.startsWith('+'))return'delta-pos';if(d.startsWith('-'))return'delta-neg';return'delta-zero';}
-function recolourMiniToBackground() {
-  const bg = getComputedStyle(document.body).backgroundColor;
-  document.querySelectorAll('#chart g.rangeslider .plot path').forEach(el => {
-    el.style.stroke = bg;
-    el.style.fill = bg;
-  });
-}
-
 
 /* ---------- load ---------- */
 async function load(){
@@ -436,6 +481,7 @@ async function load(){
       fetch(HIST_WCU(idRaw),{cache:'no-cache'}).catch(()=>null),
       fetch(GAMES_URL(idRaw),{cache:'no-cache'}).catch(()=>null)
     ]);
+
     if(!playersRes.ok)throw new Error('players.json not found');
     if(!liveRes.ok)throw new Error('live history not found');
 
@@ -444,17 +490,38 @@ async function load(){
     if(!me)throw new Error('player id not in players.json');
     document.getElementById('pname').textContent=me.name;
 
-    rawLive=(await liveRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
+    const liveData = await liveRes.json();
+
+    rawLive = liveData
+      .map(d => ({ x: d.date, y: +d.rating }))
+      .filter(p => Number.isFinite(p.y));
+
+    ratingByDate = Object.create(null);
+    for (const d of liveData) {
+      const key = (d.date || '').slice(0, 10);
+      const val = +d.rating;
+      if (Number.isFinite(val)) ratingByDate[key] = val;
+    }
+
     if(wcuRes&&wcuRes.ok){
-      rawWCU=(await wcuRes.json()).map(d=>({x:d.date,y:+d.rating})).filter(p=>Number.isFinite(p.y));
+      rawWCU=(await wcuRes.json())
+        .map(d=>({x:d.date,y:+d.rating}))
+        .filter(p=>Number.isFinite(p.y));
       document.getElementById('toggle').disabled=false;
     }else{
-      rawWCU=[];document.getElementById('toggle').disabled=true;
+      rawWCU=[];
+      document.getElementById('toggle').disabled=true;
       document.getElementById('toggle').textContent='WCU N/A';
     }
 
-    draw();refreshBadge();
-    document.getElementById('agg').addEventListener('change',()=>{draw();refreshBadge();});
+    draw();
+    refreshBadge();
+
+    document.getElementById('agg').addEventListener('change',()=>{
+      draw();
+      refreshBadge();
+    });
+
     document.querySelectorAll('.range-buttons .seg').forEach(btn=>{
       btn.addEventListener('click',()=>setPreset(btn.dataset.range));
     });
@@ -462,20 +529,15 @@ async function load(){
     if (gamesRes && gamesRes.ok) {
       const games = await gamesRes.json();
 
-      // Sort games from oldest to newest to accumulate ratings properly
       games.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-      // Starting rating — use your first known rating or fallback
-      let currentElo = rawLive.length ? rawLive[0].y : 2000;
-
-      // Compute the Elo before each game using Δ values
+      // attach J-rating from JSON for each game date
       for (const g of games) {
-        const delta = parseFloat(g.delta);
-        g.playerElo = currentElo;
-        if (!isNaN(delta)) currentElo += delta;
+        const r = ratingOnOrBefore(g.date);
+        g.jNew = Number.isFinite(r) ? Math.round(r) : null;
       }
 
-      // Display most recent games first
+      // most recent games first
       games.reverse();
 
       const tbody = document.getElementById('games-body');
@@ -483,9 +545,12 @@ async function load(){
 
       games.forEach(g => {
         const tr = document.createElement('tr');
-        const cols = ["date", "opponent", "opponentElo", "result", "delta"];
+
+        const cols = ["date", "opponent", "opponentElo", "result", "delta", "jNew"];
+
         cols.forEach(col => {
           const td = document.createElement("td");
+
           if (col === "opponent") {
             const name = g[col] ?? "";
             const id = getId(g, col);
@@ -497,15 +562,21 @@ async function load(){
             } else {
               td.textContent = name;
             }
+          } else if (col === "jNew") {
+            td.textContent = (g.jNew != null) ? g.jNew : "";
           } else {
-            td.textContent = (col === "playerElo" || col === "opponentElo")
-              ? Math.round(g[col])
-              : (g[col] ?? "");
+            td.textContent =
+              (col === "playerElo" || col === "opponentElo")
+                ? Math.round(g[col])
+                : (g[col] ?? "");
           }
+
           if (col === "result") td.className = resultClass(g[col]);
-          if (col === "delta") td.className = deltaClass(g[col]);
+          if (col === "delta")  td.className = deltaClass(g[col]);
+
           tr.appendChild(td);
         });
+
         tbody.appendChild(tr);
       });
     }
