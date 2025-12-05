@@ -352,36 +352,46 @@ function buildRightLabels(x0, x1){
   const s = new Date(x0), e = new Date(x1);
   const gd = document.getElementById('chart');
   if (!gd || !gd.data) return [];
+
   const ann = [];
+
   gd.data.forEach(trace => {
     if (!trace.x || !trace.y || !trace.name) return;
+
     const n = trace.x.length;
-    let lastX = null, lastY = null;
+    let lastY = null;
+
+    // find last visible y-value for this trace
     for (let i = 0; i < n; i++){
       const x = trace.x[i], y = trace.y[i];
       if (!x || !Number.isFinite(y)) continue;
       const d = new Date(x);
       if (d >= s && d <= e){
-        lastX = x;
         lastY = y;
       }
     }
-    if (lastX !== null){
-      const txt = `${Math.round(lastY)} ${trace.name}`;
+
+    if (lastY !== null){
+      const colour = (trace.line && trace.line.color) || '#fff';
+      const txt    = `${Math.round(lastY)} ${trace.name}`;
+
       ann.push({
-        x: lastX,
+        // stick to right-hand side of plot, just outside the frame
+        x: 1.01,
+        xref: 'paper',
         y: lastY,
-        xref: 'x',
         yref: 'y',
         showarrow: false,
         xanchor: 'left',
         align: 'left',
-        xshift: 6,
-        font: { size: 12, colour: '#fff' },
-        text: txt
+        font: { size: 12, color: colour },
+        text: txt,
+        bgcolor: 'rgba(0,0,0,0)',
+        bordercolor: 'rgba(0,0,0,0)'
       });
     }
   });
+
   return ann;
 }
 
@@ -622,11 +632,11 @@ function createChart(){
     const ymin = Math.floor(Math.min(...allY) / 50) * 50;
     const ymax = Math.ceil (Math.max(...allY) / 50) * 50;
 
-    const layout = {
-      margin:{ t:30, r:20, l:50, b:50 },
-      paper_bgcolor:'#0f1623',
-      plot_bgcolor:'#0f1623',
-      font:{ colour:'#ccc' },
+const layout = {
+  margin:{ t:30, r:120, l:50, b:50 },   // r:20 → r:120
+  paper_bgcolor:'#0f1623',
+  plot_bgcolor:'#0f1623',
+  font:{ color:'#ccc' },                // colour → color
       xaxis:{
         type:'date',
         gridcolor:'#222',
