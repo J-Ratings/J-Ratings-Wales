@@ -311,54 +311,6 @@ function adjustYToVisible(x0, x1){
   });
 }
 
-/* ---- right-hand labels (rating + name) ---- */
-function buildRightLabels(x0, x1){
-  const s = new Date(x0), e = new Date(x1);
-  const gd = document.getElementById('chart');
-  if (!gd || !gd.data) return [];
-  const ann = [];
-
-  gd.data.forEach(trace => {
-    if (!trace.x || !trace.y || !trace.name) return;
-    const n = trace.x.length;
-    let lastY = null;
-
-    for (let i = 0; i < n; i++){
-      const x = trace.x[i], y = trace.y[i];
-      if (!x || !Number.isFinite(y)) continue;
-      const d = new Date(x);
-      if (d >= s && d <= e){
-        lastY = y;
-      }
-    }
-
-    if (lastY !== null){
-      const colour = (trace.line && trace.line.color) || '#fff';
-      const txt    = `${Math.round(lastY)} ${trace.name}`;
-      ann.push({
-        x: 1.01,
-        xref: 'paper',
-        y: lastY,
-        yref: 'y',
-        showarrow: false,
-        xanchor: 'left',
-        align: 'left',
-        font: { size: 12, color: colour },
-        text: txt,
-        bgcolor: 'rgba(0,0,0,0)',
-        bordercolor: 'rgba(0,0,0,0)'
-      });
-    }
-  });
-
-  return ann;
-}
-
-function updateRightLabels(x0, x1){
-  const annotations = buildRightLabels(x0, x1);
-  Plotly.relayout('chart', { annotations });
-}
-
 /* ---- range helpers ---- */
 function setXRange(start, end){
   if (!state.dataMin || !state.dataMax) return;
@@ -566,7 +518,7 @@ function createChart(){
     }));
 
     const layout = {
-      margin:{ t:30, r:120, l:50, b:50 },
+      margin:{ t:30, r:20, l:50, b:50 },
       paper_bgcolor:'#0f1623',
       plot_bgcolor:'#0f1623',
       font:{ color:'#ccc' },
