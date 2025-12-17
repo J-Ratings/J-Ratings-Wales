@@ -270,9 +270,18 @@ function extentFrom(seriesList){
 
 function majorGridShapes(ymin, ymax){
   const shapes = [];
-  for (let v = ymin; v <= ymax; v += 50){
+
+  const start = Math.ceil(ymin / 100) * 100;
+  const end   = Math.floor(ymax / 100) * 100;
+
+  for (let v = start; v <= end; v += 100){
     shapes.push({
-      type:'line', xref:'paper', x0:0, x1:1, y0:v, y1:v,
+      type:'line',
+      xref:'paper',
+      x0:0,
+      x1:1,
+      y0:v,
+      y1:v,
       line:{ width:1, color:'rgba(128,128,128,0.35)' },
       layer:'below'
     });
