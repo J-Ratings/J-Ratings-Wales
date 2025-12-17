@@ -61,8 +61,9 @@
       <table id="players">
         <thead>
           <tr>
-            <th style="min-width:240px">Player</th>
-            <th class="right" id="rating-col" style="min-width:120px">Live rating</th>
+    <th style="min-width:70px">Rank</th>
+    <th style="min-width:240px">Player</th>
+    <th class="right" id="rating-col" style="min-width:120px">Live rating</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -151,22 +152,27 @@ function aggregateExpanded(hist, mode) {
 function renderTable() {
   const tbody = document.querySelector('#players tbody');
   tbody.innerHTML = '';
-  for (const r of state.filtered) {
-    const tr = document.createElement('tr');
-    const tdName = document.createElement('td');
-    const a = document.createElement('a');
-    a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
-    a.textContent = r.name;
-    tdName.appendChild(a);
+state.filtered.forEach((r, i) => {
+  const tr = document.createElement('tr');
 
-    const tdRt = document.createElement('td');
-    tdRt.className = 'right';
-    tdRt.textContent = Math.round(r.rating);
+  const tdRank = document.createElement('td');
+  tdRank.textContent = `#${i + 1}`;
 
-    tr.appendChild(tdName);
-    tr.appendChild(tdRt);
-    tbody.appendChild(tr);
-  }
+  const tdName = document.createElement('td');
+  const a = document.createElement('a');
+  a.href = `../player.html?id=${encodeURIComponent(r.id)}`;
+  a.textContent = r.name;
+  tdName.appendChild(a);
+
+  const tdRt = document.createElement('td');
+  tdRt.className = 'right';
+  tdRt.textContent = Math.round(r.rating);
+
+  tr.appendChild(tdRank);
+  tr.appendChild(tdName);
+  tr.appendChild(tdRt);
+  tbody.appendChild(tr);
+});
   document.getElementById('count').textContent =
     `${state.filtered.length.toLocaleString()} players`;
   document.getElementById('rating-col').textContent = 'Rating';
