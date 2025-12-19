@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
   <style>
     /* Strip the mini-graph out of the Plotly range slider */
     #chart g.rangeslider .plot,
@@ -48,7 +49,7 @@
       padding:4px 8px;border-radius:6px;cursor:pointer;font-size:.9rem;
     }
     .btn-mini[disabled]{opacity:.5;cursor:default;}
-    .btn-mini:hover:not([disabled]){background:rgba(255,255,255,.05);}
+    .btn-mini:hover:not([disabled]){background:rgba(255,255,255,05);}
 
     #chart{height:420px;touch-action:pan-y;}
 
@@ -57,7 +58,7 @@
       background:#0f1623;border:1px solid var(--border);color:var(--text);
       padding:6px 10px;border-radius:6px;cursor:pointer;font-size:.9rem;
     }
-    .range-buttons .seg:hover{background:rgba(255,255,255,.05);}
+    .range-buttons .seg:hover{background:rgba(255,255,255,05);}
 
     #games{margin-top:1.5rem;width:100%;border-collapse:collapse;}
     #games th,#games td{
@@ -74,6 +75,7 @@
     .delta-zero{color:#ffb833;font-weight:bold}
   </style>
 </head>
+
 <body>
 <header>
   <div class="wrap">
@@ -214,90 +216,21 @@ function aggregateExpanded(series, mode){
       x = iso(simple);
     } else if (k.includes('Q')) {
       const [y,q] = k.split('-Q'); const year = +y, quarter = +q;
-      const month = (quarter - 1) * 3;
-      x = iso(new Date(Date.UTC(year, month, 1)));
+      x = iso(new Date(Date.UTC(year,(quarter-1)*3,1)));
     } else if (k.length === 7) {
-      x = `${k}-01`;
+      const [y,m] = k.split('-'); x = iso(new Date(Date.UTC(+y,(+m)-1,1)));
     } else {
-      x = `${k}-01-01`;
+      x = iso(new Date(Date.UTC(+k,0,1)));
     }
     return { x, y: avg };
   });
   return normalise(out);
 }
 
-/* grid lines every 50 */
-function majorGridShapes(ymin,ymax){
-  const s=[];
-  for(let v=ymin; v<=ymax; v+=50){
-    s.push({
-      type:'line',
-      xref:'paper', x0:0, x1:1, y0:v, y1:v,
-      line:{width:1, color:'rgba(128,128,128,0.35)'},
-      layer:'below'
-    });
-  }
-  return s;
-}
-
-function getVisibleYValues(x0,x1){
-  const s=new Date(x0), e=new Date(x1);
-  const take=(series)=>(series??[])
-    .filter(p=>p && p.x && Number.isFinite(p.y))
-    .filter(p=>{const d=new Date(p.x);return d>=s&&d<=e;})
-    .map(p=>p.y);
-  const ys=[...take(seriesLive),...(showWCU&&seriesWCU?take(seriesWCU):[])];
-  return ys;
-}
-
-function adjustYToVisible(x0,x1){
-  const ys=getVisibleYValues(x0,x1);
-  if(!ys.length) return;
-  const ymin=Math.floor(Math.min(...ys)/50)*50;
-  const ymax=Math.ceil(Math.max(...ys)/50)*50;
-  Plotly.relayout('chart',{
-    'yaxis.autorange':false,
-    'yaxis.range':[ymin,ymax],
-    'shapes':majorGridShapes(ymin,ymax)
-  });
-}
-
-function clampToData([x0,x1]){
-  if(!dataMin||!dataMax) return [x0,x1];
-  const s=new Date(Math.max(new Date(x0),dataMin));
-  const e=new Date(Math.min(new Date(x1),dataMax));
-  return [iso(s), iso(e)];
-}
-
-function setXRange(start,end){
-  if(!dataMin||!dataMax)return;
-  const [x0,x1]=clampToData([start,end]);
-  rememberedXRange=[x0,x1];
-  Plotly.relayout('chart',{'xaxis.range':[x0,x1]}).then(()=>adjustYToVisible(x0,x1));
-}
-
-function setPreset(which){
-  const now=new Date();
-  if(which==='ALL'){setXRange(dataMin,dataMax);return;}
-  if(which==='YTD'){
-    const yStart=new Date(Date.UTC(now.getUTCFullYear(),0,1));
-    setXRange(yStart,dataMax);
-    return;
-  }
-  if(which==='LY'){
-    const end=dataMax?new Date(dataMax):now;
-    const start=new Date(end.getTime()-365*24*60*60*1000);
-    setXRange(start,end);
-    return;
-  }
-  const y=parseInt(which,10);
-  const start=new Date(Date.UTC(y,0,1));
-  setXRange(start,dataMax);
-}
-
-function makeTrace(series,name,colour,mode){
-  return{
-    x:series.map(p=>p.x),y:series.map(p=>p.y),
+function makeTrace(series, name, colour, mode){
+  return {
+    x:series.map(p=>p.x),
+    y:series.map(p=>p.y),
     mode:(mode==='daily'?'lines':'lines+markers'),
     line:{width:2,shape:'linear',color:colour},
     marker:(mode==='daily'?{size:0}:{size:4}),
@@ -369,7 +302,7 @@ function hideMini() {
   recolourMiniToBackground();
 }
 
-/* rating from J history JSON on or before given date */
+/* rating from J history JSON on or before given date (fallback only) */
 function ratingOnOrBefore(dateStr) {
   if (!dateStr) return null;
   const key = dateStr.slice(0, 10);
@@ -388,6 +321,28 @@ function ratingOnOrBefore(dateStr) {
     }
   }
   return best ? best.r : null;
+}
+
+function clampToData(range){
+  if(!range||!dataMin||!dataMax) return range;
+  const [x0,x1]=range.map(x=>new Date(x));
+  const lo=new Date(Math.max(+x0,+dataMin));
+  const hi=new Date(Math.min(+x1,+dataMax));
+  return [iso(lo),iso(hi)];
+}
+
+function adjustYToVisible(x0,x1){
+  if(!seriesLive?.length) return;
+  const lo=new Date(x0), hi=new Date(x1);
+  const visible = seriesLive.filter(p => {
+    const d=new Date(p.x);
+    return d>=lo && d<=hi;
+  }).map(p=>p.y).filter(Number.isFinite);
+
+  if(!visible.length) return;
+  const min=Math.min(...visible), max=Math.max(...visible);
+  const pad=(max-min)*0.12 || 10;
+  Plotly.relayout('chart', {'yaxis.range':[min-pad,max+pad]});
 }
 
 /* ---------- chart ---------- */
@@ -472,6 +427,77 @@ function getId(g,base){return g[base+'Id']??g[base+'_id']??g[base+'ID']??null;}
 function resultClass(r){if(r==='Win')return'result-win';if(r==='Draw')return'result-draw';if(r==='Loss')return'result-loss';return'';}
 function deltaClass(d){if(!d)return'';if(d.startsWith('+'))return'delta-pos';if(d.startsWith('-'))return'delta-neg';return'delta-zero';}
 
+function parseDelta(deltaVal){
+  if (deltaVal == null) return null;
+  if (typeof deltaVal === 'number' && Number.isFinite(deltaVal)) return deltaVal;
+  if (typeof deltaVal === 'string') {
+    const x = parseFloat(deltaVal);
+    return Number.isFinite(x) ? x : null;
+  }
+  return null;
+}
+
+function computeGameNew(g){
+  // 1) Preferred: a true per-game rating if you add it in R later (e.g. "new")
+  if (g.new != null && Number.isFinite(+g.new)) return Math.round(+g.new);
+
+  // 2) Optional alternative field names, if you ever introduce them
+  if (g.playerNew != null && Number.isFinite(+g.playerNew)) return Math.round(+g.playerNew);
+
+  // 3) Immediate fix with your current JSON: approximate per-game new from before+delta
+  const pe = (g.playerElo != null && Number.isFinite(+g.playerElo)) ? +g.playerElo : null;
+  const de = parseDelta(g.delta);
+  if (pe != null && de != null) return Math.round(pe + de);
+
+  // 4) Last resort: daily history join (will repeat on same-day multi-games)
+  const r = ratingOnOrBefore(g.date);
+  return Number.isFinite(r) ? Math.round(r) : null;
+}
+
+function renderGamesTable(games){
+  const tbody = document.getElementById('games-body');
+  tbody.innerHTML = '';
+
+  for (const g of games) {
+    const tr = document.createElement('tr');
+
+    const cols = ["date", "opponent", "opponentElo", "result", "delta", "jNew"];
+
+    for (const col of cols) {
+      const td = document.createElement("td");
+
+      if (col === "opponent") {
+        const name = g[col] ?? "";
+        const id = getId(g, col);
+        if (id) {
+          const a = document.createElement("a");
+          a.href = `player.html?id=${encodeURIComponent(id)}`;
+          a.textContent = name;
+          td.appendChild(a);
+        } else {
+          td.textContent = name;
+        }
+
+      } else if (col === "jNew") {
+        td.textContent = (g.jNew != null) ? g.jNew : "";
+
+      } else {
+        td.textContent =
+          (col === "playerElo" || col === "opponentElo")
+            ? (g[col] != null ? Math.round(g[col]) : "")
+            : (g[col] ?? "");
+      }
+
+      if (col === "result") td.className = resultClass(g[col]);
+      if (col === "delta")  td.className = deltaClass(g[col]);
+
+      tr.appendChild(td);
+    }
+
+    tbody.appendChild(tr);
+  }
+}
+
 /* ---------- load ---------- */
 async function load(){
   try{
@@ -529,61 +555,56 @@ async function load(){
     if (gamesRes && gamesRes.ok) {
       const games = await gamesRes.json();
 
-      games.sort((a, b) => new Date(a.date) - new Date(b.date));
+      // stable sort: newest date first; keep existing order within the same date
+      games.forEach((g, idx) => { g.__i = idx; });
+      games.sort((a, b) => {
+        const ta = (a?.date ? new Date(a.date).getTime() : NaN);
+        const tb = (b?.date ? new Date(b.date).getTime() : NaN);
 
-      // attach J-rating from JSON for each game date
+        const aOk = Number.isFinite(ta);
+        const bOk = Number.isFinite(tb);
+
+        if (aOk && bOk && ta !== tb) return tb - ta;   // newest first
+        if (aOk && !bOk) return -1;
+        if (!aOk && bOk) return 1;
+        return (a.__i ?? 0) - (b.__i ?? 0);
+      });
+
       for (const g of games) {
-        const r = ratingOnOrBefore(g.date);
-        g.jNew = Number.isFinite(r) ? Math.round(r) : null;
+        g.jNew = computeGameNew(g);
       }
 
-      // most recent games first
-      games.reverse();
-
-      const tbody = document.getElementById('games-body');
-      tbody.innerHTML = "";
-
-      games.forEach(g => {
-        const tr = document.createElement('tr');
-
-        const cols = ["date", "opponent", "opponentElo", "result", "delta", "jNew"];
-
-        cols.forEach(col => {
-          const td = document.createElement("td");
-
-          if (col === "opponent") {
-            const name = g[col] ?? "";
-            const id = getId(g, col);
-            if (id) {
-              const a = document.createElement("a");
-              a.href = `player.html?id=${encodeURIComponent(id)}`;
-              a.textContent = name;
-              td.appendChild(a);
-            } else {
-              td.textContent = name;
-            }
-          } else if (col === "jNew") {
-            td.textContent = (g.jNew != null) ? g.jNew : "";
-          } else {
-            td.textContent =
-              (col === "playerElo" || col === "opponentElo")
-                ? Math.round(g[col])
-                : (g[col] ?? "");
-          }
-
-          if (col === "result") td.className = resultClass(g[col]);
-          if (col === "delta")  td.className = deltaClass(g[col]);
-
-          tr.appendChild(td);
-        });
-
-        tbody.appendChild(tr);
-      });
+      renderGamesTable(games);
     }
   }catch(e){
     console.error(e);
     document.getElementById('chart').textContent='No Games';
   }
+}
+
+/* ---------- range presets ---------- */
+function setPreset(key){
+  if(!dataMin||!dataMax) return;
+  const end=new Date(dataMax);
+  let start=null;
+
+  if(key==='ALL'){
+    start=new Date(dataMin);
+  } else if(key==='2015'){
+    start=new Date('2015-01-01');
+  } else if(key==='2022'){
+    start=new Date('2022-01-01');
+  } else if(key==='LY'){
+    start=new Date(end); start.setFullYear(start.getFullYear()-1);
+  } else if(key==='YTD'){
+    start=new Date(end.getFullYear()+'-01-01');
+  } else {
+    start=new Date(dataMin);
+  }
+
+  const range=[iso(new Date(Math.max(+start,+dataMin))), iso(end)];
+  rememberedXRange=range;
+  Plotly.relayout('chart', {'xaxis.range':range}).then(()=>adjustYToVisible(range[0],range[1]));
 }
 
 /* ---------- interactions ---------- */
