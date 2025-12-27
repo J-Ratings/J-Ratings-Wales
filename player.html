@@ -331,19 +331,40 @@ function clampToData(range){
   return [iso(lo),iso(hi)];
 }
 
-function adjustYToVisible(x0,x1){
-  if(!seriesLive?.length) return;
-  const lo=new Date(x0), hi=new Date(x1);
-  const visible = seriesLive.filter(p => {
-    const d=new Date(p.x);
-    return d>=lo && d<=hi;
-  }).map(p=>p.y).filter(Number.isFinite);
+function adjustYToVisible(x0, x1){
+  const lo = new Date(x0), hi = new Date(x1);
 
-  if(!visible.length) return;
-  const min=Math.min(...visible), max=Math.max(...visible);
-  const pad=(max-min)*0.12 || 10;
-  Plotly.relayout('chart', {'yaxis.range':[min-pad,max+pad]});
+  const values = [];
+
+  if (seriesLive?.length) {
+    for (const p of seriesLive) {
+      const d = new Date(p.x);
+      if (d >= lo && d <= hi && Number.isFinite(p.y)) {
+        values.push(p.y);
+      }
+    }
+  }
+
+  if (showWCU && seriesWCU?.length) {
+    for (const p of seriesWCU) {
+      const d = new Date(p.x);
+      if (d >= lo && d <= hi && Number.isFinite(p.y)) {
+        values.push(p.y);
+      }
+    }
+  }
+
+  if (!values.length) return;
+
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const pad = (max - min) * 0.12 || 10;
+
+  Plotly.relayout('chart', {
+    'yaxis.range': [min - pad, max + pad]
+  });
 }
+
 
 /* ---------- chart ---------- */
 function draw(){
