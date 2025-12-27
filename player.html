@@ -180,6 +180,53 @@ function normalise(series){
     .sort((a,b) => new Date(a.x) - new Date(b.x));
 }
 
+function dateKey(s) {
+  return (s || "").slice(0, 10); // normalise to YYYY-MM-DD
+}
+
+/* Reorder same-day games so the "New" values make sense with Δ.
+   Uses implied base: base_before = New - Δ.
+   Earlier games have lower implied base, so we sort base ascending within the day. */
+function reorderSameDayGamesByImpliedBase(games) {
+  const byDate = new Map();
+
+  for (const g of games) {
+    const k = dateKey(g.date);
+    if (!byDate.has(k)) byDate.set(k, []);
+    byDate.get(k).push(g);
+  }
+
+  const keys = [...byDate.keys()].sort((a, b) => new Date(b) - new Date(a)); // newest day first
+
+  const out = [];
+  for (const k of keys) {
+    const group = byDate.get(k);
+
+    if (group.length > 1) {
+      group.sort((a, b) => {
+        const newA = Number.isFinite(+a._jNewRaw) ? +a._jNewRaw : (Number.isFinite(+a.jNew) ? +a.jNew : NaN);
+        const newB = Number.isFinite(+b._jNewRaw) ? +b._jNewRaw : (Number.isFinite(+b.jNew) ? +b.jNew : NaN);
+
+        const dA = parseDelta(a.delta);
+        const dB = parseDelta(b.delta);
+
+        if (Number.isFinite(newA) && Number.isFinite(dA) && Number.isFinite(newB) && Number.isFinite(dB)) {
+          const baseA = newA - dA;
+          const baseB = newB - dB;
+          if (baseA !== baseB) return baseA - baseB; // earlier game first
+        }
+
+        // stable fallback: keep original JSON order
+        return (a.__i ?? 0) - (b.__i ?? 0);
+      });
+    }
+
+    out.push(...group);
+  }
+
+  return out;
+}
+
 function aggregateExpanded(series, mode){
   if (mode === 'daily') return normalise(series);
   const buckets = Object.create(null);
@@ -365,7 +412,6 @@ function adjustYToVisible(x0, x1){
   });
 }
 
-
 /* ---------- chart ---------- */
 function draw(){
   const mode=document.getElementById('agg').value;
@@ -458,21 +504,18 @@ function parseDelta(deltaVal){
   return null;
 }
 
-function computeGameNew(g){
-  // 1) Preferred: a true per-game rating if you add it in R later (e.g. "new")
-  if (g.new != null && Number.isFinite(+g.new)) return Math.round(+g.new);
+/* Returns a raw (non-rounded) "new" rating for ordering purposes.
+   You still display rounded integers in the table. */
+function computeGameNewRaw(g){
+  if (g.new != null && Number.isFinite(+g.new)) return +g.new;
+  if (g.playerNew != null && Number.isFinite(+g.playerNew)) return +g.playerNew;
 
-  // 2) Optional alternative field names, if you ever introduce them
-  if (g.playerNew != null && Number.isFinite(+g.playerNew)) return Math.round(+g.playerNew);
-
-  // 3) Immediate fix with your current JSON: approximate per-game new from before+delta
   const pe = (g.playerElo != null && Number.isFinite(+g.playerElo)) ? +g.playerElo : null;
   const de = parseDelta(g.delta);
-  if (pe != null && de != null) return Math.round(pe + de);
+  if (pe != null && de != null) return pe + de;
 
-  // 4) Last resort: daily history join (will repeat on same-day multi-games)
   const r = ratingOnOrBefore(g.date);
-  return Number.isFinite(r) ? Math.round(r) : null;
+  return Number.isFinite(r) ? +r : null;
 }
 
 function renderGamesTable(games){
@@ -529,7 +572,6 @@ function renderGamesTable(games){
   }
 }
 
-
 /* ---------- load ---------- */
 async function load(){
   try{
@@ -585,39 +627,19 @@ async function load(){
     });
 
     if (gamesRes && gamesRes.ok) {
-      const games = await gamesRes.json();
+      let games = await gamesRes.json();
 
-      // stable sort: newest date first; keep existing order within the same date
-games.sort((a, b) => {
-  const ta = a?.date ? new Date(a.date).getTime() : NaN;
-  const tb = b?.date ? new Date(b.date).getTime() : NaN;
+      // stable fallback order (used only if the implied-base sort cannot decide)
+      games.forEach((g, idx) => { g.__i = idx; });
 
-  const aOk = Number.isFinite(ta);
-  const bOk = Number.isFinite(tb);
-
-  // 1) Date: newest first
-  if (aOk && bOk && ta !== tb) return tb - ta;
-  if (aOk && !bOk) return -1;
-  if (!aOk && bOk) return 1;
-
-  // 2) Same date: enforce within-day order (first game first)
-  const ao = Number.isFinite(+a?.daily_ord) ? +a.daily_ord : NaN;
-  const bo = Number.isFinite(+b?.daily_ord) ? +b.daily_ord : NaN;
-  if (Number.isFinite(ao) && Number.isFinite(bo) && ao !== bo) return ao - bo;
-
-  // 3) Fallback: use gi if present
-  const ag = Number.isFinite(+a?.gi) ? +a.gi : NaN;
-  const bg = Number.isFinite(+b?.gi) ? +b.gi : NaN;
-  if (Number.isFinite(ag) && Number.isFinite(bg) && ag !== bg) return ag - bg;
-
-  // 4) Final fallback: preserve original JSON order
-  return (a.__i ?? 0) - (b.__i ?? 0);
-});
-
-
+      // compute raw + display "New" BEFORE we reorder (this is the critical fix)
       for (const g of games) {
-        g.jNew = computeGameNew(g);
+        g._jNewRaw = computeGameNewRaw(g);
+        g.jNew = Number.isFinite(g._jNewRaw) ? Math.round(g._jNewRaw) : null;
       }
+
+      // reorder within each day so the New column is coherent with Δ
+      games = reorderSameDayGamesByImpliedBase(games);
 
       renderGamesTable(games);
     }
