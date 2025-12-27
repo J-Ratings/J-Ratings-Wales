@@ -10,13 +10,17 @@
   <style>
     /* Strip the mini-graph out of the Plotly range slider */
     #chart g.rangeslider .plot,
-    #chart g.rangeslider .rangeplot { opacity: 0 !important; }
+    #chart g.rangeslider .rangeplot {
+      opacity: 0 !important;       /* hides all the tiny traces at once */
+    }
 
     /* Hide axes and grid inside the rangeslider */
     #chart g.rangeslider .gridlayer,
     #chart g.rangeslider .zerolinelayer,
     #chart g.rangeslider [class^="xaxislayer"],
-    #chart g.rangeslider [class^="yaxislayer"] { display: none !important; }
+    #chart g.rangeslider [class^="yaxislayer"] {
+      display: none !important;
+    }
 
     .player-head{
       display:flex;justify-content:space-between;align-items:flex-end;
@@ -163,8 +167,8 @@ const kFromRating = r => (r>=2200?10:r>=1800?20:30);
 let me = null, rawLive = [], rawWCU = [], seriesLive = null, seriesWCU = null, showWCU = false;
 let dataMin = null, dataMax = null;
 let initialRangeApplied = false;
-let rememberedXRange = null;
-let ratingByDate = Object.create(null);
+let rememberedXRange = null;   // [x0,x1] strings yyyy-mm-dd
+let ratingByDate = Object.create(null); // date -> J-rating from history JSON
 
 /* ---------- helpers ---------- */
 const iso = d => new Date(d).toISOString().slice(0,10);
@@ -275,6 +279,7 @@ function refreshBadge(){
   document.getElementById('toggle').textContent=showWCU?'Hide WCU':'Show WCU';
 }
 
+/* recolour the tiny line in the rangeslider to match the background */
 function recolourMiniToBackground() {
   const bg = getComputedStyle(document.body).backgroundColor;
   document.querySelectorAll('#chart g.rangeslider .plot path').forEach(el => {
@@ -297,18 +302,23 @@ function hideMini() {
   recolourMiniToBackground();
 }
 
-/* rating from J history JSON on or before given date (rare fallback only) */
+/* rating from J history JSON on or before given date (fallback only) */
 function ratingOnOrBefore(dateStr) {
   if (!dateStr) return null;
   const key = dateStr.slice(0, 10);
-  if (ratingByDate && Object.prototype.hasOwnProperty.call(ratingByDate, key)) return ratingByDate[key];
+
+  if (ratingByDate && Object.prototype.hasOwnProperty.call(ratingByDate, key)) {
+    return ratingByDate[key];
+  }
 
   const target = new Date(key);
   let best = null;
   for (const p of rawLive) {
     if (!p || !p.x) continue;
     const d = new Date(p.x);
-    if (d <= target && (!best || d > best.d)) best = { d, r: p.y };
+    if (d <= target && (!best || d > best.d)) {
+      best = { d, r: p.y };
+    }
   }
   return best ? best.r : null;
 }
@@ -323,28 +333,38 @@ function clampToData(range){
 
 function adjustYToVisible(x0, x1){
   const lo = new Date(x0), hi = new Date(x1);
+
   const values = [];
 
   if (seriesLive?.length) {
     for (const p of seriesLive) {
       const d = new Date(p.x);
-      if (d >= lo && d <= hi && Number.isFinite(p.y)) values.push(p.y);
+      if (d >= lo && d <= hi && Number.isFinite(p.y)) {
+        values.push(p.y);
+      }
     }
   }
+
   if (showWCU && seriesWCU?.length) {
     for (const p of seriesWCU) {
       const d = new Date(p.x);
-      if (d >= lo && d <= hi && Number.isFinite(p.y)) values.push(p.y);
+      if (d >= lo && d <= hi && Number.isFinite(p.y)) {
+        values.push(p.y);
+      }
     }
   }
+
   if (!values.length) return;
 
   const min = Math.min(...values);
   const max = Math.max(...values);
   const pad = (max - min) * 0.12 || 10;
 
-  Plotly.relayout('chart', {'yaxis.range': [min - pad, max + pad]});
+  Plotly.relayout('chart', {
+    'yaxis.range': [min - pad, max + pad]
+  });
 }
+
 
 /* ---------- chart ---------- */
 function draw(){
@@ -352,7 +372,9 @@ function draw(){
 
   const gd=document.getElementById('chart');
   const liveLayout = gd && gd._fullLayout ? gd._fullLayout.xaxis : null;
-  if (liveLayout && liveLayout.range) rememberedXRange = [liveLayout.range[0], liveLayout.range[1]];
+  if (liveLayout && liveLayout.range) {
+    rememberedXRange = [liveLayout.range[0], liveLayout.range[1]];
+  }
 
   seriesLive = aggregateExpanded(rawLive,mode);
   seriesWCU  = rawWCU.length ? aggregateExpanded(rawWCU,mode) : null;
@@ -406,9 +428,17 @@ function draw(){
       });
 
       window.addEventListener('resize', hideMini);
-      new MutationObserver(() => { hideMini(); }).observe(document.getElementById('chart'), { childList: true, subtree: true });
+
+      new MutationObserver(() => {
+        hideMini();
+      }).observe(document.getElementById('chart'), {
+        childList: true,
+        subtree: true
+      });
+
       gd2._jrHandlersAttached = true;
     }
+
     hideMini();
   });
 }
@@ -428,79 +458,40 @@ function parseDelta(deltaVal){
   return null;
 }
 
-function toTime(dateStr){
-  if (!dateStr) return NaN;
-  const t = new Date(dateStr).getTime();
-  return Number.isFinite(t) ? t : NaN;
+function computeGameNew(g){
+  // 1) Preferred: a true per-game rating if you add it in R later (e.g. "new")
+  if (g.new != null && Number.isFinite(+g.new)) return Math.round(+g.new);
+
+  // 2) Optional alternative field names, if you ever introduce them
+  if (g.playerNew != null && Number.isFinite(+g.playerNew)) return Math.round(+g.playerNew);
+
+  // 3) Immediate fix with your current JSON: approximate per-game new from before+delta
+  const pe = (g.playerElo != null && Number.isFinite(+g.playerElo)) ? +g.playerElo : null;
+  const de = parseDelta(g.delta);
+  if (pe != null && de != null) return Math.round(pe + de);
+
+  // 4) Last resort: daily history join (will repeat on same-day multi-games)
+  const r = ratingOnOrBefore(g.date);
+  return Number.isFinite(r) ? Math.round(r) : null;
 }
 
-function ordOrNull(v){
-  const x = (v == null) ? NaN : +v;
-  return Number.isFinite(x) ? x : null;
-}
-
-/* ordering:
-   - primary: date
-   - secondary (same date): daily_ord when present
-   - tertiary: sourceIndex (stable fallback for legacy rows)
-*/
-function sortGames(games, direction /* +1 asc, -1 desc */){
-  games.sort((a,b) => {
-    const ta = toTime(a?.date);
-    const tb = toTime(b?.date);
-    const aOk = Number.isFinite(ta);
-    const bOk = Number.isFinite(tb);
-
-    if (aOk && bOk && ta !== tb) return direction * (ta - tb);
-    if (aOk && !bOk) return -1;
-    if (!aOk && bOk) return 1;
-
-    const ao = ordOrNull(a?.daily_ord);
-    const bo = ordOrNull(b?.daily_ord);
-
-    // if both have daily_ord, use it
-    if (ao != null && bo != null && ao !== bo) return direction * (ao - bo);
-
-    // if only one has daily_ord, prefer the one that has it (consistent grouping)
-    if (ao != null && bo == null) return -1;
-    if (ao == null && bo != null) return 1;
-
-    // stable fallback (legacy data)
-    const ai = ordOrNull(a?.sourceIndex) ?? 0;
-    const bi = ordOrNull(b?.sourceIndex) ?? 0;
-    return direction * (ai - bi);
-  });
-}
-
-function computeSequentialNew(gamesChrono){
-  // gamesChrono must be oldest -> newest with correct within-day order
-  let running = null;
-
-  for (const g of gamesChrono) {
-    const pe = (g.playerElo != null && Number.isFinite(+g.playerElo)) ? +g.playerElo : null;
-    const de = parseDelta(g.delta);
-
-    // Do NOT reset to playerElo once we are already running; that causes the "1749 too early" issue.
-    const base = Number.isFinite(running) ? running : pe;
-
-    if (base != null && de != null) {
-      running = base + de;          // keep full precision
-      g.jNew = Math.round(running); // integer display
-    } else {
-      // rare fallback: if we cannot compute, show daily rating (not per-game)
-      const r = ratingOnOrBefore(g.date);
-      g.jNew = Number.isFinite(r) ? Math.round(r) : null;
-      // do not change running here; leave it as-is
-    }
-  }
-}
-
-function renderGamesTable(gamesDisplay){
+function renderGamesTable(games){
   const tbody = document.getElementById('games-body');
   tbody.innerHTML = '';
 
-  for (const g of gamesDisplay) {
+  for (const g of games) {
+
+    // Filter rule: skip low Elo opponents
+    if (
+      g.opponentElo != null &&
+      Number.isFinite(+g.opponentElo) &&
+      +g.opponentElo < 500
+    ) {
+      continue;
+    }
+
     const tr = document.createElement('tr');
+
     const cols = ["date", "opponent", "opponentElo", "result", "delta", "jNew"];
 
     for (const col of cols) {
@@ -517,8 +508,10 @@ function renderGamesTable(gamesDisplay){
         } else {
           td.textContent = name;
         }
+
       } else if (col === "jNew") {
         td.textContent = (g.jNew != null) ? g.jNew : "";
+
       } else {
         td.textContent =
           (col === "playerElo" || col === "opponentElo")
@@ -535,6 +528,7 @@ function renderGamesTable(gamesDisplay){
     tbody.appendChild(tr);
   }
 }
+
 
 /* ---------- load ---------- */
 async function load(){
@@ -555,6 +549,7 @@ async function load(){
     document.getElementById('pname').textContent=me.name;
 
     const liveData = await liveRes.json();
+
     rawLive = liveData
       .map(d => ({ x: d.date, y: +d.rating }))
       .filter(p => Number.isFinite(p.y));
@@ -590,26 +585,28 @@ async function load(){
     });
 
     if (gamesRes && gamesRes.ok) {
-      let games = await gamesRes.json();
+      const games = await gamesRes.json();
 
-      // attach stable fallback key for legacy rows without daily_ord
-      games.forEach((g, idx) => { g.sourceIndex = idx; });
+      // stable sort: newest date first; keep existing order within the same date
+      games.forEach((g, idx) => { g.__i = idx; });
+      games.sort((a, b) => {
+        const ta = (a?.date ? new Date(a.date).getTime() : NaN);
+        const tb = (b?.date ? new Date(b.date).getTime() : NaN);
 
-      // filter out low opponent Elo rows *before* ordering and computation
-      games = games.filter(g => {
-        const oe = (g.opponentElo != null) ? +g.opponentElo : NaN;
-        return !(Number.isFinite(oe) && oe < 500);
+        const aOk = Number.isFinite(ta);
+        const bOk = Number.isFinite(tb);
+
+        if (aOk && bOk && ta !== tb) return tb - ta;   // newest first
+        if (aOk && !bOk) return -1;
+        if (!aOk && bOk) return 1;
+        return (a.__i ?? 0) - (b.__i ?? 0);
       });
 
-      // 1) compute New sequentially in true chronological order
-      const gamesChrono = [...games];
-      sortGames(gamesChrono, +1);       // oldest -> newest (and daily_ord asc)
-      computeSequentialNew(gamesChrono);
+      for (const g of games) {
+        g.jNew = computeGameNew(g);
+      }
 
-      // 2) display newest first (and daily_ord desc)
-      const gamesDisplay = [...gamesChrono];
-      sortGames(gamesDisplay, -1);
-      renderGamesTable(gamesDisplay);
+      renderGamesTable(games);
     }
   }catch(e){
     console.error(e);
