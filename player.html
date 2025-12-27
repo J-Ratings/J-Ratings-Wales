@@ -588,7 +588,6 @@ async function load(){
       const games = await gamesRes.json();
 
       // stable sort: newest date first; keep existing order within the same date
-      games.forEach((g, idx) => { g.__i = idx; });
 games.sort((a, b) => {
   const ta = a?.date ? new Date(a.date).getTime() : NaN;
   const tb = b?.date ? new Date(b.date).getTime() : NaN;
@@ -601,12 +600,20 @@ games.sort((a, b) => {
   if (aOk && !bOk) return -1;
   if (!aOk && bOk) return 1;
 
-  // 2) Same date: later game first (engine order)
-  const ag = Number.isFinite(+a?.gi) ? +a.gi : 0;
-  const bg = Number.isFinite(+b?.gi) ? +b.gi : 0;
+  // 2) Same date: enforce within-day order (first game first)
+  const ao = Number.isFinite(+a?.daily_ord) ? +a.daily_ord : NaN;
+  const bo = Number.isFinite(+b?.daily_ord) ? +b.daily_ord : NaN;
+  if (Number.isFinite(ao) && Number.isFinite(bo) && ao !== bo) return ao - bo;
 
-  return bg - ag;
+  // 3) Fallback: use gi if present
+  const ag = Number.isFinite(+a?.gi) ? +a.gi : NaN;
+  const bg = Number.isFinite(+b?.gi) ? +b.gi : NaN;
+  if (Number.isFinite(ag) && Number.isFinite(bg) && ag !== bg) return ag - bg;
+
+  // 4) Final fallback: preserve original JSON order
+  return (a.__i ?? 0) - (b.__i ?? 0);
 });
+
 
       for (const g of games) {
         g.jNew = computeGameNew(g);
