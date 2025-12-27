@@ -476,6 +476,14 @@ function computeGameNew(g){
 }
 
 function renderGamesTable(games){
+for (const g of games) {
+
+  if (g.opponentElo != null && Number.isFinite(+g.opponentElo) && +g.opponentElo < 500) {
+    continue;
+  }
+
+  const tr = document.createElement('tr');
+
   const tbody = document.getElementById('games-body');
   tbody.innerHTML = '';
 
