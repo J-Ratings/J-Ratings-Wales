@@ -476,18 +476,20 @@ function computeGameNew(g){
 }
 
 function renderGamesTable(games){
-for (const g of games) {
-
-  if (g.opponentElo != null && Number.isFinite(+g.opponentElo) && +g.opponentElo < 500) {
-    continue;
-  }
-
-  const tr = document.createElement('tr');
-
   const tbody = document.getElementById('games-body');
   tbody.innerHTML = '';
 
   for (const g of games) {
+
+    // Filter rule: skip low Elo opponents
+    if (
+      g.opponentElo != null &&
+      Number.isFinite(+g.opponentElo) &&
+      +g.opponentElo < 500
+    ) {
+      continue;
+    }
+
     const tr = document.createElement('tr');
 
     const cols = ["date", "opponent", "opponentElo", "result", "delta", "jNew"];
@@ -526,6 +528,7 @@ for (const g of games) {
     tbody.appendChild(tr);
   }
 }
+
 
 /* ---------- load ---------- */
 async function load(){
