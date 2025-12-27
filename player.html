@@ -589,18 +589,24 @@ async function load(){
 
       // stable sort: newest date first; keep existing order within the same date
       games.forEach((g, idx) => { g.__i = idx; });
-      games.sort((a, b) => {
-        const ta = (a?.date ? new Date(a.date).getTime() : NaN);
-        const tb = (b?.date ? new Date(b.date).getTime() : NaN);
+games.sort((a, b) => {
+  const ta = a?.date ? new Date(a.date).getTime() : NaN;
+  const tb = b?.date ? new Date(b.date).getTime() : NaN;
 
-        const aOk = Number.isFinite(ta);
-        const bOk = Number.isFinite(tb);
+  const aOk = Number.isFinite(ta);
+  const bOk = Number.isFinite(tb);
 
-        if (aOk && bOk && ta !== tb) return tb - ta;   // newest first
-        if (aOk && !bOk) return -1;
-        if (!aOk && bOk) return 1;
-        return (a.__i ?? 0) - (b.__i ?? 0);
-      });
+  // 1) Date: newest first
+  if (aOk && bOk && ta !== tb) return tb - ta;
+  if (aOk && !bOk) return -1;
+  if (!aOk && bOk) return 1;
+
+  // 2) Same date: later game first (engine order)
+  const ag = Number.isFinite(+a?.gi) ? +a.gi : 0;
+  const bg = Number.isFinite(+b?.gi) ? +b.gi : 0;
+
+  return bg - ag;
+});
 
       for (const g of games) {
         g.jNew = computeGameNew(g);
