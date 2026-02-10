@@ -436,15 +436,16 @@ const baseLayout = {
   margin: { l: 50, r: 20, t: 10, b: 40 },
 
   xaxis: {
-    type: 'date',
-    fixedrange: true,
-    rangeslider: {
-      visible: true,
-      thickness: 0.04,
-      borderwidth: 0,
-      bgcolor: '#0f1623'
-    }
-  },
+  type: 'date',
+  fixedrange: true,
+  showgrid: false,            // <— add this
+  rangeslider: {
+    visible: true,
+    thickness: 0.04,
+    borderwidth: 0,
+    bgcolor: '#0f1623'
+  }
+},
 
   yaxis: {
   title: 'Rating',
