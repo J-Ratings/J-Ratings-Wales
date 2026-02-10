@@ -184,6 +184,14 @@ function dateKey(s) {
   return (s || "").slice(0, 10);
 }
 
+function labelStepForRange(y0, y1) {
+  const span = Math.abs(y1 - y0);
+
+  if (span < 100) return 25;     // show 25s
+  if (span < 300) return 50;     // show 50s
+  return 100;                   // show 100s
+}
+
 function setHundredsOnlyTicks(yMin, yMax) {
   const lo = Math.floor(yMin / 50) * 50;
   const hi = Math.ceil(yMax / 50) * 50;
@@ -443,7 +451,6 @@ function makeYGridShapes(yMin, yMax) {
 
 function adjustYToVisible(x0, x1){
   const lo = new Date(x0), hi = new Date(x1);
-
   const values = [];
 
   if (seriesLive?.length) {
@@ -470,11 +477,11 @@ function adjustYToVisible(x0, x1){
   const y1 = max + pad;
 
   Plotly.relayout('chart', {
-  'yaxis.range': [y0, y1],
-  'shapes': makeYGridShapes(y0, y1)
-}).then(() => {
-  setHundredsOnlyTicks(y0, y1);
-});
+    'yaxis.range': [y0, y1],
+    'shapes': makeYGridShapes(y0, y1)
+  }).then(() => {
+    setTickLabelsEvery(y0, y1, labelStepForRange(y0, y1));
+  });
 }
 
 /* ---------- chart ---------- */
