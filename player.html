@@ -192,14 +192,14 @@ function labelStepForRange(y0, y1) {
   return 100;                   // show 100s
 }
 
-function setHundredsOnlyTicks(yMin, yMax) {
-  const lo = Math.floor(yMin / 50) * 50;
-  const hi = Math.ceil(yMax / 50) * 50;
+function setTickLabelsEvery(yMin, yMax, step) {
+  const lo = Math.floor(yMin / step) * step;
+  const hi = Math.ceil(yMax / step) * step;
 
   const vals = [];
   const text = [];
 
-  for (let y = lo; y <= hi; y += 50) {
+  for (let y = lo; y <= hi; y += step) {
     vals.push(y);
     text.push(String(y));
   }
