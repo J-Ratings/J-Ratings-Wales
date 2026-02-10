@@ -495,14 +495,23 @@ function draw(){
     },
 
     // Ticks every 25 (labels every 25). Gridlines handled by shapes, not Plotly's grid.
-    yaxis:{
-      title:'Rating',
-      fixedrange:true,
-      tick0: 0,
-      dtick: 25,
-      showgrid:false,
-      zeroline:false
-    },
+    yaxis: {
+  title: 'Rating',
+  fixedrange: true,
+  showgrid: false,
+  zeroline: false,
+
+  // keep tick marks every 25 so the scale is still "anchored"
+  tick0: 0,
+  dtick: 25,
+  ticks: 'outside',
+  ticklen: 4,
+
+  // but only LABEL the 100s
+  tickmode: 'array',
+  tickvals: [],   // filled dynamically
+  ticktext: []    // filled dynamically
+},
 
     paper_bgcolor:bg,
     plot_bgcolor:bg,
