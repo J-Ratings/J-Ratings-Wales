@@ -184,6 +184,25 @@ function dateKey(s) {
   return (s || "").slice(0, 10);
 }
 
+function setHundredsOnlyTicks(yMin, yMax) {
+  const lo = Math.floor(yMin / 50) * 50;
+  const hi = Math.ceil(yMax / 50) * 50;
+
+  const vals = [];
+  const text = [];
+
+  for (let y = lo; y <= hi; y += 50) {
+    vals.push(y);
+    text.push(String(y));
+  }
+
+  Plotly.relayout('chart', {
+    'yaxis.tickmode': 'array',
+    'yaxis.tickvals': vals,
+    'yaxis.ticktext': text
+  });
+}
+
 /* Reorder same-day games so the "New" values make sense with Δ. */
 function reorderSameDayGamesByImpliedBase(games) {
   const byDate = new Map();
@@ -451,9 +470,11 @@ function adjustYToVisible(x0, x1){
   const y1 = max + pad;
 
   Plotly.relayout('chart', {
-    'yaxis.range': [y0, y1],
-    'shapes': makeYGridShapes(y0, y1)
-  });
+  'yaxis.range': [y0, y1],
+  'shapes': makeYGridShapes(y0, y1)
+}).then(() => {
+  setHundredsOnlyTicks(y0, y1);
+});
 }
 
 /* ---------- chart ---------- */
