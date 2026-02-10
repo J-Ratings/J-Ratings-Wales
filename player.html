@@ -439,7 +439,25 @@ function draw(){
       fixedrange: true,
       rangeslider: { visible: true, thickness: 0.04, borderwidth: 0, bgcolor: '#0f1623' }
     },
-    yaxis:{title:'Rating',fixedrange:true},
+    yaxis: {
+  title: 'Rating',
+  fixedrange: true,
+
+  tick0: 0,
+  dtick: 100,                 // major ticks every 100
+  showgrid: true,
+  gridcolor: 'rgba(255,255,255,0.25)',
+  gridwidth: 1.5,             // stronger major lines
+
+  minor: {
+    tick0: 0,
+    dtick: 50,                // minor ticks every 50
+    showgrid: true,
+    gridcolor: 'rgba(255,255,255,0.08)',
+    gridwidth: 1
+  }
+}
+
     paper_bgcolor:bg,plot_bgcolor:bg,
     font:{color:getComputedStyle(document.body).color},
     legend:{orientation:'h',x:0,y:1.1},
