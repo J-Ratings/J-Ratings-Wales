@@ -447,23 +447,24 @@ const baseLayout = {
   },
 
   yaxis: {
-    title: 'Rating',
-    fixedrange: true,
+  title: 'Rating',
+  fixedrange: true,
 
+  tick0: 0,
+  dtick: 100,
+  showgrid: true,
+  gridcolor: 'rgba(255,255,255,0.28)',
+  gridwidth: 1.6,
+
+  minor: {
     tick0: 0,
-    dtick: 100,
+    dtick: 50,
+    ticks: 'inside',                 // ← THIS is the missing piece
     showgrid: true,
-    gridcolor: 'rgba(255,255,255,0.25)',
-    gridwidth: 1.5,
-
-    minor: {
-      tick0: 0,
-      dtick: 50,
-      showgrid: true,
-      gridcolor: 'rgba(255,255,255,0.08)',
-      gridwidth: 1
-    }
-  },
+    gridcolor: 'rgba(255,255,255,0.10)',
+    gridwidth: 1
+  }
+},
 
   paper_bgcolor: bg,
   plot_bgcolor: bg,
