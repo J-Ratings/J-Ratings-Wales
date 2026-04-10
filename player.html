@@ -719,7 +719,7 @@ games.sort((a, b) => {
 
   const ga = Number.isFinite(+a.gi) ? +a.gi : 0;
   const gb = Number.isFinite(+b.gi) ? +b.gi : 0;
-  return ga - gb;                               // same day: actual game order
+  return gb - ga;   // same day: reverse game order for newest-first table
 });
 
 renderGamesTable(games);
