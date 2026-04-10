@@ -7,12 +7,12 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    .tabs {
-      display: flex;
-      justify-content: centre;
-      gap: 6px;
-      margin: 6px auto 0;
-    }
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 6px auto 0;
+}
 
     .tabs button {
       padding: 6px 10px;
@@ -86,12 +86,17 @@
 
   <main class="wrap">
     <section class="panel" id="players-panel">
-      <h2>All players</h2>
+<h2>All players</h2>
 
-      <div class="toolbar">
-        <input id="q" type="search" placeholder="Filter by name…">
-        <span id="count" class="muted"></span>
-      </div>
+<div class="tabs" aria-label="Rating view">
+  <button id="view-live" class="active" type="button">Live</button>
+  <button id="view-peak" type="button">Peak</button>
+</div>
+
+<div class="toolbar">
+  <input id="q" type="search" placeholder="Filter by name…">
+  <span id="count" class="muted"></span>
+</div>
 
       <div class="table-wrap">
         <table id="players">
@@ -112,47 +117,54 @@
   <script>
     const DATA_URL = 'data/players.json';
 
-    const state = {
-      rows: [],
-      filtered: []
-    };
+const state = {
+  rows: [],
+  filtered: [],
+  view: 'live'
+};
 
-    function render() {
-      const tbody = document.querySelector('#players tbody');
-      tbody.innerHTML = '';
+function render() {
+  const tbody = document.querySelector('#players tbody');
+  tbody.innerHTML = '';
 
-      for (const r of state.filtered) {
-        const tr = document.createElement('tr');
+  const valueKey = state.view === 'peak' ? 'peak' : 'rating';
 
-        const tdName = document.createElement('td');
-        const a = document.createElement('a');
-        a.href = `player.html?id=${encodeURIComponent(r.id)}`;
-        a.textContent = r.name;
-        tdName.appendChild(a);
+  for (const r of state.filtered) {
+    const tr = document.createElement('tr');
 
-        const tdRt = document.createElement('td');
-        tdRt.className = 'right';
-        tdRt.textContent = Math.round(r.rating);
+    const tdName = document.createElement('td');
+    const a = document.createElement('a');
+    a.href = `player.html?id=${encodeURIComponent(r.id)}`;
+    a.textContent = r.name;
+    tdName.appendChild(a);
 
-        tr.appendChild(tdName);
-        tr.appendChild(tdRt);
-        tbody.appendChild(tr);
-      }
+    const tdRt = document.createElement('td');
+    tdRt.className = 'right';
+    tdRt.textContent = Math.round(r[valueKey]);
 
-      document.getElementById('count').textContent =
-        `${state.filtered.length.toLocaleString()} players`;
-    }
+    tr.appendChild(tdName);
+    tr.appendChild(tdRt);
+    tbody.appendChild(tr);
+  }
 
-    function applyFilter() {
-      const q = document.getElementById('q').value.trim().toLowerCase();
+  document.getElementById('rating-col').textContent =
+    state.view === 'peak' ? 'Peak' : 'Rating';
 
-      const list = !q
-        ? state.rows.slice()
-        : state.rows.filter(r => r.name.toLowerCase().includes(q));
+  document.getElementById('count').textContent =
+    `${state.filtered.length.toLocaleString()} players`;
+}
 
-      state.filtered = list.sort((a, b) => b.rating - a.rating);
-      render();
-    }
+function applyFilter() {
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  const valueKey = state.view === 'peak' ? 'peak' : 'rating';
+
+  const list = !q
+    ? state.rows.slice()
+    : state.rows.filter(r => r.name.toLowerCase().includes(q));
+
+  state.filtered = list.sort((a, b) => b[valueKey] - a[valueKey]);
+  render();
+}
 
     async function load() {
       try {
@@ -163,25 +175,44 @@
 
         const data = await res.json();
 
-        state.rows = data
-          .filter(d => d && d.name && Number.isFinite(+d.rating))
-          .map(d => ({
-            id: d.id,
-            name: d.name,
-            rating: +d.rating
-          }))
-          .sort((a, b) => b.rating - a.rating);
+state.rows = data
+  .filter(d =>
+    d &&
+    d.id &&
+    d.name &&
+    Number.isFinite(+d.rating) &&
+    Number.isFinite(+d.peak)
+  )
+  .map(d => ({
+    id: d.id,
+    name: d.name,
+    rating: +d.rating,
+    peak: +d.peak
+  }));
 
-        state.filtered = state.rows.slice();
-        render();
+applyFilter();
       } catch (err) {
         document.querySelector('#players tbody').innerHTML =
           `<tr><td colspan="2">Error loading data: ${err.message}</td></tr>`;
       }
     }
 
-    document.getElementById('q').addEventListener('input', applyFilter);
-    load();
+document.getElementById('view-live').addEventListener('click', () => {
+  state.view = 'live';
+  document.getElementById('view-live').classList.add('active');
+  document.getElementById('view-peak').classList.remove('active');
+  applyFilter();
+});
+
+document.getElementById('view-peak').addEventListener('click', () => {
+  state.view = 'peak';
+  document.getElementById('view-peak').classList.add('active');
+  document.getElementById('view-live').classList.remove('active');
+  applyFilter();
+});
+
+document.getElementById('q').addEventListener('input', applyFilter);
+load();
   </script>
 </body>
 </html>
