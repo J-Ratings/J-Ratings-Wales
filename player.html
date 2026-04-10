@@ -560,6 +560,8 @@ function draw(){
 
 if (!initialRangeApplied && dataMin && dataMax) {
   const end = new Date(dataMax);
+  end.setDate(end.getDate() + 7); // add padding to the right
+
   const start = new Date('2022-01-01');
   rememberedXRange = [iso(new Date(Math.max(+start, +dataMin))), iso(end)];
   initialRangeApplied = true;
@@ -758,7 +760,8 @@ async function load(){
 /* ---------- range presets ---------- */
 function setPreset(key){
   if(!dataMin||!dataMax) return;
-  const end=new Date(dataMax);
+  const end = new Date(dataMax);
+end.setDate(end.getDate() + 7); // same padding
   let start=null;
 
   if(key==='ALL'){
