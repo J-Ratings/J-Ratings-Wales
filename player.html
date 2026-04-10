@@ -308,22 +308,23 @@ function computeMetrics(series){
 }
 
 function refreshBadge(){
-  const j=computeMetrics(seriesLive);
-  document.getElementById('live-j').textContent=j.live??'–';
-  document.getElementById('peak-j').textContent=j.peak??'–';
-  document.getElementById('kval-j').textContent=(typeof me?.k==='number')?me.k:(j.kval??'–');
+  const j = computeMetrics(rawLive);
+  document.getElementById('live-j').textContent = j.live ?? '–';
+  document.getElementById('peak-j').textContent = j.peak ?? '–';
+  document.getElementById('kval-j').textContent = (typeof me?.k === 'number') ? me.k : (j.kval ?? '–');
 
-  const wcuRow=document.getElementById('stats-wcu');
-  if(showWCU&&seriesWCU){
-    const w=computeMetrics(seriesWCU);
-    document.getElementById('live-wcu').textContent=w.live??'–';
-    document.getElementById('peak-wcu').textContent=w.peak??'–';
-    document.getElementById('kval-wcu').textContent=w.kval??'–';
-    wcuRow.style.display='';
+  const wcuRow = document.getElementById('stats-wcu');
+  if (showWCU && rawWCU.length) {
+    const w = computeMetrics(rawWCU);
+    document.getElementById('live-wcu').textContent = w.live ?? '–';
+    document.getElementById('peak-wcu').textContent = w.peak ?? '–';
+    document.getElementById('kval-wcu').textContent = w.kval ?? '–';
+    wcuRow.style.display = '';
   } else {
-    wcuRow.style.display='none';
+    wcuRow.style.display = 'none';
   }
-  document.getElementById('toggle').textContent=showWCU?'Hide WCU':'Show WCU';
+
+  document.getElementById('toggle').textContent = showWCU ? 'Hide WCU' : 'Show WCU';
 }
 
 /* recolour the tiny line in the rangeslider to match the background */
