@@ -761,7 +761,7 @@ async function load(){
 function setPreset(key){
   if(!dataMin||!dataMax) return;
   const end = new Date(dataMax);
-end.setDate(end.getDate() + 7); // same padding
+end.setDate(end.getDate() + 14); // same padding
   let start=null;
 
   if(key==='ALL'){
