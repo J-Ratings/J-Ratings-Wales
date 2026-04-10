@@ -233,27 +233,6 @@ function reorderSameDayGamesByImpliedBase(games) {
         const newB = Number.isFinite(+b._jNewRaw) ? +b._jNewRaw : (Number.isFinite(+b.jNew) ? +b.jNew : NaN);
 
         const dA = parseDelta(a.delta);
-        function reorderSameDayGamesByImpliedBase(games) {
-  const byDate = new Map();
-
-  for (const g of games) {
-    const k = dateKey(g.date);
-    if (!byDate.has(k)) byDate.set(k, []);
-    byDate.get(k).push(g);
-  }
-
-  const keys = [...byDate.keys()].sort((a, b) => new Date(b) - new Date(a)); // newest day first
-  const out = [];
-
-  for (const k of keys) {
-    const group = byDate.get(k);
-
-    if (group.length > 1) {
-      group.sort((a, b) => {
-        const newA = Number.isFinite(+a._jNewRaw) ? +a._jNewRaw : (Number.isFinite(+a.jNew) ? +a.jNew : NaN);
-        const newB = Number.isFinite(+b._jNewRaw) ? +b._jNewRaw : (Number.isFinite(+b.jNew) ? +b.jNew : NaN);
-
-        const dA = parseDelta(a.delta);
         const dB = parseDelta(b.delta);
 
         if (Number.isFinite(newA) && Number.isFinite(dA) && Number.isFinite(newB) && Number.isFinite(dB)) {
