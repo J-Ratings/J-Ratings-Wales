@@ -110,8 +110,8 @@
       <div>
         <label for="agg">View:</label>
         <select id="agg">
-          <option value="daily" selected>Daily</option>
-          <option value="weekly">Weekly</option>
+          <option value="daily">Daily</option>
+          <option value="weekly" selected>Weekly</option>
           <option value="monthly">Monthly</option>
           <option value="quarterly">Quarterly</option>
           <option value="yearly">Yearly</option>
@@ -558,12 +558,12 @@ function draw(){
     shapes: makeYGridShapes(yMin0, yMax0, 100) // safe default until adjustYToVisible runs
   };
 
-  if (!initialRangeApplied && dataMin && dataMax) {
-    const end=new Date(dataMax);
-    const start=new Date(end.getTime()-365*24*60*60*1000);
-    rememberedXRange = [iso(new Date(Math.max(start,dataMin))), iso(end)];
-    initialRangeApplied = true;
-  }
+if (!initialRangeApplied && dataMin && dataMax) {
+  const end = new Date(dataMax);
+  const start = new Date('2022-01-01');
+  rememberedXRange = [iso(new Date(Math.max(+start, +dataMin))), iso(end)];
+  initialRangeApplied = true;
+}
 
   Plotly.react('chart', traces, baseLayout, {
     staticPlot:false,scrollZoom:false,displayModeBar:false,responsive:true
