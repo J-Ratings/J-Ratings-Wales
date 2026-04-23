@@ -8,24 +8,14 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
   <style>
-    /* Strip the mini-graph out of the Plotly range slider */
-    #chart g.rangeslider .plot,
-    #chart g.rangeslider .rangeplot {
-      opacity: 0 !important;
-    }
-
-    /* Hide axes and grid inside the rangeslider */
-    #chart g.rangeslider .gridlayer,
-    #chart g.rangeslider .zerolinelayer,
-    #chart g.rangeslider [class^="xaxislayer"],
-    #chart g.rangeslider [class^="yaxislayer"] {
-      display: none !important;
-    }
-
     .player-head{
-      display:flex;justify-content:space-between;align-items:flex-end;
-      margin:12px 0;padding-right:12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      margin:12px 0;
+      padding-right:12px;
     }
+
     .badge{
       border:1px solid var(--border);
       background:#0f1623;
@@ -38,41 +28,98 @@
       flex-direction:column;
       gap:.5rem;
     }
-    .badge .stack{display:flex;flex-direction:column;gap:.25rem;}
-    .badge strong{font-variant-numeric:tabular-nums;}
+
+    .badge .stack{
+      display:flex;
+      flex-direction:column;
+      gap:.25rem;
+    }
+
+    .badge strong{
+      font-variant-numeric:tabular-nums;
+    }
 
     #stats-j .muted{color:#1f77b4;font-weight:bold;}
     #stats-wcu .muted{color:#ff7f0e;font-weight:bold;}
 
     .btn-mini{
-      background:#0f1623;border:1px solid var(--border);color:var(--text);
-      padding:4px 8px;border-radius:6px;cursor:pointer;font-size:.9rem;
+      background:#0f1623;
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:4px 8px;
+      border-radius:6px;
+      cursor:pointer;
+      font-size:.9rem;
     }
-    .btn-mini[disabled]{opacity:.5;cursor:default;}
-    .btn-mini:hover:not([disabled]){background:rgba(255,255,255,05);}
 
-    #chart{height:420px;touch-action:pan-y;}
+    .btn-mini[disabled]{
+      opacity:.5;
+      cursor:default;
+    }
 
-    .range-buttons{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin:.5rem 0 0.25rem 0;}
+    .btn-mini:hover:not([disabled]){
+      background:rgba(255,255,255,.05);
+    }
+
+    #chart{
+      height:420px;
+      touch-action:pan-y;
+    }
+
+    .range-buttons{
+      display:flex;
+      gap:.5rem;
+      flex-wrap:wrap;
+      align-items:center;
+      margin:.5rem 0 .25rem 0;
+    }
+
     .range-buttons .seg{
-      background:#0f1623;border:1px solid var(--border);color:var(--text);
-      padding:6px 10px;border-radius:6px;cursor:pointer;font-size:.9rem;
+      background:#0f1623;
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:6px 10px;
+      border-radius:6px;
+      cursor:pointer;
+      font-size:.9rem;
     }
-    .range-buttons .seg:hover{background:rgba(255,255,255,05);}
 
-    #games{margin-top:1.5rem;width:100%;border-collapse:collapse;}
-    #games th,#games td{
-      padding:6px 10px;border-bottom:1px solid #333;text-align:center!important;
-      vertical-align:middle;white-space:nowrap;border-right:3px double rgba(255,255,255,0.25);
+    .range-buttons .seg:hover{
+      background:rgba(255,255,255,.05);
     }
-    #games th:last-child,#games td:last-child{border-right:none;}
-    #games th:nth-child(6),#games td:nth-child(6){border-right:3px double rgba(128,128,128,0.6)}
-    .result-win{color:#34c759;font-weight:bold}
-    .result-draw{color:#ffb833;font-weight:bold}
-    .result-loss{color:#e53935;font-weight:bold}
-    .delta-pos{color:#34c759;font-weight:bold}
-    .delta-neg{color:#e53935;font-weight:bold}
-    .delta-zero{color:#ffb833;font-weight:bold}
+
+    #games{
+      margin-top:1.5rem;
+      width:100%;
+      border-collapse:collapse;
+    }
+
+    #games th,
+    #games td{
+      padding:6px 10px;
+      border-bottom:1px solid #333;
+      text-align:center !important;
+      vertical-align:middle;
+      white-space:nowrap;
+      border-right:3px double rgba(255,255,255,0.25);
+    }
+
+    #games th:last-child,
+    #games td:last-child{
+      border-right:none;
+    }
+
+    #games th:nth-child(6),
+    #games td:nth-child(6){
+      border-right:3px double rgba(128,128,128,0.6);
+    }
+
+    .result-win{color:#34c759;font-weight:bold;}
+    .result-draw{color:#ffb833;font-weight:bold;}
+    .result-loss{color:#e53935;font-weight:bold;}
+    .delta-pos{color:#34c759;font-weight:bold;}
+    .delta-neg{color:#e53935;font-weight:bold;}
+    .delta-zero{color:#ffb833;font-weight:bold;}
   </style>
 </head>
 
@@ -150,6 +197,7 @@
 /* ---------- constants ---------- */
 const params = new URLSearchParams(location.search);
 const idRaw = params.get('id');
+
 if (!idRaw) {
   document.getElementById('chart').textContent = 'Missing player id.';
   throw new Error('no id');
@@ -161,35 +209,40 @@ const HIST_WCU    = id => `data/history/${encodeURIComponent(id)}_wcu.json`;
 const GAMES_URL   = id => `data/games/${encodeURIComponent(id)}.json`;
 
 const COLORS = { J:'#1f77b4', WCU:'#ff7f0e' };
-const kFromRating = r => (r>=2200?10:r>=1800?20:30);
+const kFromRating = r => (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
 
 /* ---------- state ---------- */
-let me = null, rawLive = [], rawWCU = [], seriesLive = null, seriesWCU = null, showWCU = false;
-let dataMin = null, dataMax = null;
+let me = null;
+let rawLive = [];
+let rawWCU = [];
+let seriesLive = null;
+let seriesWCU = null;
+let showWCU = false;
+let dataMin = null;
+let dataMax = null;
 let initialRangeApplied = false;
-let rememberedXRange = null;   // [x0,x1] strings yyyy-mm-dd
-let ratingByDate = Object.create(null); // date -> J-rating from history JSON
+let rememberedXRange = null;   // [x0, x1] as yyyy-mm-dd
+let ratingByDate = Object.create(null);
 
 /* ---------- helpers ---------- */
-const iso = d => new Date(d).toISOString().slice(0,10);
+const iso = d => new Date(d).toISOString().slice(0, 10);
 
 function normalise(series){
   return series
     .filter(p => p && p.x && Number.isFinite(+p.y))
     .map(p => ({ x: p.x, y: +p.y }))
-    .sort((a,b) => new Date(a.x) - new Date(b.x));
+    .sort((a, b) => new Date(a.x) - new Date(b.x));
 }
 
 function dateKey(s) {
-  return (s || "").slice(0, 10);
+  return (s || '').slice(0, 10);
 }
 
 function labelStepForRange(y0, y1) {
   const span = Math.abs(y1 - y0);
-
-  if (span < 100) return 25;     // show 25s
-  if (span < 300) return 50;     // show 50s
-  return 100;                   // show 100s
+  if (span < 100) return 25;
+  if (span < 300) return 50;
+  return 100;
 }
 
 function setTickLabelsEvery(yMin, yMax, step) {
@@ -211,12 +264,11 @@ function setTickLabelsEvery(yMin, yMax, step) {
   });
 }
 
-/* Reorder same-day games so the "New" values make sense with Δ. */
-
 function aggregateExpanded(series, mode){
   if (mode === 'daily') return normalise(series);
 
   const buckets = Object.create(null);
+
   for (const p of series) {
     const d = new Date(p.x);
     let key;
@@ -227,15 +279,12 @@ function aggregateExpanded(series, mode){
       tmp.setUTCDate(tmp.getUTCDate() + 4 - dayNum);
       const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(), 0, 1));
       const weekNo = Math.ceil((((tmp - yearStart) / 86400000) + 1) / 7);
-      key = `${tmp.getUTCFullYear()}-W${String(weekNo).padStart(2,'0')}`;
-
+      key = `${tmp.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
     } else if (mode === 'monthly') {
-      key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-
+      key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
     } else if (mode === 'quarterly') {
       const q = Math.floor(d.getMonth() / 3) + 1;
       key = `${d.getFullYear()}-Q${q}`;
-
     } else {
       key = `${d.getFullYear()}`;
     }
@@ -245,27 +294,29 @@ function aggregateExpanded(series, mode){
 
   const out = Object.keys(buckets).sort().map(k => {
     const ys = buckets[k].filter(Number.isFinite);
-    const avg = ys.reduce((a,b)=>a+b,0)/ys.length;
+    const avg = ys.reduce((a, b) => a + b, 0) / ys.length;
 
     let x;
+
     if (k.includes('W')) {
-      const [y,w] = k.split('-W'); const year = +y, week = +w;
-      const simple = new Date(Date.UTC(year,0,1+(week-1)*7));
+      const [y, w] = k.split('-W');
+      const year = +y;
+      const week = +w;
+      const simple = new Date(Date.UTC(year, 0, 1 + (week - 1) * 7));
       const dow = simple.getUTCDay();
+
       if (dow <= 4) simple.setUTCDate(simple.getUTCDate() - dow + 1);
       else simple.setUTCDate(simple.getUTCDate() + 8 - dow);
+
       x = iso(simple);
-
     } else if (k.includes('Q')) {
-      const [y,q] = k.split('-Q'); const year = +y, quarter = +q;
-      x = iso(new Date(Date.UTC(year,(quarter-1)*3,1)));
-
+      const [y, q] = k.split('-Q');
+      x = iso(new Date(Date.UTC(+y, (+q - 1) * 3, 1)));
     } else if (k.length === 7) {
-      const [y,m] = k.split('-');
-      x = iso(new Date(Date.UTC(+y,(+m)-1,1)));
-
+      const [y, m] = k.split('-');
+      x = iso(new Date(Date.UTC(+y, (+m) - 1, 1)));
     } else {
-      x = iso(new Date(Date.UTC(+k,0,1)));
+      x = iso(new Date(Date.UTC(+k, 0, 1)));
     }
 
     return { x, y: avg };
@@ -276,44 +327,52 @@ function aggregateExpanded(series, mode){
 
 function makeTrace(series, name, colour, mode){
   return {
-    x:series.map(p=>p.x),
-    y:series.map(p=>p.y),
-    mode:(mode==='daily'?'lines':'lines+markers'),
-    line:{width:2,shape:'linear',color:colour},
-    marker:(mode==='daily'?{size:0}:{size:4}),
+    x: series.map(p => p.x),
+    y: series.map(p => p.y),
+    mode: (mode === 'daily' ? 'lines' : 'lines+markers'),
+    line: { width: 2, shape: 'linear', color: colour },
+    marker: (mode === 'daily' ? { size: 0 } : { size: 4 }),
     name,
-    hovertemplate:'%{y:.0f}<extra>'+name+'</extra>',
-    connectgaps:true
+    hovertemplate: '%{y:.0f}<extra>' + name + '</extra>',
+    connectgaps: true
   };
 }
 
 function extentFrom(...seriesList){
-  const xs=[];
-  for(const s of seriesList){
-    if(!s) continue;
-    for(const p of s){
-      if(p?.x) xs.push(new Date(p.x));
+  const xs = [];
+
+  for (const s of seriesList) {
+    if (!s) continue;
+    for (const p of s) {
+      if (p?.x) xs.push(new Date(p.x));
     }
   }
-  if(!xs.length) return{min:null,max:null};
-  return{min:new Date(Math.min(...xs)),max:new Date(Math.max(...xs))};
+
+  if (!xs.length) return { min: null, max: null };
+
+  return {
+    min: new Date(Math.min(...xs)),
+    max: new Date(Math.max(...xs))
+  };
 }
 
 function computeMetrics(series){
-  const y=series?.map(p=>p.y)??[];
-  const live=y.length?Math.round(y[y.length-1]):null;
-  const peak=y.length?Math.round(Math.max(...y)):null;
-  const kval=Number.isFinite(live)?kFromRating(live):null;
-  return{live,peak,kval};
+  const y = series?.map(p => p.y) ?? [];
+  const live = y.length ? Math.round(y[y.length - 1]) : null;
+  const peak = y.length ? Math.round(Math.max(...y)) : null;
+  const kval = Number.isFinite(live) ? kFromRating(live) : null;
+  return { live, peak, kval };
 }
 
 function refreshBadge(){
   const j = computeMetrics(rawLive);
   document.getElementById('live-j').textContent = j.live ?? '–';
   document.getElementById('peak-j').textContent = j.peak ?? '–';
-  document.getElementById('kval-j').textContent = (typeof me?.k === 'number') ? me.k : (j.kval ?? '–');
+  document.getElementById('kval-j').textContent =
+    (typeof me?.k === 'number') ? me.k : (j.kval ?? '–');
 
   const wcuRow = document.getElementById('stats-wcu');
+
   if (showWCU && rawWCU.length) {
     const w = computeMetrics(rawWCU);
     document.getElementById('live-wcu').textContent = w.live ?? '–';
@@ -327,68 +386,46 @@ function refreshBadge(){
   document.getElementById('toggle').textContent = showWCU ? 'Hide WCU' : 'Show WCU';
 }
 
-/* recolour the tiny line in the rangeslider to match the background */
-function recolourMiniToBackground() {
-  const bg = getComputedStyle(document.body).backgroundColor;
-  document.querySelectorAll('#chart g.rangeslider .plot path').forEach(el => {
-    el.style.stroke = bg;
-    el.style.fill = bg;
-  });
-}
-
-function hideMini() {
-  const chart = document.getElementById('chart');
-  if (!chart) return;
-
-  chart.querySelectorAll('g.rangeslider .plot, g.rangeslider .rangeplot')
-    .forEach(el => { el.style.opacity = '0'; });
-
-  chart.querySelectorAll(
-    'g.rangeslider .gridlayer, ' +
-    'g.rangeslider .zerolinelayer, ' +
-    'g.rangeslider [class^="xaxislayer"], ' +
-    'g.rangeslider [class^="yaxislayer"]'
-  ).forEach(el => { el.style.display = 'none'; });
-
-  recolourMiniToBackground();
-}
-
-/* rating from J history JSON on or before given date (fallback only) */
 function ratingOnOrBefore(dateStr) {
   if (!dateStr) return null;
+
   const key = dateStr.slice(0, 10);
 
-  if (ratingByDate && Object.prototype.hasOwnProperty.call(ratingByDate, key)) {
+  if (Object.prototype.hasOwnProperty.call(ratingByDate, key)) {
     return ratingByDate[key];
   }
 
   const target = new Date(key);
   let best = null;
+
   for (const p of rawLive) {
     if (!p || !p.x) continue;
     const d = new Date(p.x);
+
     if (d <= target && (!best || d > best.d)) {
       best = { d, r: p.y };
     }
   }
+
   return best ? best.r : null;
 }
 
 function clampToData(range){
-  if(!range||!dataMin||!dataMax) return range;
-  const [x0,x1]=range.map(x=>new Date(x));
-  const lo=new Date(Math.max(+x0,+dataMin));
-  const hi=new Date(Math.min(+x1,+dataMax));
-  return [iso(lo),iso(hi)];
+  if (!range || !dataMin || !dataMax) return range;
+
+  const [x0, x1] = range.map(x => new Date(x));
+  const lo = new Date(Math.max(+x0, +dataMin));
+  const hi = new Date(Math.min(+x1, +dataMax));
+
+  return [iso(lo), iso(hi)];
 }
 
-/* ---------- custom Y gridlines (25/50/100) ---------- */
+/* ---------- custom Y gridlines ---------- */
 function makeYGridShapes(yMin, yMax, step) {
   if (!Number.isFinite(yMin) || !Number.isFinite(yMax) || !step) return [];
 
   const lo = Math.floor((yMin - 1) / step) * step;
   const hi = Math.ceil((yMax + 1) / step) * step;
-
   const shapes = [];
 
   for (let y = lo; y <= hi; y += step) {
@@ -400,7 +437,7 @@ function makeYGridShapes(yMin, yMax, step) {
     } else if (step === 50) {
       width = 1.4;
       color = 'rgba(255,255,255,0.16)';
-    } else { // 25
+    } else {
       width = 1.0;
       color = 'rgba(255,255,255,0.08)';
     }
@@ -408,9 +445,11 @@ function makeYGridShapes(yMin, yMax, step) {
     shapes.push({
       type: 'line',
       xref: 'paper',
-      x0: 0, x1: 1,
+      x0: 0,
+      x1: 1,
       yref: 'y',
-      y0: y, y1: y,
+      y0: y,
+      y1: y,
       line: { width, color }
     });
   }
@@ -418,9 +457,9 @@ function makeYGridShapes(yMin, yMax, step) {
   return shapes;
 }
 
-
 function adjustYToVisible(x0, x1) {
-  const lo = new Date(x0), hi = new Date(x1);
+  const lo = new Date(x0);
+  const hi = new Date(x1);
   const values = [];
 
   if (seriesLive?.length) {
@@ -442,11 +481,8 @@ function adjustYToVisible(x0, x1) {
   const min = Math.min(...values);
   const max = Math.max(...values);
   const pad = (max - min) * 0.12 || 10;
-
   const y0 = min - pad;
   const y1 = max + pad;
-
-  // pick 25/50/100 based on the visible span
   const step = labelStepForRange(y0, y1);
 
   Plotly.relayout('chart', {
@@ -459,118 +495,123 @@ function adjustYToVisible(x0, x1) {
 
 /* ---------- chart ---------- */
 function draw(){
-  const mode=document.getElementById('agg').value;
+  const mode = document.getElementById('agg').value;
 
-  const gd=document.getElementById('chart');
+  const gd = document.getElementById('chart');
   const liveLayout = gd && gd._fullLayout ? gd._fullLayout.xaxis : null;
+
   if (liveLayout && liveLayout.range) {
     rememberedXRange = [liveLayout.range[0], liveLayout.range[1]];
   }
 
-  seriesLive = aggregateExpanded(rawLive,mode);
-  seriesWCU  = rawWCU.length ? aggregateExpanded(rawWCU,mode) : null;
+  seriesLive = aggregateExpanded(rawLive, mode);
+  seriesWCU = rawWCU.length ? aggregateExpanded(rawWCU, mode) : null;
 
-  const traces=[makeTrace(seriesLive,'J-Ratings',COLORS.J,mode)];
-  if(showWCU&&seriesWCU) traces.push(makeTrace(seriesWCU,'WCU',COLORS.WCU,mode));
+  const traces = [makeTrace(seriesLive, 'J-Ratings', COLORS.J, mode)];
+  if (showWCU && seriesWCU) traces.push(makeTrace(seriesWCU, 'WCU', COLORS.WCU, mode));
 
-  const ext=extentFrom(seriesLive,seriesWCU);
-  dataMin=ext.min; dataMax=ext.max;
+  const ext = extentFrom(seriesLive, seriesWCU);
+  dataMin = ext.min;
+  dataMax = ext.max;
 
-  // Compute initial shapes from series (fallback; y-range gets set properly later)
   const allY = [];
   for (const p of seriesLive || []) if (Number.isFinite(p.y)) allY.push(p.y);
-  if (showWCU && seriesWCU) for (const p of seriesWCU) if (Number.isFinite(p.y)) allY.push(p.y);
+  if (showWCU && seriesWCU) {
+    for (const p of seriesWCU) if (Number.isFinite(p.y)) allY.push(p.y);
+  }
+
   const yMin0 = allY.length ? Math.min(...allY) : 0;
   const yMax0 = allY.length ? Math.max(...allY) : 1;
-
-  const bg=getComputedStyle(document.body).backgroundColor;
+  const bg = getComputedStyle(document.body).backgroundColor;
 
   const baseLayout = {
-    margin:{l:50,r:20,t:10,b:40},
+    margin: { l: 50, r: 20, t: 10, b: 40 },
 
     xaxis: {
       type: 'date',
       fixedrange: true,
-      showgrid: false, // keeps vertical gridlines out of the way
-      rangeslider: { visible: true, thickness: 0.04, borderwidth: 0, bgcolor: '#0f1623' }
+      showgrid: false,
+      rangeslider: { visible: false }
     },
 
-    // Ticks every 25 (labels every 25). Gridlines handled by shapes, not Plotly's grid.
     yaxis: {
-  title: '',
-  fixedrange: true,
-  showgrid: false,
-  zeroline: false,
+      title: '',
+      fixedrange: true,
+      showgrid: false,
+      zeroline: false,
+      tick0: 0,
+      dtick: 25,
+      ticks: 'outside',
+      ticklen: 4,
+      tickmode: 'array',
+      tickvals: [],
+      ticktext: []
+    },
 
-  // keep tick marks every 25 so the scale is still "anchored"
-  tick0: 0,
-  dtick: 25,
-  ticks: 'outside',
-  ticklen: 4,
-
-  // but only LABEL the 100s
-  tickmode: 'array',
-  tickvals: [],   // filled dynamically
-  ticktext: []    // filled dynamically
-},
-
-    paper_bgcolor:bg,
-    plot_bgcolor:bg,
-    font:{color:getComputedStyle(document.body).color},
-    legend:{orientation:'h',x:0,y:1.1},
-
-    shapes: makeYGridShapes(yMin0, yMax0, 100) // safe default until adjustYToVisible runs
+    paper_bgcolor: bg,
+    plot_bgcolor: bg,
+    font: { color: getComputedStyle(document.body).color },
+    legend: { orientation: 'h', x: 0, y: 1.1 },
+    shapes: makeYGridShapes(yMin0, yMax0, 100)
   };
 
-if (!initialRangeApplied && dataMin && dataMax) {
-  const end = new Date(dataMax);
-  end.setDate(end.getDate() + 7); // add padding to the right
+  if (!initialRangeApplied && dataMin && dataMax) {
+    const end = new Date(dataMax);
+    end.setDate(end.getDate() + 7);
 
-  const start = new Date('2022-01-01');
-  rememberedXRange = [iso(new Date(Math.max(+start, +dataMin))), iso(end)];
-  initialRangeApplied = true;
-}
+    const start = new Date('2022-01-01');
+    rememberedXRange = [iso(new Date(Math.max(+start, +dataMin))), iso(end)];
+    initialRangeApplied = true;
+  }
 
   Plotly.react('chart', traces, baseLayout, {
-    staticPlot:false,scrollZoom:false,displayModeBar:false,responsive:true
+    staticPlot: false,
+    scrollZoom: false,
+    displayModeBar: false,
+    responsive: true
   }).then(() => {
     if (rememberedXRange) {
-      const [x0,x1]=clampToData(rememberedXRange);
-      Plotly.relayout('chart', {'xaxis.range':[x0,x1]}).then(()=>adjustYToVisible(x0,x1));
+      const [x0, x1] = clampToData(rememberedXRange);
+      Plotly.relayout('chart', { 'xaxis.range': [x0, x1] })
+        .then(() => adjustYToVisible(x0, x1));
     }
 
-    const gd2=document.getElementById('chart');
+    const gd2 = document.getElementById('chart');
+
     if (!gd2._jrHandlersAttached) {
       gd2.on('plotly_relayout', ev => {
-        const x0=ev['xaxis.range[0]']??(ev['xaxis.range'] && ev['xaxis.range'][0]);
-        const x1=ev['xaxis.range[1]']??(ev['xaxis.range'] && ev['xaxis.range'][1]);
+        const x0 = ev['xaxis.range[0]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][0]);
+        const x1 = ev['xaxis.range[1]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][1]);
+
         if (x0 && x1) {
-          rememberedXRange=[x0,x1];
-          adjustYToVisible(x0,x1);
+          rememberedXRange = [x0, x1];
+          adjustYToVisible(x0, x1);
         }
-        hideMini();
-      });
-
-      window.addEventListener('resize', hideMini);
-
-      new MutationObserver(() => {
-        hideMini();
-      }).observe(document.getElementById('chart'), {
-        childList: true,
-        subtree: true
       });
 
       gd2._jrHandlersAttached = true;
     }
-
-    hideMini();
   });
 }
 
 /* ---------- table helpers ---------- */
-function getId(g,base){return g[base+'Id']??g[base+'_id']??g[base+'ID']??null;}
-function resultClass(r){if(r==='Win')return'result-win';if(r==='Draw')return'result-draw';if(r==='Loss')return'result-loss';return'';}
-function deltaClass(d){if(!d)return'';if(d.startsWith('+'))return'delta-pos';if(d.startsWith('-'))return'delta-neg';return'delta-zero';}
+function getId(g, base){
+  return g[base + 'Id'] ?? g[base + '_id'] ?? g[base + 'ID'] ?? null;
+}
+
+function resultClass(r){
+  if (r === 'Win') return 'result-win';
+  if (r === 'Draw') return 'result-draw';
+  if (r === 'Loss') return 'result-loss';
+  return '';
+}
+
+function deltaClass(d){
+  if (!d) return '';
+  if (d.startsWith('+')) return 'delta-pos';
+  if (d.startsWith('-')) return 'delta-neg';
+  return 'delta-zero';
+}
 
 function parseDelta(deltaVal){
   if (deltaVal == null) return null;
@@ -582,7 +623,6 @@ function parseDelta(deltaVal){
   return null;
 }
 
-/* Returns a raw (non-rounded) "new" rating for ordering purposes. */
 function computeGameNewRaw(g){
   if (g.new != null && Number.isFinite(+g.new)) return +g.new;
   if (g.playerNew != null && Number.isFinite(+g.playerNew)) return +g.playerNew;
@@ -600,8 +640,6 @@ function renderGamesTable(games){
   tbody.innerHTML = '';
 
   for (const g of games) {
-
-    // Filter rule: skip low Elo opponents
     if (
       g.opponentElo != null &&
       Number.isFinite(+g.opponentElo) &&
@@ -611,35 +649,34 @@ function renderGamesTable(games){
     }
 
     const tr = document.createElement('tr');
-    const cols = ["date", "opponent", "opponentElo", "result", "delta", "jNew"];
+    const cols = ['date', 'opponent', 'opponentElo', 'result', 'delta', 'jNew'];
 
     for (const col of cols) {
-      const td = document.createElement("td");
+      const td = document.createElement('td');
 
-      if (col === "opponent") {
-        const name = g[col] ?? "";
+      if (col === 'opponent') {
+        const name = g[col] ?? '';
         const id = getId(g, col);
+
         if (id) {
-          const a = document.createElement("a");
+          const a = document.createElement('a');
           a.href = `player.html?id=${encodeURIComponent(id)}`;
           a.textContent = name;
           td.appendChild(a);
         } else {
           td.textContent = name;
         }
-
-      } else if (col === "jNew") {
-        td.textContent = (g.jNew != null) ? g.jNew : "";
-
+      } else if (col === 'jNew') {
+        td.textContent = (g.jNew != null) ? g.jNew : '';
       } else {
         td.textContent =
-          (col === "playerElo" || col === "opponentElo")
-            ? (g[col] != null ? Math.round(g[col]) : "")
-            : (g[col] ?? "");
+          (col === 'playerElo' || col === 'opponentElo')
+            ? (g[col] != null ? Math.round(g[col]) : '')
+            : (g[col] ?? '');
       }
 
-      if (col === "result") td.className = resultClass(g[col]);
-      if (col === "delta")  td.className = deltaClass(g[col]);
+      if (col === 'result') td.className = resultClass(g[col]);
+      if (col === 'delta') td.className = deltaClass(g[col]);
 
       tr.appendChild(td);
     }
@@ -650,21 +687,23 @@ function renderGamesTable(games){
 
 /* ---------- load ---------- */
 async function load(){
-  try{
-    const[playersRes,liveRes,wcuRes,gamesRes]=await Promise.all([
-      fetch(PLAYERS_URL,{cache:'no-cache'}),
-      fetch(HIST_URL(idRaw),{cache:'no-cache'}),
-      fetch(HIST_WCU(idRaw),{cache:'no-cache'}).catch(()=>null),
-      fetch(GAMES_URL(idRaw),{cache:'no-cache'}).catch(()=>null)
+  try {
+    const [playersRes, liveRes, wcuRes, gamesRes] = await Promise.all([
+      fetch(PLAYERS_URL, { cache: 'no-cache' }),
+      fetch(HIST_URL(idRaw), { cache: 'no-cache' }),
+      fetch(HIST_WCU(idRaw), { cache: 'no-cache' }).catch(() => null),
+      fetch(GAMES_URL(idRaw), { cache: 'no-cache' }).catch(() => null)
     ]);
 
-    if(!playersRes.ok)throw new Error('players.json not found');
-    if(!liveRes.ok)throw new Error('live history not found');
+    if (!playersRes.ok) throw new Error('players.json not found');
+    if (!liveRes.ok) throw new Error('live history not found');
 
-    const players=await playersRes.json();
-    me=players.find(p=>p.id===idRaw);
-    if(!me)throw new Error('player id not in players.json');
-    document.getElementById('pname').textContent=me.name;
+    const players = await playersRes.json();
+    me = players.find(p => p.id === idRaw);
+
+    if (!me) throw new Error('player id not in players.json');
+
+    document.getElementById('pname').textContent = me.name;
 
     const liveData = await liveRes.json();
 
@@ -679,89 +718,93 @@ async function load(){
       if (Number.isFinite(val)) ratingByDate[key] = val;
     }
 
-    if(wcuRes&&wcuRes.ok){
-      rawWCU=(await wcuRes.json())
-        .map(d=>({x:d.date,y:+d.rating}))
-        .filter(p=>Number.isFinite(p.y));
-      document.getElementById('toggle').disabled=false;
-    }else{
-      rawWCU=[];
-      document.getElementById('toggle').disabled=true;
-      document.getElementById('toggle').textContent='WCU N/A';
+    if (wcuRes && wcuRes.ok) {
+      rawWCU = (await wcuRes.json())
+        .map(d => ({ x: d.date, y: +d.rating }))
+        .filter(p => Number.isFinite(p.y));
+      document.getElementById('toggle').disabled = false;
+    } else {
+      rawWCU = [];
+      document.getElementById('toggle').disabled = true;
+      document.getElementById('toggle').textContent = 'WCU N/A';
     }
 
     draw();
     refreshBadge();
 
-    document.getElementById('agg').addEventListener('change',()=>{
+    document.getElementById('agg').addEventListener('change', () => {
       draw();
       refreshBadge();
     });
 
-    document.querySelectorAll('.range-buttons .seg').forEach(btn=>{
-      btn.addEventListener('click',()=>setPreset(btn.dataset.range));
+    document.querySelectorAll('.range-buttons .seg').forEach(btn => {
+      btn.addEventListener('click', () => setPreset(btn.dataset.range));
     });
 
     if (gamesRes && gamesRes.ok) {
-      let games = await gamesRes.json();
+      const games = await gamesRes.json();
 
       games.forEach((g, idx) => { g.__i = idx; });
 
-     for (const g of games) {
-  g._jNewRaw = computeGameNewRaw(g);
-  g.jNew = Number.isFinite(g._jNewRaw) ? Math.round(g._jNewRaw) : null;
-}
+      for (const g of games) {
+        g._jNewRaw = computeGameNewRaw(g);
+        g.jNew = Number.isFinite(g._jNewRaw) ? Math.round(g._jNewRaw) : null;
+      }
 
-games.sort((a, b) => {
-  const da = dateKey(a.date);
-  const db = dateKey(b.date);
+      games.sort((a, b) => {
+        const da = dateKey(a.date);
+        const db = dateKey(b.date);
 
-  if (da !== db) return db.localeCompare(da);   // newer dates first
+        if (da !== db) return db.localeCompare(da);
 
-  const ga = Number.isFinite(+a.gi) ? +a.gi : 0;
-  const gb = Number.isFinite(+b.gi) ? +b.gi : 0;
-  return gb - ga;   // same day: reverse game order for newest-first table
-});
+        const ga = Number.isFinite(+a.gi) ? +a.gi : 0;
+        const gb = Number.isFinite(+b.gi) ? +b.gi : 0;
+        return gb - ga;
+      });
 
-renderGamesTable(games);
-
+      renderGamesTable(games);
     }
-  }catch(e){
+  } catch (e) {
     console.error(e);
-    document.getElementById('chart').textContent='No Games';
+    document.getElementById('chart').textContent = 'No Games';
   }
 }
 
 /* ---------- range presets ---------- */
 function setPreset(key){
-  if(!dataMin||!dataMax) return;
-  const end = new Date(dataMax);
-end.setDate(end.getDate() + 14); // same padding
-  let start=null;
+  if (!dataMin || !dataMax) return;
 
-  if(key==='ALL'){
-    start=new Date(dataMin);
-  } else if(key==='2015'){
-    start=new Date('2015-01-01');
-  } else if(key==='2022'){
-    start=new Date('2022-01-01');
-  } else if(key==='LY'){
-    start=new Date(end); start.setFullYear(start.getFullYear()-1);
-  } else if(key==='YTD'){
-    start=new Date(end.getFullYear()+'-01-01');
+  const end = new Date(dataMax);
+  end.setDate(end.getDate() + 14);
+
+  let start = null;
+
+  if (key === 'ALL') {
+    start = new Date(dataMin);
+  } else if (key === '2015') {
+    start = new Date('2015-01-01');
+  } else if (key === '2022') {
+    start = new Date('2022-01-01');
+  } else if (key === 'LY') {
+    start = new Date(end);
+    start.setFullYear(start.getFullYear() - 1);
+  } else if (key === 'YTD') {
+    start = new Date(end.getFullYear() + '-01-01');
   } else {
-    start=new Date(dataMin);
+    start = new Date(dataMin);
   }
 
-  const range=[iso(new Date(Math.max(+start,+dataMin))), iso(end)];
-  rememberedXRange=range;
-  Plotly.relayout('chart', {'xaxis.range':range}).then(()=>adjustYToVisible(range[0],range[1]));
+  const range = [iso(new Date(Math.max(+start, +dataMin))), iso(end)];
+  rememberedXRange = range;
+
+  Plotly.relayout('chart', { 'xaxis.range': range })
+    .then(() => adjustYToVisible(range[0], range[1]));
 }
 
 /* ---------- interactions ---------- */
-document.addEventListener('click',e=>{
-  if(e.target.id==='toggle'&&!e.target.disabled){
-    showWCU=!showWCU;
+document.addEventListener('click', e => {
+  if (e.target.id === 'toggle' && !e.target.disabled) {
+    showWCU = !showWCU;
     draw();
     refreshBadge();
   }
