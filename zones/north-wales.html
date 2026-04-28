@@ -2,35 +2,108 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>North Wales</title>
+  <title>Zone — J-Ratings</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <style>
-    #compare-chart { touch-action: pan-y; }
 
-    .tabs {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin: 6px 0 12px;
+  <style>
+    #compare-chart{
+      height:420px;
+      touch-action:pan-y;
     }
 
-.tabs button {
-  padding: 7px 12px;
-  border: 1px solid var(--border, #ccc);
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  font-size: 1.15rem;
-}
+    .tabs{
+      display:flex;
+      justify-content:center;
+      gap:6px;
+      margin:6px 0 12px;
+    }
 
-    .tabs button.active {
-      font-weight: 600;
-      background: rgba(255,255,255,0.06);
+    .tabs button{
+      padding:7px 12px;
+      border:1px solid var(--border, #ccc);
+      background:transparent;
+      color:inherit;
+      cursor:pointer;
+      font-size:1.15rem;
+    }
+
+    .tabs button.active{
+      font-weight:600;
+      background:rgba(255,255,255,0.06);
+    }
+
+    .compare-controls{
+      display:flex;
+      align-items:center;
+      gap:1rem;
+      flex-wrap:wrap;
+      margin-bottom:.5rem;
+    }
+
+    .range-buttons{
+      display:flex;
+      gap:.5rem;
+      flex-wrap:wrap;
+      align-items:center;
+      margin:.5rem 0 .25rem 0;
+    }
+
+    .range-buttons .seg{
+      background:#0f1623;
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:6px 10px;
+      border-radius:6px;
+      cursor:pointer;
+      font-size:.9rem;
+    }
+
+    .range-buttons .seg:hover{
+      background:rgba(255,255,255,.05);
+    }
+
+    .range-buttons .seg.active{
+      background:rgba(255,255,255,.08);
+      border-color:rgba(255,255,255,.9);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.55);
+    }
+
+    .compare-modal{
+      display:none;
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,0.6);
+      justify-content:center;
+      align-items:center;
+      z-index:9999;
+    }
+
+    .compare-modal-box{
+      background:#1a1a1a;
+      padding:20px;
+      border-radius:8px;
+      max-width:500px;
+      width:90%;
+      max-height:80%;
+      overflow:auto;
+      color:#fff;
+    }
+
+    .compare-actions{
+      margin:12px 0;
+    }
+
+    .compare-show{
+      margin-right:10px;
     }
   </style>
 </head>
+
 <body>
 <header>
   <div class="wrap">
@@ -43,7 +116,7 @@
       <a href="dyfed.html">Dyfed</a>
       <a href="east-glam.html">East Glamorgan</a>
       <a href="gwent.html">Gwent</a>
-      <a href="north-wales.html" class="active-zone">North Wales</a>
+      <a href="north-wales.html">North Wales</a>
       <a href="west-wales.html">West Wales</a>
       <a href="../compare.html">Compare</a>
     </nav>
@@ -54,7 +127,7 @@
 
 <main class="wrap">
   <section class="panel" id="players-panel">
-    <h2 id="zone-title">North Wales</h2>
+    <h2 id="zone-title">Zone</h2>
 
     <div class="tabs" aria-label="Rating view">
       <button id="view-live" class="active" type="button">Live</button>
@@ -68,16 +141,30 @@
     </div>
 
     <div id="compare-wrap" style="display:none; padding:16px">
-      <div id="agg-wrap" style="margin-bottom:10px; display:none">
-        <label for="agg">View: </label>
-        <select id="agg">
-          <option value="daily" selected>Daily</option>
-          <option value="weekly">Weekly</option>
-          <option value="monthly">Monthly</option>
-          <option value="yearly">Yearly</option>
-        </select>
+      <div id="agg-wrap" style="display:none">
+        <div class="compare-controls">
+          <div>
+            <label for="agg">View:</label>
+            <select id="agg">
+              <option value="daily">Daily</option>
+              <option value="weekly" selected>Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="quarterly">Quarterly</option>
+              <option value="yearly">Yearly</option>
+            </select>
+          </div>
+
+          <div class="range-buttons">
+            <button class="seg" data-range="ALL">ALL</button>
+            <button class="seg" data-range="2015">2015–Present</button>
+            <button class="seg" data-range="2022">2022–Present</button>
+            <button class="seg" data-range="LY">Last Year</button>
+            <button class="seg" data-range="YTD">YTD</button>
+          </div>
+        </div>
       </div>
-      <div id="compare-chart" style="height:450px"></div>
+
+      <div id="compare-chart"></div>
     </div>
 
     <div class="table-wrap">
@@ -94,66 +181,135 @@
     </div>
   </section>
 
-  <div id="compare-modal" style="
-    display:none;
-    position:fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background:rgba(0,0,0,0.6);
-    justify-content:center;
-    align-items:center;
-    z-index:9999;
-  ">
-    <div style="
-      background:#1a1a1a;
-      padding:20px;
-      border-radius:8px;
-      max-width:500px;
-      width:90%;
-      max-height:80%;
-      overflow:auto;
-      color:#fff;
-    ">
+  <div id="compare-modal" class="compare-modal">
+    <div class="compare-modal-box">
       <h3>Select players to view:</h3>
 
-      <div class="compare-actions" style="margin-bottom:12px;">
-        <button class="compare-show" style="margin-right:10px">Show Selected</button>
-        <button class="compare-cancel">Cancel</button>
+      <div class="compare-actions">
+        <button class="compare-show" type="button">Show Selected</button>
+        <button class="compare-cancel" type="button">Cancel</button>
       </div>
 
       <div id="compare-list" style="margin:20px 0;"></div>
 
-      <div class="compare-actions" style="margin-top:12px;">
-        <button class="compare-show" style="margin-right:10px">Show Selected</button>
-        <button class="compare-cancel">Cancel</button>
+      <div class="compare-actions">
+        <button class="compare-show" type="button">Show Selected</button>
+        <button class="compare-cancel" type="button">Cancel</button>
       </div>
     </div>
   </div>
 </main>
 
 <script>
-const ZONE_CODE = 'N1';
-const ZONE_NAME = 'North Wales';
-const DATA_URL = '../data/players.json';
-const COMPARE_SINCE = null;
-const MAX_SERIES = 50;
+/* ---------- zone config ---------- */
+const ZONES = {
+  'dyfed.html': {
+    code: 'D1',
+    name: 'Dyfed',
+    clubs: {
+      "4CG": "Cardigan",
+      "4CM": "Carmarthen",
+      "4AB": "Aberystwyth",
+      "4PB": "Pembs",
+      "4AU": "Aberystwyth University"
+    }
+  },
 
-const clubNames = {
-  "1BA": "Bangor",
-  "1BM": "Buckley/Mold",
-  "1CF": "Caernarfon",
-  "1CB": "Colwyn Bay",
-  "1RP": "Rhyl & Prestatyn",
-  "1WX": "Wrecsam",
-  "1SA": "Rydal Penrhos School"
+  'east-glam.html': {
+    code: 'E1',
+    name: 'East Glamorgan',
+    clubs: {
+      "2BR": "Bridgend",
+      "2BY": "Barry",
+      "2CD": "Cardiff",
+      "2CP": "Caerphilly",
+      "2CU": "Cardiff University",
+      "2EG": "East Glam Zone",
+      "2NC": "North Cardiff",
+      "2NE": "Nelson",
+      "2PN": "Penarth",
+      "2PP": "Pontypridd",
+      "2PR": "Pentyrch",
+      "2RH": "Rhondda",
+      "2SJ": "St John's College"
+    }
+  },
+
+  'gwent.html': {
+    code: 'G1',
+    name: 'Gwent',
+    clubs: {
+      "3AG": "Abergavenny",
+      "3NP": "Newport",
+      "3PL": "Pontypool",
+      "3MA": "Malpas",
+      "3CB": "Cwmbran",
+      "3AP": "All Players",
+      "3IM": "Improvement"
+    }
+  },
+
+  'north-wales.html': {
+    code: 'N1',
+    name: 'North Wales',
+    clubs: {
+      "1BA": "Bangor",
+      "1BM": "Buckley/Mold",
+      "1CF": "Caernarfon",
+      "1CB": "Colwyn Bay",
+      "1RP": "Rhyl & Prestatyn",
+      "1WX": "Wrecsam",
+      "1SA": "Rydal Penrhos School"
+    }
+  },
+
+  'west-wales.html': {
+    code: 'W1',
+    name: 'West Wales',
+    clubs: {
+      "5CN": "Castell Nedd",
+      "5DB": "De La Beche",
+      "5MO": "Morriston",
+      "5NY": "Noah's Yard",
+      "5UK": "Upper Killay",
+      "5WK": "White Knights",
+      "5SU": "Swansea University"
+    }
+  }
 };
 
+const PAGE = location.pathname.split('/').pop();
+const CONFIG = ZONES[PAGE] || ZONES['dyfed.html'];
+
+const ZONE_CODE = CONFIG.code;
+const ZONE_NAME = CONFIG.name;
+const clubNames = CONFIG.clubs;
+
+const DATA_URL = '../data/players.json';
+const HIST_URL = id => `../data/history/${encodeURIComponent(id)}.json`;
+const MAX_SERIES = 50;
+const COMPARE_SINCE = null;
+
+/* ---------- state ---------- */
 const state = {
   rows: [],
   filtered: [],
   selectedClub: null,
-  view: 'live'
+  view: 'live',
+  selectedCompareIds: [],
+  compareSeries: [],
+  dataMin: null,
+  dataMax: null
 };
+
+const histCache = new Map();
+
+let rememberedXRange = null;
+let activeRangeKey = '2022';
+let initialRangeApplied = false;
+
+/* ---------- helpers ---------- */
+const iso = d => new Date(d).toISOString().slice(0, 10);
 
 function getValueKey() {
   return state.view === 'peak' ? 'peak' : 'rating';
@@ -163,36 +319,229 @@ function getValueLabel() {
   return state.view === 'peak' ? 'Peak' : 'Rating';
 }
 
-function aggregateExpanded(hist, mode) {
-  if (mode === 'daily') return hist;
+function normalise(series){
+  return series
+    .filter(p => p && p.x && Number.isFinite(+p.y))
+    .map(p => ({ x: p.x, y: +p.y }))
+    .sort((a, b) => new Date(a.x) - new Date(b.x));
+}
 
-  const buckets = new Map();
+function labelStepForRange(y0, y1) {
+  const span = Math.abs(y1 - y0);
+  if (span < 100) return 25;
+  if (span < 300) return 50;
+  return 100;
+}
 
-  for (const d of hist) {
-    const dt = new Date(d.date);
+function setTickLabelsEvery(yMin, yMax, step) {
+  const lo = Math.floor(yMin / step) * step;
+  const hi = Math.ceil(yMax / step) * step;
+
+  const vals = [];
+  const text = [];
+
+  for (let y = lo; y <= hi; y += step) {
+    vals.push(y);
+    text.push(String(y));
+  }
+
+  Plotly.relayout('compare-chart', {
+    'yaxis.tickmode': 'array',
+    'yaxis.tickvals': vals,
+    'yaxis.ticktext': text
+  });
+}
+
+function aggregateExpanded(series, mode){
+  if (mode === 'daily') return normalise(series);
+
+  const buckets = Object.create(null);
+
+  for (const p of series) {
+    const d = new Date(p.x);
     let key;
 
     if (mode === 'weekly') {
-      const tmp = new Date(Date.UTC(dt.getUTCFullYear(), dt.getUTCMonth(), dt.getUTCDate()));
-      const day = tmp.getUTCDay();
-      const diff = (day === 0 ? -6 : 1) - day;
-      tmp.setUTCDate(tmp.getUTCDate() + diff);
-      key = tmp.toISOString().slice(0, 10);
+      const tmp = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      const dayNum = tmp.getUTCDay() || 7;
+
+      tmp.setUTCDate(tmp.getUTCDate() + 4 - dayNum);
+
+      const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(), 0, 1));
+      const weekNo = Math.ceil((((tmp - yearStart) / 86400000) + 1) / 7);
+
+      key = `${tmp.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
     } else if (mode === 'monthly') {
-      key = dt.getUTCFullYear() + '-' + String(dt.getUTCMonth() + 1).padStart(2, '0');
-    } else if (mode === 'yearly') {
-      key = String(dt.getUTCFullYear());
+      key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    } else if (mode === 'quarterly') {
+      const q = Math.floor(d.getMonth() / 3) + 1;
+      key = `${d.getFullYear()}-Q${q}`;
+    } else {
+      key = `${d.getFullYear()}`;
     }
 
-    buckets.set(key, d);
+    (buckets[key] ||= []).push(+p.y);
   }
 
-  return [...buckets.entries()].map(([k, v]) => ({
-    date: k.length === 4 ? k + '-01-01' : (k.length === 7 ? k + '-01' : k),
-    rating: v.rating
-  }));
+  const out = Object.keys(buckets).sort().map(k => {
+    const ys = buckets[k].filter(Number.isFinite);
+    const avg = ys.reduce((a, b) => a + b, 0) / ys.length;
+
+    let x;
+
+    if (k.includes('W')) {
+      const [y, w] = k.split('-W');
+      const year = +y;
+      const week = +w;
+      const simple = new Date(Date.UTC(year, 0, 1 + (week - 1) * 7));
+      const dow = simple.getUTCDay();
+
+      if (dow <= 4) simple.setUTCDate(simple.getUTCDate() - dow + 1);
+      else simple.setUTCDate(simple.getUTCDate() + 8 - dow);
+
+      x = iso(simple);
+    } else if (k.includes('Q')) {
+      const [y, q] = k.split('-Q');
+      x = iso(new Date(Date.UTC(+y, (+q - 1) * 3, 1)));
+    } else if (k.length === 7) {
+      const [y, m] = k.split('-');
+      x = iso(new Date(Date.UTC(+y, (+m) - 1, 1)));
+    } else {
+      x = iso(new Date(Date.UTC(+k, 0, 1)));
+    }
+
+    return { x, y: avg };
+  });
+
+  return normalise(out);
 }
 
+function extentFrom(seriesList){
+  const xs = [];
+
+  for (const s of seriesList) {
+    if (!s) continue;
+
+    for (const p of s) {
+      if (p?.x) xs.push(new Date(p.x));
+    }
+  }
+
+  if (!xs.length) return { min: null, max: null };
+
+  return {
+    min: new Date(Math.min(...xs)),
+    max: new Date(Math.max(...xs))
+  };
+}
+
+function makeTrace(series, name){
+  return {
+    x: series.map(p => p.x),
+    y: series.map(p => p.y),
+    mode: 'lines',
+    line: {
+      width: 3,
+      shape: 'linear'
+    },
+    name,
+    hovertemplate: '%{y:.0f}<extra>' + name + '</extra>',
+    connectgaps: true
+  };
+}
+
+function makeYGridShapes(yMin, yMax, step) {
+  if (!Number.isFinite(yMin) || !Number.isFinite(yMax) || !step) return [];
+
+  const lo = Math.floor((yMin - 1) / step) * step;
+  const hi = Math.ceil((yMax + 1) / step) * step;
+  const shapes = [];
+
+  for (let y = lo; y <= hi; y += step) {
+    let width, color;
+
+    if (step === 100) {
+      width = 2.2;
+      color = 'rgba(255,255,255,0.28)';
+    } else if (step === 50) {
+      width = 1.4;
+      color = 'rgba(255,255,255,0.16)';
+    } else {
+      width = 1.0;
+      color = 'rgba(255,255,255,0.08)';
+    }
+
+    shapes.push({
+      type: 'line',
+      xref: 'paper',
+      x0: 0,
+      x1: 1,
+      yref: 'y',
+      y0: y,
+      y1: y,
+      line: { width, color }
+    });
+  }
+
+  return shapes;
+}
+
+function makePaddedEnd(start, endData){
+  const oneDay = 86400000;
+  const spanMs = Math.max(oneDay, +endData - +start);
+  const padMs = Math.max(3 * oneDay, Math.min(14 * oneDay, spanMs * 0.02));
+
+  return new Date(+endData + padMs);
+}
+
+function clampRangeStartOnly(range){
+  if (!range || !state.dataMin) return range;
+
+  const [x0, x1] = range.map(x => new Date(x));
+  const lo = new Date(Math.max(+x0, +state.dataMin));
+
+  return [iso(lo), iso(x1)];
+}
+
+function updateActiveRangeButton(){
+  document.querySelectorAll('.range-buttons .seg').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.range === activeRangeKey);
+  });
+}
+
+function adjustYToVisible(x0, x1) {
+  const lo = new Date(x0);
+  const hi = new Date(x1);
+  const values = [];
+
+  for (const item of state.compareSeries) {
+    for (const p of item.series) {
+      const d = new Date(p.x);
+
+      if (d >= lo && d <= hi && Number.isFinite(p.y)) {
+        values.push(p.y);
+      }
+    }
+  }
+
+  if (!values.length) return;
+
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const pad = (max - min) * 0.12 || 10;
+  const y0 = min - pad;
+  const y1 = max + pad;
+  const step = labelStepForRange(y0, y1);
+
+  Plotly.relayout('compare-chart', {
+    'yaxis.range': [y0, y1],
+    'shapes': makeYGridShapes(y0, y1, step)
+  }).then(() => {
+    setTickLabelsEvery(y0, y1, step);
+  });
+}
+
+/* ---------- table ---------- */
 function renderTable() {
   const tbody = document.querySelector('#players tbody');
   tbody.innerHTML = '';
@@ -249,29 +598,50 @@ function applyFilter() {
   hideCompare();
 }
 
-const histCache = new Map();
-
+/* ---------- history ---------- */
 async function fetchHistoryFor(id) {
   if (histCache.has(id)) return histCache.get(id);
 
   async function tryUrl(url) {
     const res = await fetch(url, { cache: 'no-cache' });
     if (!res.ok) return null;
+
     const rows = await res.json();
     return Array.isArray(rows) && rows.length ? rows : null;
   }
 
-  let hist = await tryUrl(`../data/history/${id}.json`);
-  if (!hist) hist = await tryUrl(`../data/history/${encodeURIComponent(id)}.json`);
+  let hist = await tryUrl(HIST_URL(id));
 
-  histCache.set(id, hist ?? null);
-  return hist ?? null;
+  if (!hist) {
+    hist = await tryUrl(`../data/history/${id}.json`);
+  }
+
+  const out = hist
+    ? hist
+        .map(d => ({ x: d.date, y: +d.rating }))
+        .filter(p => p.x && Number.isFinite(p.y))
+    : null;
+
+  histCache.set(id, out);
+  return out;
 }
 
+/* ---------- compare chart ---------- */
 function hideCompare() {
   document.getElementById('compare-wrap').style.display = 'none';
   document.getElementById('compare-chart').innerHTML = '';
   document.getElementById('agg-wrap').style.display = 'none';
+
+  state.selectedCompareIds = [];
+  state.compareSeries = [];
+  state.dataMin = null;
+  state.dataMax = null;
+
+  rememberedXRange = null;
+  activeRangeKey = '2022';
+  initialRangeApplied = false;
+
+  updateActiveRangeButton();
 }
 
 async function buildComparison(players) {
@@ -283,13 +653,29 @@ async function buildComparison(players) {
   document.getElementById('agg-wrap').style.display = 'block';
   chart.innerHTML = 'Loading…';
 
+  const gd = document.getElementById('compare-chart');
+  const liveLayout = gd && gd._fullLayout ? gd._fullLayout.xaxis : null;
+
+  if (liveLayout && liveLayout.range) {
+    rememberedXRange = [liveLayout.range[0], liveLayout.range[1]];
+  }
+
   const withHist = [];
 
   await Promise.all(players.map(async p => {
     const hist = await fetchHistoryFor(p.id);
     if (!hist) return;
-    const use = COMPARE_SINCE ? hist.filter(d => d.date >= COMPARE_SINCE) : hist;
-    if (use.length) withHist.push({ p, hist: aggregateExpanded(use, aggMode) });
+
+    const use = COMPARE_SINCE
+      ? hist.filter(d => d.x >= COMPARE_SINCE)
+      : hist;
+
+    if (use.length) {
+      withHist.push({
+        p,
+        series: aggregateExpanded(use, aggMode)
+      });
+    }
   }));
 
   if (!withHist.length) {
@@ -300,36 +686,138 @@ async function buildComparison(players) {
   }
 
   withHist.sort((a, b) =>
-    b.hist[b.hist.length - 1].date.localeCompare(a.hist[a.hist.length - 1].date)
+    b.series[b.series.length - 1].x.localeCompare(a.series[a.series.length - 1].x)
   );
 
-  const picked = withHist.slice(0, MAX_SERIES);
-  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+  state.compareSeries = withHist.slice(0, MAX_SERIES);
 
-  const traces = picked.map(({ p, hist }) => ({
-    name: p.name,
-    x: hist.map(d => d.date),
-    y: hist.map(d => d.rating),
-    mode: (aggMode === 'daily' ? 'lines' : 'lines+markers'),
-    marker: (aggMode === 'daily' ? { size: 0 } : { size: 4 }),
-    line: { width: 2 },
-    hovertemplate: '%{y:.0f}<extra>' + p.name + '</extra>',
-  }));
+  const ext = extentFrom(state.compareSeries.map(x => x.series));
+  state.dataMin = ext.min;
+  state.dataMax = ext.max;
 
-  const cs = getComputedStyle(document.body);
+  const traces = state.compareSeries.map(({ p, series }) =>
+    makeTrace(series, p.name)
+  );
+
+  const allY = [];
+
+  for (const item of state.compareSeries) {
+    for (const p of item.series) {
+      if (Number.isFinite(p.y)) allY.push(p.y);
+    }
+  }
+
+  const yMin0 = allY.length ? Math.min(...allY) : 0;
+  const yMax0 = allY.length ? Math.max(...allY) : 1;
+  const bg = getComputedStyle(document.body).backgroundColor;
+
   const layout = {
-    margin: { l: 50, r: (isTouch ? 110 : 20), t: 10, b: 40 },
-    xaxis: { type: 'date' },
-    yaxis: { title: 'Rating' },
-    legend: { orientation: 'h' },
-    paper_bgcolor: cs.backgroundColor,
-    plot_bgcolor: cs.backgroundColor,
-    font: { color: cs.color }
+    margin: { l: 50, r: 28, t: 10, b: 40 },
+
+    xaxis: {
+      type: 'date',
+      fixedrange: true,
+      showgrid: false,
+      rangeslider: { visible: false }
+    },
+
+    yaxis: {
+      title: '',
+      fixedrange: true,
+      showgrid: false,
+      zeroline: false,
+      tick0: 0,
+      dtick: 25,
+      ticks: 'outside',
+      ticklen: 4,
+      tickmode: 'array',
+      tickvals: [],
+      ticktext: []
+    },
+
+    paper_bgcolor: bg,
+    plot_bgcolor: bg,
+    font: { color: getComputedStyle(document.body).color },
+    legend: { orientation: 'h', x: 0, y: 1.1 },
+    shapes: makeYGridShapes(yMin0, yMax0, 100)
   };
 
-  Plotly.newPlot(chart, traces, layout, { displayModeBar: false, responsive: true });
+  if (!initialRangeApplied && state.dataMin && state.dataMax) {
+    const rawStart = new Date('2022-01-01');
+    const start = new Date(Math.max(+rawStart, +state.dataMin));
+    const end = makePaddedEnd(start, state.dataMax);
+
+    rememberedXRange = [iso(start), iso(end)];
+    activeRangeKey = '2022';
+    initialRangeApplied = true;
+  }
+
+  await Plotly.react(chart, traces, layout, {
+    staticPlot: false,
+    scrollZoom: false,
+    displayModeBar: false,
+    responsive: true
+  });
+
+  if (rememberedXRange) {
+    const [x0, x1] = clampRangeStartOnly(rememberedXRange);
+    rememberedXRange = [x0, x1];
+
+    await Plotly.relayout(chart, { 'xaxis.range': [x0, x1] });
+    adjustYToVisible(x0, x1);
+  }
+
+  updateActiveRangeButton();
+
+  if (!chart._jrHandlersAttached) {
+    chart.on('plotly_relayout', ev => {
+      const x0 = ev['xaxis.range[0]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][0]);
+      const x1 = ev['xaxis.range[1]'] ?? (ev['xaxis.range'] && ev['xaxis.range'][1]);
+
+      if (x0 && x1) {
+        rememberedXRange = [x0, x1];
+        adjustYToVisible(x0, x1);
+      }
+    });
+
+    chart._jrHandlersAttached = true;
+  }
 }
 
+function setPreset(key){
+  if (!state.dataMin || !state.dataMax) return;
+
+  let start;
+
+  if (key === 'ALL') {
+    start = new Date(state.dataMin);
+  } else if (key === '2015') {
+    start = new Date('2015-01-01');
+  } else if (key === '2022') {
+    start = new Date('2022-01-01');
+  } else if (key === 'LY') {
+    start = new Date(state.dataMax);
+    start.setFullYear(start.getFullYear() - 1);
+  } else if (key === 'YTD') {
+    start = new Date(state.dataMax.getFullYear() + '-01-01');
+  } else {
+    start = new Date(state.dataMin);
+  }
+
+  start = new Date(Math.max(+start, +state.dataMin));
+  const end = makePaddedEnd(start, state.dataMax);
+  const range = [iso(start), iso(end)];
+
+  rememberedXRange = range;
+  activeRangeKey = key;
+
+  updateActiveRangeButton();
+
+  Plotly.relayout('compare-chart', { 'xaxis.range': range })
+    .then(() => adjustYToVisible(range[0], range[1]));
+}
+
+/* ---------- modal ---------- */
 function setupCompareButton() {
   const modal = document.getElementById('compare-modal');
   const listDiv = document.getElementById('compare-list');
@@ -345,13 +833,14 @@ function setupCompareButton() {
     state.filtered.forEach(p => {
       const id = `chk-${p.id}`;
       const wrapper = document.createElement('div');
+
       wrapper.style.marginBottom = '6px';
       wrapper.innerHTML = `
         <label style="cursor:pointer">
           <input type="checkbox" id="${id}" value="${p.id}" style="margin-right:6px">
           ${p.name} (${label}: ${Math.round(p[valueKey])})
-        </label>
-      `;
+        </label>`;
+
       listDiv.appendChild(wrapper);
     });
 
@@ -359,12 +848,14 @@ function setupCompareButton() {
   });
 
   cancelBtns.forEach(btn =>
-    btn.addEventListener('click', () => { modal.style.display = 'none'; })
+    btn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    })
   );
 
   showBtns.forEach(btn =>
     btn.addEventListener('click', async () => {
-      const selectedIds = Array.from(listDiv.querySelectorAll('input[type=checkbox]:checked'))
+      const selectedIds = [...listDiv.querySelectorAll('input[type=checkbox]:checked')]
         .map(cb => cb.value);
 
       if (!selectedIds.length) {
@@ -372,24 +863,45 @@ function setupCompareButton() {
         return;
       }
 
+      state.selectedCompareIds = selectedIds;
+
       modal.style.display = 'none';
-      const chosenPlayers = state.filtered.filter(p => selectedIds.includes(p.id));
+
+      const chosenPlayers = state.filtered.filter(p =>
+        selectedIds.includes(p.id)
+      );
+
       await buildComparison(chosenPlayers);
     })
   );
 
   document.getElementById('agg').addEventListener('change', () => {
-    const selectedIds = Array.from(document.querySelectorAll('#compare-list input[type=checkbox]:checked'))
-      .map(cb => cb.value);
+    if (!state.selectedCompareIds.length) return;
 
-    if (!selectedIds.length) return;
+    const chosenPlayers = state.filtered.filter(p =>
+      state.selectedCompareIds.includes(p.id)
+    );
 
-    const chosenPlayers = state.filtered.filter(p => selectedIds.includes(p.id));
-    buildComparison(chosenPlayers);
+    if (chosenPlayers.length) {
+      buildComparison(chosenPlayers);
+    }
+  });
+
+  document.querySelectorAll('.range-buttons .seg').forEach(btn => {
+    btn.addEventListener('click', () => setPreset(btn.dataset.range));
   });
 }
 
+/* ---------- load ---------- */
 async function load() {
+  document.title = `${ZONE_NAME} — J-Ratings`;
+  document.getElementById('zone-title').textContent = ZONE_NAME;
+
+  document.querySelectorAll('.zones a').forEach(a => {
+    const href = a.getAttribute('href');
+    a.classList.toggle('active-zone', href === PAGE);
+  });
+
   const res = await fetch(DATA_URL, { cache: 'no-cache' });
   if (!res.ok) throw new Error('Failed to load players.json');
 
@@ -411,46 +923,63 @@ async function load() {
     }));
 
   const clubsNav = document.querySelector('.clubs-nav');
+
   const clubs = [...new Set(
-    state.rows.map(r => r.club).filter(c => /^\d/.test(c) && clubNames[c])
+    state.rows
+      .map(r => r.club)
+      .filter(c => /^\d/.test(c) && clubNames[c])
   )].sort();
 
   clubsNav.innerHTML =
     `<button class="club-btn active-club" data-code="">All</button>` +
-    clubs.map(c => `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`).join(' ');
+    clubs.map(c =>
+      `<button class="club-btn" data-code="${c}">${clubNames[c]}</button>`
+    ).join(' ');
 
   document.getElementById('compare-btn').style.display = 'none';
 
   clubsNav.addEventListener('click', e => {
     if (!e.target.classList.contains('club-btn')) return;
 
-    document.querySelectorAll('.clubs-nav .club-btn').forEach(b => b.classList.remove('active-club'));
+    document.querySelectorAll('.clubs-nav .club-btn').forEach(b =>
+      b.classList.remove('active-club')
+    );
+
     e.target.classList.add('active-club');
 
     const code = e.target.dataset.code;
     state.selectedClub = code || null;
 
-    document.getElementById('zone-title').textContent = code ? clubNames[code] : ZONE_NAME;
-    document.getElementById('compare-btn').style.display = code ? 'inline-block' : 'none';
+    document.getElementById('zone-title').textContent =
+      code ? clubNames[code] : ZONE_NAME;
+
+    document.getElementById('compare-btn').style.display =
+      code ? 'inline-block' : 'none';
 
     applyFilter();
   });
 
+  updateActiveRangeButton();
   applyFilter();
   setupCompareButton();
 }
 
+/* ---------- events ---------- */
 document.getElementById('view-live').addEventListener('click', () => {
   state.view = 'live';
+
   document.getElementById('view-live').classList.add('active');
   document.getElementById('view-peak').classList.remove('active');
+
   applyFilter();
 });
 
 document.getElementById('view-peak').addEventListener('click', () => {
   state.view = 'peak';
+
   document.getElementById('view-peak').classList.add('active');
   document.getElementById('view-live').classList.remove('active');
+
   applyFilter();
 });
 
