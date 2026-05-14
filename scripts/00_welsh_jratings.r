@@ -26,11 +26,11 @@ RUN_DATE <- Sys.Date()                         # Guard: do not include dates aft
 # Recalculate from one month before the run date.
 CALC_FROM_DATE <- RUN_DATE %m-% months(1)
 
-# Normal weekly scrape: look back 14 days.
-NORMAL_SCRAPE_DAYS <- 14
+# Normal weekly scrape: look back 7 days.
+NORMAL_SCRAPE_DAYS <- 7
 
 # Deep scrape: every 8 ISO weeks, look back 1 month.
-DEEP_REFRESH_EVERY_WEEKS <- 8
+DEEP_REFRESH_EVERY_WEEKS <- 4
 DEEP_REFRESH_MONTHS <- 1
 
 is_deep_refresh_week <- function(d = Sys.Date()) {
