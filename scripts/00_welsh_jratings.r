@@ -10,8 +10,9 @@ library(tidyr)
 library(jsonlite)
 library(purrr)
 library(tibble)
+library(tictoc)
 options(stringsAsFactors = FALSE)
-
+tic()
 # simple helper for null-coalesce used below (to avoid relying on rlang)
 `%||%` <- function(x, y) if (is.null(x)) y else x
 
@@ -92,10 +93,16 @@ players_col_types <- cols(
 )
 
 
-cache_dir <- "C:/Users/stjuk/OneDrive/Desktop/Chess/J-Ratings-Wales/WCU Live Ratings"
+repo_dir <- normalizePath(
+  getwd(),
+  winslash = "/",
+  mustWork = TRUE
+)
+
+cache_dir <- file.path(repo_dir, "pipeline_data", "cache")
 dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
 
-site_root <- "C:/Users/stjuk/OneDrive/Documents/GitHub/J-Ratings-Wales"
+site_root <- repo_dir
 data_dir  <- file.path(site_root, "data")
 hist_dir  <- file.path(data_dir, "history")
 wcu_hist_dir <- hist_dir
@@ -1301,6 +1308,7 @@ if (nrow(players_json)) {
     
     if (nrow(new_rows)) {
       jsonlite::write_json(new_rows, out_path, auto_unbox = TRUE, na = "null")
+      games_written <- games_written + 1L
     }
   }
 } else {
@@ -1377,4 +1385,4 @@ cat("Output:\n  -", file.path(data_dir, "players.json"),
     "\n  -", file.path(data_dir, "games", "<id>.json"),
     "\n  -", file.path(cache_dir, "ratings_wide_daily.csv"),
     "\n  -", SNAPSHOT_FILE, "\n")
-
+toc()

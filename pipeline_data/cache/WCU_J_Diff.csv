@@ -3,6 +3,7 @@ n1 matthew thomas,Matthew Thomas,1663,1339,-324,324
 n1 harry wood,Harry Wood,1614,1377,-237,237
 w1 glyn hill,Glyn Hill,1786,1592,-194,194
 d1 henry burton,Henry Burton,1770,1584,-186,186
+n1 evie harries-jackson,Evie Harries-Jackson,1659,1480,-179,179
 n1 steve mccall,Steve McCall,1744,1567,-177,177
 e1 james powell,James Powell,1612,1440,-172,172
 e1 harri davies,Harri Davies,1529,1364,-165,165
@@ -77,7 +78,9 @@ e1 jonathan james,Jonathan James,2043,2085,42,42
 d1 robert narayan-taylor,Robert Narayan-Taylor,1581,1539,-42,42
 w1 tomos francis,Tomos Francis,1268,1310,42,42
 n1 gary slegg,Gary Slegg,1710,1751,41,41
+w1 jacob pratten,Jacob Pratten,1606,1647,41,41
 e1 anthony baker,Anthony Baker,1630,1589,-41,41
+w1 steve jeacock,Steve Jeacock,1529,1488,-41,41
 e1 patrick civil,Patrick Civil,1514,1473,-41,41
 e1 gareth yeo,Gareth Yeo,2029,2069,40,40
 e1 reginald mba,Reginald Mba,1954,1994,40,40
@@ -127,6 +130,7 @@ e1 csombor hanczar,Csombor Hanczar,1641,1609,-32,32
 g1 bob stanworth,Bob Stanworth,1561,1529,-32,32
 e1 jonathan edwards,Jonathan Edwards,1424,1456,32,32
 g1 dave hurst,Dave Hurst,1443,1411,-32,32
+e1 harri llwyd dafydd,Harri Llwyd Dafydd,1355,1323,-32,32
 e1 joseph browse,Joseph Browse,1881,1850,-31,31
 e1 krzysztof jakubiak,Krzysztof Jakubiak,1782,1813,31,31
 w1 huw jones,Huw Jones,1771,1802,31,31
@@ -163,6 +167,7 @@ g1 lucas james,Lucas James,1797,1770,-27,27
 e1 zack wilkins,Zack Wilkins,1688,1715,27,27
 w1 andrew golley,Andrew Golley,1687,1660,-27,27
 d1 ray greenwood,Ray Greenwood,1547,1520,-27,27
+e1 emir rhouni,Emir Rhouni,1435,1408,-27,27
 w1 byron minter,Byron Minter,1283,1310,27,27
 e1 gruffydd chwieseni,Gruffydd Chwieseni,1283,1310,27,27
 w1 kai palmer,Kai Palmer,1283,1310,27,27
@@ -204,6 +209,7 @@ w1 sam brown,Sam Brown,1796,1773,-23,23
 w1 joshua richards,Joshua Richards,1699,1722,23,23
 e1 s wyn howells,S Wyn Howells,1695,1672,-23,23
 e1 peter brain,Peter Brain,1687,1664,-23,23
+w1 joe purden,Joe Purden,1609,1632,23,23
 e1 csege hanczar,Csege Hanczar,1616,1593,-23,23
 e1 hefin jones,Hefin Jones,1542,1565,23,23
 e1 andrei zhuravlev,Andrei Zhuravlev,1532,1555,23,23
@@ -251,6 +257,7 @@ e1 andrew jeanes,Andrew Jeanes,1684,1664,-20,20
 e1 ben hannigan,Ben Hannigan,1590,1570,-20,20
 w1 wojtek liponski,Wojtek Liponski,1550,1570,20,20
 g1 charlie gibson,Charlie Gibson,1556,1536,-20,20
+w1 calvin phang,Calvin Phang,1508,1488,-20,20
 g1 gwilym davies-kabir,Gwilym Davies-Kabir,1460,1480,20,20
 g1 rowan ridge,Rowan Ridge,1395,1415,20,20
 d1 jack poole,Jack Poole,1324,1344,20,20
@@ -269,6 +276,7 @@ w1 louis bathein,Louis Bathein,1596,1577,-19,19
 e1 steve keable,Steve Keable,1438,1419,-19,19
 w1 nick hale,Nick Hale,1433,1414,-19,19
 d1 andrew burton,Andrew Burton,1291,1310,19,19
+w1 rishi reddy mittapally,Rishi Reddy Mittapally,1329,1310,-19,19
 n1 robert g clark,Robert G Clark,1991,2009,18,18
 g1 richard batey,Richard Batey,1905,1923,18,18
 n1 ray j holland,Ray J Holland,1871,1889,18,18
@@ -365,6 +373,7 @@ d1 ieuan din,Ieuan Din,1343,1356,13,13
 e1 bethan mattingley,Bethan Mattingley,1367,1354,-13,13
 e1 dean evans,Dean Evans,1297,1310,13,13
 e1 rohan powell,Rohan Powell,1295,1308,13,13
+g1 james lavender,James Lavender,2144,2132,-12,12
 g1 hugo fowler,Hugo Fowler,2126,2114,-12,12
 e1 bence szakmany,Bence Szakmany,2055,2043,-12,12
 e1 paul hatchett,Paul Hatchett,2031,2043,12,12
@@ -432,6 +441,7 @@ g1 mark emblem,Mark Emblem,1519,1509,-10,10
 n1 emil walther,Emil Walther,1515,1505,-10,10
 w1 jeff boyce,Jeff Boyce,1489,1479,-10,10
 g1 gareth holyfield,Gareth Holyfield,1483,1473,-10,10
+g1 gwilym kabhir-davies,Gwilym Kabhir-Davies,1459,1449,-10,10
 e1 chris kavanagh,Chris Kavanagh,1453,1443,-10,10
 e1 rhys davies,Rhys Davies,1442,1432,-10,10
 g1 mikhail saparovich,Mikhail Saparovich,1403,1393,-10,10
@@ -494,11 +504,14 @@ w1 hywel griffiths,Hywel Griffiths,1850,1843,-7,7
 w1 blake stone,Blake Stone,1816,1809,-7,7
 w1 ian eustis,Ian Eustis,1799,1792,-7,7
 n1 david fernandez-arias,David Fernandez-Arias,1764,1757,-7,7
+g1 adam jenkins,Adam Jenkins,1713,1720,7,7
 e1 jeremy ryan,Jeremy Ryan,1719,1712,-7,7
 w1 neil stuart,Neil Stuart,1645,1652,7,7
+w1 andrew davies,Andrew Davies,1644,1637,-7,7
 e1 james evans (cf),James Evans (Cf),1591,1584,-7,7
 e1 sam white,Sam White,1555,1548,-7,7
 w1 mike richards,Mike Richards,1509,1502,-7,7
+g1 troy hanniford,Troy Hanniford,1501,1494,-7,7
 e1 julian irving,Julian Irving,1482,1475,-7,7
 w1 wiliam francis,Wiliam Francis,1464,1471,7,7
 w1 greg goold,Greg Goold,1437,1444,7,7
@@ -592,7 +605,9 @@ d1 ewan ferguson,Ewan Ferguson,1848,1851,3,3
 g1 neil carter,Neil Carter,1840,1843,3,3
 e1 yusuf sulemani,Yusuf Sulemani,1801,1804,3,3
 g1 steve horrell,Steve Horrell,1779,1782,3,3
+e1 michael hurley,Michael Hurley,1777,1774,-3,3
 w1 evan whitehouse,Evan Whitehouse,1740,1743,3,3
+n1 joshua mullineux,Joshua Mullineux,1720,1723,3,3
 n1 barrie wells,Barrie Wells,1721,1718,-3,3
 e1 ken hannah,Ken Hannah,1713,1716,3,3
 g1 liam powell-jones,Liam Powell-Jones,1711,1714,3,3
@@ -606,6 +621,7 @@ e1 rohit saseendran,Rohit Saseendran,1599,1602,3,3
 g1 bjorn oliver,Bjorn Oliver,1582,1585,3,3
 g1 dakota samson,Dakota Samson,1533,1536,3,3
 e1 ieuan thomas,Ieuan Thomas,1500,1497,-3,3
+w1 ben hambridge,Ben Hambridge,1498,1495,-3,3
 w1 roger llewellyn,Roger Llewellyn,1452,1455,3,3
 w1 claire gorman,Claire Gorman,1442,1439,-3,3
 e1 james williams,James Williams,1428,1425,-3,3
@@ -631,6 +647,7 @@ e1 dan edwards,Dan Edwards,1771,1769,-2,2
 e1 danylo shevchenko,Danylo Shevchenko,1748,1750,2,2
 e1 matthew lunnon,Matthew Lunnon,1750,1748,-2,2
 e1 leon jansen van rensburg,Leon Jansen van Rensburg,1721,1723,2,2
+w1 yash dave,Yash Dave,1707,1705,-2,2
 g1 phil smith,Phil Smith,1652,1654,2,2
 e1 gareth richards,Gareth Richards,1643,1645,2,2
 e1 dominic murray,Dominic Murray,1591,1589,-2,2
@@ -674,6 +691,7 @@ e1 greg lloyd,Greg Lloyd,1634,1633,-1,1
 w1 carl halpin,Carl Halpin,1626,1627,1,1
 e1 martin ilett,Martin Ilett,1548,1549,1,1
 g1 mike diamond,Mike Diamond,1508,1507,-1,1
+e1 gergely hanczar,Gergely Hanczar,1464,1465,1,1
 e1 kenul herath,Kenul Herath,1463,1464,1,1
 g1 elijah daniel,Elijah Daniel,1413,1412,-1,1
 e1 toby sargents,Toby Sargents,1379,1380,1,1
@@ -716,6 +734,7 @@ e1 wale oladejo,Wale Oladejo,NA,1679,NA,NA
 e1 xavier austin,Xavier Austin,NA,1678,NA,NA
 d1 michael  edwards,Michael Edwards,NA,1670,NA,NA
 n1 paul maddock,Paul Maddock,NA,1650,NA,NA
+g1 john williams,John Williams,NA,1636,NA,NA
 d1 declan connellan,Declan Connellan,NA,1600,NA,NA
 d1 john price,John Price,NA,1600,NA,NA
 g1 matthew davies (aber),Matthew Davies (Aber),NA,1586,NA,NA
@@ -725,6 +744,7 @@ w1 sam goss,Sam Goss,NA,1500,NA,NA
 d1 sam rawlinson,Sam Rawlinson,NA,1500,NA,NA
 d1 wayne edwards,Wayne Edwards,NA,1500,NA,NA
 e1 morgan mcguigan,Morgan McGuigan,NA,1494,NA,NA
+w1 martin bevan,Martin Bevan,NA,1493,NA,NA
 w1 william selby,William Selby,NA,1457,NA,NA
 d1 howard warner,Howard Warner,NA,1450,NA,NA
 d1 richard baker,Richard Baker,NA,1450,NA,NA
