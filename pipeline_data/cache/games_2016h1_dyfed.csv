@@ -1,0 +1,433 @@
+GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,Exp,Pts
+1,2016-01-19,Adam Robinson,Sam Holman,43,1250,,1,1724,0.9,0.9,1
+2,2016-01-27,Adam Robinson,Robert Narayan-Taylor,27,1517,,0.5,1718,1.67,0.77,1.5
+3,2016-02-09,Adam Robinson,Iolo Jones,2,2215,FM,0,1716,1.77,0.1,1.5
+4,2016-02-17,Adam Robinson,Howard Leah,28,1514,,1,1721,2.54,0.77,2.5
+5,2016-02-20,Adam Robinson,Jake C Chan,NA,1778,,0.5,1723,2.96,0.42,3
+6,2016-02-20,Adam Robinson,Zheng Yang Sng,NA,2274,,1,1745,3.06,0.1,4
+7,2016-02-20,Adam Robinson,Davin Menon,NA,2001,,0.5,1753,3.22,0.16,4.5
+8,2016-02-21,Adam Robinson,Jonathan Bold,NA,1847,,0,1745,3.55,0.33,4.5
+9,2016-02-21,Adam Robinson,Ravi Sharma,NA,1714,,0,1733,4.06,0.51,4.5
+10,2016-03-16,Adam Robinson,Scott Hammett,31,1450,,1,1737,4.89,0.83,5.5
+11,2016-03-29,Adam Robinson,Ted Nottingham,NA,1730,,1,1749,5.38,0.49,6.5
+12,2016-04-09,Adam Robinson,Ivan Myall,NA,2130,,0,1746,5.48,0.1,6.5
+13,2016-04-09,Adam Robinson,Francesca Matta,NA,2010,,0,1743,5.63,0.15,6.5
+14,2016-04-09,Adam Robinson,Oscar Pollack,NA,2002,,0,1739,5.79,0.16,6.5
+15,2016-04-10,Adam Robinson,Richard Maynes,NA,1778,,1,1753,6.21,0.42,7.5
+16,2016-04-10,Adam Robinson,Richard Cannon,NA,2050,,0,1750,6.33,0.12,7.5
+17,2016-04-24,Adam Robinson,Andrew Smith,NA,1617,,1,1759,6.97,0.64,8.5
+18,2016-04-26,Adam Robinson,Owen Llywelyn,24,1534,,1,1765,7.72,0.75,9.5
+1,2016-01-19,Adam Watkin-Jones,Anthony Geraghty,23,1559,,1,1973,0.9,0.9,1
+2,2016-01-27,Adam Watkin-Jones,Paul Orton,20,1586,,1,1976,1.8,0.9,2
+3,2016-02-03,Adam Watkin-Jones,John Miller,13,1661,,1,1979,2.66,0.86,3
+4,2016-02-17,Adam Watkin-Jones,Iolo Jones,2,2215,FM,0.5,1987,2.85,0.19,3.5
+1,2016-04-24,Alexander Cooney,John Corner,NA,1000,Est,1,1357,0.89,0.89,1
+1,2016-01-05,Anthony Geraghty,Owen Llywelyn,24,1534,D1,1,1574,0.54,0.54,1
+2,2016-01-11,Anthony Geraghty,John Miller,13,1661,D1,0.5,1578,0.9,0.36,1.5
+3,2016-01-19,Anthony Geraghty,Adam Watkin-Jones,6,1971,D1,0,1575,1,0.1,1.5
+4,2016-01-26,Anthony Geraghty,Ian Finlay,38,1355,D1,0.5,1567,1.76,0.76,2
+5,2016-03-14,Anthony Geraghty,Richard Thomas,19,1605,D1,1,1585,2.2,0.44,3
+6,2016-03-16,Anthony Geraghty,Robbie Coles,49,1169,D1,0,1556,3.1,0.9,3
+7,2016-04-04,Anthony Geraghty,Gwyn Evans,37,1371,D1,1,1564,3.85,0.75,4
+8,2016-04-26,Anthony Geraghty,Emyr Llywelyn,56,964,D1,1,1567,4.75,0.9,5
+1,2016-01-11,Awne Osinga,Emyr Llywelyn,56,964,,1,1522,0.9,0.9,1
+2,2016-01-25,Awne Osinga,Robbie Coles,49,1169,,0,1494,1.79,0.89,1
+3,2016-02-09,Awne Osinga,Jamie Friel,32,1450,,0,1475,2.39,0.6,1
+4,2016-02-26,Awne Osinga,Sarah Rowles,29,1474,,1,1489,2.95,0.56,2
+5,2016-02-27,Awne Osinga,Kimberley Chong,NA,1500,,0,1472,3.48,0.53,2
+6,2016-02-27,Awne Osinga,Howard Leah,28,1514,,0,1455,3.99,0.51,2
+7,2016-02-28,Awne Osinga,Scott Hammett,31,1450,,0,1436,4.59,0.6,2
+8,2016-03-10,Awne Osinga,Iolo Jones,2,2215,FM,0,1433,4.69,0.1,2
+9,2016-03-15,Awne Osinga,Scott Hammett,31,1450,,0,1414,5.29,0.6,2
+10,2016-04-13,Awne Osinga,Emyr Llywelyn,56,964,,1,1417,6.19,0.9,3
+11,2016-04-26,Awne Osinga,Robbie Coles,49,1169,,0,1388,7.08,0.89,3
+12,2016-05-17,Awne Osinga,Robert Narayan-Taylor,27,1517,,0.5,1388,7.58,0.5,3.5
+1,2016-04-24,Calum Davidson,Adrian Cucu,NA,1514,N1,1,1421,0.34,0.34,1
+1,2015-12-28,Colin Denham,Ian Brooke,NA,1618,,0.5,1650,0.55,0.55,0.5
+2,2015-12-28,Colin Denham,John R McKenna,NA,1786,,0.5,1654,0.87,0.32,1
+3,2015-12-29,Colin Denham,Adrian DP Waldock,NA,1754,,0.5,1657,1.23,0.36,1.5
+4,2015-12-29,Colin Denham,Timothy S Allen,NA,1618,,1,1668,1.78,0.55,2.5
+5,2015-12-30,Colin Denham,Adrian Cload,NA,1618,,0,1655,2.33,0.55,2.5
+6,2015-12-30,Colin Denham,Russell R Goodfellow,NA,1834,,0,1649,2.59,0.26,2.5
+7,2015-12-31,Colin Denham,Anthony J Roberts,NA,1740,,0,1640,2.97,0.38,2.5
+8,2015-12-31,Colin Denham,Hugh G Tassell,NA,1706,,0,1630,3.39,0.42,2.5
+9,2016-01-01,Colin Denham,Timothy J Crouch,NA,1666,,1,1642,3.87,0.48,3.5
+10,2016-01-02,Colin Denham,Paul A Batchelor,NA,2002,,0,1639,3.98,0.11,3.5
+11,2016-01-02,Colin Denham,David W Fowler,NA,2058,,0,1637,4.08,0.1,3.5
+12,2016-01-03,Colin Denham,Laura J Davidson,NA,1746,,1,1652,4.45,0.37,4.5
+13,2016-01-03,Colin Denham,Helge Hjort,NA,2082,,0,1650,4.55,0.1,4.5
+14,2016-01-04,Colin Denham,David F Newell,NA,1778,,1,1666,4.88,0.33,5.5
+15,2016-01-04,Colin Denham,Phil T Foley,NA,1786,,0,1658,5.2,0.32,5.5
+16,2016-01-05,Colin Denham,Nicholas P Driver,NA,1738,,0.5,1661,5.58,0.38,6
+17,2016-01-05,Colin Denham,Peter C Wood,NA,1778,,0.5,1665,5.91,0.33,6.5
+18,2016-01-08,Colin Denham,Robbie Coles,49,1169,,1,1668,6.81,0.9,7.5
+19,2016-01-11,Colin Denham,Matthew Francis,14,1657,,0,1656,7.3,0.49,7.5
+20,2016-03-15,Colin Denham,Iolo Jones,2,2215,FM,0,1653,7.4,0.1,7.5
+21,2016-04-13,Colin Denham,Rudy van Kemenade,4,2032,,0,1651,7.5,0.1,7.5
+22,2016-04-19,Colin Denham,Robbie Coles,49,1169,,1,1653,8.4,0.9,8.5
+1,2016-01-19,Damien Clarke,Joel Greenwood,40,1335,D1,0,1177,0.3,0.3,0
+1,2016-01-11,Emyr Llywelyn,Awne Osinga,26,1519,D1,0,961,0.1,0.1,0
+2,2016-01-27,Emyr Llywelyn,Robbie Coles,49,1169,D1,0,953,0.33,0.23,0
+3,2016-02-03,Emyr Llywelyn,Robert Narayan-Taylor,27,1517,D1,0,950,0.43,0.1,0
+4,2016-02-17,Emyr Llywelyn,Gwyn Evans,37,1371,D1,0,947,0.53,0.1,0
+5,2016-04-13,Emyr Llywelyn,Awne Osinga,26,1519,D1,0,944,0.63,0.1,0
+6,2016-04-26,Emyr Llywelyn,Anthony Geraghty,23,1559,D1,0,941,0.73,0.1,0
+1,2016-01-03,Gerry Heap,William Hewitt,NA,2134,,1,2168,0.54,0.54,1
+2,2016-01-05,Gerry Heap,David Buttell,NA,1894,,1,2171,1.37,0.83,2
+3,2016-01-20,Gerry Heap,Keith Downey,NA,1850,,1,2173,2.23,0.86,3
+4,2016-01-24,Gerry Heap,Ben Thomas,NA,2054,,0,2163,2.88,0.65,3
+5,2016-02-03,Gerry Heap,David Merryweather,NA,1491,,1,2165,3.78,0.9,4
+6,2016-02-24,Gerry Heap,Robert Saunders,NA,2068,,1,2170,4.41,0.63,5
+7,2016-02-27,Gerry Heap,Lynda Roberts,NA,1840,WCM,0,2157,5.28,0.87,5
+8,2016-02-27,Gerry Heap,Les Philpin,NA,1579,,1,2158,6.18,0.9,6
+9,2016-02-28,Gerry Heap,John Waterfield,NA,1922,,0,2145,6.98,0.8,6
+10,2016-02-28,Gerry Heap,David J Lawrence,NA,1610,,0.5,2139,7.88,0.9,6.5
+11,2016-03-14,Gerry Heap,Julie van Kemenade,10,1800,,1,2141,8.78,0.9,7.5
+12,2016-03-22,Gerry Heap,Martin C Jones,12,1696,,1,2142,9.68,0.9,8.5
+13,2016-03-23,Gerry Heap,Ian R Jones,NA,2031,,1,2147,10.36,0.68,9.5
+14,2016-04-13,Gerry Heap,Ian Eustis,NA,1790,,1,2149,11.26,0.9,10.5
+15,2016-04-16,Gerry Heap,Bob Moore,NA,1980,,1,2153,12,0.74,11.5
+16,2016-05-08,Gerry Heap,Frank May,NA,2120,,1,2160,12.56,0.56,12.5
+17,2016-05-23,Gerry Heap,Carl Strugnell,NA,2277,FM,1,2171,12.9,0.34,13.5
+1,2016-01-07,Howard Leah,Tony Haigh,9,1888,D1,0,1511,0.1,0.1,0
+2,2016-01-11,Howard Leah,Tegwyn Jones,46,1212,D1,0,1483,0.96,0.86,0
+3,2016-01-25,Howard Leah,Gwyn Evans,37,1371,D1,1,1493,1.65,0.69,1
+4,2016-02-11,Howard Leah,Seamus Cunnane,22,1574,D1,0.5,1496,2.07,0.42,1.5
+5,2016-02-17,Howard Leah,Adam Robinson,11,1722,D1,0,1488,2.3,0.23,1.5
+6,2016-02-26,Howard Leah,Kimberley Chong,NA,1500,E1,0,1472,2.82,0.52,1.5
+7,2016-02-27,Howard Leah,Gwyn Evans,37,1371,D1,1,1482,3.51,0.69,2.5
+8,2016-02-27,Howard Leah,Awne Osinga,26,1519,D1,1,1498,4,0.49,3.5
+9,2016-02-28,Howard Leah,Paul Bevan,NA,1318,W1,1,1506,4.76,0.76,4.5
+10,2016-02-28,Howard Leah,Paul Orton,20,1586,D1,0.5,1509,5.16,0.4,5
+11,2016-04-13,Howard Leah,Tegwyn Jones,46,1212,D1,1,1513,6.02,0.86,6
+12,2016-04-26,Howard Leah,Gwyn Evans,37,1371,D1,1,1523,6.71,0.69,7
+1,2016-01-03,Howard Williams,Carl Strugnell,NA,2304,FM,1,2354,0.56,0.56,1
+2,2016-01-24,Howard Williams,Lee Davis,NA,2124,,1,2357,1.35,0.79,2
+3,2016-02-09,Howard Williams,Julie van Kemenade,10,1800,,1,2358,2.25,0.9,3
+4,2016-02-17,Howard Williams,Rudy van Kemenade,4,2049,,1,2359,3.11,0.86,4
+5,2016-02-26,Howard Williams,Lynda Roberts,NA,1840,WCM,0.5,2355,4.01,0.9,4.5
+6,2016-02-27,Howard Williams,Les Philpin,NA,1579,,1,2356,4.91,0.9,5.5
+7,2016-02-27,Howard Williams,Roger Greatorex,NA,1818,,1,2357,5.81,0.9,6.5
+8,2016-02-28,Howard Williams,Jane Richmond,NA,2191,WFM,0.5,2355,6.52,0.71,7
+9,2016-02-28,Howard Williams,John Waterfield,NA,1922,,1,2356,7.42,0.9,8
+10,2016-03-15,Howard Williams,Martin C Jones,12,1696,,1,2357,8.32,0.9,9
+11,2016-04-07,Howard Williams,David Buttell,NA,1880,,1,2358,9.22,0.9,10
+12,2016-04-16,Howard Williams,Matthew Davies,NA,2021,,1,2359,10.1,0.88,11
+13,2016-04-26,Howard Williams,Martin C Jones,12,1696,,1,2360,11,0.9,12
+14,2016-05-08,Howard Williams,Sven Zeidler,NA,2235,FM,1,2363,11.66,0.66,13
+15,2016-05-17,Howard Williams,David Buttell,NA,1880,,1,2364,12.56,0.9,14
+1,2016-01-05,Ian Finlay,Sam Holman,43,1250,D1,1,1367,0.64,0.64,1
+2,2016-01-11,Ian Finlay,Gwyn Evans,37,1371,D1,0,1351,1.12,0.48,1
+3,2016-01-19,Ian Finlay,Robert Wright,7,1958,D1,0.5,1364,1.22,0.1,1.5
+4,2016-01-26,Ian Finlay,Anthony Geraghty,23,1559,D1,0.5,1372,1.46,0.24,2
+5,2016-03-08,Ian Finlay,Rudy van Kemenade,4,2049,D1,0,1369,1.56,0.1,2
+1,2016-01-03,Iolo Jones,Alan Young,NA,2167,,1,2222,0.57,0.57,1
+2,2016-01-14,Iolo Jones,Tony Haigh,9,1888,,0.5,2216,1.45,0.88,1.5
+3,2016-01-24,Iolo Jones,Nigel Ralphs,NA,2061,,0.5,2212,2.16,0.71,2
+4,2016-01-25,Iolo Jones,Martin C Jones,12,1696,,1,2214,3.06,0.9,3
+5,2016-02-09,Iolo Jones,Adam Robinson,11,1722,,1,2216,3.96,0.9,4
+6,2016-02-17,Iolo Jones,Adam Watkin-Jones,6,1971,,0.5,2211,4.77,0.81,4.5
+7,2016-02-26,Iolo Jones,Rod Gough,NA,1814,,1,2212,5.67,0.9,5.5
+8,2016-02-27,Iolo Jones,Johnathan Bourne,NA,1946,,1,2215,6.5,0.83,6.5
+9,2016-02-27,Iolo Jones,Tom Brown,NA,2142,,1,2221,7.1,0.6,7.5
+10,2016-02-28,Iolo Jones,Frank May,NA,2120,,1,2227,7.73,0.63,8.5
+11,2016-02-28,Iolo Jones,David Jameson,NA,2138,,0.5,2226,8.34,0.61,9
+12,2016-03-10,Iolo Jones,Awne Osinga,26,1519,,1,2227,9.24,0.9,10
+13,2016-03-15,Iolo Jones,Colin Denham,15,1651,,1,2229,10.14,0.9,11
+14,2016-04-07,Iolo Jones,Paul Orton,20,1586,,1,2230,11.04,0.9,12
+15,2016-04-16,Iolo Jones,Andrew Gibbons,NA,2039,,0.5,2227,11.77,0.73,12.5
+16,2016-04-20,Iolo Jones,Lars Kjolberg,NA,2146,,0.5,2225,12.37,0.6,13
+17,2016-04-21,Iolo Jones,Dragomir Vucenovic,NA,2243,FM,0.5,2226,12.83,0.46,13.5
+18,2016-04-23,Iolo Jones,Joachim Hollstein,NA,2070,,0.5,2223,13.53,0.7,14
+19,2016-04-24,Iolo Jones,Horst Watzka,NA,2236,FM,1,2231,14,0.47,15
+20,2016-04-25,Iolo Jones,Bengt Hammar,NA,2168,FM,0,2222,14.57,0.57,15
+21,2016-04-26,Iolo Jones,Philip Giulian,NA,2141,FM,1,2228,15.17,0.6,16
+22,2016-04-27,Iolo Jones,Alastair White,NA,2070,,0.5,2225,15.87,0.7,16.5
+23,2016-05-08,Iolo Jones,Charles Morris,NA,2181,,0.5,2224,16.42,0.55,17
+24,2016-05-17,Iolo Jones,Paul Orton,20,1586,,1,2226,17.32,0.9,18
+1,2016-01-11,Iwan Griffiths,Tony Haigh,9,1888,D1,0,1610,0.17,0.17,0
+2,2016-01-27,Iwan Griffiths,Martin C Jones,12,1696,D1,0.5,1613,0.56,0.39,0.5
+3,2016-04-13,Iwan Griffiths,Tony Haigh,9,1888,D1,0,1608,0.73,0.17,0.5
+4,2016-04-26,Iwan Griffiths,Julie van Kemenade,10,1800,D1,0,1602,0.99,0.26,0.5
+1,2016-04-09,James Corrigan,Andris Krivins,NA,1290,ECF,1,1389,0.62,0.62,1
+2,2016-04-09,James Corrigan,Reg McKenzie,NA,1274,ECF,1,1401,1.26,0.64,2
+3,2016-04-09,James Corrigan,Igor Maguskin,NA,1540,Est,1,1424,1.54,0.28,3
+4,2016-04-10,James Corrigan,Kidge Elder,NA,1578,ECF,1,1448,1.78,0.24,4
+5,2016-04-10,James Corrigan,Mark Duggan,NA,1610,ECF,0.5,1458,1.98,0.2,4.5
+1,2016-01-05,Jamie Friel,Tegwyn Jones,46,1212,D1,1,1456,0.8,0.8,1
+2,2016-01-19,Jamie Friel,Francis Headley,50,1157,D1,1,1461,1.65,0.85,2
+3,2016-02-09,Jamie Friel,Awne Osinga,26,1519,D1,1,1480,2.05,0.4,3
+4,2016-02-16,Jamie Friel,Sam Holman,43,1250,D1,1,1488,2.81,0.76,4
+5,2016-02-20,Jamie Friel,Stuart Jenkins,NA,1730,ECF,1,1515,2.97,0.16,5
+6,2016-02-20,Jamie Friel,Jia Rong Fan,NA,1450,ECF,0.5,1515,3.47,0.5,5.5
+7,2016-02-20,Jamie Friel,Daniel Koehler,NA,1592,N1,0,1505,3.78,0.31,5.5
+8,2016-02-21,Jamie Friel,James Falvey,NA,1411,W1,1,1519,4.33,0.55,6.5
+9,2016-02-21,Jamie Friel,Edward Ko,NA,1618,ECF,0,1510,4.61,0.28,6.5
+10,2016-03-16,Jamie Friel,Ray Greenwood,48,1178,D1,0,1484,5.44,0.83,6.5
+11,2016-04-13,Jamie Friel,Gwyn Evans,37,1371,D1,0,1464,6.05,0.61,6.5
+12,2016-04-24,Jamie Friel,Ewygene Templonuevo,NA,1642,N1,1,1488,6.3,0.25,7.5
+1,2016-01-19,Joel Greenwood,Damien Clarke,47,1187,D1,1,1345,0.7,0.7,1
+2,2016-02-09,Joel Greenwood,Tony Haigh,9,1888,D1,0,1341,0.8,0.1,1
+3,2016-03-08,Joel Greenwood,Sam Holman,43,1250,D1,0.5,1338,1.42,0.62,1.5
+4,2016-04-24,Joel Greenwood,Jimi Squirrell,NA,1492,N1,0,1328,1.71,0.29,1.5
+1,2016-01-03,John Miller,David Buttell,NA,1894,W1,0,1656,0.2,0.2,0
+2,2016-01-08,John Miller,Martin C Jones,12,1696,D1,0,1645,0.65,0.45,0
+3,2016-01-11,John Miller,Anthony Geraghty,23,1559,D1,0.5,1642,1.29,0.64,0.5
+4,2016-01-27,John Miller,Owen Llywelyn,24,1534,D1,0.5,1638,1.96,0.67,1
+5,2016-02-03,John Miller,Adam Watkin-Jones,6,1971,D1,0,1635,2.1,0.14,1
+6,2016-03-15,John Miller,Tony Haigh,9,1888,D1,0,1630,2.31,0.21,1
+7,2016-03-22,John Miller,Paul Orton,20,1586,D1,0.5,1627,2.91,0.6,1.5
+8,2016-04-13,John Miller,Julie van Kemenade,10,1800,D1,0.5,1632,3.22,0.31,2
+9,2016-04-19,John Miller,Martin C Jones,12,1696,D1,0,1621,3.67,0.45,2
+1,2016-01-08,Julie van Kemenade,Paul Hatchett,NA,2066,,0,1796,0.17,0.17,0
+2,2016-01-09,Julie van Kemenade,Lyn Holland,NA,1411,,1,1798,1.07,0.9,1
+3,2016-01-09,Julie van Kemenade,David Rhys Lewis,NA,1970,,0,1792,1.34,0.27,1
+4,2016-01-10,Julie van Kemenade,Stephen Bonutto,NA,1387,,1,1794,2.24,0.9,2
+5,2016-01-10,Julie van Kemenade,Dave Turner,NA,2006,,0.5,1801,2.47,0.23,2.5
+6,2016-01-24,Julie van Kemenade,Stephen Bonutto,NA,1387,,0.5,1791,3.37,0.9,3
+7,2016-01-27,Julie van Kemenade,Richard Thomas,19,1605,,1,1797,4.12,0.75,4
+8,2016-02-03,Julie van Kemenade,Scott Hammett,31,1450,,0.5,1788,5.01,0.89,4.5
+9,2016-02-09,Julie van Kemenade,Howard Williams,1,2350,FM,0,1785,5.11,0.1,4.5
+10,2016-02-17,Julie van Kemenade,Tony Haigh,9,1888,,0,1776,5.49,0.38,4.5
+11,2016-02-27,Julie van Kemenade,William Hewitt,NA,2134,,0,1773,5.61,0.12,4.5
+12,2016-02-27,Julie van Kemenade,Robert Taylor,NA,2044,,0.5,1781,5.8,0.19,5
+13,2016-02-28,Julie van Kemenade,Juan Talavera Rodriguez,NA,2022,,0,1776,6.02,0.22,5
+14,2016-02-28,Julie van Kemenade,Paul Bridges,NA,1891,,0,1767,6.39,0.37,5
+15,2016-03-14,Julie van Kemenade,Gerry Heap,3,2161,,0,1764,6.49,0.1,5
+16,2016-03-25,Julie van Kemenade,Juan Talavera Rodriguez,NA,2022,,0,1759,6.71,0.22,5
+17,2016-03-26,Julie van Kemenade,Peter Heaven,NA,2056,,0.5,1767,6.89,0.18,5.5
+18,2016-03-26,Julie van Kemenade,Joe Fathallah,NA,2061,,0.5,1774,7.07,0.18,6
+19,2016-03-27,Julie van Kemenade,Allan Pleasants,NA,2116,,0,1771,7.2,0.13,6
+20,2016-03-28,Julie van Kemenade,John Shakespeare,NA,2044,,1,1791,7.39,0.19,7
+21,2016-03-28,Julie van Kemenade,Ben Thomas,NA,2054,,0,1786,7.57,0.18,7
+22,2016-04-04,Julie van Kemenade,Martin C Jones,12,1696,,1,1795,8.21,0.64,8
+23,2016-04-13,Julie van Kemenade,John Miller,13,1661,,0.5,1790,8.9,0.69,8.5
+24,2016-04-16,Julie van Kemenade,Hywel Griffiths,NA,1839,,0,1780,9.35,0.45,8.5
+25,2016-04-26,Julie van Kemenade,Iwan Griffiths,18,1614,,1,1786,10.09,0.74,9.5
+26,2016-05-08,Julie van Kemenade,John Waterfield,NA,1946,,0,1779,0.29,0.29,0
+1,2016-04-24,Kieran Judge,Roy Wilson,NA,1000,Est,1,1016,0.5,0.5,1
+1,2016-04-21,Luke Williams,Robbie Coles,49,1169,D1,1,1262,0.61,0.61,1
+1,2015-12-28,Margaret Baron,Chas Chapman,NA,1474,ECF,0,847,0.1,0.1,0
+2,2015-12-28,Margaret Baron,Derek Cosens,NA,1570,ECF,0,844,0.2,0.1,0
+3,2015-12-29,Margaret Baron,George P Jelliss,NA,1298,ECF,0,840,0.3,0.1,0
+4,2015-12-29,Margaret Baron,Mason Woodhams,NA,1594,ECF,0,837,0.4,0.1,0
+5,2015-12-30,Margaret Baron,Paul Buswell,NA,1474,ECF,0,834,0.5,0.1,0
+6,2015-12-31,Margaret Baron,John C Calvert,NA,1474,ECF,0,831,0.6,0.1,0
+7,2016-01-01,Margaret Baron,Roy Richardson,NA,1250,ECF,0,828,0.7,0.1,0
+8,2016-01-01,Margaret Baron,Adrian Cload,NA,1618,ECF,0,824,0.8,0.1,0
+9,2016-01-02,Margaret Baron,Mason Woodhams,NA,1594,ECF,0,821,0.9,0.1,0
+10,2016-01-02,Margaret Baron,Lona Steuart,NA,850,ECF,1,837,1.4,0.5,1
+11,2016-01-03,Margaret Baron,Paul Buswell,NA,1474,ECF,0,834,1.5,0.1,1
+12,2016-01-03,Margaret Baron,Anna Pontonutti,NA,1506,ECF,0,831,1.6,0.1,1
+13,2016-01-04,Margaret Baron,Simon Sellick,NA,1522,ECF,0,828,1.7,0.1,1
+14,2016-01-04,Margaret Baron,Alan R Fraser,NA,1506,ECF,0,824,1.8,0.1,1
+15,2016-01-05,Margaret Baron,Paul Buswell,NA,1474,ECF,0,821,1.9,0.1,1
+16,2016-01-08,Margaret Baron,Gwyn Evans,37,1371,D1,0,818,2,0.1,1
+17,2016-01-19,Margaret Baron,Robert Narayan-Taylor,27,1517,D1,0,815,2.1,0.1,1
+18,2016-02-27,Margaret Baron,Paul Bevan,NA,1318,W1,0,812,2.2,0.1,1
+19,2016-02-27,Margaret Baron,Sarah Rowles,29,1474,D1,0,808,2.3,0.1,1
+20,2016-02-28,Margaret Baron,Robbie Coles,49,1169,D1,0,804,2.43,0.13,1
+21,2016-02-28,Margaret Baron,Ray Greenwood,48,1178,D1,0,800,2.55,0.12,1
+22,2016-04-19,Margaret Baron,Gwyn Evans,37,1371,D1,0,797,2.65,0.1,1
+1,2016-01-08,Martin C Jones,John Miller,13,1661,,1,1707,0.55,0.55,1
+2,2016-01-19,Martin C Jones,David Buttell,NA,1894,,0.5,1713,0.79,0.24,1.5
+3,2016-01-25,Martin C Jones,Iolo Jones,2,2215,FM,0,1711,0.89,0.1,1.5
+4,2016-01-27,Martin C Jones,Iwan Griffiths,18,1614,,0.5,1708,1.5,0.61,2
+5,2016-02-03,Martin C Jones,Rudy van Kemenade,4,2049,,1,1729,1.61,0.11,3
+6,2016-02-17,Martin C Jones,Owen Llywelyn,24,1534,,0.5,1724,2.33,0.72,3.5
+7,2016-02-26,Martin C Jones,Johnathan Bourne,NA,1946,,0,1720,2.52,0.19,3.5
+8,2016-02-27,Martin C Jones,Rod Gough,NA,1814,,1,1735,2.86,0.34,4.5
+9,2016-02-27,Martin C Jones,Rudy van Kemenade,4,2049,,0,1733,2.97,0.11,4.5
+10,2016-02-28,Martin C Jones,Paul Bridges,NA,1891,,0.5,1739,3.22,0.25,5
+11,2016-02-28,Martin C Jones,Chris Dixon,NA,1818,,0.5,1743,3.55,0.33,5.5
+12,2016-03-15,Martin C Jones,Howard Williams,1,2350,FM,0,1740,3.65,0.1,5.5
+13,2016-03-16,Martin C Jones,Rudy van Kemenade,4,2049,,1,1762,3.76,0.11,6.5
+14,2016-03-22,Martin C Jones,Gerry Heap,3,2161,,0,1759,3.86,0.1,6.5
+15,2016-04-04,Martin C Jones,Julie van Kemenade,10,1800,,0,1751,4.22,0.36,6.5
+16,2016-04-19,Martin C Jones,John Miller,13,1661,,1,1762,4.77,0.55,7.5
+17,2016-04-21,Martin C Jones,David Buttell,NA,1880,,0,1755,5.03,0.26,7.5
+18,2016-04-26,Martin C Jones,Howard Williams,1,2350,FM,0,1753,5.13,0.1,7.5
+1,2016-01-05,Matthew Francis,Rudy van Kemenade,4,2049,D1,0,1655,0.1,0.1,0
+2,2016-01-11,Matthew Francis,Colin Denham,15,1651,D1,1,1666,0.61,0.51,1
+3,2016-01-19,Matthew Francis,Rudy van Kemenade,4,2049,D1,0,1664,0.71,0.1,1
+4,2016-02-16,Matthew Francis,Francis Headley,50,1157,D1,1,1666,1.61,0.9,2
+5,2016-02-26,Matthew Francis,John Waterfield,NA,1922,G1,1,1686,1.78,0.17,3
+6,2016-02-27,Matthew Francis,Peter Bevan,NA,2028,W1,0,1684,1.88,0.1,3
+7,2016-02-27,Matthew Francis,Adam May,NA,1937,W1,0,1680,2.04,0.16,3
+8,2016-02-28,Matthew Francis,David Buttell,NA,1894,W1,0,1675,2.24,0.2,3
+9,2016-02-28,Matthew Francis,Alun Howell,NA,1769,E1,0.5,1679,2.59,0.35,3.5
+10,2016-04-04,Matthew Francis,Scott Hammett,31,1450,D1,1,1684,3.36,0.77,4.5
+11,2016-04-13,Matthew Francis,Scott Hammett,31,1450,D1,1,1690,4.13,0.77,5.5
+1,2016-01-11,Mike Weston,Scott Hammett,31,1450,D1,1,1534,0.6,0.6,1
+1,2016-02-27,Nick McIlvenna,Allan Williams,NA,1200,E1,0,1378,0.76,0.76,0
+2,2016-02-27,Nick McIlvenna,Ray Greenwood,48,1178,D1,1,1384,1.55,0.79,1
+3,2016-02-28,Nick McIlvenna,Scott Hammett,31,1450,D1,0,1371,1.98,0.43,1
+4,2016-02-28,Nick McIlvenna,Gwyn Evans,37,1371,D1,0,1353,2.52,0.54,1
+1,2016-01-05,Owen Llywelyn,Anthony Geraghty,23,1559,D1,0,1519,0.46,0.46,0
+2,2016-01-11,Owen Llywelyn,Seamus Cunnane,22,1574,D1,0.5,1521,0.9,0.44,0.5
+3,2016-01-27,Owen Llywelyn,John Miller,13,1661,D1,0.5,1527,1.23,0.33,1
+4,2016-02-03,Owen Llywelyn,Paul Orton,20,1586,D1,0.5,1529,1.66,0.43,1.5
+5,2016-02-17,Owen Llywelyn,Martin C Jones,12,1696,D1,0.5,1536,1.94,0.28,2
+6,2016-04-13,Owen Llywelyn,Seamus Cunnane,22,1574,D1,1,1554,2.38,0.44,3
+7,2016-04-26,Owen Llywelyn,Adam Robinson,11,1722,D1,0,1546,2.63,0.25,3
+1,2016-01-19,Paul Orton,Ray Greenwood,48,1178,,1,1589,0.9,0.9,1
+2,2016-01-27,Paul Orton,Adam Watkin-Jones,6,1971,,0,1586,1,0.1,1
+3,2016-02-03,Paul Orton,Owen Llywelyn,24,1534,,0.5,1584,1.57,0.57,1.5
+4,2016-02-26,Paul Orton,Gwyn Evans,37,1371,,1,1591,2.35,0.78,2.5
+5,2016-02-27,Paul Orton,Scott Hammett,31,1450,,0.5,1585,3.03,0.68,3
+6,2016-02-27,Paul Orton,Kimberley Chong,NA,1500,,1,1597,3.65,0.62,4
+7,2016-02-28,Paul Orton,Chris P Smith,NA,1530,,0.5,1595,4.23,0.58,4.5
+8,2016-02-28,Paul Orton,Howard Leah,28,1514,,0.5,1591,4.83,0.6,5
+9,2016-03-22,Paul Orton,John Miller,13,1661,,0.5,1595,5.23,0.4,5.5
+10,2016-04-07,Paul Orton,Iolo Jones,2,2215,FM,0,1591,5.33,0.1,5.5
+11,2016-05-17,Paul Orton,Iolo Jones,2,2215,FM,0,1588,5.43,0.1,5.5
+1,2016-01-08,Ray Greenwood,Scott Hammett,31,1450,D1,0,1173,0.17,0.17,0
+2,2016-01-19,Ray Greenwood,Paul Orton,20,1586,D1,0,1169,0.27,0.1,0
+3,2016-02-26,Ray Greenwood,Scott Hammett,31,1450,D1,0,1164,0.44,0.17,0
+4,2016-02-27,Ray Greenwood,Sarah Rowles,29,1474,D1,0,1159,0.59,0.15,0
+5,2016-02-27,Ray Greenwood,Nick McIlvenna,33,1402,D1,0,1152,0.8,0.21,0
+6,2016-02-28,Ray Greenwood,Margaret Baron,57,850,D1,1,1156,1.68,0.88,1
+7,2016-03-16,Ray Greenwood,Jamie Friel,32,1450,D1,1,1183,1.85,0.17,2
+8,2016-03-22,Ray Greenwood,Rob Frame,53,1000,D1,1,1191,2.59,0.74,3
+9,2016-04-19,Ray Greenwood,Scott Hammett,31,1450,D1,0,1186,2.76,0.17,3
+1,2016-01-19,Richard Thomas,Scott Hammett,31,1450,D1,0,1588,0.71,0.71,0
+2,2016-01-27,Richard Thomas,Julie van Kemenade,10,1800,D1,0,1582,0.96,0.25,0
+3,2016-02-03,Richard Thomas,Tegwyn Jones,46,1212,D1,1,1584,1.86,0.9,1
+4,2016-03-14,Richard Thomas,Anthony Geraghty,23,1559,D1,0,1571,2.42,0.56,1
+5,2016-04-07,Richard Thomas,Tony Haigh,9,1888,D1,0,1567,2.58,0.16,1
+6,2016-04-21,Richard Thomas,Gwyn Evans,37,1371,D1,1,1572,3.38,0.8,2
+7,2016-05-17,Richard Thomas,Tony Haigh,9,1888,D1,0,1568,3.54,0.16,2
+1,2016-03-22,Rob Frame,Ray Greenwood,48,1178,D1,0,992,0.26,0.26,0
+1,2016-01-08,Robbie Coles,Colin Denham,15,1651,D1,0,1166,0.1,0.1,0
+2,2016-01-25,Robbie Coles,Awne Osinga,26,1519,D1,1,1194,0.21,0.11,1
+3,2016-01-27,Robbie Coles,Emyr Llywelyn,56,964,D1,1,1202,0.98,0.77,2
+4,2016-02-03,Robbie Coles,Sam Holman,43,1250,D1,0,1189,1.37,0.39,2
+5,2016-02-27,Robbie Coles,Chris P Smith,NA,1530,G1,0,1186,1.47,0.1,2
+6,2016-02-27,Robbie Coles,Gwyn Evans,37,1371,D1,0,1178,1.71,0.24,2
+7,2016-02-28,Robbie Coles,Margaret Baron,57,850,D1,1,1182,2.58,0.87,3
+8,2016-02-28,Robbie Coles,Allan Williams,NA,1200,E1,1,1200,3.04,0.46,4
+9,2016-03-16,Robbie Coles,Anthony Geraghty,23,1559,D1,1,1229,3.14,0.1,5
+10,2016-04-19,Robbie Coles,Colin Denham,15,1651,D1,0,1225,3.24,0.1,5
+11,2016-04-21,Robbie Coles,Luke Williams,44,1250,D1,0,1213,3.63,0.39,5
+12,2016-04-26,Robbie Coles,Awne Osinga,26,1519,D1,1,1241,3.74,0.11,6
+1,2016-01-19,Robert Narayan-Taylor,Margaret Baron,57,850,D1,1,1520,0.9,0.9,1
+2,2016-01-27,Robert Narayan-Taylor,Adam Robinson,11,1722,D1,0.5,1529,1.13,0.23,1.5
+3,2016-02-03,Robert Narayan-Taylor,Emyr Llywelyn,56,964,D1,1,1532,2.03,0.9,2.5
+4,2016-03-14,Robert Narayan-Taylor,Sam Holman,43,1250,D1,0,1505,2.86,0.83,2.5
+5,2016-05-17,Robert Narayan-Taylor,Awne Osinga,26,1519,D1,0.5,1505,3.36,0.5,3
+1,2016-01-19,Robert Wright,Ian Finlay,38,1355,D1,0.5,1948,0.9,0.9,0.5
+2,2016-02-20,Robert Wright,Forbes Welford-Ranson,NA,1762,ECF,0,1930,1.66,0.76,0.5
+3,2016-02-20,Robert Wright,Kavitha Appulingam,NA,1746,ECF,0,1912,2.43,0.77,0.5
+4,2016-02-20,Robert Wright,Hai Tran,NA,1870,N1,1,1921,3.05,0.62,1.5
+5,2016-02-21,Robert Wright,Sebastian Hay,NA,1578,W1,1,1923,3.95,0.9,2.5
+6,2016-02-21,Robert Wright,Luke Bryant,NA,1706,ECF,1,1928,4.76,0.81,3.5
+7,2016-04-24,Robert Wright,Daniel Koehler,NA,1592,N1,0,1906,5.66,0.9,3.5
+1,2016-01-03,Rudy van Kemenade,Jason Garcia,NA,2087,,0,2042,0.45,0.45,0
+2,2016-01-05,Rudy van Kemenade,Matthew Francis,14,1657,,1,2043,1.35,0.9,1
+3,2016-01-08,Rudy van Kemenade,Ed Donovan,NA,1814,,1,2047,2.15,0.8,2
+4,2016-01-09,Rudy van Kemenade,David Sands,NA,2210,,0,2042,2.43,0.28,2
+5,2016-01-09,Rudy van Kemenade,Roy Thomas,NA,1760,,1,2045,3.28,0.85,3
+6,2016-01-10,Rudy van Kemenade,Paul J Kelly,NA,2018,,1,2052,3.82,0.54,4
+7,2016-01-10,Rudy van Kemenade,Walter Braun,NA,2209,FM,0,2047,4.11,0.29,4
+8,2016-01-16,Rudy van Kemenade,Brian G Whyte,NA,2122,,0,2041,4.51,0.4,4
+9,2016-01-17,Rudy van Kemenade,Ian J Wallis,NA,2170,,1,2052,4.84,0.33,5
+10,2016-01-19,Rudy van Kemenade,Matthew Francis,14,1657,,1,2053,5.74,0.9,6
+11,2016-01-24,Rudy van Kemenade,Robert Taylor,NA,2044,,0.5,2053,6.25,0.51,6.5
+12,2016-01-27,Rudy van Kemenade,David Buttell,NA,1894,,0.5,2050,6.96,0.71,7
+13,2016-02-03,Rudy van Kemenade,Martin C Jones,12,1696,,0,2035,7.85,0.89,7
+14,2016-02-09,Rudy van Kemenade,Francis Headley,50,1157,,1,2037,8.75,0.9,8
+15,2016-02-13,Rudy van Kemenade,Christopher Gibson,NA,2002,,1,2044,9.32,0.57,9
+16,2016-02-14,Rudy van Kemenade,Diana-Maria Serbanescu,NA,2122,,0,2037,9.72,0.4,9
+17,2016-02-17,Rudy van Kemenade,Howard Williams,1,2350,FM,0,2035,9.86,0.14,9
+18,2016-02-26,Rudy van Kemenade,Malcolm Probert,NA,1604,,1,2037,10.76,0.9,10
+19,2016-02-27,Rudy van Kemenade,Jane Richmond,NA,2191,WFM,0,2032,11.07,0.31,10
+20,2016-02-27,Rudy van Kemenade,Martin C Jones,12,1696,,1,2034,11.96,0.89,11
+21,2016-02-28,Rudy van Kemenade,Sven Zeidler,NA,2228,FM,0,2029,12.22,0.26,11
+22,2016-02-28,Rudy van Kemenade,Tony Haigh,9,1888,,1,2034,12.94,0.72,12
+23,2016-03-08,Rudy van Kemenade,Ian Finlay,38,1355,,1,2036,13.84,0.9,13
+24,2016-03-16,Rudy van Kemenade,Martin C Jones,12,1696,,0,2021,14.73,0.89,13
+25,2016-03-19,Rudy van Kemenade,Daniel Rowan,NA,1906,,1,2026,15.42,0.69,14
+26,2016-03-20,Rudy van Kemenade,Robert Whiteside,NA,1922,,1,2032,16.09,0.67,15
+27,2016-03-25,Rudy van Kemenade,David Jameson,NA,2187,,0,2027,0.29,0.29,0
+28,2016-03-25,Rudy van Kemenade,David Guy,NA,1863,,0.5,2024,1.01,0.72,0.5
+29,2016-03-26,Rudy van Kemenade,David Robinson,NA,1958,,1,2030,1.61,0.6,1.5
+30,2016-03-26,Rudy van Kemenade,Allan Pleasants,NA,2116,,0.5,2032,1.99,0.38,2
+31,2016-03-27,Rudy van Kemenade,Lee Davis,NA,2092,,0.5,2033,2.41,0.42,2.5
+32,2016-03-28,Rudy van Kemenade,Ben Thomas,NA,2054,,0,2026,2.88,0.47,2.5
+33,2016-03-28,Rudy van Kemenade,Joseph David Turner,NA,2006,,0,2017,3.42,0.54,2.5
+34,2016-04-13,Rudy van Kemenade,Colin Denham,15,1651,,1,2019,4.32,0.9,3.5
+35,2016-04-16,Rudy van Kemenade,Alan Bennett,NA,1999,,1,2026,4.87,0.55,4.5
+36,2016-04-19,Rudy van Kemenade,Boris Gutkin,NA,2320,FM,0,2024,5.02,0.15,4.5
+37,2016-04-21,Rudy van Kemenade,Fritz Maurer,NA,2028,,1,2032,5.53,0.51,5.5
+38,2016-04-22,Rudy van Kemenade,Nikolai Pushkov,NA,2336,GM,0,2029,5.67,0.14,5.5
+39,2016-04-23,Rudy van Kemenade,Hartmut Mai,NA,1943,,0,2019,6.29,0.62,5.5
+40,2016-04-24,Rudy van Kemenade,Klaus Nickl,NA,2069,,1,2028,6.74,0.45,6.5
+41,2016-04-25,Rudy van Kemenade,Jan Bengtsson,NA,2056,,1,2037,7.21,0.47,7.5
+42,2016-04-27,Rudy van Kemenade,Ian A Marks,NA,1888,,1,2042,7.9,0.69,8.5
+43,2016-04-30,Rudy van Kemenade,Brian D Judkins,NA,1866,,1,2046,8.62,0.72,9.5
+44,2016-05-01,Rudy van Kemenade,Nigel S Towers,NA,1922,,1,2052,9.27,0.65,10.5
+45,2016-05-02,Rudy van Kemenade,Graham P Alcock,NA,1962,,1,2058,9.87,0.6,11.5
+46,2016-05-08,Rudy van Kemenade,Matthew Parry,NA,2064,,0,2051,10.32,0.45,11.5
+1,2016-01-05,Sam Holman,Ian Finlay,38,1355,D1,0,1238,0.36,0.36,0
+2,2016-01-19,Sam Holman,Adam Robinson,11,1722,D1,0,1235,0.46,0.1,0
+3,2016-02-03,Sam Holman,Robbie Coles,49,1169,D1,1,1248,1.07,0.61,1
+4,2016-02-16,Sam Holman,Jamie Friel,32,1450,D1,0,1240,1.31,0.24,1
+5,2016-03-08,Sam Holman,Joel Greenwood,40,1335,D1,0.5,1244,1.69,0.38,1.5
+6,2016-03-14,Sam Holman,Robert Narayan-Taylor,27,1517,D1,1,1270,1.86,0.17,2.5
+7,2016-04-04,Sam Holman,Sandra Whitby,58,850,D1,1,1274,2.76,0.9,3.5
+1,2016-04-04,Sandra Whitby,Sam Holman,43,1250,D1,0,847,0.1,0.1,0
+1,2016-02-13,Sarah Rowles,Daniel Finn,NA,1682,ECF,0,1467,0.23,0.23,0
+2,2016-02-14,Sarah Rowles,David Scott,NA,1634,ECF,1,1489,0.52,0.29,1
+3,2016-02-26,Sarah Rowles,Awne Osinga,26,1519,D1,0,1475,0.96,0.44,1
+4,2016-02-27,Sarah Rowles,Ray Greenwood,48,1178,D1,1,1480,1.81,0.85,2
+5,2016-02-27,Sarah Rowles,Margaret Baron,57,850,D1,1,1483,2.71,0.9,3
+6,2016-02-28,Sarah Rowles,Kimberley Chong,NA,1500,E1,0,1469,3.17,0.46,3
+7,2016-02-28,Sarah Rowles,Paul Bevan,NA,1318,W1,0,1446,3.88,0.71,3
+1,2016-01-08,Scott Hammett,Ray Greenwood,48,1178,D1,1,1455,0.83,0.83,1
+2,2016-01-11,Scott Hammett,Mike Weston,25,1521,D1,0,1443,1.23,0.4,1
+3,2016-01-19,Scott Hammett,Richard Thomas,19,1605,D1,1,1465,1.52,0.29,2
+4,2016-01-25,Scott Hammett,Tony Haigh,9,1888,D1,0,1462,1.62,0.1,2
+5,2016-01-27,Scott Hammett,Tegwyn Jones,46,1212,D1,0.5,1453,2.42,0.8,2.5
+6,2016-02-03,Scott Hammett,Julie van Kemenade,10,1800,D1,0.5,1465,2.53,0.11,3
+7,2016-02-17,Scott Hammett,Tegwyn Jones,46,1212,D1,0.5,1455,3.33,0.8,3.5
+8,2016-02-26,Scott Hammett,Ray Greenwood,48,1178,D1,1,1461,4.16,0.83,4.5
+9,2016-02-27,Scott Hammett,Paul Orton,20,1586,D1,0.5,1467,4.48,0.32,5
+10,2016-02-27,Scott Hammett,Paul Bevan,NA,1318,W1,0,1445,5.16,0.68,5
+11,2016-02-28,Scott Hammett,Nick McIlvenna,33,1402,D1,1,1459,5.73,0.57,6
+12,2016-02-28,Scott Hammett,Awne Osinga,26,1519,D1,1,1478,6.13,0.4,7
+13,2016-03-15,Scott Hammett,Awne Osinga,26,1519,D1,1,1497,6.53,0.4,8
+14,2016-03-16,Scott Hammett,Adam Robinson,11,1722,D1,0,1492,6.7,0.17,8
+15,2016-03-25,Scott Hammett,Huw Davies,NA,866,E1,1,1495,7.6,0.9,9
+16,2016-03-25,Scott Hammett,Dafydd Chapman,NA,1400,E1,0,1477,8.17,0.57,9
+17,2016-03-26,Scott Hammett,Caspian Fowler,NA,1322,G1,1,1487,8.84,0.67,10
+18,2016-03-26,Scott Hammett,Stephen Bonutto,NA,1387,E1,0,1468,9.43,0.59,10
+19,2016-03-27,Scott Hammett,Sam White,NA,1445,E1,1,1484,9.94,0.51,11
+20,2016-03-28,Scott Hammett,Merlin Davies,NA,1300,E1,1,1494,10.64,0.7,12
+21,2016-03-28,Scott Hammett,Roger Phillips,NA,1507,E1,0,1480,11.06,0.42,12
+22,2016-04-04,Scott Hammett,Matthew Francis,14,1657,D1,0,1473,11.29,0.23,12
+23,2016-04-13,Scott Hammett,Matthew Francis,14,1657,D1,0,1465,11.52,0.23,12
+24,2016-04-19,Scott Hammett,Ray Greenwood,48,1178,D1,1,1471,12.35,0.83,13
+25,2016-04-26,Scott Hammett,Tony Haigh,9,1888,D1,0,1468,12.45,0.1,13
+1,2016-01-11,Seamus Cunnane,Owen Llywelyn,24,1534,D1,0.5,1572,0.56,0.56,0.5
+2,2016-02-11,Seamus Cunnane,Howard Leah,28,1514,D1,0.5,1570,1.14,0.58,1
+3,2016-04-13,Seamus Cunnane,Owen Llywelyn,24,1534,D1,0,1552,1.7,0.56,1
+1,2016-01-03,Tony Haigh,Peter Bevan,NA,2028,,0,1881,0.31,0.31,0
+2,2016-01-07,Tony Haigh,Howard Leah,28,1514,,1,1883,1.21,0.9,1
+3,2016-01-11,Tony Haigh,Iwan Griffiths,18,1614,,1,1887,2.04,0.83,2
+4,2016-01-14,Tony Haigh,Iolo Jones,2,2215,FM,0.5,1896,2.16,0.12,2.5
+5,2016-01-24,Tony Haigh,Sam Jukes,NA,1729,,1,1903,2.87,0.71,3.5
+6,2016-01-25,Tony Haigh,Scott Hammett,31,1450,,1,1906,3.77,0.9,4.5
+7,2016-02-09,Tony Haigh,Joel Greenwood,40,1335,,1,1908,4.67,0.9,5.5
+8,2016-02-17,Tony Haigh,Julie van Kemenade,10,1800,,1,1917,5.29,0.62,6.5
+9,2016-02-26,Tony Haigh,Frank May,NA,2120,,0,1912,5.5,0.21,6.5
+10,2016-02-27,Tony Haigh,Bob Hurn,NA,1664,,1,1917,6.29,0.79,7.5
+11,2016-02-27,Tony Haigh,Alun Howell,NA,1769,,0.5,1913,6.95,0.66,8
+12,2016-02-28,Tony Haigh,Alan Young,NA,2167,,0.5,1921,7.11,0.16,8.5
+13,2016-02-28,Tony Haigh,Rudy van Kemenade,4,2049,,0,1915,7.39,0.28,8.5
+14,2016-03-15,Tony Haigh,John Miller,13,1661,,1,1920,8.18,0.79,9.5
+15,2016-04-07,Tony Haigh,Richard Thomas,19,1605,,1,1924,9.02,0.84,10.5
+16,2016-04-13,Tony Haigh,Iwan Griffiths,18,1614,,1,1928,9.85,0.83,11.5
+17,2016-04-16,Tony Haigh,Chris Sims,NA,1897,,0,1916,10.34,0.49,11.5
+18,2016-04-26,Tony Haigh,Scott Hammett,31,1450,,1,1918,11.24,0.9,12.5
+19,2016-05-08,Tony Haigh,David Llewellyn,NA,1970,,0,1909,11.63,0.39,12.5
+20,2016-05-17,Tony Haigh,Richard Thomas,19,1605,,1,1913,12.47,0.84,13.5

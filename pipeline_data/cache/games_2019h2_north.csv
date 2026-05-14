@@ -1,0 +1,453 @@
+GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,Exp,Pts
+1,2019-11-12,Alan Valentine,Mike Blake,NA,1553,N1,0,1185,0.1,0.1,0
+2,2019-11-25,Alan Valentine,Peter Coutts,NA,1436,N1,0,1176,0.29,0.19,0
+3,2019-11-28,Alan Valentine,Stuart Hamilton,NA,1221,N1,0,1154,0.75,0.46,0
+4,2019-12-17,Alan Valentine,John A Simmons,NA,1369,N1,0,1142,1.01,0.26,0
+1,2019-10-29,Anton Petkov,John Bowers,NA,1782,N1,1,1782,0.48,0.48,1
+2,2019-11-11,Anton Petkov,Huw Davies,NA,1662,N1,0.5,1779,1.13,0.65,1.5
+3,2019-12-09,Anton Petkov,Lloyd Dalby,NA,1223,N1,1,1781,2.03,0.9,2.5
+4,2019-12-10,Anton Petkov,Michael Whale,NA,1762,N1,1,1793,2.54,0.51,3.5
+1,2019-07-02,Barrie Wells,Wayne McFadden,NA,1322,N1,1,1663,0.88,0.88,1
+2,2019-09-04,Barrie Wells,Ifan Rathbone-Jones,NA,1993,N1,0,1660,1,0.12,1
+3,2019-09-16,Barrie Wells,Brian Jones,NA,1184,N1,0,1638,1.9,0.9,1
+4,2019-09-17,Barrie Wells,Steve Williams,NA,1598,ECF,1,1648,2.49,0.59,2
+5,2019-10-01,Barrie Wells,Owain Meurig,NA,1736,N1,0.5,1651,2.88,0.39,2.5
+6,2019-10-08,Barrie Wells,Peter S Fisher,NA,1729,N1,0.5,1653,3.28,0.4,3
+7,2019-11-05,Barrie Wells,Graham Bromley,NA,1846,ECF,0,1647,3.54,0.26,3
+8,2019-11-26,Barrie Wells,Chris Doran,NA,2030,ECF,0,1645,3.64,0.1,3
+9,2019-12-03,Barrie Wells,Cliff Rice,NA,1961,N1,1,1665,3.78,0.14,4
+10,2019-12-10,Barrie Wells,Steve Lloyd,NA,1806,ECF,0,1658,4.08,0.3,4
+1,2019-09-10,Brian Jones,Adrian Bailey,NA,1110,Est,1,1203,0.6,0.6,1
+2,2019-09-16,Brian Jones,Barrie Wells,NA,1660,N1,1,1246,0.7,0.1,2
+3,2019-09-23,Brian Jones,James Babington,NA,2214,ECF,0,1242,0.8,0.1,2
+4,2019-10-09,Brian Jones,Tanmay Madhusudhan,NA,1110,Est,1,1261,1.4,0.6,3
+5,2019-10-28,Brian Jones,Paul Taylor,NA,1546,N1,0,1256,1.5,0.1,3
+6,2019-11-12,Brian Jones,Mark Donovan,NA,1190,Est,0,1232,1.99,0.49,3
+1,2019-11-04,Catriona Coutts,Nigel G Hughes,NA,1126,ECF,1,1514,0.9,0.9,1
+2,2019-11-11,Catriona Coutts,Wayne McFadden,NA,1322,N1,1,1522,1.65,0.75,2
+3,2019-12-10,Catriona Coutts,Stephen Paterson,NA,1243,N1,1,1528,2.48,0.83,3
+1,2019-09-24,Charles F Morris,Graham Dobson,NA,2070,ECF,0.5,2159,0.63,0.63,0.5
+2,2019-10-08,Charles F Morris,David Jameson,NA,2173,N1,0,2151,1.11,0.48,0.5
+3,2019-10-20,Charles F Morris,John Fletcher,NA,2100,E1,0,2142,1.7,0.59,0.5
+4,2019-10-22,Charles F Morris,Phil Crocker,NA,2198,ECF,1,2151,2.15,0.45,1.5
+5,2019-11-12,Charles F Morris,Richard B E Bryant,NA,1998,ECF,0.5,2147,2.87,0.72,2
+6,2019-11-26,Charles F Morris,Michael McDonagh,NA,2150,ECF,0.5,2147,3.39,0.52,2.5
+7,2019-12-01,Charles F Morris,Adam Musson,NA,2093,W1,0,2137,3.99,0.6,2.5
+1,2019-09-10,Charles Higgie,Dewi Jones,NA,1707,N1,1,2002,0.85,0.85,1
+2,2019-09-11,Charles Higgie,Luke Boumphrey,NA,1990,ECF,1,2010,1.36,0.51,2
+3,2019-09-24,Charles Higgie,Jixin Yang,NA,1710,ECF,1,2013,2.21,0.85,3
+4,2019-09-26,Charles Higgie,Michael Vidler,NA,2027,N1,0,2005,2.67,0.46,3
+5,2019-10-02,Charles Higgie,John Gorman,NA,1902,ECF,0.5,2003,3.31,0.64,3.5
+6,2019-10-08,Charles Higgie,Michael McDonagh,NA,2150,ECF,1,2014,3.61,0.3,4.5
+7,2019-11-09,Charles Higgie,Alberto Gissi,NA,1582,ECF,1,2016,4.51,0.9,5.5
+8,2019-11-10,Charles Higgie,Vijay Kakarparthi,NA,1630,ECF,0.5,2009,5.41,0.9,6
+9,2019-11-12,Charles Higgie,Bob Clark,NA,2118,ECF,0,2004,5.75,0.34,6
+10,2019-11-13,Charles Higgie,Steve Richards,NA,1583,N1,1,2006,6.65,0.9,7
+11,2019-11-20,Charles Higgie,Greg Hughes,NA,1918,ECF,0.5,2004,7.26,0.61,7.5
+12,2019-11-26,Charles Higgie,David Robertson,NA,2126,ECF,1,2015,7.59,0.33,8.5
+13,2019-11-28,Charles Higgie,Mark Thomas,NA,1726,N1,0.5,2009,8.42,0.83,9
+14,2019-12-03,Charles Higgie,Ian McLean,NA,1966,ECF,0,2000,8.97,0.55,9
+15,2019-12-10,Charles Higgie,Rokas Valantinas,NA,2054,ECF,0.5,2002,9.39,0.42,9.5
+1,2019-09-10,Chris Grier,David Houston,NA,1622,ECF,1,1680,0.57,0.57,1
+2,2019-09-17,Chris Grier,Joe Nemcek,NA,1702,ECF,1,1694,1.02,0.45,2
+3,2019-09-23,Chris Grier,Angus Weir,NA,1462,ECF,0.5,1687,1.79,0.77,2.5
+4,2019-10-01,Chris Grier,Nick Pendlebury,NA,1470,ECF,1,1693,2.55,0.76,3.5
+5,2019-10-08,Chris Grier,Anh Pham,NA,1500,Est,1,1699,3.28,0.73,4.5
+6,2019-11-04,Chris Grier,Filip Molnar,NA,1620,N1,1,1710,3.85,0.57,5.5
+7,2019-11-06,Chris Grier,Domantas Kirklys,NA,1544,N1,0.5,1706,4.52,0.67,6
+8,2019-11-26,Chris Grier,Steve Richards,NA,1583,N1,1,1715,5.14,0.62,7
+9,2019-11-28,Chris Grier,Michael Whale,NA,1762,N1,1,1730,5.51,0.37,8
+1,2019-10-29,Cliff Rice,John Shakespeare,NA,2048,N1,0.5,1964,0.38,0.38,0.5
+2,2019-11-12,Cliff Rice,Michael Whale,NA,1762,N1,1,1970,1.14,0.76,1.5
+3,2019-12-03,Cliff Rice,Barrie Wells,NA,1660,N1,0,1949,2,0.86,1.5
+1,2019-09-17,Danny Heath,Dave Littlemore,NA,1366,ECF,1,1543,0.72,0.72,1
+2,2019-10-01,Danny Heath,Stephen Williams (Tre),NA,1658,N1,0,1532,1.05,0.33,1
+1,2019-09-09,David J James,Tom Bimpson,NA,2014,ECF,0,2162,0.71,0.71,0
+2,2019-09-30,David J James,James Faulkner,NA,1950,ECF,1,2165,1.49,0.78,1
+3,2019-10-14,David J James,Colin D Horton,NA,2014,ECF,1,2170,2.2,0.71,2
+4,2019-11-04,David J James,Mike Stone,NA,2030,ECF,0.5,2167,2.89,0.69,2.5
+5,2019-12-02,David J James,Tom Dugdale,NA,1894,ECF,0.5,2161,3.73,0.84,3
+1,2019-09-26,David Jameson,Brian Whyte,NA,2150,,1,2181,0.53,0.53,1
+2,2019-10-02,David Jameson,Keith Arkell,GM,2566,GM,0,2179,0.63,0.1,1
+3,2019-10-08,David Jameson,Charles F Morris,NA,2161,,1,2187,1.15,0.52,2
+4,2019-10-29,David Jameson,Michael Whale,NA,1762,,1,2188,2.05,0.9,3
+5,2019-11-06,David Jameson,Phil Crocker,NA,2198,,0,2181,2.51,0.46,3
+6,2019-11-12,David Jameson,John Carleton,NA,2294,,1,2192,2.84,0.33,4
+7,2019-11-20,David Jameson,Steve Kee,NA,2190,,1,2200,3.32,0.48,5
+8,2019-11-26,David Jameson,Phil Crocker,NA,2198,,0.5,2201,3.78,0.46,5.5
+9,2019-12-10,David Jameson,Michael McDonagh,NA,2150,,0.5,2200,4.31,0.53,6
+10,2019-12-16,David Jameson,John Bowers,NA,1782,,1,2202,5.21,0.9,7
+1,2019-10-11,Deio Parri,David Pinch,NA,1842,D1,0.5,1665,0.26,0.26,0.5
+2,2019-10-12,Deio Parri,Stephen Horrell,NA,1696,G1,0,1654,0.71,0.45,0.5
+3,2019-10-12,Deio Parri,Daniel Chung,NA,1434,W1,0,1635,1.5,0.79,0.5
+4,2019-10-13,Deio Parri,Bence Szakmany,NA,1415,E1,0.5,1628,2.31,0.81,1
+5,2019-10-13,Deio Parri,Neil Stuart,NA,1660,W1,0.5,1628,2.81,0.5,1.5
+6,2019-10-29,Deio Parri,Huw Davies,NA,1662,N1,1,1640,3.31,0.5,2.5
+7,2019-11-15,Deio Parri,Mark Emblem,NA,1345,G1,0.5,1631,4.18,0.87,3
+8,2019-11-16,Deio Parri,Andy Wang,NA,1438,ECF,0.5,1624,4.96,0.78,3.5
+9,2019-11-17,Deio Parri,Stephen Horrell,NA,1696,G1,0,1613,5.41,0.45,3.5
+10,2019-11-17,Deio Parri,Leon Jansen Van Rensburg,NA,1574,E1,1,1622,6.03,0.62,4.5
+1,2019-07-19,Dewi Jones,M John Cawston,NA,1870,ECF,0,1700,0.28,0.28,0
+2,2019-07-20,Dewi Jones,Rajeiv Ratnesan,NA,1998,ECF,0.5,1709,0.43,0.15,0.5
+3,2019-07-20,Dewi Jones,Michael I Connor,NA,1806,ECF,0,1700,0.79,0.36,0.5
+4,2019-07-21,Dewi Jones,Neil S Homer,NA,1734,ECF,1,1713,1.25,0.46,1.5
+5,2019-09-10,Dewi Jones,Charles Higgie,NA,2000,N1,0,1709,1.4,0.15,1.5
+6,2019-09-16,Dewi Jones,Stephen Dunning,NA,1581,N1,1,1717,2.07,0.67,2.5
+7,2019-09-23,Dewi Jones,Mohammed Ayad,NA,1700,N1,0.5,1717,2.58,0.51,3
+8,2019-10-01,Dewi Jones,John A Simmons,NA,1369,N1,1,1720,3.46,0.88,4
+9,2019-10-07,Dewi Jones,Jeff Reid,NA,1486,ECF,1,1725,4.24,0.78,5
+10,2019-10-09,Dewi Jones,Steve Richards,NA,1583,N1,1,1733,4.91,0.67,6
+11,2019-10-15,Dewi Jones,Nick Pendlebury,NA,1470,ECF,1,1738,5.71,0.8,7
+12,2019-10-21,Dewi Jones,Adrian Bailey,NA,1550,ECF,0,1721,6.42,0.71,7
+13,2019-10-28,Dewi Jones,Domantas Kirklys,NA,1544,N1,1,1728,7.14,0.72,8
+14,2019-11-10,Dewi Jones,Jim WR Nicholson,NA,2022,ECF,0,1725,7.27,0.13,8
+15,2019-11-12,Dewi Jones,Phil Crew,NA,1334,ECF,1,1727,8.17,0.9,9
+16,2019-11-16,Dewi Jones,Stephen Williams (Tre),NA,1658,N1,1,1737,8.74,0.57,10
+17,2019-11-19,Dewi Jones,Colin White,NA,1662,ECF,1,1748,9.3,0.56,11
+1,2019-09-04,Domantas Kirklys,Richard Hibbs,NA,1482,N1,1,1557,0.59,0.59,1
+2,2019-09-16,Domantas Kirklys,Liam Jeffries,NA,1700,Est,0,1548,0.88,0.29,1
+3,2019-09-25,Domantas Kirklys,David Price,NA,1582,ECF,0.5,1549,1.33,0.45,1.5
+4,2019-10-15,Domantas Kirklys,Colin White,NA,1662,ECF,1,1571,1.67,0.34,2.5
+5,2019-10-22,Domantas Kirklys,Steve Richards,NA,1583,N1,1,1588,2.12,0.45,3.5
+6,2019-10-28,Domantas Kirklys,Dewi Jones,NA,1707,N1,0,1579,2.4,0.28,3.5
+7,2019-11-06,Domantas Kirklys,Chris Grier,NA,1670,N1,0.5,1585,2.73,0.33,4
+8,2019-11-18,Domantas Kirklys,Frank McGuigan,NA,1246,ECF,1,1589,3.58,0.85,5
+9,2019-12-04,Domantas Kirklys,Dave Littlemore,NA,1366,ECF,0,1566,4.32,0.74,5
+1,2019-10-29,Filip Molnar,Mike Blake,NA,1553,N1,1,1630,0.59,0.59,1
+2,2019-11-04,Filip Molnar,Chris Grier,NA,1670,N1,0,1620,1.02,0.43,1
+3,2019-11-11,Filip Molnar,John A Simmons,NA,1369,N1,1,1624,1.83,0.81,2
+4,2019-12-10,Filip Molnar,Wayne McFadden,NA,1322,N1,1,1628,2.68,0.85,3
+1,2019-10-09,Frank Salt,Simon Wyn Roberts,NA,1238,ECF,1,1618,0.9,0.9,1
+2,2019-11-20,Frank Salt,Adam Miller,NA,1326,ECF,0,1598,1.75,0.85,1
+3,2019-11-28,Frank Salt,David Thomas,NA,1470,ECF,0,1581,2.45,0.7,1
+4,2019-12-02,Frank Salt,Tom Webb,NA,1598,ECF,0,1568,2.98,0.53,1
+1,2019-10-08,G Brian Davies,Syringa Camp,NA,1766,N1,1,1744,0.45,0.45,1
+2,2019-10-29,G Brian Davies,David Bryan,NA,1806,ECF,0.5,1747,0.85,0.4,1.5
+3,2019-11-26,G Brian Davies,John Harvey,NA,1798,ECF,0.5,1749,1.26,0.41,2
+4,2019-12-03,G Brian Davies,Simon Layhe,NA,1702,ECF,0,1736,1.8,0.54,2
+1,2019-09-17,Gary Fox,Dave Hulme,NA,1374,ECF,1,1480,0.63,0.63,1
+2,2019-11-05,Gary Fox,John Sutcliffe,NA,1638,ECF,0.5,1487,0.9,0.27,1.5
+3,2019-11-12,Gary Fox,John Sutcliffe,NA,1638,ECF,0.5,1495,1.17,0.27,2
+4,2019-11-18,Gary Fox,Lloyd Dalby,NA,1223,N1,0.5,1485,1.98,0.81,2.5
+5,2019-12-03,Gary Fox,Chris Goy,NA,1326,ECF,1,1495,2.67,0.69,3.5
+6,2019-12-17,Gary Fox,Michael Whale,NA,1762,N1,0,1490,2.82,0.15,3.5
+1,2019-09-04,Haydn Parry,Timothy J Soar,NA,1667,N1,1,1666,0.48,0.48,1
+2,2019-09-25,Haydn Parry,Simon Layhe,NA,1702,ECF,0.5,1668,0.91,0.43,1.5
+3,2019-10-15,Haydn Parry,Joe Nemcek,NA,1702,ECF,0.5,1670,1.34,0.43,2
+4,2019-10-22,Haydn Parry,Peter S Fisher,NA,1729,N1,0.5,1672,1.74,0.4,2.5
+5,2019-11-06,Haydn Parry,Mohammed Ayad,NA,1700,N1,0.5,1674,2.18,0.44,3
+6,2019-11-18,Haydn Parry,Chris Goy,NA,1326,ECF,1,1677,3.06,0.88,4
+1,2019-10-29,Huw Davies,Deio Parri,NA,1659,N1,0,1650,0.5,0.5,0
+2,2019-11-04,Huw Davies,Mohammed Ayad,NA,1700,N1,1,1663,0.95,0.45,1
+3,2019-11-11,Huw Davies,Anton Petkov,NA,1770,N1,0.5,1667,1.3,0.35,1.5
+4,2019-12-10,Huw Davies,John A Simmons,NA,1369,N1,1,1670,2.15,0.85,2.5
+1,2019-07-22,Ifan Rathbone-Jones,William Gijsen,NA,2005,FIDE,0,1981,0.48,0.48,0
+2,2019-07-22,Ifan Rathbone-Jones,Luc Mahieu,NA,2049,FIDE,0.5,1983,0.9,0.42,0.5
+3,2019-07-23,Ifan Rathbone-Jones,Euan Dawson,NA,1992.4,Sco-adj,0.5,1983,1.4,0.5,1
+4,2019-07-23,Ifan Rathbone-Jones,Jacob Flynn,NA,1994,FIDE,0,1971,1.9,0.5,1
+5,2019-07-24,Ifan Rathbone-Jones,Thomas Carroll,NA,2222,ECF,1,1990,2.11,0.21,2
+6,2019-07-27,Ifan Rathbone-Jones,William J Taylor,NA,2118,ECF,0,1982,2.44,0.33,2
+7,2019-07-28,Ifan Rathbone-Jones,Michael Ifalore,NA,2134,ECF,1,1999,2.75,0.31,3
+8,2019-07-28,Ifan Rathbone-Jones,Evan McMullan,NA,1566,ECF,1,2001,3.65,0.9,4
+9,2019-07-29,Ifan Rathbone-Jones,Peter W Cusick,NA,2078,ECF,0.5,2004,4.03,0.38,4.5
+10,2019-07-29,Ifan Rathbone-Jones,Maxim Wenninger,NA,1750,ECF,1,2009,4.83,0.8,5.5
+11,2019-07-30,Ifan Rathbone-Jones,Peter Shaw,NA,2182,ECF,0,2003,5.08,0.25,5.5
+12,2019-07-30,Ifan Rathbone-Jones,Devan Patel,NA,1926,ECF,0.5,2001,5.67,0.59,6
+13,2019-07-31,Ifan Rathbone-Jones,Jens Muller,NA,1938,FIDE,1,2011,6.25,0.58,7
+14,2019-07-31,Ifan Rathbone-Jones,David Phillips,NA,2054,ECF,0,2001,6.66,0.41,7
+15,2019-08-01,Ifan Rathbone-Jones,Joe Fathallah,NA,2053,E1,1,2015,7.08,0.42,8
+16,2019-08-01,Ifan Rathbone-Jones,Xavier Cowan,NA,1886,ECF,1,2023,7.73,0.65,9
+17,2019-08-02,Ifan Rathbone-Jones,Robert A Akeya-Price,NA,2022,ECF,0,2012,8.19,0.46,9
+18,2019-08-02,Ifan Rathbone-Jones,Leo Sanitt,NA,2062,ECF,0.5,2015,8.59,0.4,9.5
+19,2019-08-03,Ifan Rathbone-Jones,James Merriman,NA,1934,ECF,1,2025,9.17,0.58,10.5
+20,2019-08-03,Ifan Rathbone-Jones,Calum Salmons,NA,2078,ECF,0,2016,9.55,0.38,10.5
+21,2019-08-04,Ifan Rathbone-Jones,Daniel J Young,NA,2102,ECF,0,2007,9.9,0.35,10.5
+22,2019-09-04,Ifan Rathbone-Jones,Barrie Wells,NA,1660,N1,1,2010,10.78,0.88,11.5
+23,2019-09-27,Ifan Rathbone-Jones,Max French,NA,2294,ECF,0,2007,10.92,0.14,11.5
+24,2019-09-28,Ifan Rathbone-Jones,Tony J Slinger,NA,1990,ECF,1,2019,11.42,0.5,12.5
+25,2019-09-28,Ifan Rathbone-Jones,Stuart Ross,NA,1742,ECF,1,2023,12.23,0.81,13.5
+26,2019-09-29,Ifan Rathbone-Jones,Henrik Stepanyan,NA,2302,ECF,1,2044,12.37,0.14,14.5
+27,2019-09-29,Ifan Rathbone-Jones,Ali Reza Jaunooby,NA,2270,ECF,0,2040,12.53,0.16,14.5
+28,2019-10-15,Ifan Rathbone-Jones,John Harvey,NA,1798,ECF,1,2045,0.8,0.8,1
+29,2019-10-20,Ifan Rathbone-Jones,Alex Bullen,NA,2216,E2,1,2062,1.07,0.27,2
+30,2019-10-22,Ifan Rathbone-Jones,Piotr Swiech,NA,2059,N1,1,2075,1.54,0.47,3
+31,2019-11-09,Ifan Rathbone-Jones,Jude Shearsby,NA,1758,ECF,1,2079,2.38,0.84,4
+32,2019-11-10,Ifan Rathbone-Jones,Steve Smith,NA,1850,W1,0,2061,3.13,0.75,4
+33,2019-11-18,Ifan Rathbone-Jones,Mark Cromwell,NA,1830,ECF,1,2066,3.9,0.77,5
+34,2019-12-04,Ifan Rathbone-Jones,Ray Williams,NA,1806,ECF,1,2071,4.7,0.8,6
+35,2019-12-07,Ifan Rathbone-Jones,Mate Ther,NA,2054,ECF,0,2060,5.18,0.48,6
+36,2019-12-08,Ifan Rathbone-Jones,Jonathan McKay,NA,1799,Sco-adj,1,2064,5.98,0.8,7
+37,2019-12-08,Ifan Rathbone-Jones,Kevin Venkatesan,NA,1864,ICU-adj,1,2071,6.71,0.73,8
+1,2019-07-07,Imogen Camp,Peter T Roberson,IM,2429,IM,0,1947,0.1,0.1,0
+2,2019-07-07,Imogen Camp,Bob Hurn,NA,1559,,1,1949,1,0.9,1
+3,2019-07-08,Imogen Camp,Tom Brown,NA,2146,,0,1943,1.24,0.24,1
+4,2019-07-09,Imogen Camp,Paul Orton,NA,1584,,1,1946,2.14,0.9,2
+5,2019-07-09,Imogen Camp,Petr Marusenko,IM,2154,IM,0,1940,2.37,0.23,2
+6,2019-07-10,Imogen Camp,Weng Yan Ong,NA,1790,,1,1947,3.08,0.71,3
+7,2019-07-11,Imogen Camp,William Hewitt,NA,2086,,0.5,1952,3.39,0.31,3.5
+8,2019-07-11,Imogen Camp,Jason Garcia,NA,2126,,0,1945,3.66,0.27,3.5
+9,2019-07-12,Imogen Camp,Daniel Chung,NA,1434,,0.5,1936,4.56,0.9,4
+10,2019-07-22,Imogen Camp,Jonas Hilwerda,FM,2275,FM,0,1933,4.68,0.12,4
+11,2019-07-22,Imogen Camp,Damien Lary,NA,2071,,0,1925,5.01,0.33,4
+12,2019-07-23,Imogen Camp,Marco D'Alessio,NA,1956.4,,0,1913,5.5,0.49,4
+13,2019-07-23,Imogen Camp,Peter Carroll,NA,2032,,0,1904,5.88,0.38,4
+14,2019-07-24,Imogen Camp,Aditya Verma,NA,2230,,0,1900,6.04,0.16,4
+15,2019-07-27,Imogen Camp,Chris B Rice,AIM,2102,AIM,0.5,1905,6.33,0.29,4.5
+16,2019-07-28,Imogen Camp,Gwilym T Price,NA,2214,,0.5,1913,6.5,0.17,5
+17,2019-07-29,Imogen Camp,Mark Cleary,NA,2222,,0,1909,6.67,0.17,5
+18,2019-07-29,Imogen Camp,Nugith Jayawarna,NA,2198,,0.5,1916,6.86,0.19,5.5
+19,2019-07-30,Imogen Camp,Daniel J Young,NA,2102,,0,1909,7.15,0.29,5.5
+20,2019-07-30,Imogen Camp,Mitchell R Burke,NA,2118,,0.5,1915,7.43,0.28,6
+21,2019-07-31,Imogen Camp,Adam Hussain,NA,1894,,1,1925,8.01,0.58,7
+22,2019-08-01,Imogen Camp,Tim Hilton,NA,1982,,1,1938,8.46,0.45,8
+23,2019-08-01,Imogen Camp,Joshua Pink,NA,2078,,0.5,1942,8.78,0.32,8.5
+24,2019-08-02,Imogen Camp,Tom Brown,NA,2078,,0.5,1947,9.1,0.32,9
+25,2019-08-02,Imogen Camp,Philip Staniland,NA,1998,,0.5,1948,9.53,0.43,9.5
+26,2019-08-03,Imogen Camp,R Alan Barton,NA,2054,,0.5,1952,9.89,0.36,10
+27,2019-08-04,Imogen Camp,Remy Rushbrooke,NA,2094,,0,1944,10.19,0.3,10
+28,2019-09-26,Imogen Camp,Richard B E Bryant,NA,1998,,0,1934,0.42,0.42,0
+1,2019-11-22,Jamie Glancey,Ron Sheen,NA,1286,ECF,1,993,0.12,0.12,1
+1,2019-09-04,John A Simmons,Paul Taylor,NA,1546,N1,1,1392,0.27,0.27,1
+2,2019-10-01,John A Simmons,Dewi Jones,NA,1707,N1,0,1389,0.39,0.12,1
+3,2019-11-05,John A Simmons,Colin White,NA,1662,ECF,0,1384,0.54,0.15,1
+4,2019-11-11,John A Simmons,Filip Molnar,NA,1620,N1,0,1378,0.73,0.19,1
+5,2019-11-12,John A Simmons,John Bowers,NA,1782,N1,0,1374,0.83,0.1,1
+6,2019-12-03,John A Simmons,Pat Ridley,NA,1422,ECF,1,1393,1.26,0.43,2
+7,2019-12-10,John A Simmons,Huw Davies,NA,1662,N1,0,1388,1.41,0.15,2
+8,2019-12-17,John A Simmons,Alan Valentine,NA,1190,N1,1,1396,2.15,0.74,3
+1,2019-10-29,John Bowers,Anton Petkov,NA,1770,N1,0,1770,0.52,0.52,0
+2,2019-11-04,John Bowers,Timothy J Soar,NA,1667,N1,1,1778,1.18,0.66,1
+3,2019-11-12,John Bowers,John A Simmons,NA,1369,N1,1,1780,2.08,0.9,2
+4,2019-12-16,John Bowers,David Jameson,NA,2173,N1,0,1778,2.18,0.1,2
+1,2019-10-29,John Shakespeare,Cliff Rice,NA,1961,N1,0.5,2046,0.62,0.62,0.5
+2,2019-11-04,John Shakespeare,Les Simcock,NA,1742,ECF,0,2032,1.48,0.86,0.5
+1,2019-10-08,Mark Bastow,Ray J Holland,NA,1857,N1,0.5,1930,0.6,0.6,0.5
+2,2019-11-12,Mark Bastow,Riyaan Yesudian,NA,1894,ECF,1,1940,1.15,0.55,1.5
+3,2019-12-10,Mark Bastow,Colm Buckley,NA,1990,ECF,0.5,1942,1.57,0.42,2
+1,2019-09-04,Mark Thomas,Michael Whale,NA,1762,N1,0,1715,0.45,0.45,0
+2,2019-09-16,Mark Thomas,Stephen Williams (Tre),NA,1658,N1,0,1701,1.05,0.6,0
+3,2019-09-25,Mark Thomas,Harry Gardiner,NA,1678,ECF,0,1687,1.62,0.57,0
+4,2019-10-22,Mark Thomas,Mike Hughes,NA,1771,N1,1,1701,2.06,0.44,1
+5,2019-11-18,Mark Thomas,Pat Ridley,NA,1422,ECF,1,1704,2.92,0.86,2
+6,2019-11-28,Mark Thomas,Charles Higgie,NA,2000,N1,0.5,1712,3.09,0.17,2.5
+7,2019-12-04,Mark Thomas,Nick Pendlebury,NA,1470,ECF,0.5,1704,3.91,0.82,3
+1,2019-12-07,Maximos Pento,Evie Maher,NA,1334,ECF-Rapid,0,1178,0.31,0.31,0
+2,2019-12-08,Maximos Pento,Nivedita Suyal,NA,1204,Sco-adj,0.5,1179,0.79,0.48,0.5
+1,2019-09-26,Michael Vidler,Charles Higgie,NA,2000,N1,1,2034,0.54,0.54,1
+2,2019-10-08,Michael Vidler,Bob Clark,NA,2118,ECF,1,2044,0.91,0.37,2
+1,2019-08-24,Michael Whale,Ian Mitchell,NA,1558,ECF,1,1768,0.76,0.76,1
+2,2019-08-24,Michael Whale,Alex Robinson,NA,1654,ECF,1,1776,1.41,0.65,2
+3,2019-08-25,Michael Whale,Jason Widdup,NA,1662,ECF,0.5,1773,2.05,0.64,2.5
+4,2019-08-25,Michael Whale,David J Buckell,NA,1662,ECF,0.5,1769,2.69,0.64,3
+5,2019-08-26,Michael Whale,Richard Szwajkun,NA,1670,ECF,0.5,1766,3.32,0.63,3.5
+6,2019-08-26,Michael Whale,Carl Kennedy,NA,1654,ECF,0.5,1763,3.97,0.65,4
+7,2019-09-04,Michael Whale,Mark Thomas,NA,1726,N1,1,1774,4.52,0.55,5
+8,2019-09-17,Michael Whale,Ray Williams,NA,1806,ECF,0,1763,4.96,0.44,5
+9,2019-10-29,Michael Whale,David Jameson,NA,2173,N1,0,1761,5.06,0.1,5
+10,2019-11-05,Michael Whale,Paul Watson,NA,1790,ECF,0,1750,5.52,0.46,5
+11,2019-11-12,Michael Whale,Cliff Rice,NA,1961,N1,0,1744,5.76,0.24,5
+12,2019-11-26,Michael Whale,Rokas Valantinas,NA,2054,ECF,0,1740,5.91,0.15,5
+13,2019-11-28,Michael Whale,Chris Grier,NA,1670,N1,0,1725,6.54,0.63,5
+14,2019-12-03,Michael Whale,Mark Cromwell,NA,1830,ECF,0,1715,6.94,0.4,5
+15,2019-12-10,Michael Whale,Anton Petkov,NA,1770,N1,0,1704,7.43,0.49,5
+16,2019-12-17,Michael Whale,Gary Fox,NA,1468,N1,1,1707,8.28,0.85,6
+1,2019-10-29,Mike Blake,Filip Molnar,NA,1620,N1,0,1540,0.41,0.41,0
+2,2019-11-12,Mike Blake,Alan Valentine,NA,1190,N1,1,1543,1.31,0.9,1
+1,2019-10-22,Mike Hughes,Mark Thomas,NA,1726,N1,0,1758,0.56,0.56,0
+2,2019-10-29,Mike Hughes,Ray Williams,NA,1806,ECF,1,1771,1.01,0.45,1
+3,2019-11-18,Mike Hughes,Steve Farry,NA,1446,ECF,1,1774,1.88,0.87,2
+4,2019-12-03,Mike Hughes,Karl Lockett,NA,1854,ECF,0,1765,2.26,0.38,2
+1,2019-09-23,Mohammed Ayad,Dewi Jones,NA,1707,N1,0.5,1700,0.49,0.49,0.5
+2,2019-10-01,Mohammed Ayad,Steve Williams,NA,1598,ECF,1,1709,1.13,0.64,1.5
+3,2019-10-08,Mohammed Ayad,Yixin Yang,NA,1710,ECF,1,1721,1.62,0.49,2.5
+4,2019-10-15,Mohammed Ayad,Roy Julian,NA,1534,ECF,1,1728,2.34,0.72,3.5
+5,2019-11-04,Mohammed Ayad,Huw Davies,NA,1662,N1,0,1715,2.89,0.55,3.5
+6,2019-11-06,Mohammed Ayad,Haydn Parry,NA,1654,N1,0.5,1713,3.45,0.56,4
+1,2019-07-07,Nigel R Davies,Tim R Spanton,NA,1974,,1,2485,0.9,0.9,1
+2,2019-07-07,Nigel R Davies,Tom Brown,NA,2146,,1,2486,1.78,0.88,2
+3,2019-07-08,Nigel R Davies,Mike P Waddington,FM,2142,FM,1,2487,2.67,0.89,3
+4,2019-07-09,Nigel R Davies,Oleg Korneev,GM,2523,GM,0.5,2488,3.12,0.45,3.5
+5,2019-07-09,Nigel R Davies,Jack Rudd,IM,2382,IM,1,2491,3.76,0.64,4.5
+6,2019-07-10,Nigel R Davies,Boris Chatalbashev,GM,2518,GM,0,2487,4.21,0.45,4.5
+7,2019-07-11,Nigel R Davies,Jagadeesh Siddharth,FM,2410,FM,1,2491,4.81,0.6,5.5
+8,2019-07-11,Nigel R Davies,Collados Jose Camacho,IM,2408,IM,0,2485,5.42,0.61,5.5
+9,2019-07-12,Nigel R Davies,Grzegorz Nasuta,GM,2529,GM,0.5,2485,5.86,0.44,6
+10,2019-08-17,Nigel R Davies,Richard B E Bryant,NA,1998,,1,2486,6.76,0.9,7
+11,2019-08-17,Nigel R Davies,Robert Lothian,NA,2046,,1,2487,7.66,0.9,8
+12,2019-08-18,Nigel R Davies,Mike J Surtees,NA,2206,,1,2489,8.5,0.84,9
+13,2019-08-18,Nigel R Davies,Brandon G I Clarke,IM,2433,IM,0.5,2488,9.07,0.57,9.5
+1,2019-09-16,Owain Meurig,Andrew M Barber,NA,1862,ECF,0,1728,0.33,0.33,0
+2,2019-10-01,Owain Meurig,Barrie Wells,NA,1660,N1,0.5,1725,0.94,0.61,0.5
+3,2019-10-07,Owain Meurig,Mark Cromwell,NA,1830,ECF,0.5,1729,1.31,0.37,1
+4,2019-10-15,Owain Meurig,Ray Williams,NA,1806,ECF,0.5,1731,1.71,0.4,1.5
+5,2019-10-15,Owain Meurig,Ray Williams,NA,1806,ECF,0.5,1733,2.11,0.4,2
+6,2019-10-21,Owain Meurig,Graham Ives,NA,1566,ECF,1,1740,2.84,0.73,3
+7,2019-11-16,Owain Meurig,Richard Drew,NA,1403,N1,1,1743,3.72,0.88,4
+8,2019-11-19,Owain Meurig,David Bryan,NA,1806,ECF,0.5,1745,4.12,0.4,4.5
+1,2019-09-04,Paul Taylor,John A Simmons,NA,1369,N1,0,1523,0.73,0.73,0
+2,2019-09-16,Paul Taylor,Richard Drew,NA,1403,N1,1,1533,1.42,0.69,1
+3,2019-09-18,Paul Taylor,Dave Littlemore,NA,1366,ECF,0.5,1525,2.16,0.74,1.5
+4,2019-10-09,Paul Taylor,Stuart Hamilton,NA,1221,N1,0.5,1513,3.03,0.87,2
+5,2019-10-15,Paul Taylor,John Sutcliffe,NA,1638,ECF,1,1533,3.4,0.37,3
+6,2019-10-28,Paul Taylor,Brian Jones,NA,1184,N1,1,1536,4.3,0.9,4
+7,2019-11-06,Paul Taylor,Andrew Hughes,NA,1614,ECF,0.5,1540,4.7,0.4,4.5
+8,2019-11-13,Paul Taylor,Jack Yang,NA,1526,ECF,1,1555,5.23,0.53,5.5
+9,2019-11-20,Paul Taylor,Felix Lefeuvre,NA,1318,ECF,1,1561,6.02,0.79,6.5
+10,2019-12-02,Paul Taylor,John Lawton,NA,1430,ECF,0,1540,6.68,0.66,6.5
+1,2019-10-08,Peter S Fisher,Barrie Wells,NA,1660,N1,0.5,1727,0.6,0.6,0.5
+2,2019-10-22,Peter S Fisher,Haydn Parry,NA,1654,N1,0.5,1724,1.2,0.6,1
+3,2019-10-22,Peter S Fisher,Colm Buckley,NA,1990,ECF,0,1720,1.38,0.18,1
+4,2019-10-29,Peter S Fisher,Steve Lloyd,NA,1806,ECF,0.5,1723,1.77,0.39,1.5
+5,2019-11-18,Peter S Fisher,Viv Oldham,NA,1422,ECF,0,1702,2.63,0.86,1.5
+6,2019-11-26,Peter S Fisher,Steve Lloyd,NA,1806,ECF,1,1717,3.02,0.39,2.5
+7,2019-12-03,Peter S Fisher,David Hulme,NA,1782,ECF,1,1730,3.45,0.43,3.5
+8,2019-12-10,Peter S Fisher,John Sutcliffe,NA,1638,ECF,0,1715,4.08,0.63,3.5
+1,2019-09-24,Piotr Swiech,Chris Doran,NA,2030,ECF,0,2050,0.54,0.54,0
+2,2019-10-22,Piotr Swiech,Ifan Rathbone-Jones,NA,2040,N2,0,2042,1.07,0.53,0
+3,2019-10-22,Piotr Swiech,David Robertson,NA,2126,ECF,1,2051,1.48,0.41,1
+4,2019-11-12,Piotr Swiech,David Bennion,NA,1918,ECF,0,2040,2.17,0.69,1
+5,2019-11-18,Piotr Swiech,Tony Roberts,NA,1734,ECF,1,2042,3.04,0.87,2
+6,2019-11-26,Piotr Swiech,Colm Buckley,NA,1990,ECF,1,2049,3.64,0.6,3
+7,2019-12-10,Piotr Swiech,David Stuttard,NA,1822,ECF,1,2052,4.44,0.8,4
+1,2019-09-11,Quentin RH Dodd,John Bourne,NA,1326,ECF,0.5,1607,0.85,0.85,0.5
+2,2019-09-18,Quentin RH Dodd,Ian Clayton,NA,1414,ECF,1,1612,1.61,0.76,1.5
+3,2019-09-25,Quentin RH Dodd,Lukasz Michalek,NA,1510,ECF,0,1597,2.25,0.64,1.5
+4,2019-10-09,Quentin RH Dodd,David Houston,NA,1622,ECF,0.5,1597,2.74,0.49,2
+5,2019-10-28,Quentin RH Dodd,Richard Drew,NA,1403,N1,0.5,1591,3.51,0.77,2.5
+6,2019-11-06,Quentin RH Dodd,Michael Williams,NA,1662,ECF,1,1604,3.94,0.43,3.5
+7,2019-11-13,Quentin RH Dodd,Anh Pham,NA,1590,ECF,1,1615,4.48,0.54,4.5
+8,2019-11-20,Quentin RH Dodd,Martin Hargreaves,NA,1494,ECF,0.5,1611,5.15,0.67,5
+9,2019-11-28,Quentin RH Dodd,Adrian Bailey,NA,1550,ECF,0,1597,5.74,0.59,5
+10,2019-12-02,Quentin RH Dodd,Sanjoy Banerjee,NA,1662,ECF,1,1611,6.17,0.43,6
+1,2019-09-24,Ray J Holland,Paula R Watson,NA,1790,ECF,0,1843,0.59,0.59,0
+2,2019-10-08,Ray J Holland,Mark Bastow,NA,1932,N1,0.5,1845,0.99,0.4,0.5
+3,2019-10-22,Ray J Holland,Andy Barber,NA,1862,ECF,0.5,1845,1.48,0.49,1
+4,2019-10-22,Ray J Holland,Graham Dobson,NA,2070,ECF,0.5,1852,1.71,0.23,1.5
+5,2019-10-29,Ray J Holland,Graham Bromley,NA,1846,ECF,0.5,1851,2.23,0.52,2
+6,2019-11-12,Ray J Holland,Peter Lovatt,NA,1790,ECF,0.5,1849,2.82,0.59,2.5
+7,2019-11-18,Ray J Holland,Alan Kelly,NA,1494,ECF,1,1852,3.72,0.9,3.5
+8,2019-11-26,Ray J Holland,Ian McLean,NA,1966,ECF,1,1867,4.07,0.35,4.5
+9,2019-12-03,Ray J Holland,Bart Fajfer,NA,2022,ECF,1,1885,4.35,0.28,5.5
+10,2019-12-10,Ray J Holland,Ray Williams,NA,1806,ECF,1,1895,4.92,0.57,6.5
+1,2019-09-04,Raymond Pearson,Chris Fox,NA,1782,E1,0.5,1948,0.73,0.73,0.5
+2,2019-09-09,Raymond Pearson,Daniel Jaberansari,NA,1545,E1,1,1951,1.63,0.9,1.5
+3,2019-09-16,Raymond Pearson,Marcell Vesz,NA,1561,E1,1,1953,2.53,0.9,2.5
+4,2019-09-17,Raymond Pearson,Richard Miles,NA,2002,G1,1,1967,2.96,0.43,3.5
+1,2019-09-26,Richard Burton,David Bennion,NA,1918,ECF,1,1859,0.4,0.4,1
+2,2019-10-02,Richard Burton,Richard B E Bryant,NA,1998,ECF,0,1852,0.69,0.29,1
+3,2019-11-06,Richard Burton,David Bryan,NA,1806,ECF,1,1863,1.24,0.55,2
+4,2019-11-20,Richard Burton,Jim Wiseman,NA,1606,ECF,1,1868,2.04,0.8,3
+5,2019-12-10,Richard Burton,Ian McLean,NA,1966,ECF,0,1860,2.37,0.33,3
+1,2019-09-24,Richard Dineley,Philip J Crocker,NA,2198,ECF,0.5,2302,0.64,0.64,0.5
+2,2019-10-22,Richard Dineley,John Carleton,NA,2294,ECF,1,2307,1.15,0.51,1.5
+3,2019-11-12,Richard Dineley,Brian Whyte,NA,2150,ECF,1,2309,1.86,0.71,2.5
+4,2019-12-10,Richard Dineley,John Carleton,NA,2294,ECF,0.5,2309,2.37,0.51,3
+1,2019-09-16,Richard Drew,Paul Taylor,NA,1546,N1,0,1393,0.31,0.31,0
+2,2019-09-23,Richard Drew,Andrew Hughes,NA,1614,ECF,0,1386,0.54,0.23,0
+3,2019-10-01,Richard Drew,Stephen Paterson,NA,1243,N1,1,1395,1.25,0.71,1
+4,2019-10-07,Richard Drew,Phil Wright,NA,1382,ECF,1,1410,1.78,0.53,2
+5,2019-10-21,Richard Drew,Orlando Bell,NA,1078,ECF,1,1414,2.65,0.87,3
+6,2019-10-28,Richard Drew,Quentin RH Dodd,NA,1615,N1,0.5,1423,2.88,0.23,3.5
+7,2019-11-12,Richard Drew,Nigel Hughes,NA,1126,ECF,0.5,1412,3.72,0.84,4
+8,2019-11-16,Richard Drew,Owain Meurig,NA,1736,N1,0,1408,3.84,0.12,4
+1,2019-09-04,Richard Hibbs,Domantas Kirklys,NA,1544,N1,0,1469,0.41,0.41,0
+2,2019-11-28,Richard Hibbs,David Houston,NA,1622,ECF,0,1459,0.72,0.31,0
+1,2019-10-05,Robin Kirkwood,Vladimir Pan,NA,2031,Fide,0,1625,0.1,0.1,0
+2,2019-10-06,Robin Kirkwood,Maurice Engelaer,NA,1896,Fide,0,1621,0.27,0.17,0
+3,2019-10-07,Robin Kirkwood,Geir Olsen,NA,1465,Fide,1,1627,0.99,0.72,1
+4,2019-10-08,Robin Kirkwood,Bas Dudink,NA,1939,Fide,0,1624,1.12,0.13,1
+5,2019-10-09,Robin Kirkwood,Christian Bokhenek,NA,1243,Fide,0,1603,2.02,0.9,1
+6,2019-10-10,Robin Kirkwood,Clas Brauer,NA,1346,Fide,1,1606,2.86,0.84,2
+7,2019-10-11,Robin Kirkwood,Miguel Gaya Torrens,NA,1744,Fide,0,1598,3.2,0.34,2
+8,2019-10-12,Robin Kirkwood,Johan Carlsson,NA,1501,Fide,0,1582,3.87,0.67,2
+9,2019-10-13,Robin Kirkwood,Robin Nettleton,NA,1438,ECF,0.5,1576,4.62,0.75,2.5
+10,2019-10-20,Robin Kirkwood,Wim Van Hoek,NA,1863,Fide,0,1571,4.82,0.2,2.5
+11,2019-10-21,Robin Kirkwood,Sidney A Jones,NA,1550,ECF,1,1581,5.43,0.61,3.5
+12,2019-10-22,Robin Kirkwood,Geoff R Hermes,NA,1862,ECF,0,1576,5.63,0.2,3.5
+13,2019-10-23,Robin Kirkwood,Bogdan Nalichowski,NA,1375,Fide,0,1556,6.44,0.81,3.5
+14,2019-10-24,Robin Kirkwood,Terry Harnden,NA,1499,Fide,0.5,1552,7.11,0.67,4
+15,2019-10-25,Robin Kirkwood,Frits Bakkes,NA,1605,Fide,0,1540,7.64,0.53,4
+16,2019-10-26,Robin Kirkwood,Richard Le Maitre,NA,1351,Fide,0.5,1531,8.48,0.84,4.5
+17,2019-11-20,Robin Kirkwood,Thorsten Meyer,NA,1940,Fide,0,1528,8.61,0.13,4.5
+18,2019-11-21,Robin Kirkwood,Harry Verhoef,NA,1785,Fide,0,1521,8.9,0.29,4.5
+19,2019-11-22,Robin Kirkwood,Kurt Schorn,NA,1558,Est,1,1531,9.5,0.6,5.5
+20,2019-11-23,Robin Kirkwood,Gary Hinchcliffe,NA,1878,ECF,0,1526,9.69,0.19,5.5
+21,2019-11-24,Robin Kirkwood,Frank Pikatz,NA,1697,Fide,0,1517,10.09,0.4,5.5
+22,2019-11-26,Robin Kirkwood,Thomas Alexsson,NA,1708,Fide,0,1507,10.48,0.39,5.5
+1,2019-11-16,Roger Greatorex,William J Egan,NA,1606,ECF,0.5,1745,0.69,0.69,0.5
+2,2019-11-17,Roger Greatorex,Noel J Boustred,NA,1622,ECF,0.5,1741,1.36,0.67,1
+3,2019-11-17,Roger Greatorex,Mark M Cheetham,NA,1606,ECF,0.5,1737,2.05,0.69,1.5
+4,2019-11-30,Roger Greatorex,Christine F Constable,NA,1582,ECF,1,1744,2.77,0.72,2.5
+5,2019-11-30,Roger Greatorex,Kanav Monga,NA,1638,ECF,0.5,1740,3.42,0.65,3
+6,2019-11-30,Roger Greatorex,Golf Sookphanich,NA,1654,ECF,0,1725,4.05,0.63,3
+7,2019-12-01,Roger Greatorex,John Harris,NA,1702,ECF,0.5,1723,4.62,0.57,3.5
+1,2019-10-16,Sandi Medagedara,Mark Eldor,NA,1450,Est,0,1182,0.18,0.18,0
+2,2019-10-30,Sandi Medagedara,Graham Ashley,NA,1118,ECF,1,1202,0.78,0.6,1
+3,2019-11-22,Sandi Medagedara,Philip Green,NA,1366,ECF,1,1237,1.05,0.27,2
+1,2019-09-18,Sithi Medagedara,Ethan Challenor,NA,1094,ECF,1,1411,0.87,0.87,1
+2,2019-10-16,Sithi Medagedara,Anh Pham,NA,1500,Est,1,1431,1.24,0.37,2
+3,2019-10-30,Sithi Medagedara,Ben Newnham,NA,1142,ECF,1,1437,2.07,0.83,3
+4,2019-11-22,Sithi Medagedara,Allan Clarke,NA,1398,ECF,0,1420,2.58,0.51,3
+1,2019-09-11,Stephen Dunning,Steve Richards,NA,1550,ECF,0.5,1580,0.54,0.54,0.5
+2,2019-09-16,Stephen Dunning,Dewi Jones,NA,1707,N1,0,1569,0.87,0.33,0.5
+3,2019-09-18,Stephen Dunning,Steve Williams,NA,1598,ECF,1,1586,1.35,0.48,1.5
+4,2019-11-13,Stephen Dunning,Jixin Yang,NA,1710,ECF,0,1576,1.67,0.32,1.5
+5,2019-11-20,Stephen Dunning,Martin Cockerill,NA,1382,ECF,1,1583,2.43,0.76,2.5
+6,2019-12-02,Stephen Dunning,Jim Wiseman,NA,1606,ECF,1,1601,2.89,0.46,3.5
+7,2019-12-04,Stephen Dunning,Dave Hulme,NA,1374,ECF,1,1608,3.66,0.77,4.5
+1,2019-10-01,Stephen Paterson,Richard Drew,NA,1403,N1,0,1234,0.29,0.29,0
+2,2019-11-28,Stephen Paterson,Diego Garcia Lucas,NA,1422,ECF,0,1225,0.55,0.26,0
+3,2019-12-03,Stephen Paterson,Frank McGuigan,NA,1246,ECF,0,1209,1.05,0.5,0
+4,2019-12-10,Stephen Paterson,Catriona Coutts,NA,1511,N1,0,1204,1.22,0.17,0
+1,2019-09-16,Stephen Williams (Tre),Mark Thomas,NA,1726,N1,1,1672,0.4,0.4,1
+2,2019-10-01,Stephen Williams (Tre),Danny Heath,NA,1534,N1,1,1680,1.07,0.67,2
+3,2019-10-07,Stephen Williams (Tre),Roy Julian,NA,1534,ECF,1,1688,1.74,0.67,3
+4,2019-10-15,Stephen Williams (Tre),Steve Williams,NA,1598,ECF,1,1698,2.32,0.58,4
+5,2019-10-21,Stephen Williams (Tre),David Bennion,NA,1918,ECF,0,1694,2.5,0.18,4
+6,2019-11-16,Stephen Williams (Tre),Dewi Jones,NA,1707,N1,0,1684,2.93,0.43,4
+7,2019-11-19,Stephen Williams (Tre),Joe Nemcek,NA,1702,ECF,0.5,1685,3.37,0.44,4.5
+1,2019-09-11,Steve Richards,Stephen Dunning,NA,1550,ECF,0.5,1581,0.55,0.55,0.5
+2,2019-10-09,Steve Richards,Dewi Jones,NA,1707,N1,0,1571,0.88,0.33,0.5
+3,2019-10-22,Steve Richards,Domantas Kirklys,NA,1544,N1,0,1553,1.43,0.55,0.5
+4,2019-10-29,Steve Richards,Joe Nemcek,NA,1702,ECF,0.5,1558,1.77,0.34,1
+5,2019-11-13,Steve Richards,Charles Higgie,NA,2000,N1,0,1555,1.87,0.1,1
+6,2019-11-18,Steve Richards,Barry O'Brien,NA,1366,ECF,1,1562,2.65,0.78,2
+7,2019-11-26,Steve Richards,Chris Grier,NA,1670,N1,0,1550,3.03,0.38,2
+8,2019-12-03,Steve Richards,Harry Gardiner,NA,1678,ECF,0,1538,3.4,0.37,2
+1,2019-09-10,Stuart Hamilton,Nigel G Hughes,NA,1126,ECF,0,1201,0.63,0.63,0
+2,2019-09-19,Stuart Hamilton,Ryan Ho,NA,1270,Est,1,1219,1.06,0.43,1
+3,2019-10-09,Stuart Hamilton,Paul Taylor,NA,1546,N1,0.5,1231,1.19,0.13,1.5
+4,2019-10-28,Stuart Hamilton,Chris Goy,NA,1326,ECF,0.5,1235,1.55,0.36,2
+5,2019-11-12,Stuart Hamilton,Angus Weir,NA,1462,ECF,1,1261,1.75,0.2,3
+6,2019-11-16,Stuart Hamilton,Timothy S Allen,NA,1486,ECF,0,1256,1.92,0.17,3
+7,2019-11-16,Stuart Hamilton,Anthony Jinks,NA,1558,ECF,0,1252,2.04,0.12,3
+8,2019-11-17,Stuart Hamilton,Alfredo Andreoli,NA,902,ECF,0.5,1240,2.91,0.87,3.5
+9,2019-11-17,Stuart Hamilton,W Douglas McLellan,NA,1190,ECF,1,1255,3.45,0.54,4.5
+10,2019-11-26,Stuart Hamilton,Nethuli Saram,NA,1470,ECF,1,1281,3.64,0.19,5.5
+11,2019-11-28,Stuart Hamilton,Alan Valentine,NA,1190,N1,1,1295,4.18,0.54,6.5
+12,2019-12-03,Stuart Hamilton,Felix Lefeuvre,NA,1318,ECF,0.5,1299,4.55,0.37,7
+13,2019-12-10,Stuart Hamilton,David Thomas,NA,1470,ECF,1,1325,4.74,0.19,8
+1,2019-10-16,Susan F Parry,Warren Bates,NA,942,ECF,1,1220,0.83,0.83,1
+2,2019-10-30,Susan F Parry,Mike Dickinson,NA,1086,ECF,0,1199,1.51,0.68,1
+3,2019-11-22,Susan F Parry,Brian Crompton,NA,1374,ECF,0.5,1205,1.8,0.29,1.5
+1,2019-09-26,Syringa Camp,Peter Lovatt,NA,1774,ECF,0,1754,0.49,0.49,0
+2,2019-10-08,Syringa Camp,G Brian Davies,NA,1731,N1,0,1741,1.04,0.55,0
+3,2019-11-12,Syringa Camp,David Stuttard,NA,1822,ECF,0,1731,1.46,0.42,0
+4,2019-11-26,Syringa Camp,Graham Dobson,NA,2070,ECF,0,1728,1.6,0.14,0
+1,2019-08-16,Timothy J Soar,Michael Burney_Cumming,NA,1526,ECF,1,1674,0.69,0.69,1
+2,2019-08-17,Timothy J Soar,Chris J.Soltysiak,NA,1566,ECF,0.5,1671,1.33,0.64,1.5
+3,2019-08-17,Timothy J Soar,Derek W Hadley,NA,1582,ECF,0.5,1668,1.95,0.62,2
+4,2019-08-18,Timothy J Soar,Geoff A Foxon,NA,1534,ECF,1,1676,2.63,0.68,3
+5,2019-08-18,Timothy J Soar,Manoj Natarajan,NA,1542,Est,0.5,1672,3.3,0.67,3.5
+6,2019-09-04,Timothy J Soar,Haydn Parry,NA,1654,N1,0,1659,3.82,0.52,3.5
+7,2019-09-17,Timothy J Soar,Nick Pendlebury,NA,1470,ECF,1,1665,4.58,0.76,4.5
+8,2019-10-01,Timothy J Soar,Liam Jefferies,NA,1700,Est,0.5,1666,5.03,0.45,5
+9,2019-11-04,Timothy J Soar,John Bowers,NA,1782,N1,0,1658,5.37,0.34,5
+10,2019-11-05,Timothy J Soar,Joe Nemcek,NA,1702,ECF,0.5,1659,5.82,0.45,5.5
+11,2019-11-12,Timothy J Soar,Ray Williams,NA,1806,ECF,1,1676,6.13,0.31,6.5
+12,2019-11-26,Timothy J Soar,Paul Watson,NA,1790,ECF,0.5,1680,6.46,0.33,7
+13,2019-12-03,Timothy J Soar,Jeff Reid,NA,1486,ECF,0,1662,7.2,0.74,7
+14,2019-12-10,Timothy J Soar,John Harvey,NA,1798,ECF,0,1655,7.52,0.32,7
+1,2019-07-02,Wayne McFadden,Barrie Wells,NA,1660,N1,0,1318,0.12,0.12,0
+2,2019-11-11,Wayne McFadden,Catriona Coutts,NA,1511,N1,0,1310,0.37,0.25,0
+3,2019-12-10,Wayne McFadden,Filip Molnar,NA,1620,N1,0,1305,0.52,0.15,0

@@ -7,12 +7,12 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-.tabs {
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin: 6px auto 0;
-}
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin: 6px auto 0;
+    }
 
     .tabs button {
       padding: 6px 10px;
@@ -51,7 +51,11 @@
   </header>
 
   <div class="wrap intro">
-    <p class="muted">Last Updated: 11/05/2026</p>
+    <p class="muted">Updated: <span id="last-updated">loading…</span></p>
+
+    <p>
+      This site auto-updates every Monday morning. 
+    </p>
 
     <p>
       Here you’ll find unofficial WCU ratings calculated with a live batch system,
@@ -78,25 +82,23 @@
       <a href="https://www.welshchessunion.uk/Grading/index.php">WCU grading site</a>.
       That site does all the work of collecting results, maintaining records, and
       producing the official rating lists. J-Ratings simply copies those published
-      results and applies a different calculation method. From time to time I run
-      some code to refresh the numbers. There’s no separate database or ongoing
-      manual work involved here.
+      results and applies a different calculation method.
     </p>
   </div>
 
   <main class="wrap">
     <section class="panel" id="players-panel">
-<h2>All players</h2>
+      <h2>All players</h2>
 
-<div class="tabs" aria-label="Rating view">
-  <button id="view-live" class="active" type="button">Live</button>
-  <button id="view-peak" type="button">Peak</button>
-</div>
+      <div class="tabs" aria-label="Rating view">
+        <button id="view-live" class="active" type="button">Live</button>
+        <button id="view-peak" type="button">Peak</button>
+      </div>
 
-<div class="toolbar">
-  <input id="q" type="search" placeholder="Filter by name…">
-  <span id="count" class="muted"></span>
-</div>
+      <div class="toolbar">
+        <input id="q" type="search" placeholder="Filter by name…">
+        <span id="count" class="muted"></span>
+      </div>
 
       <div class="table-wrap">
         <table id="players">
@@ -116,103 +118,124 @@
 
   <script>
     const DATA_URL = 'data/players.json';
+    const META_URL = 'data/meta.json';
 
-const state = {
-  rows: [],
-  filtered: [],
-  view: 'live'
-};
+    const state = {
+      rows: [],
+      filtered: [],
+      view: 'live'
+    };
 
-function render() {
-  const tbody = document.querySelector('#players tbody');
-  tbody.innerHTML = '';
+    async function loadMeta() {
+      try {
+        const res = await fetch(META_URL, { cache: 'no-cache' });
 
-  const valueKey = state.view === 'peak' ? 'peak' : 'rating';
+        if (!res.ok) {
+          throw new Error('Failed to load meta.json');
+        }
 
-  for (const r of state.filtered) {
-    const tr = document.createElement('tr');
+        const meta = await res.json();
 
-    const tdName = document.createElement('td');
-    const a = document.createElement('a');
-    a.href = `player.html?id=${encodeURIComponent(r.id)}`;
-    a.textContent = r.name;
-    tdName.appendChild(a);
+        document.getElementById('last-updated').textContent =
+          meta.updated || 'unknown';
+      } catch (err) {
+        document.getElementById('last-updated').textContent = 'unknown';
+      }
+    }
 
-    const tdRt = document.createElement('td');
-    tdRt.className = 'right';
-    tdRt.textContent = Math.round(r[valueKey]);
+    function render() {
+      const tbody = document.querySelector('#players tbody');
+      tbody.innerHTML = '';
 
-    tr.appendChild(tdName);
-    tr.appendChild(tdRt);
-    tbody.appendChild(tr);
-  }
+      const valueKey = state.view === 'peak' ? 'peak' : 'rating';
 
-  document.getElementById('rating-col').textContent =
-    state.view === 'peak' ? 'Peak' : 'Rating';
+      for (const r of state.filtered) {
+        const tr = document.createElement('tr');
 
-  document.getElementById('count').textContent =
-    `${state.filtered.length.toLocaleString()} players`;
-}
+        const tdName = document.createElement('td');
+        const a = document.createElement('a');
+        a.href = `player.html?id=${encodeURIComponent(r.id)}`;
+        a.textContent = r.name;
+        tdName.appendChild(a);
 
-function applyFilter() {
-  const q = document.getElementById('q').value.trim().toLowerCase();
-  const valueKey = state.view === 'peak' ? 'peak' : 'rating';
+        const tdRt = document.createElement('td');
+        tdRt.className = 'right';
+        tdRt.textContent = Math.round(r[valueKey]);
 
-  const list = !q
-    ? state.rows.slice()
-    : state.rows.filter(r => r.name.toLowerCase().includes(q));
+        tr.appendChild(tdName);
+        tr.appendChild(tdRt);
+        tbody.appendChild(tr);
+      }
 
-  state.filtered = list.sort((a, b) => b[valueKey] - a[valueKey]);
-  render();
-}
+      document.getElementById('rating-col').textContent =
+        state.view === 'peak' ? 'Peak' : 'Rating';
+
+      document.getElementById('count').textContent =
+        `${state.filtered.length.toLocaleString()} players`;
+    }
+
+    function applyFilter() {
+      const q = document.getElementById('q').value.trim().toLowerCase();
+      const valueKey = state.view === 'peak' ? 'peak' : 'rating';
+
+      const list = !q
+        ? state.rows.slice()
+        : state.rows.filter(r => r.name.toLowerCase().includes(q));
+
+      state.filtered = list.sort((a, b) => b[valueKey] - a[valueKey]);
+      render();
+    }
 
     async function load() {
       try {
         const res = await fetch(DATA_URL, { cache: 'no-cache' });
+
         if (!res.ok) {
           throw new Error('Failed to load players.json');
         }
 
         const data = await res.json();
 
-state.rows = data
-  .filter(d =>
-    d &&
-    d.id &&
-    d.name &&
-    Number.isFinite(+d.rating) &&
-    Number.isFinite(+d.peak)
-  )
-  .map(d => ({
-    id: d.id,
-    name: d.name,
-    rating: +d.rating,
-    peak: +d.peak
-  }));
+        state.rows = data
+          .filter(d =>
+            d &&
+            d.id &&
+            d.name &&
+            Number.isFinite(+d.rating) &&
+            Number.isFinite(+d.peak)
+          )
+          .map(d => ({
+            id: d.id,
+            name: d.name,
+            rating: +d.rating,
+            peak: +d.peak
+          }));
 
-applyFilter();
+        applyFilter();
       } catch (err) {
         document.querySelector('#players tbody').innerHTML =
           `<tr><td colspan="2">Error loading data: ${err.message}</td></tr>`;
       }
     }
 
-document.getElementById('view-live').addEventListener('click', () => {
-  state.view = 'live';
-  document.getElementById('view-live').classList.add('active');
-  document.getElementById('view-peak').classList.remove('active');
-  applyFilter();
-});
+    document.getElementById('view-live').addEventListener('click', () => {
+      state.view = 'live';
+      document.getElementById('view-live').classList.add('active');
+      document.getElementById('view-peak').classList.remove('active');
+      applyFilter();
+    });
 
-document.getElementById('view-peak').addEventListener('click', () => {
-  state.view = 'peak';
-  document.getElementById('view-peak').classList.add('active');
-  document.getElementById('view-live').classList.remove('active');
-  applyFilter();
-});
+    document.getElementById('view-peak').addEventListener('click', () => {
+      state.view = 'peak';
+      document.getElementById('view-peak').classList.add('active');
+      document.getElementById('view-live').classList.remove('active');
+      applyFilter();
+    });
 
-document.getElementById('q').addEventListener('input', applyFilter);
-load();
+    document.getElementById('q').addEventListener('input', applyFilter);
+
+    loadMeta();
+    load();
   </script>
 </body>
 </html>

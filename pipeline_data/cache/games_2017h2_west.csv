@@ -1,0 +1,1340 @@
+GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,Exp,Pts
+1,2017-09-02,Adam May,Gareth Morris,7,2106,W1,0,2030,0.4,0.4,0
+2,2017-09-02,Adam May,Peter Ehsandar,NA,2027,E1,0,2021,0.91,0.51,0
+3,2017-09-03,Adam May,Ondrej Cisek,NA,1847,FIDE,1,2025,1.66,0.75,1
+4,2017-09-03,Adam May,Dave Turner,NA,2003,G1,0.5,2025,2.21,0.55,1.5
+5,2017-09-19,Adam May,Tony Crossman,47,1663,W1,1,2026,3.11,0.9,2.5
+6,2017-09-27,Adam May,Chris Daniel,40,1725,W1,0.5,2020,3.97,0.86,3
+7,2017-10-10,Adam May,Rob Saunders,11,2084,W1,0.5,2022,4.4,0.43,3.5
+8,2017-10-13,Adam May,Tom Brown,NA,2092,E2,0.5,2023,4.82,0.42,4
+9,2017-10-14,Adam May,Tim Kett,NA,2269,E1,0,2020,5.02,0.2,4
+10,2017-10-14,Adam May,Adam Musson,4,2121,W1,1,2030,5.4,0.38,5
+11,2017-10-15,Adam May,Ernest M White,NA,1802,G1,0.5,2025,6.2,0.8,5.5
+12,2017-10-15,Adam May,Julie Van Kemenade,NA,1752,D1,0.5,2019,7.04,0.84,6
+13,2017-10-18,Adam May,Mal Kingman,42,1722,W1,1,2021,7.91,0.87,7
+14,2017-11-02,Adam May,Huw Jones,55,1621,W1,1,2023,8.81,0.9,8
+15,2017-11-05,Adam May,Tony Haigh,NA,1875,D1,1,2028,9.53,0.72,9
+16,2017-11-09,Adam May,Moss McCarthy,23,1950,W1,0.5,2026,10.15,0.62,9.5
+17,2017-11-17,Adam May,Andrew Di-Vetta,NA,1745,E2,0.5,2020,11,0.85,10
+18,2017-11-18,Adam May,Tony Haigh,NA,1875,D1,0,2008,11.72,0.72,10
+19,2017-11-18,Adam May,Lynda Smith,NA,1967,G1,1,2015,12.32,0.6,11
+20,2017-11-19,Adam May,Andrew Gibbons,16,2010,W1,0.5,2014,12.86,0.54,11.5
+21,2017-11-19,Adam May,Dai James,NA,1959,E2,0.5,2012,13.47,0.61,12
+22,2017-12-06,Adam May,Tony Crossman,47,1663,W1,1,2014,14.37,0.9,13
+23,2017-12-13,Adam May,Mark Evans,24,1941,W1,0.5,2012,15,0.63,13.5
+1,2017-08-25,Adam Musson,Andrew J Borkowski,NA,1878,,1,2124,0.8,0.8,1
+2,2017-08-26,Adam Musson,Ashley Stewart,NA,2294,,0,2120,1.07,0.27,1
+3,2017-08-26,Adam Musson,Mike Bramson,NA,1982,,0.5,2117,1.76,0.69,1.5
+4,2017-08-27,Adam Musson,David Kramaley,NA,1966,,1,2121,2.47,0.71,2.5
+5,2017-08-27,Adam Musson,Simon Wilks,NA,2126,,0,2114,2.96,0.49,2.5
+6,2017-09-12,Adam Musson,Andrew Di-Vetta,NA,1806,,0,2100,3.83,0.87,2.5
+7,2017-09-19,Adam Musson,Richard Cleveland,10,2092,,0,2091,4.37,0.54,2.5
+8,2017-09-20,Adam Musson,Michael T Harris,NA,2014,,0,2081,5.02,0.65,2.5
+9,2017-10-04,Adam Musson,Tomas Jankowski,NA,1606,,1,2082,5.92,0.9,3.5
+10,2017-10-10,Adam Musson,Alan Young,8,2101,,0.5,2082,6.45,0.53,4
+11,2017-10-13,Adam Musson,Dave Turner,NA,2003,,0,2071,7.11,0.66,4
+12,2017-10-14,Adam Musson,Julie Van Kemenade,NA,1752,,1,2073,8.01,0.9,5
+13,2017-10-14,Adam Musson,Adam May,15,2036,,0,2063,8.63,0.62,5
+14,2017-10-15,Adam Musson,Tom Brown,NA,2092,,0.5,2062,9.17,0.54,5.5
+15,2017-10-17,Adam Musson,David Buttell,25,1913,,0,2050,9.94,0.77,5.5
+16,2017-10-22,Adam Musson,Howard Williams,NA,2323,FM,0.5,2054,10.18,0.24,6
+17,2017-10-24,Adam Musson,David Buttell,25,1913,,1,2058,10.95,0.77,7
+18,2017-11-05,Adam Musson,Tom Brown,NA,2092,,1,2065,11.49,0.54,8
+19,2017-11-07,Adam Musson,David Guy,30,1865,,1,2068,12.31,0.82,9
+20,2017-11-08,Adam Musson,Peter Chaplin,NA,2102,,1,2076,12.84,0.53,10
+21,2017-11-14,Adam Musson,Andrew Di-Vetta,NA,1745,,0.5,2069,13.74,0.9,10.5
+22,2017-11-15,Adam Musson,Bogdan Manghiuc,NA,2062,,0.5,2068,14.32,0.58,11
+23,2017-11-17,Adam Musson,Moss McCarthy,23,1950,,1,2072,15.05,0.73,12
+24,2017-11-18,Adam Musson,Andrew Gibbons,16,2010,,1,2078,15.7,0.65,13
+25,2017-11-18,Adam Musson,Tom Brown,NA,2112,,0,2070,16.21,0.51,13
+26,2017-11-19,Adam Musson,Sven Zeidler,NA,2230,,1,2080,16.56,0.35,14
+27,2017-11-19,Adam Musson,Tim Kett,NA,2278,,0.5,2083,16.85,0.29,14.5
+28,2017-11-24,Adam Musson,John Waterfield,NA,2005,,1,2089,0.61,0.61,1
+29,2017-11-25,Adam Musson,Haria D Bogdan,NA,2054,,1,2097,1.15,0.54,2
+30,2017-11-25,Adam Musson,Svyatoslav Vorobyev,NA,2050,,0,2088,1.7,0.55,2
+31,2017-11-26,Adam Musson,Max French,NA,2070,,0,2079,2.22,0.52,2
+32,2017-11-26,Adam Musson,Cherupalli Ramprasad,NA,2050,,0.5,2079,2.77,0.55,2.5
+33,2017-11-29,Adam Musson,Mike Brigden,NA,2062,,1,2086,3.3,0.53,3.5
+34,2017-12-13,Adam Musson,Alan Young,8,2101,,0.5,2087,3.77,0.47,4
+35,2017-12-14,Adam Musson,Patryk Krzyzanowski,NA,2206,,1,2097,4.1,0.33,5
+1,2017-09-21,Adrian Davies,Peter George,67,1525,W1,0.5,1692,0.73,0.73,0.5
+1,2017-10-17,Aidan Reilly,Ian Dyer,143,1048,W1,1,1018,0.43,0.43,1
+2,2017-11-02,Aidan Reilly,Clive Gosling,139,1026,W1,1,1036,0.89,0.46,2
+3,2017-11-09,Aidan Reilly,Derek Bellamy,124,1162,W1,0,1027,1.17,0.28,2
+4,2017-11-29,Aidan Reilly,Max Browning,93,1322,W1,0,1022,1.3,0.13,2
+5,2017-12-05,Aidan Reilly,Joel Chung,122,1171,W1,1,1046,1.57,0.27,3
+6,2017-12-12,Aidan Reilly,Kevin Cullen,142,1000,W1,1,1062,2.07,0.5,4
+1,2017-09-13,Alan Bean,Ben Mora,64,1590,W1,0,1263,0.13,0.13,0
+2,2017-09-20,Alan Bean,John Davies,108,1281,W1,0,1247,0.61,0.48,0
+3,2017-09-22,Alan Bean,Daniel Chung,110,1261,W1,0,1231,1.12,0.51,0
+4,2017-09-27,Alan Bean,Peter George,67,1525,W1,0.5,1241,1.3,0.18,0.5
+5,2017-10-11,Alan Bean,Ken Huntley,86,1377,W1,0,1230,1.65,0.35,0.5
+6,2017-10-17,Alan Bean,Byron Jones,148,1061,W1,1,1238,2.42,0.77,1.5
+7,2017-10-18,Alan Bean,Guto Neave,59,1585,W1,0,1233,2.55,0.13,1.5
+8,2017-10-20,Alan Bean,David Toner,70,1500,W1,0,1227,2.75,0.2,1.5
+9,2017-10-23,Alan Bean,Sean Denton,83,1407,W1,1,1249,3.06,0.31,2.5
+10,2017-11-01,Alan Bean,Roger Jenkins,NA,1490,E1,0,1242,3.28,0.22,2.5
+11,2017-11-08,Alan Bean,Jon Jenkins,112,1250,W1,1,1257,3.8,0.52,3.5
+12,2017-11-27,Alan Bean,Joe Spooner,129,1101,W1,0,1234,4.52,0.72,3.5
+13,2017-11-29,Alan Bean,Eleanor Collins,94,1304,W1,0,1220,4.97,0.45,3.5
+14,2017-12-06,Alan Bean,Ken Huntley,86,1377,W1,0,1209,5.32,0.35,3.5
+15,2017-12-07,Alan Bean,Vaughan Thomas,95,1300,W1,0.5,1210,5.77,0.45,4
+16,2017-12-13,Alan Bean,Joseph Addis,78,1447,W1,0,1202,6.03,0.26,4
+1,2017-09-19,Alan Bennett,Chris Howells,NA,1867,E1,0,2037,0.74,0.74,0
+2,2017-10-10,Alan Bennett,William Hewitt,6,2110,W1,0,2031,1.15,0.41,0
+1,2017-09-14,Alan Rosser,Minjae Park,132,1100,W1,1,1296,0.75,0.75,1
+2,2017-10-05,Alan Rosser,Joel Chung,122,1171,W1,0,1275,1.41,0.66,1
+3,2017-10-19,Alan Rosser,Michael Beck,52,1632,W1,0,1271,1.52,0.11,1
+4,2017-11-02,Alan Rosser,John Davies,108,1281,W1,0.5,1271,2.03,0.51,1.5
+5,2017-11-30,Alan Rosser,Chandon Brown,107,1287,W1,0,1255,2.53,0.5,1.5
+6,2017-12-07,Alan Rosser,Greg Goold,121,1173,W1,1,1266,3.19,0.66,2.5
+1,2017-09-02,Alan Young,Ondrej Cisek,NA,1847,,1,2104,0.82,0.82,1
+2,2017-09-02,Alan Young,Tim Kett,NA,2269,,1,2115,1.1,0.28,2
+3,2017-09-03,Alan Young,Tom Brown,NA,2092,,0,2107,1.61,0.51,2
+4,2017-09-03,Alan Young,Alex Bullen,NA,2148,,0.5,2108,2.04,0.43,2.5
+5,2017-09-13,Alan Young,David Buttell,25,1913,,1,2112,2.79,0.75,3.5
+6,2017-09-19,Alan Young,David Guy,30,1865,,0.5,2108,3.59,0.8,4
+7,2017-10-10,Alan Young,Adam Musson,4,2121,,0.5,2108,4.06,0.47,4.5
+8,2017-10-13,Alan Young,Chris Dixon,NA,1819,,0.5,2103,4.9,0.84,5
+9,2017-10-14,Alan Young,Justin Morgans,NA,1704,,1,2104,5.8,0.9,6
+10,2017-10-14,Alan Young,Jason Garcia,12,2078,,0,2096,6.33,0.53,6
+11,2017-10-15,Alan Young,Dave Turner,NA,2003,,1,2101,6.97,0.64,7
+12,2017-10-15,Alan Young,Grzegorz Tocsek,NA,2305,FM,0,2098,7.21,0.24,7
+13,2017-10-18,Alan Young,Andrew Di-Vetta,NA,1745,,1,2099,8.11,0.9,8
+14,2017-10-22,Alan Young,Frank May,NA,2088,,0.5,2099,8.63,0.52,8.5
+15,2017-11-02,Alan Young,Tomasz Miga,45,1694,,1,2101,9.53,0.9,9.5
+16,2017-11-05,Alan Young,Gerry Heap,NA,2132,,0,2093,9.99,0.46,9.5
+17,2017-11-08,Alan Young,Thomas van Veelen,20,1993,,0.5,2091,10.64,0.65,10
+18,2017-11-17,Alan Young,Chris Howells,NA,1867,,0.5,2086,11.44,0.8,10.5
+19,2017-11-18,Alan Young,Dai James,NA,1959,,0.5,2083,12.13,0.69,11
+20,2017-11-18,Alan Young,David Guy,30,1865,,0.5,2078,12.93,0.8,11.5
+21,2017-11-19,Alan Young,Joe Fathallah,NA,2023,,1,2084,13.54,0.61,12.5
+22,2017-11-19,Alan Young,Ian Jones,18,2000,,0.5,2082,14.18,0.64,13
+23,2017-12-06,Alan Young,Tomasz Miga,45,1694,,0.5,2076,15.08,0.9,13.5
+24,2017-12-13,Alan Young,Adam Musson,4,2083,,0.5,2075,15.61,0.53,14
+1,2017-09-12,Albert Easton,John Ward,137,1035,W1,1,1403,0.9,0.9,1
+2,2017-09-19,Albert Easton,Dennis Thomas,136,1062,W1,1,1407,1.78,0.88,2
+3,2017-09-21,Albert Easton,Paul Scott,66,1537,W1,0.5,1413,2.09,0.31,2.5
+4,2017-09-26,Albert Easton,Louis Ba Thein,74,1470,W1,1,1432,2.49,0.4,3.5
+5,2017-09-27,Albert Easton,June Evans,140,1056,W1,1,1436,3.38,0.89,4.5
+6,2017-10-13,Albert Easton,David Toner,70,1500,W1,1,1456,3.74,0.36,5.5
+7,2017-10-18,Albert Easton,Ezaq Zaki,79,1435,W1,0,1442,4.19,0.45,5.5
+8,2017-10-25,Albert Easton,June Evans,140,1056,W1,1,1445,5.08,0.89,6.5
+9,2017-11-09,Albert Easton,Dave Conway,116,1222,W1,1,1454,5.82,0.74,7.5
+10,2017-11-17,Albert Easton,Joe Spooner,129,1101,W1,1,1459,6.67,0.85,8.5
+11,2017-11-18,Albert Easton,Sean Denton,83,1407,W1,0.5,1459,7.16,0.49,9
+12,2017-11-18,Albert Easton,Paul Bevan,90,1332,W1,1,1472,7.76,0.6,10
+13,2017-11-19,Albert Easton,Eleanor Collins,94,1304,W1,1,1484,8.39,0.63,11
+14,2017-11-19,Albert Easton,Joel Chung,122,1171,W1,0.5,1474,9.18,0.79,11.5
+15,2017-11-21,Albert Easton,Ian Jones,18,2000,W1,0,1471,9.28,0.1,11.5
+16,2017-11-23,Albert Easton,Greg Goold,121,1173,W1,1,1478,10.07,0.79,12.5
+17,2017-11-30,Albert Easton,Paul Bevan,90,1332,W1,0,1459,10.67,0.6,12.5
+18,2017-12-07,Albert Easton,Michael Beck,52,1632,W1,0,1452,10.88,0.21,12.5
+1,2017-09-15,Alice Potter,Joel Chung,122,1171,W1,0,955,0.23,0.23,0
+2,2017-09-29,Alice Potter,Paul Bevan,90,1332,W1,0,951,0.33,0.1,0
+3,2017-11-10,Alice Potter,John Porter,146,972,W1,1,968,0.82,0.49,1
+1,2017-07-08,Allan Pleasants,Andrew Jeanes,NA,1622,,1,2161,0.9,0.9,1
+2,2017-07-08,Allan Pleasants,Boris Chatalbashev,NA,2552,GM,0,2159,1,0.1,1
+3,2017-07-09,Allan Pleasants,Dai James,NA,1893,,0.5,2154,1.83,0.83,1.5
+4,2017-07-10,Allan Pleasants,Chris Dixon,NA,1819,,1,2155,2.72,0.89,2.5
+5,2017-07-11,Allan Pleasants,John Waterfield,NA,2037,,1,2161,3.39,0.67,3.5
+6,2017-07-12,Allan Pleasants,Keith Arkell,NA,2526,GM,0,2159,3.49,0.1,3.5
+7,2017-07-12,Allan Pleasants,Mark A Whitehead,NA,2006,,0.5,2156,4.2,0.71,4
+8,2017-07-13,Allan Pleasants,Aigerim Rysbayeva,NA,2157,WFM,1,2164,4.7,0.5,5
+9,2017-07-14,Allan Pleasants,Richard S Jones,1,2414,IM,1,2177,4.88,0.18,6
+10,2017-07-29,Allan Pleasants,Keith Arkell,NA,2526,GM,0.5,2183,4.98,0.1,6.5
+11,2017-07-30,Allan Pleasants,Robert F Willmoth,NA,2302,CM,0.5,2186,5.29,0.31,7
+12,2017-07-31,Allan Pleasants,Katarzyna Toma,NA,2422,WGM,1,2199,5.47,0.18,8
+13,2017-08-01,Allan Pleasants,Nick Pert,NA,2622,GM,0,2198,5.57,0.1,8
+14,2017-08-02,Allan Pleasants,Peter Gayson,NA,2214,,0.5,2199,5.99,0.42,8.5
+15,2017-08-03,Allan Pleasants,Koby Kalavannan,NA,2334,,0.5,2203,6.26,0.27,9
+16,2017-08-04,Allan Pleasants,William Claridge-Hansen,NA,2358,,0,2199,6.5,0.24,9
+17,2017-08-05,Allan Pleasants,Adam A Taylor,NA,2278,,0,2194,6.84,0.34,9
+18,2017-08-06,Allan Pleasants,Katherine M Shepherd,NA,2014,,1,2198,7.54,0.7,10
+19,2017-09-14,Allan Pleasants,Ian C Clark,NA,2094,,1,2205,8.13,0.59,11
+20,2017-10-02,Allan Pleasants,Frank J Pittman,NA,1942,,0.5,2200,8.91,0.78,11.5
+21,2017-10-06,Allan Pleasants,Martin J Simons,NA,2174,,1,2209,9.39,0.48,12.5
+22,2017-10-09,Allan Pleasants,Mike P Waddington,NA,2158,,0,2201,9.89,0.5,12.5
+23,2017-10-13,Allan Pleasants,Gabor Horvath,NA,2310,,0,2196,10.19,0.3,12.5
+24,2017-10-22,Allan Pleasants,Sven Zeidler,NA,2230,FM,0.5,2198,10.59,0.4,13
+25,2017-10-25,Allan Pleasants,Martin Machacek,NA,2166,,0.5,2198,11.08,0.49,13.5
+26,2017-11-01,Allan Pleasants,Andrew Grzybicki,NA,2006,,0.5,2194,0.75,0.75,0.5
+27,2017-11-05,Allan Pleasants,Howard Williams,NA,2323,FM,0,2189,1.08,0.33,0.5
+28,2017-11-11,Allan Pleasants,Richard L Britton,NA,2254,,0.5,2190,1.5,0.42,1
+29,2017-11-12,Allan Pleasants,Charles Pickard,NA,2214,,0.5,2190,1.98,0.48,1.5
+30,2017-11-13,Allan Pleasants,Andre La Bouchardiere,NA,1230,,1,2192,2.88,0.9,2.5
+31,2017-11-16,Allan Pleasants,Ciprian Stanciu,NA,1982,,0,2179,3.66,0.78,2.5
+32,2017-11-18,Allan Pleasants,David Buttell,25,1913,,1,2182,4.5,0.84,3.5
+33,2017-11-18,Allan Pleasants,Joe Fathallah,NA,2023,,0.5,2178,5.23,0.73,4
+34,2017-11-19,Allan Pleasants,Peter Bevan,22,1965,,0.5,2174,6.03,0.8,4.5
+35,2017-11-19,Allan Pleasants,David Guy,30,1865,,0.5,2167,6.91,0.88,5
+36,2017-11-20,Allan Pleasants,Steve Blake,NA,1822,,1,2169,7.81,0.9,6
+37,2017-11-27,Allan Pleasants,W John Kelly,NA,1630,,1,2171,8.71,0.9,7
+38,2017-12-06,Allan Pleasants,Steve Peirson,NA,2102,,0.5,2169,9.34,0.63,7.5
+39,2017-12-14,Allan Pleasants,Andrew Footner,NA,2078,,0.5,2166,10,0.66,8
+1,2017-09-12,Andrew Gibbons,Steve Morgan,49,1647,W1,0.5,2004,0.9,0.9,0.5
+2,2017-09-19,Andrew Gibbons,Moss McCarthy,23,1950,W1,1,2010,1.48,0.58,1.5
+3,2017-10-04,Andrew Gibbons,Thomas van Veelen,20,1993,W1,0.5,2010,2,0.52,2
+4,2017-10-10,Andrew Gibbons,David Buttell,25,1913,W1,0.5,2008,2.63,0.63,2.5
+5,2017-10-17,Andrew Gibbons,Keith Downey,37,1785,W1,1,2011,3.42,0.79,3.5
+6,2017-10-18,Andrew Gibbons,William Hewitt,6,2110,W1,0.5,2014,3.78,0.36,4
+7,2017-10-22,Andrew Gibbons,Tony Haigh,NA,1875,D1,0.5,2011,4.46,0.68,4.5
+8,2017-11-05,Andrew Gibbons,Joe Fathallah,NA,2023,E2,0.5,2011,4.94,0.48,5
+9,2017-11-07,Andrew Gibbons,Malcolm Probert,50,1641,W1,0.5,2005,5.84,0.9,5.5
+10,2017-11-17,Andrew Gibbons,David Guy,30,1865,W1,1,2009,6.54,0.7,6.5
+11,2017-11-18,Andrew Gibbons,Adam Musson,4,2121,W1,0,2004,6.89,0.35,6.5
+12,2017-11-18,Andrew Gibbons,Dai James,NA,1959,E2,0.5,2003,7.46,0.57,7
+13,2017-11-19,Andrew Gibbons,Adam May,15,2036,W1,0.5,2003,7.92,0.46,7.5
+14,2017-11-19,Andrew Gibbons,Chris Howells,NA,1867,E1,0.5,2000,8.61,0.69,8
+15,2017-11-29,Andrew Gibbons,Neil Stuart,46,1689,W1,1,2002,9.48,0.87,9
+16,2017-12-06,Andrew Gibbons,Thomas van Veelen,20,1993,W1,0,1994,10,0.52,9
+17,2017-12-13,Andrew Gibbons,Gerry Heap,NA,2132,D1,0.5,1997,10.33,0.33,9.5
+1,2017-10-06,Andrew Powell,Ioan Phillips,99,904,W1,0,980,0.63,0.63,0
+2,2017-12-05,Andrew Powell,Ioan Phillips,99,904,W1,1,992,1.26,0.63,1
+1,2017-09-21,Andrew Smith,Kelvin Haines,73,1483,W1,1,1668,0.74,0.74,1
+2,2017-10-04,Andrew Smith,Guto Neave,59,1585,W1,1,1678,1.35,0.61,2
+3,2017-10-11,Andrew Smith,Joseph Addis,78,1447,W1,1,1683,2.13,0.78,3
+4,2017-10-12,Andrew Smith,Daniel Chung,110,1261,W1,1,1685,3.03,0.9,4
+5,2017-10-19,Andrew Smith,Joe Spooner,129,1101,W1,1,1688,3.93,0.9,5
+6,2017-10-23,Andrew Smith,Bill Flew,88,1346,W1,1,1691,4.8,0.87,6
+7,2017-10-25,Andrew Smith,Joel Chung,122,1171,W1,1,1693,5.7,0.9,7
+8,2017-11-01,Andrew Smith,George Searle,75,1455,W1,0.5,1687,6.47,0.77,7.5
+9,2017-11-06,Andrew Smith,Steve Smith,34,1821,W1,0,1680,6.76,0.29,7.5
+10,2017-11-09,Andrew Smith,James Evans,53,1624,W1,0,1667,7.31,0.55,7.5
+11,2017-11-14,Andrew Smith,Steve Smith,34,1821,W1,0.5,1672,7.6,0.29,8
+12,2017-11-17,Andrew Smith,Tony Goodchild,89,1345,W1,1,1675,8.47,0.87,9
+13,2017-11-18,Andrew Smith,Stephen Horrell,NA,1723,G1,0.5,1677,8.88,0.41,9.5
+14,2017-11-19,Andrew Smith,Steve Williams (Cwm),NA,1740,G2,0.5,1680,9.27,0.39,10
+15,2017-11-19,Andrew Smith,Tomasz Miga,45,1694,W1,0,1669,9.72,0.45,10
+16,2017-11-21,Andrew Smith,Dennis Thomas,136,1062,W1,1,1671,10.62,0.9,11
+17,2017-11-23,Andrew Smith,Chris Price,19,2000,W1,0.5,1680,10.74,0.12,11.5
+18,2017-11-27,Andrew Smith,Richard Morgan,54,1622,W1,0.5,1679,11.3,0.56,12
+19,2017-12-06,Andrew Smith,Sai Prarnedth,63,1480,W1,1,1685,12.04,0.74,13
+1,2017-09-12,Anthony Beck,Paul Bevan,90,1332,W1,1,1587,0.81,0.81,1
+2,2017-09-20,Anthony Beck,Ben Mora,64,1590,W1,0,1571,1.3,0.49,1
+3,2017-09-26,Anthony Beck,Kelvin Haines,73,1483,W1,0.5,1567,1.94,0.64,1.5
+4,2017-10-10,Anthony Beck,Ian Evans,141,1002,W1,0,1538,2.84,0.9,1.5
+5,2017-10-19,Anthony Beck,Derek Bellamy,124,1162,W1,1,1541,3.74,0.9,2.5
+6,2017-11-06,Anthony Beck,Eleanor Collins,94,1304,W1,0,1514,4.58,0.84,2.5
+7,2017-11-14,Anthony Beck,Joseph Cura,127,1147,W1,0,1486,5.48,0.9,2.5
+8,2017-11-29,Anthony Beck,Ezaq Zaki,79,1435,W1,0.5,1479,6.18,0.7,3
+9,2017-12-07,Anthony Beck,Colin Chambers,113,1240,W1,1,1483,7.07,0.89,4
+1,2017-09-13,Ben Mora,Alan Bean,109,1267,W1,1,1594,0.87,0.87,1
+2,2017-09-20,Ben Mora,Anthony Beck,60,1581,W1,1,1610,1.38,0.51,2
+3,2017-10-23,Ben Mora,Ian Eustis,35,1806,W1,0,1603,1.6,0.22,2
+4,2017-11-27,Ben Mora,Sean Denton,83,1407,W1,1,1611,2.34,0.74,3
+5,2017-12-07,Ben Mora,Paul Bevan,90,1332,W1,1,1617,3.16,0.82,4
+1,2017-09-13,Bill Flew,Nick Hale,118,1196,W1,1,1356,0.7,0.7,1
+2,2017-09-20,Bill Flew,Louis Ba Thein,74,1470,W1,0,1345,1.03,0.33,1
+3,2017-09-22,Bill Flew,David Toner,70,1500,W1,0.5,1352,1.32,0.29,1.5
+4,2017-10-11,Bill Flew,Mark Livingston,80,1424,W1,0.5,1355,1.71,0.39,2
+5,2017-10-18,Bill Flew,James Evans,53,1624,W1,0,1350,1.87,0.16,2
+6,2017-10-23,Bill Flew,Andrew Smith,48,1662,W1,0,1346,2,0.13,2
+7,2017-11-01,Bill Flew,Peter George,67,1525,W1,0.5,1354,2.26,0.26,2.5
+8,2017-11-08,Bill Flew,Joe Spooner,129,1101,W1,0,1328,3.07,0.81,2.5
+9,2017-11-21,Bill Flew,Joel Chung,122,1171,W1,1,1336,3.8,0.73,3.5
+10,2017-11-27,Bill Flew,Dave Conway,116,1222,W1,1,1347,4.47,0.67,4.5
+11,2017-11-29,Bill Flew,David Toner,70,1500,W1,0,1338,4.76,0.29,4.5
+12,2017-12-13,Bill Flew,Jack Bevan,58,1485,W1,0,1328,5.07,0.31,4.5
+1,2017-09-26,Bob Moore,Ian Jones,18,2000,W1,0.5,1978,0.47,0.47,0.5
+2,2017-10-04,Bob Moore,Neil Stuart,46,1689,W1,0.5,1969,1.32,0.85,1
+3,2017-10-12,Bob Moore,David Guy,30,1865,W1,0,1954,1.97,0.65,1
+4,2017-10-17,Bob Moore,Tony Crossman,47,1663,W1,0,1933,2.84,0.87,1
+5,2017-10-22,Bob Moore,Matthew Francis,NA,1756,D1,1,1938,3.62,0.78,2
+6,2017-10-24,Bob Moore,Malcolm Probert,50,1641,W1,1,1941,4.5,0.88,3
+7,2017-11-07,Bob Moore,Huw Jones,55,1621,W1,0,1919,5.4,0.9,3
+8,2017-11-14,Bob Moore,Kelvin Haines,73,1483,W1,1,1922,6.3,0.9,4
+9,2017-11-28,Bob Moore,Moss McCarthy,23,1950,W1,1,1933,6.84,0.54,5
+10,2017-12-06,Bob Moore,Neil Stuart,46,1689,W1,1,1936,7.69,0.85,6
+1,2017-09-19,Byron Jones,Lyndon Todd,92,1327,W1,1,1088,0.17,0.17,1
+2,2017-10-06,Byron Jones,Cameron Bale,153,960,W1,1,1099,0.81,0.64,2
+3,2017-10-17,Byron Jones,Alan Bean,109,1267,W1,0,1092,1.04,0.23,2
+4,2017-12-05,Byron Jones,Daniel Chung,110,1261,W1,0,1084,1.28,0.24,2
+1,2017-09-15,Calum Newton,Daniel Chung,110,1261,W1,0,1036,0.22,0.22,0
+2,2017-09-29,Calum Newton,Ken Huntley,86,1377,W1,0,1032,0.34,0.12,0
+3,2017-10-06,Calum Newton,John Davies,108,1281,W1,0,1026,0.54,0.2,0
+4,2017-10-27,Calum Newton,Nikolay Lidzhiev,130,1100,W1,0,1012,0.96,0.42,0
+5,2017-11-10,Calum Newton,Paul Bevan,90,1332,W1,0,1007,1.11,0.15,0
+6,2017-11-24,Calum Newton,Colin Chambers,113,1240,W1,0,1000,1.35,0.24,0
+1,2017-09-15,Cameron Bale,Ella Toner,101,900,W1,0,941,0.58,0.58,0
+2,2017-10-06,Cameron Bale,Byron Jones,148,1061,W1,0,930,0.94,0.36,0
+3,2017-10-27,Cameron Bale,Yoon Nam,119,1100,W1,1,952,1.25,0.31,1
+4,2017-11-10,Cameron Bale,Roger Llewellyn,125,1155,W1,0,944,1.5,0.25,1
+5,2017-11-24,Cameron Bale,Lyndon Todd,92,1327,W1,0,941,1.6,0.1,1
+6,2017-11-29,Cameron Bale,Norman Speak,152,962,W1,1,957,2.1,0.5,2
+1,2017-10-05,Carl Halpin,Thang Ngyuen,133,1100,W1,1,1235,0.67,0.67,1
+2,2017-10-13,Carl Halpin,Claire Roberts,100,900,W1,1,1239,1.54,0.87,2
+3,2017-10-18,Carl Halpin,Mohammad Farhadi,91,1331,W1,1,1260,1.89,0.35,3
+4,2017-11-23,Carl Halpin,Norman Speak,152,962,W1,1,1265,2.71,0.82,4
+5,2017-11-24,Carl Halpin,Harri Beale,151,964,W1,1,1271,3.53,0.82,5
+6,2017-11-30,Carl Halpin,John Porter,146,972,W1,1,1277,4.34,0.81,6
+1,2017-07-07,Carl Strugnell,Sandor I Farkas,NA,1935,,1,2299,0.9,0.9,1
+2,2017-07-08,Carl Strugnell,Nikola Ostojic,NA,2412,IM,0,2293,1.24,0.34,1
+3,2017-07-08,Carl Strugnell,Mire Deniz Dogan,NA,2075,FM,1,2297,2.02,0.78,2
+4,2017-07-09,Carl Strugnell,Umut Atakisi,NA,2373,IM,0,2290,2.41,0.39,2
+5,2017-07-11,Carl Strugnell,Andrej Sukovic,NA,2150,,0.5,2287,3.11,0.7,2.5
+6,2017-07-11,Carl Strugnell,Evgeny Gordon,NA,1942,,1,2289,4.01,0.9,3.5
+7,2017-07-12,Carl Strugnell,Florian Mesaros,NA,2415,IM,0.5,2291,4.35,0.34,4
+8,2017-07-13,Carl Strugnell,Vuk Djordevic,NA,2377,,1,2301,4.74,0.39,5
+9,2017-07-14,Carl Strugnell,Nikola Radovanovic,NA,2399,IM,1,2311,5.1,0.36,6
+10,2017-07-21,Carl Strugnell,Jiri Stocek,NA,2590,GM,0,2309,5.25,0.15,6
+11,2017-07-22,Carl Strugnell,Vladimir P Gergel,NA,2166,FM,1,2314,5.93,0.68,7
+12,2017-07-23,Carl Strugnell,Konstatin Maslak,NA,2566,GM,0,2311,6.1,0.17,7
+13,2017-07-24,Carl Strugnell,Vaidotas Valantiejus,NA,2171,,0,2301,6.77,0.67,7
+14,2017-07-25,Carl Strugnell,Jiri Plesek,NA,2176,,1,2306,7.44,0.67,8
+15,2017-07-26,Carl Strugnell,Jaroslaw Paprocki,NA,2192,,0.5,2304,8.08,0.64,8.5
+16,2017-07-27,Carl Strugnell,Francois-Xavier Podvin,NA,2180,,1,2309,8.74,0.66,9.5
+17,2017-07-28,Carl Strugnell,Aleksandrs Jazdanovs,NA,2066,,0,2297,9.53,0.79,9.5
+18,2017-07-29,Carl Strugnell,Natasa Richterova,NA,2184,WIM,1,2302,10.19,0.66,10.5
+19,2017-08-21,Carl Strugnell,Conor O'Donnell,NA,2351,FM,1,2311,10.61,0.42,11.5
+20,2017-08-22,Carl Strugnell,William Claridge-Hansen,NA,2358,FM,1,2321,11.02,0.41,12.5
+21,2017-08-22,Carl Strugnell,Gavin Wall,NA,2422,IM,1,2331,11.35,0.33,13.5
+22,2017-08-23,Carl Strugnell,Joseph McPhillips,NA,2470,FM,0,2327,11.62,0.27,13.5
+23,2017-08-23,Carl Strugnell,Daniel Fernandez,NA,2630,IM,0,2325,11.74,0.12,13.5
+24,2017-08-24,Carl Strugnell,Michael Fernandez,NA,2358,FM,1,2335,12.15,0.41,14.5
+25,2017-08-24,Carl Strugnell,Akito Oyama,NA,2278,,1,2342,12.68,0.53,15.5
+26,2017-08-25,Carl Strugnell,Alexander Cherniaev,NA,2430,GM,0.5,2345,13,0.32,16
+27,2017-08-25,Carl Strugnell,Zaki Harari,NA,2062,,1,2348,13.8,0.8,17
+28,2017-09-12,Carl Strugnell,Keith Downey,37,1785,,1,2350,0.9,0.9,1
+29,2017-10-07,Carl Strugnell,Jean Herman,NA,2238,,0,2339,1.55,0.65,1
+30,2017-10-08,Carl Strugnell,Marc Vallet,NA,2224,,0.5,2336,2.22,0.67,1.5
+31,2017-10-27,Carl Strugnell,James Golding,NA,2022,,0.5,2330,3.1,0.88,2
+32,2017-10-28,Carl Strugnell,Thomas Delaplace,NA,2009,,1,2332,3.98,0.88,3
+33,2017-10-29,Carl Strugnell,Alexandre Koulitchenko,NA,2133,,1,2336,4.76,0.78,4
+34,2017-10-30,Carl Strugnell,Andrei Sokolov,NA,2496,GM,0,2331,5.06,0.3,4
+35,2017-10-31,Carl Strugnell,Antoine Bournel,NA,2167,,0,2319,5.8,0.74,4
+36,2017-11-01,Carl Strugnell,Pierre-Louis Pieri,NA,2118,,1,2323,6.59,0.79,5
+37,2017-11-02,Carl Strugnell,Niels Willems,NA,2154,,0.5,2319,7.34,0.75,5.5
+38,2017-11-03,Carl Strugnell,Pierre-Louis Brolly,NA,2149,,1,2322,8.1,0.76,6.5
+39,2017-11-04,Carl Strugnell,Matthieu Pourquet,NA,2110,,0,2310,8.9,0.8,6.5
+40,2017-11-19,Carl Strugnell,Kiego Guerlach,NA,2089,,1,2312,9.72,0.82,7.5
+41,2017-12-02,Carl Strugnell,Michael Bon,NA,2364,FM,1,2321,10.2,0.48,8.5
+42,2017-12-03,Carl Strugnell,Kevin Roser,NA,2378,IM,0.5,2321,10.66,0.46,9
+1,2017-09-26,Chandon Brown,Joe Spooner,129,1101,W1,0,1263,0.74,0.74,0
+2,2017-10-04,Chandon Brown,Sean Denton,83,1407,W1,0,1252,1.08,0.34,0
+3,2017-11-01,Chandon Brown,Joseph Cura,127,1147,W1,1,1262,1.77,0.69,1
+4,2017-11-15,Chandon Brown,Joseph Addis,78,1447,W1,0.5,1269,2.06,0.29,1.5
+5,2017-11-22,Chandon Brown,Kelvin Haines,73,1483,W1,0,1261,2.3,0.24,1.5
+6,2017-11-30,Chandon Brown,Alan Rosser,106,1288,W1,1,1277,2.8,0.5,2.5
+1,2017-09-27,Chris Daniel,Adam May,15,2036,W1,0.5,1734,0.14,0.14,0.5
+2,2017-10-12,Chris Daniel,Steve Morgan,49,1647,W1,0.5,1731,0.75,0.61,1
+3,2017-10-17,Chris Daniel,Mark Evans,24,1941,W1,0.5,1738,0.97,0.22,1.5
+4,2017-10-31,Chris Daniel,Mike Cleaves,43,1713,W1,0.5,1737,1.49,0.52,2
+5,2017-11-01,Chris Daniel,David Toner,70,1500,W1,1,1742,2.28,0.79,3
+6,2017-11-08,Chris Daniel,Sebastian Hay,62,1573,W1,0,1725,2.98,0.7,3
+7,2017-11-15,Chris Daniel,Markus Obendrauf,97,1600,W1,0.5,1721,3.65,0.67,3.5
+8,2017-11-22,Chris Daniel,Markus Obendrauf,97,1600,W1,0,1705,4.32,0.67,3.5
+9,2017-11-28,Chris Daniel,Tomasz Miga,45,1694,W1,0,1692,4.86,0.54,3.5
+1,2017-10-19,Chris Price,Hywel Griffiths,33,1823,W1,1,2004,0.73,0.73,1
+2,2017-10-26,Chris Price,Tony Goodchild,89,1345,W1,1,2006,1.63,0.9,2
+3,2017-11-23,Chris Price,Andrew Smith,48,1662,W1,0.5,2000,2.51,0.88,2.5
+4,2017-11-30,Chris Price,Tomasz Miga,45,1694,W1,1,2002,3.37,0.86,3.5
+1,2017-09-12,Chris Sims,Jeff Burrows,72,1484,W1,1,1884,0.9,0.9,1
+2,2017-10-17,Chris Sims,Malcolm Probert,50,1641,W1,1,1889,1.7,0.8,2
+3,2017-10-24,Chris Sims,Guto Llywelyn,69,1501,W1,1,1892,2.6,0.9,3
+4,2017-11-05,Chris Sims,Bill Harle,NA,1721,E1,0,1874,3.32,0.72,3
+5,2017-11-14,Chris Sims,Steve Morgan,49,1647,W1,0.5,1867,4.12,0.8,3.5
+1,2017-09-14,Christian Taren,Clive Gosling,139,1026,W1,0,1081,0.6,0.6,0
+2,2017-10-05,Christian Taren,Colin Chambers,113,1240,W1,0,1071,0.91,0.31,0
+3,2017-10-13,Christian Taren,Stuart Thomas,120,900,W1,1,1079,1.67,0.76,1
+1,2017-09-15,Claire Roberts,Ioan Phillips,99,904,W1,0,884,0.49,0.49,0
+2,2017-10-05,Claire Roberts,Mike Osborn,155,893,W1,0,868,1,0.51,0
+3,2017-10-13,Claire Roberts,Carl Halpin,115,1224,W1,0,864,1.13,0.13,0
+4,2017-10-20,Claire Roberts,Janet Evans,159,912,W1,0,848,1.61,0.48,0
+1,2017-09-14,Clive Gosling,Christian Taren,134,1100,W1,1,1045,0.4,0.4,1
+2,2017-09-21,Clive Gosling,Paul Bevan,90,1332,W1,0,1041,0.54,0.14,1
+3,2017-11-02,Clive Gosling,Aidan Reilly,105,1000,W1,0,1023,1.08,0.54,1
+4,2017-11-09,Clive Gosling,Dylan Greenway,156,980,W1,1,1038,1.64,0.56,2
+5,2017-12-07,Clive Gosling,Nick Hale,118,1196,W1,0,1029,1.91,0.27,2
+1,2017-09-12,Colin Chambers,Leighton Anthony,138,1033,W1,1,1247,0.77,0.77,1
+2,2017-09-19,Colin Chambers,Stephen Lloyd-Brown,149,1060,W1,0,1224,1.51,0.74,1
+3,2017-09-27,Colin Chambers,Norman Speak,152,962,W1,1,1229,2.35,0.84,2
+4,2017-10-05,Colin Chambers,Christian Taren,134,1100,W1,1,1239,3.04,0.69,3
+5,2017-10-13,Colin Chambers,Joel Chung,122,1171,W1,0,1220,3.64,0.6,3
+6,2017-11-09,Colin Chambers,Joe Spooner,129,1101,W1,0,1197,4.33,0.69,3
+7,2017-11-24,Colin Chambers,Calum Newton,144,1043,W1,1,1205,5.09,0.76,4
+8,2017-12-07,Colin Chambers,Anthony Beck,60,1581,W1,0,1202,5.2,0.11,4
+1,2017-10-10,Craig Evans,Jason Garcia,12,2078,,0,2085,0.52,0.52,0
+2,2017-10-22,Craig Evans,Rudy Van Kemenade,NA,2040,AGM,1,2092,1.09,0.57,1
+3,2017-11-07,Craig Evans,Tomasz Miga,45,1694,,1,2093,1.99,0.9,2
+4,2017-11-29,Craig Evans,Markus Obendrauf,97,1600,,1,2095,2.89,0.9,3
+5,2017-12-13,Craig Evans,Jason Garcia,12,2078,,1,2102,3.41,0.52,4
+1,2017-09-02,Daniel Chung,Elliott MacNeil,NA,1625,E1,0,1258,0.1,0.1,0
+2,2017-09-03,Daniel Chung,Chris Peters,NA,1527,E1,0,1252,0.27,0.17,0
+3,2017-09-03,Daniel Chung,Gareth Davies,NA,1365,E1,0,1241,0.63,0.36,0
+4,2017-09-15,Daniel Chung,Calum Newton,144,1043,W1,1,1248,1.41,0.78,1
+5,2017-09-22,Daniel Chung,Alan Bean,109,1267,W1,1,1264,1.9,0.49,2
+6,2017-10-05,Daniel Chung,Vaughan Thomas,95,1300,W1,1,1282,2.35,0.45,3
+7,2017-10-12,Daniel Chung,Andrew Smith,48,1662,W1,0,1279,2.45,0.1,3
+8,2017-10-13,Daniel Chung,Lyndon Todd,92,1327,W1,0.5,1281,2.86,0.41,3.5
+9,2017-10-14,Daniel Chung,Gareth Davies,NA,1365,E1,0.5,1286,3.22,0.36,4
+10,2017-10-14,Daniel Chung,Joel Chung,122,1171,W1,1,1298,3.84,0.62,5
+11,2017-10-15,Daniel Chung,Morgan Rees,NA,1322,E1,0,1285,4.25,0.41,5
+12,2017-10-15,Daniel Chung,Robert Rees,NA,1539,E1,1,1312,4.41,0.16,6
+13,2017-10-20,Daniel Chung,Greg Goold,121,1173,W1,0,1292,5.03,0.62,6
+14,2017-10-25,Daniel Chung,Peter Bevan,22,1965,W1,0,1289,5.13,0.1,6
+15,2017-11-17,Daniel Chung,Louis Ba Thein,74,1470,W1,0,1281,5.36,0.23,6
+16,2017-11-18,Daniel Chung,Margaret Baron,NA,850,D1,1,1285,6.26,0.9,7
+17,2017-11-18,Daniel Chung,Joel Chung,122,1171,W1,0,1265,6.88,0.62,7
+18,2017-11-19,Daniel Chung,Joe Spooner,129,1101,W1,1,1274,7.59,0.71,8
+19,2017-11-19,Daniel Chung,Sean Denton,83,1407,W1,0.5,1281,7.89,0.3,8.5
+20,2017-12-05,Daniel Chung,Byron Jones,148,1061,W1,1,1288,8.65,0.76,9.5
+1,2017-09-12,Dave Conway,Peter George,67,1525,W1,0,1218,0.14,0.14,0
+2,2017-09-19,Dave Conway,Sean Denton,83,1407,W1,0,1209,0.4,0.26,0
+3,2017-09-26,Dave Conway,James Evans,53,1624,W1,0,1206,0.5,0.1,0
+4,2017-10-11,Dave Conway,Mohammad Farhadi,91,1331,W1,1,1227,0.85,0.35,1
+5,2017-10-19,Dave Conway,Juraj Sokolsky,27,1886,W1,0,1224,0.95,0.1,1
+6,2017-10-26,Dave Conway,Tom Winfield,38,1781,W1,0,1220,1.05,0.1,1
+7,2017-11-09,Dave Conway,Albert Easton,84,1400,W1,0,1212,1.31,0.26,1
+8,2017-11-27,Dave Conway,Bill Flew,88,1346,W1,0,1202,1.64,0.33,1
+9,2017-12-12,Dave Conway,Martyn Griffiths,36,1793,W1,0,1198,1.74,0.1,1
+1,2017-09-01,David Buttell,Tom Brown,NA,2092,E2,0,1907,0.26,0.26,0
+2,2017-09-02,David Buttell,Sridatta Dantu,NA,905,E1,1,1909,1.16,0.9,1
+3,2017-09-02,David Buttell,Sam Jukes,NA,1899,E1,0,1897,1.68,0.52,1
+4,2017-09-03,David Buttell,Stephen Williams (Cwm),NA,1756,G2,0,1880,2.39,0.71,1
+5,2017-09-03,David Buttell,Ondrej Cisek,NA,1847,FIDE,0,1865,2.98,0.59,1
+6,2017-09-13,David Buttell,Alan Young,8,2101,W1,0,1859,3.23,0.25,1
+7,2017-09-19,David Buttell,James Evans,53,1624,W1,1,1863,4.08,0.85,2
+8,2017-10-03,David Buttell,Chris Howells,NA,1867,E1,0,1850,4.64,0.56,2
+9,2017-10-10,David Buttell,Andrew Gibbons,16,2010,W1,0.5,1853,5.01,0.37,2.5
+10,2017-10-11,David Buttell,Thomas van Veelen,20,1993,W1,0,1843,5.4,0.39,2.5
+11,2017-10-12,David Buttell,Mark Evans,24,1941,W1,0.5,1844,5.86,0.46,3
+12,2017-10-17,David Buttell,Adam Musson,4,2121,W1,1,1863,6.09,0.23,4
+13,2017-10-18,David Buttell,Brendan-Budok Durand-Le Ludec,NA,2172,D1,0,1859,6.27,0.18,4
+14,2017-10-22,David Buttell,Richard Miles,NA,1980,G1,0.5,1861,6.68,0.41,4.5
+15,2017-10-24,David Buttell,Adam Musson,4,2121,W1,0,1855,6.91,0.23,4.5
+16,2017-10-28,David Buttell,Awne Osinga,NA,1353,D1,1,1858,7.81,0.9,5.5
+17,2017-10-28,David Buttell,Brendan-Budok Durand-Le Ludec,NA,2172,D1,0,1853,7.99,0.18,5.5
+18,2017-10-28,David Buttell,Tony Haigh,NA,1875,D1,0,1840,8.54,0.55,5.5
+19,2017-10-29,David Buttell,Julie Van Kemenade,NA,1752,D1,1,1847,9.26,0.72,6.5
+20,2017-10-29,David Buttell,Gerry Heap,NA,2132,D1,0,1841,9.48,0.22,6.5
+21,2017-11-11,David Buttell,Aditya Munshi,NA,2046,ECF,0,1834,9.8,0.32,6.5
+22,2017-11-12,David Buttell,Ron Usharovsky,NA,1638,ECF,1,1838,10.63,0.83,7.5
+23,2017-11-15,David Buttell,Thomas van Veelen,20,1993,W1,0,1829,11.02,0.39,7.5
+24,2017-11-16,David Buttell,Martin C Jones,NA,1749,D1,0,1811,11.74,0.72,7.5
+25,2017-11-17,David Buttell,Tom Brown,NA,2112,E3,0,1805,11.98,0.24,7.5
+26,2017-11-18,David Buttell,Allan Pleasants,3,2198,W2,0,1802,12.14,0.16,7.5
+27,2017-11-18,David Buttell,Colin Denham,NA,1643,D1,0.5,1794,12.97,0.83,8
+28,2017-11-19,David Buttell,Lynda Smith,NA,1967,G1,0,1784,13.39,0.42,8
+29,2017-11-19,David Buttell,Malcolm Probert,50,1641,W1,1,1788,14.22,0.83,9
+30,2017-11-22,David Buttell,Thomas van Veelen,20,1993,W1,0,1782,0.23,0.23,0
+31,2017-11-28,David Buttell,Keith Downey,37,1785,W1,0.5,1782,0.73,0.5,0.5
+32,2017-11-30,David Buttell,Awne Osinga,NA,1353,D1,1,1785,1.63,0.9,1.5
+33,2017-12-06,David Buttell,Gerry Heap,NA,2132,D1,0,1782,1.74,0.11,1.5
+34,2017-12-14,David Buttell,Iolo C Jones,NA,2241,D1,0.5,1792,1.84,0.1,2
+1,2017-07-08,David Guy,Christopher Kreuzer,NA,1974,ECF,0,1857,0.35,0.35,0
+2,2017-07-08,David Guy,Olaf Hoyer,NA,1856,FIDE,1,1868,0.86,0.51,1
+3,2017-07-09,David Guy,Bahtiyar Raimov,NA,1571,FIDE,1,1872,1.71,0.85,2
+4,2017-07-09,David Guy,Michael Freund,NA,1646,ECF,1,1877,2.49,0.78,3
+5,2017-07-10,David Guy,Mohammad Reza Ghadimi,NA,2126,FIDE,0,1873,2.67,0.18,3
+6,2017-07-10,David Guy,Dmitry Mochalsky,NA,1877,FIDE,0.5,1873,3.15,0.48,3.5
+7,2017-07-11,David Guy,Jan Van Der Plas,NA,1378,RP,1,1876,4.05,0.9,4.5
+8,2017-09-13,David Guy,William Hewitt,6,2110,W1,0.5,1883,4.24,0.19,5
+9,2017-09-19,David Guy,Alan Young,8,2101,W1,0.5,1890,4.44,0.2,5.5
+10,2017-09-27,David Guy,Nicholas Evans,13,2051,W1,1,1908,4.7,0.26,6.5
+11,2017-10-03,David Guy,Juraj Sokolsky,27,1886,W1,0.5,1909,5.17,0.47,7
+12,2017-10-12,David Guy,Bob Moore,21,1977,W1,1,1925,5.52,0.35,8
+13,2017-10-18,David Guy,Steve Morgan,49,1647,W1,0.5,1918,6.3,0.78,8.5
+14,2017-11-02,David Guy,Guto Llywelyn,69,1501,W1,1,1920,7.2,0.9,9.5
+15,2017-11-04,David Guy,Michael P Freund,NA,1630,ECF,0.5,1913,8,0.8,10
+16,2017-11-04,David Guy,Martin Berridge,NA,1646,ECF,0.5,1906,8.78,0.78,10.5
+17,2017-11-04,David Guy,Philip K Gardner,NA,1918,ECF,0.5,1908,9.21,0.43,11
+18,2017-11-05,David Guy,Alasdair MacLeod,NA,1862,ECF,0.5,1908,9.71,0.5,11.5
+19,2017-11-05,David Guy,Neil J Dunlop,NA,1870,ECF,0.5,1908,10.2,0.49,12
+20,2017-11-07,David Guy,Adam Musson,4,2121,W1,0,1904,10.38,0.18,12
+21,2017-11-09,David Guy,Chris Howells,NA,1867,E1,1,1916,10.88,0.5,13
+22,2017-11-17,David Guy,Andrew Gibbons,16,2010,W1,0,1909,11.18,0.3,13
+23,2017-11-18,David Guy,Chris Boyd,NA,1950,G1,1,1924,11.56,0.38,14
+24,2017-11-18,David Guy,Alan Young,8,2101,W1,0.5,1931,11.76,0.2,14.5
+25,2017-11-19,David Guy,Dai James,NA,1959,E2,0.5,1934,12.13,0.37,15
+26,2017-11-19,David Guy,Allan Pleasants,3,2198,W2,0.5,1943,12.25,0.12,15.5
+1,2017-09-15,David Toner,Eleanor Collins,94,1304,W1,1,1508,0.76,0.76,1
+2,2017-09-22,David Toner,Bill Flew,88,1346,W1,0.5,1501,1.47,0.71,1.5
+3,2017-10-05,David Toner,Paul Bevan,90,1332,W1,1,1510,2.19,0.72,2.5
+4,2017-10-11,David Toner,Ezaq Zaki,79,1435,W1,1,1523,2.78,0.59,3.5
+5,2017-10-12,David Toner,Chris Howells,NA,1867,E1,0,1520,2.88,0.1,3.5
+6,2017-10-13,David Toner,Albert Easton,84,1400,W1,0,1499,3.52,0.64,3.5
+7,2017-10-20,David Toner,Alan Bean,109,1267,W1,1,1506,4.32,0.8,4.5
+8,2017-10-25,David Toner,Paul Bevan,90,1332,W1,0,1483,5.04,0.72,4.5
+9,2017-11-01,David Toner,Chris Daniel,40,1725,W1,0,1476,5.25,0.21,4.5
+10,2017-11-22,David Toner,Greg Goold,121,1173,W1,1,1480,6.13,0.88,5.5
+11,2017-11-29,David Toner,Bill Flew,88,1346,W1,1,1489,6.84,0.71,6.5
+12,2017-12-05,David Toner,Louis Ba Thein,74,1470,W1,1,1504,7.38,0.54,7.5
+13,2017-12-06,David Toner,Ezaq Zaki,79,1435,W1,0.5,1501,7.97,0.59,8
+14,2017-12-12,David Toner,Hywel Griffiths,33,1823,W1,0,1497,8.1,0.13,8
+1,2017-10-31,Dennis Jones,Malcolm Probert,50,1641,W1,0.5,1638,0.5,0.5,0.5
+2,2017-11-28,Dennis Jones,Ian Eustis,35,1806,W1,0,1631,0.78,0.28,0.5
+1,2017-09-19,Dennis Thomas,Albert Easton,84,1400,W1,0,1058,0.12,0.12,0
+2,2017-10-25,Dennis Thomas,Sean Denton,83,1407,W1,1,1087,0.23,0.11,1
+3,2017-11-02,Dennis Thomas,Roger Llewellyn,125,1155,W1,1,1107,0.6,0.37,2
+4,2017-11-09,Dennis Thomas,Paul Bevan,90,1332,W1,0,1101,0.77,0.17,2
+5,2017-11-21,Dennis Thomas,Andrew Smith,48,1662,W1,0,1098,0.87,0.1,2
+6,2017-12-07,Dennis Thomas,Jonathan Davies,114,1240,W1,0,1090,1.13,0.26,2
+1,2017-09-21,Derek Bellamy,Mike Osborn,155,893,W1,1,1167,0.83,0.83,1
+2,2017-10-04,Derek Bellamy,June Evans,140,1056,W1,1,1179,1.48,0.65,2
+3,2017-10-19,Derek Bellamy,Anthony Beck,60,1581,W1,0,1175,1.58,0.1,2
+4,2017-10-26,Derek Bellamy,Kevin Cullen,142,1000,W1,1,1184,2.3,0.72,3
+5,2017-10-30,Derek Bellamy,Eleanor Collins,94,1304,W1,0.5,1190,2.61,0.31,3.5
+6,2017-11-09,Derek Bellamy,Aidan Reilly,105,1000,W1,1,1199,3.33,0.72,4.5
+7,2017-12-06,Derek Bellamy,Ian Dyer,143,1048,W1,1,1210,3.99,0.66,5.5
+1,2017-10-04,Donovan Sipho,Jeff Burrows,72,1484,W1,1,1553,0.58,0.58,1
+2,2017-10-11,Donovan Sipho,James Evans,53,1624,W1,0.5,1557,0.96,0.38,1.5
+3,2017-11-01,Donovan Sipho,Chris Howells,NA,1867,E1,0,1553,1.08,0.12,1.5
+4,2017-11-08,Donovan Sipho,Tony Crossman,47,1663,W1,0,1543,1.41,0.33,1.5
+5,2017-11-15,Donovan Sipho,Huw Jones,55,1621,W1,0.5,1546,1.8,0.39,2
+6,2017-11-17,Donovan Sipho,Stephen Horrell,NA,1723,G1,0,1538,2.06,0.26,2
+7,2017-11-18,Donovan Sipho,Paul Orton,NA,1608,D1,0,1525,2.46,0.4,2
+8,2017-11-19,Donovan Sipho,Tony Goodchild,89,1345,W1,0.5,1517,3.21,0.75,2.5
+9,2017-11-19,Donovan Sipho,Chris P Smith,NA,1460,G1,1,1530,3.82,0.61,3.5
+10,2017-11-22,Donovan Sipho,Tony Crossman,47,1663,W1,1,1551,4.15,0.33,4.5
+11,2017-11-29,Donovan Sipho,Mal Kingman,42,1722,W1,0,1543,4.41,0.26,4.5
+12,2017-12-06,Donovan Sipho,Jeff Burrows,72,1484,W1,1,1556,4.99,0.58,5.5
+1,2017-10-17,Dylan Greenway,Norman Speak,152,962,W1,1,995,0.53,0.53,1
+2,2017-11-02,Dylan Greenway,John Porter,146,972,W1,1,1011,1.04,0.51,2
+3,2017-11-09,Dylan Greenway,Clive Gosling,139,1026,W1,0,997,1.48,0.44,2
+1,2017-09-15,Eleanor Collins,David Toner,70,1500,W1,0,1296,0.24,0.24,0
+2,2017-09-19,Eleanor Collins,Joe Spooner,129,1101,W1,1,1304,1,0.76,1
+3,2017-09-29,Eleanor Collins,Gary Harber,85,1396,W1,1,1324,1.37,0.37,2
+4,2017-10-04,Eleanor Collins,Ian Evans,141,1002,W1,1,1329,2.23,0.86,3
+5,2017-10-19,Eleanor Collins,Kevin Cullen,142,1000,W1,1,1333,3.09,0.86,4
+6,2017-10-27,Eleanor Collins,Jon Jenkins,112,1250,W1,1,1347,3.67,0.58,5
+7,2017-10-30,Eleanor Collins,Derek Bellamy,124,1162,W1,0.5,1340,4.36,0.69,5.5
+8,2017-11-06,Eleanor Collins,Anthony Beck,60,1581,W1,1,1367,4.52,0.16,6.5
+9,2017-11-10,Eleanor Collins,Ken Huntley,86,1377,W1,0.5,1371,4.92,0.4,7
+10,2017-11-14,Eleanor Collins,Martyn Griffiths,36,1793,W1,0,1367,5.02,0.1,7
+11,2017-11-17,Eleanor Collins,Margaret Baron,NA,850,D1,1,1371,5.92,0.9,8
+12,2017-11-18,Eleanor Collins,Louis Ba Thein,74,1470,W1,1,1394,6.2,0.28,9
+13,2017-11-19,Eleanor Collins,Albert Easton,84,1400,W1,0,1382,6.57,0.37,9
+14,2017-11-19,Eleanor Collins,Joe Spooner,129,1101,W1,1,1389,7.33,0.76,10
+15,2017-11-24,Eleanor Collins,Roger Jenkins,NA,1490,E1,0.5,1397,7.59,0.26,10.5
+16,2017-11-29,Eleanor Collins,Alan Bean,109,1267,W1,1,1412,8.14,0.55,11.5
+1,2017-09-15,Ella Toner,Cameron Bale,153,960,W1,1,919,0.42,0.42,1
+2,2017-09-22,Ella Toner,Norman Speak,152,962,W1,0.5,921,0.83,0.41,1.5
+3,2017-10-05,Ella Toner,Roger Llewellyn,125,1155,W1,0,916,1.01,0.18,1.5
+4,2017-10-12,Ella Toner,Sean Denton,83,1407,W1,0,912,1.11,0.1,1.5
+5,2017-10-13,Ella Toner,Jonathan Davies,114,1240,W1,0,909,1.22,0.11,1.5
+6,2017-10-20,Ella Toner,Ian Dyer,143,1048,W1,0,899,1.52,0.3,1.5
+7,2017-10-27,Ella Toner,Jack Cummine,96,1100,W1,1,924,1.76,0.24,2.5
+8,2017-12-05,Ella Toner,Stephen Lloyd-Brown,149,1060,W1,0,914,2.05,0.29,2.5
+1,2017-10-11,Ezaq Zaki,David Toner,70,1500,W1,0,1422,0.41,0.41,0
+2,2017-10-18,Ezaq Zaki,Albert Easton,84,1400,W1,1,1436,0.96,0.55,1
+3,2017-11-29,Ezaq Zaki,Anthony Beck,60,1581,W1,0.5,1443,1.26,0.3,1.5
+4,2017-12-06,Ezaq Zaki,David Toner,70,1500,W1,0.5,1446,1.67,0.41,2
+1,2017-07-30,Gareth Morris,Craig Kennedy,NA,1982,ECF,0.5,2103,0.67,0.67,0.5
+2,2017-07-31,Gareth Morris,Nicholas Fallowfield,NA,1982,ECF,1,2109,1.34,0.67,1.5
+3,2017-08-01,Gareth Morris,Cliff R Chandler,NA,2254,ECF,0,2104,1.64,0.3,1.5
+4,2017-08-02,Gareth Morris,David Shepherd,NA,2054,ECF,0,2095,2.21,0.57,1.5
+5,2017-08-03,Gareth Morris,Nigel S Towers,NA,1910,ECF,1,2098,2.97,0.76,2.5
+6,2017-08-04,Gareth Morris,Charles L Higgie,NA,2037,N1,1,2105,3.57,0.6,3.5
+7,2017-08-05,Gareth Morris,Phil J Brooks,NA,2246,ECF,0,2100,3.88,0.31,3.5
+8,2017-08-25,Gareth Morris,Jon Fisher,NA,1846,ECF,1,2103,4.7,0.82,4.5
+9,2017-08-26,Gareth Morris,Fabrizio Magrini,NA,2278,FIDE,1,2114,4.97,0.27,5.5
+10,2017-08-26,Gareth Morris,Attila Reznak,NA,2446,ECF,0,2113,5.08,0.11,5.5
+11,2017-08-27,Gareth Morris,Geoffrey M Brown,NA,1854,ECF,1,2116,5.89,0.81,6.5
+12,2017-08-27,Gareth Morris,Carl Bicknell,NA,2198,ECF,0.5,2118,6.26,0.37,7
+13,2017-09-02,Gareth Morris,Adam May,15,2036,W1,1,2124,6.86,0.6,8
+14,2017-09-02,Gareth Morris,Nigel Ralphs,NA,2118,E1,0.5,2125,7.34,0.48,8.5
+15,2017-09-03,Gareth Morris,Sam Jukes,NA,1899,E1,1,2128,8.11,0.77,9.5
+16,2017-09-03,Gareth Morris,Tom Brown,NA,2092,E2,0,2120,8.63,0.52,9.5
+17,2017-09-26,Gareth Morris,Christopher JA Jones,NA,1926,ECF,1,2124,9.37,0.74,10.5
+18,2017-10-02,Gareth Morris,David C Egginton,NA,2006,ECF,0.5,2122,10.01,0.64,11
+19,2017-10-17,Gareth Morris,Richard J Savory,NA,2230,ECF,0.5,2125,10.34,0.33,11.5
+20,2017-11-02,Gareth Morris,Iain Bourne,NA,1982,ECF,1,2130,11.01,0.67,12.5
+21,2017-11-07,Gareth Morris,Philipp Prasse,NA,1990,ECF,1,2135,11.67,0.66,13.5
+22,2017-11-14,Gareth Morris,Stephen J Meek,NA,2150,ECF,0,2128,12.11,0.44,13.5
+23,2017-11-21,Gareth Morris,Anton Muller,NA,1822,ECF,1,2131,12.95,0.84,14.5
+24,2017-11-28,Gareth Morris,Derek Pugh,NA,2198,ECF,0.5,2133,13.32,0.37,15
+25,2017-12-12,Gareth Morris,Derek Pugh,NA,2198,ECF,0,2127,13.69,0.37,15
+1,2017-09-29,Gary Harber,Eleanor Collins,94,1304,W1,0,1376,0.63,0.63,0
+1,2017-11-01,George Searle,Andrew Smith,48,1662,W1,0.5,1464,0.23,0.23,0.5
+2,2017-11-15,George Searle,James Evans,53,1624,W1,0.5,1471,0.51,0.28,1
+3,2017-11-29,George Searle,Hywel Griffiths,33,1823,W1,1,1499,0.61,0.1,2
+4,2017-12-06,George Searle,Chris Howells,NA,1867,E1,0,1496,0.71,0.1,2
+5,2017-12-13,George Searle,Richard Morgan,54,1622,W1,0.5,1503,0.99,0.28,2.5
+1,2017-06-21,Graham Chesters,Andrew D Bettley,NA,1878,ECF,1,2122,0.8,0.8,1
+2,2017-07-26,Graham Chesters,Keith Thompson,NA,1898,E1,0.5,2118,1.58,0.78,1.5
+3,2017-08-09,Graham Chesters,Steve R Hodge,NA,2046,ECF,0.5,2116,2.18,0.6,2
+4,2017-08-23,Graham Chesters,Paul SN Kendall,NA,2038,ECF,0.5,2114,2.79,0.61,2.5
+5,2017-10-17,Graham Chesters,David E Lord,NA,1950,ECF,0.5,2111,3.51,0.72,3
+6,2017-12-04,Graham Chesters,Philip Bawden,NA,1862,ECF,1,2114,4.33,0.82,4
+1,2017-09-12,Guto Llywelyn,Chris Howells,NA,1867,E1,0,1498,0.1,0.1,0
+2,2017-10-24,Guto Llywelyn,Chris Sims,28,1882,W1,0,1495,0.2,0.1,0
+3,2017-11-02,Guto Llywelyn,David Guy,30,1865,W1,0,1491,0.3,0.1,0
+4,2017-11-28,Guto Llywelyn,Mike Richards,87,1350,W1,0.5,1485,1,0.7,0.5
+1,2017-10-04,Guto Neave,Andrew Smith,48,1662,W1,0,1573,0.39,0.39,0
+2,2017-10-10,Guto Neave,Martyn Griffiths,36,1793,W1,1,1597,0.62,0.23,1
+3,2017-10-18,Guto Neave,Alan Bean,109,1267,W1,1,1601,1.49,0.87,2
+4,2017-11-01,Guto Neave,Tony Goodchild,89,1345,W1,0.5,1592,2.29,0.8,2.5
+5,2017-11-15,Guto Neave,Sai Prarnedth,63,1480,W1,1,1603,2.93,0.64,3.5
+6,2017-11-17,Guto Neave,Martin C Jones,NA,1749,D1,0.5,1610,3.21,0.28,4
+7,2017-11-18,Guto Neave,Steve Williams (Cwm),NA,1740,G2,0.5,1617,3.5,0.29,4.5
+8,2017-11-18,Guto Neave,Robert Dineen,NA,1802,E1,0,1610,3.72,0.22,4.5
+9,2017-11-19,Guto Neave,Paul Orton,NA,1608,D1,1,1627,4.19,0.47,5.5
+10,2017-11-19,Guto Neave,Liam Penny,NA,1716,E1,0.5,1633,4.51,0.32,6
+11,2017-11-22,Guto Neave,Peter George,67,1525,W1,0.5,1630,5.09,0.58,6.5
+12,2017-11-30,Guto Neave,Peter Smith,56,1618,W1,0.5,1632,5.54,0.45,7
+1,2017-09-29,Harri Beale,Roger Llewellyn,125,1155,W1,0,956,0.25,0.25,0
+2,2017-11-24,Harri Beale,Carl Halpin,115,1224,W1,0,950,0.43,0.18,0
+1,2017-10-11,Huw Jones,Prasanth Lakshmi-Narasimhan,117,1500,W1,0,1605,0.67,0.67,0
+2,2017-10-24,Huw Jones,Mark Evans,24,1941,W1,0.5,1614,0.8,0.13,0.5
+3,2017-11-02,Huw Jones,Adam May,15,2036,W1,0,1611,0.9,0.1,0.5
+4,2017-11-07,Huw Jones,Bob Moore,21,1977,W1,1,1633,1,0.1,1.5
+5,2017-11-15,Huw Jones,Donovan Sipho,65,1540,W1,0.5,1630,1.61,0.61,2
+6,2017-11-28,Huw Jones,Tony Crossman,47,1663,W1,1,1644,2.05,0.44,3
+1,2017-09-12,Hywel Griffiths,Tom Winfield,38,1781,W1,0,1810,0.56,0.56,0
+2,2017-09-20,Hywel Griffiths,Richard Morgan,54,1622,W1,1,1815,1.32,0.76,1
+3,2017-09-26,Hywel Griffiths,Robert Wood,61,1579,W1,1,1820,2.13,0.81,2
+4,2017-10-10,Hywel Griffiths,Malcolm Probert,50,1641,W1,0.5,1814,2.87,0.74,2.5
+5,2017-10-19,Hywel Griffiths,Chris Price,19,2000,W1,0,1808,3.14,0.27,2.5
+6,2017-11-06,Hywel Griffiths,Paul Scott,66,1537,W1,1,1811,3.98,0.84,3.5
+7,2017-11-14,Hywel Griffiths,Tony Goodchild,89,1345,W1,1,1814,4.88,0.9,4.5
+8,2017-11-29,Hywel Griffiths,George Searle,75,1455,W1,0,1792,5.78,0.9,4.5
+9,2017-12-07,Hywel Griffiths,Peter George,67,1525,W1,1,1796,6.63,0.85,5.5
+10,2017-12-12,Hywel Griffiths,David Toner,70,1500,W1,1,1799,7.5,0.87,6.5
+1,2017-09-13,Ian Dyer,Janet Evans,159,912,W1,1,1058,0.68,0.68,1
+2,2017-10-04,Ian Dyer,Roger Llewellyn,125,1155,W1,0,1047,1.03,0.35,1
+3,2017-10-11,Ian Dyer,Vaughan Thomas,95,1300,W1,0.5,1057,1.22,0.19,1.5
+4,2017-10-17,Ian Dyer,Aidan Reilly,105,1000,W1,0,1039,1.79,0.57,1.5
+5,2017-10-20,Ian Dyer,Ella Toner,101,900,W1,1,1048,2.49,0.7,2.5
+6,2017-11-29,Ian Dyer,Ioan Phillips,99,904,W1,1,1058,3.18,0.69,3.5
+7,2017-12-06,Ian Dyer,Derek Bellamy,124,1162,W1,0,1047,3.52,0.34,3.5
+8,2017-12-13,Ian Dyer,Manuel Zoller,26,1200,W1,0,1038,3.82,0.3,3.5
+1,2017-09-21,Ian Eustis,Robert Wood,61,1579,W1,0.5,1799,0.79,0.79,0.5
+2,2017-10-12,Ian Eustis,Rishi Choudhuri,111,1259,W1,1,1801,1.69,0.9,1.5
+3,2017-10-19,Ian Eustis,Steve Lockley,98,1203,W1,1,1804,2.59,0.9,2.5
+4,2017-10-23,Ian Eustis,Ben Mora,64,1590,W1,1,1809,3.37,0.78,3.5
+5,2017-10-30,Ian Eustis,Peter Smith,56,1618,W1,0.5,1803,4.12,0.75,4
+6,2017-11-28,Ian Eustis,Dennis Jones,51,1638,W1,1,1810,4.84,0.72,5
+7,2017-12-06,Ian Eustis,Joseph Addis,78,1447,W1,1,1812,5.74,0.9,6
+1,2017-09-26,Ian Evans,Leighton Anthony,138,1033,W1,1,1019,0.46,0.46,1
+2,2017-09-27,Ian Evans,Mike Richards,87,1350,W1,0.5,1032,0.57,0.11,1.5
+3,2017-10-04,Ian Evans,Eleanor Collins,94,1304,W1,0,1027,0.71,0.14,1.5
+4,2017-10-10,Ian Evans,Anthony Beck,60,1581,W1,1,1056,0.81,0.1,2.5
+5,2017-10-18,Ian Evans,June Evans,140,1056,W1,1,1075,1.23,0.42,3.5
+6,2017-11-15,Ian Evans,Manuel Zoller,26,1200,W1,0,1067,1.47,0.24,3.5
+7,2017-11-22,Ian Evans,Jonathan Davies,114,1240,W1,1,1093,1.67,0.2,4.5
+1,2017-09-12,Ian Jones,Tomasz Miga,45,1694,,1,2002,0.86,0.86,1
+2,2017-09-26,Ian Jones,Bob Moore,21,1977,,0.5,2002,1.39,0.53,1.5
+3,2017-10-22,Ian Jones,Julie Van Kemenade,NA,1752,,1,2005,2.2,0.81,2.5
+4,2017-10-25,Ian Jones,John Davies,108,1281,,1,2006,3.1,0.9,3.5
+5,2017-11-01,Ian Jones,Neil Stuart,46,1689,,0.5,2001,3.96,0.86,4
+6,2017-11-05,Ian Jones,Venetia Sivarajasingam,NA,1761,WCM,1,2004,4.76,0.8,5
+7,2017-11-09,Ian Jones,Jason Garcia,12,2078,,0.5,2006,5.15,0.39,5.5
+8,2017-11-17,Ian Jones,Colin Denham,NA,1643,,1,2007,6.05,0.9,6.5
+9,2017-11-18,Ian Jones,Sven Zeidler,NA,2230,,0.5,2012,6.26,0.21,7
+10,2017-11-18,Ian Jones,Gerry Heap,NA,2132,,0.5,2015,6.58,0.32,7.5
+11,2017-11-19,Ian Jones,Thomas Van Veelen,20,1993,,0.5,2015,7.09,0.51,8
+12,2017-11-19,Ian Jones,Alan Young,8,2101,,0.5,2017,7.45,0.36,8.5
+13,2017-11-21,Ian Jones,Albert Easton,84,1400,,1,2018,8.35,0.9,9.5
+1,2017-09-15,Ioan Phillips,Claire Roberts,100,900,W1,1,920,0.51,0.51,1
+2,2017-10-06,Ioan Phillips,Andrew Powell,104,1000,W1,1,940,0.88,0.37,2
+3,2017-10-27,Ioan Phillips,Thang Ngyuen,133,1100,W1,0,932,1.12,0.24,2
+4,2017-11-24,Ioan Phillips,Jonathan Davies,114,1240,W1,0,928,1.24,0.12,2
+5,2017-11-29,Ioan Phillips,Ian Dyer,143,1048,W1,0,918,1.55,0.31,2
+6,2017-12-05,Ioan Phillips,Andrew Powell,104,1000,W1,0,907,1.92,0.37,2
+1,2017-11-01,Jack Bevan,Mike Burrows,29,1867,W1,0,1482,0.1,0.1,0
+2,2017-11-15,Jack Bevan,Mike Richards,87,1350,W1,0.5,1476,0.78,0.68,0.5
+3,2017-12-13,Jack Bevan,Bill Flew,88,1346,W1,1,1486,1.47,0.69,1.5
+1,2017-10-13,Jack Cummine,Mike Osborn,155,893,W1,0,1075,0.77,0.77,0
+2,2017-10-27,Jack Cummine,Ella Toner,101,900,W1,0,1051,1.53,0.76,0
+1,2017-09-12,James Evans,Moss McCarthy,23,1950,W1,0,1621,0.12,0.12,0
+2,2017-09-19,James Evans,David Buttell,25,1913,W1,0,1618,0.27,0.15,0
+3,2017-09-26,James Evans,Dave Conway,116,1222,W1,1,1620,1.17,0.9,1
+4,2017-10-11,James Evans,Donovan Sipho,65,1540,W1,0.5,1617,1.79,0.62,1.5
+5,2017-10-18,James Evans,Bill Flew,88,1346,W1,1,1621,2.63,0.84,2.5
+6,2017-11-09,James Evans,Andrew Smith,48,1662,W1,1,1634,3.08,0.45,3.5
+7,2017-11-15,James Evans,George Searle,75,1455,W1,0.5,1629,3.8,0.72,4
+8,2017-11-22,James Evans,Robert Wood,61,1579,W1,1,1639,4.36,0.56,5
+9,2017-11-30,James Evans,Tom Winfield,38,1781,W1,0,1632,4.65,0.29,5
+1,2017-09-13,Janet Evans,Ian Dyer,143,1048,W1,0,902,0.32,0.32,0
+2,2017-10-20,Janet Evans,Claire Roberts,100,900,W1,1,917,0.84,0.52,1
+3,2017-10-25,Janet Evans,Tony Goodchild,89,1345,W1,0,914,0.94,0.1,1
+4,2017-11-08,Janet Evans,Thang Ngyuen,133,1100,W1,1,938,1.19,0.25,2
+5,2017-12-06,Janet Evans,John Porter,146,972,W1,0,924,1.61,0.42,2
+1,2017-09-13,Jason Garcia,Mike Richards,87,1350,,1,2080,0.9,0.9,1
+2,2017-09-19,Jason Garcia,Tomasz Miga,45,1694,,1,2081,1.8,0.9,2
+3,2017-09-27,Jason Garcia,Keith Downey,37,1785,,1,2084,2.65,0.85,3
+4,2017-10-03,Jason Garcia,Moss McCarthy,23,1950,,1,2089,3.32,0.67,4
+5,2017-10-10,Jason Garcia,Craig Evans,9,2093,,1,2097,3.8,0.48,5
+6,2017-10-13,Jason Garcia,Justin Morgans,NA,1704,,0.5,2091,4.7,0.9,5.5
+7,2017-10-14,Jason Garcia,Daniel Jaberansari,NA,1500,,1,2092,5.6,0.9,6.5
+8,2017-10-14,Jason Garcia,Alan Young,8,2101,,1,2101,6.07,0.47,7.5
+9,2017-10-15,Jason Garcia,Joe Fathallah,NA,2023,,0.5,2100,6.65,0.58,8
+10,2017-10-15,Jason Garcia,Tim Kett,NA,2269,,0.5,2104,6.9,0.25,8.5
+11,2017-10-18,Jason Garcia,Mike Cleaves,43,1713,,1,2105,7.8,0.9,9.5
+12,2017-10-22,Jason Garcia,Douglas Spencer,NA,2025,,1,2112,8.37,0.57,10.5
+13,2017-11-02,Jason Garcia,Malcolm Probert,50,1641,,1,2114,9.27,0.9,11.5
+14,2017-11-05,Jason Garcia,Iolo C Jones,NA,2241,FM,0.5,2117,9.55,0.28,12
+15,2017-11-08,Jason Garcia,Neil Stuart,46,1689,,1,2119,10.45,0.9,13
+16,2017-11-09,Jason Garcia,Ian Jones,18,2000,,0.5,2117,11.06,0.61,13.5
+17,2017-12-06,Jason Garcia,Malcolm Probert,50,1641,,1,2119,11.96,0.9,14.5
+18,2017-12-13,Jason Garcia,Craig Evans,9,2093,,0,2111,12.44,0.48,14.5
+1,2017-09-12,Jeff Burrows,Chris Sims,28,1882,W1,0,1481,0.1,0.1,0
+2,2017-10-04,Jeff Burrows,Donovan Sipho,65,1540,W1,0,1467,0.52,0.42,0
+3,2017-11-01,Jeff Burrows,Greg Goold,121,1173,W1,1,1472,1.38,0.86,1
+4,2017-11-09,Jeff Burrows,Sean Denton,83,1407,W1,1,1484,1.99,0.61,2
+5,2017-11-14,Jeff Burrows,Mike Cleaves,43,1713,W1,0,1478,2.2,0.21,2
+6,2017-12-06,Jeff Burrows,Donovan Sipho,65,1540,W1,0,1464,2.62,0.42,2
+1,2017-09-12,Joe Spooner,Kelvin Haines,73,1483,W1,0,1098,0.1,0.1,0
+2,2017-09-19,Joe Spooner,Eleanor Collins,94,1304,W1,0,1090,0.34,0.24,0
+3,2017-09-26,Joe Spooner,Chandon Brown,107,1287,W1,1,1114,0.6,0.26,1
+4,2017-10-19,Joe Spooner,Andrew Smith,48,1662,W1,0,1111,0.7,0.1,1
+5,2017-11-08,Joe Spooner,Bill Flew,88,1346,W1,1,1137,0.89,0.19,2
+6,2017-11-09,Joe Spooner,Colin Chambers,113,1240,W1,1,1159,1.2,0.31,3
+7,2017-11-17,Joe Spooner,Albert Easton,84,1400,W1,0,1154,1.35,0.15,3
+8,2017-11-18,Joe Spooner,Joel Chung,122,1171,W1,0,1141,1.75,0.4,3
+9,2017-11-19,Joe Spooner,Daniel Chung,110,1261,W1,0,1132,2.04,0.29,3
+10,2017-11-19,Joe Spooner,Eleanor Collins,94,1304,W1,0,1124,2.28,0.24,3
+11,2017-11-27,Joe Spooner,Alan Bean,109,1267,W1,1,1147,2.56,0.28,4
+12,2017-12-01,Joe Spooner,Moss McCarthy,23,1950,W1,0,1144,2.66,0.1,4
+1,2017-09-02,Joel Chung,Chris Peters,NA,1527,E1,0,1168,0.1,0.1,0
+2,2017-09-02,Joel Chung,Gareth Davies,NA,1365,E1,0,1160,0.35,0.25,0
+3,2017-09-03,Joel Chung,Peter Watkins,NA,1314,E1,0,1150,0.66,0.31,0
+4,2017-09-15,Joel Chung,Alice Potter,154,962,W1,1,1157,1.43,0.77,1
+5,2017-09-22,Joel Chung,Greg Goold,121,1173,W1,0,1141,1.93,0.5,1
+6,2017-10-05,Joel Chung,Alan Rosser,106,1288,W1,1,1162,2.27,0.34,2
+7,2017-10-12,Joel Chung,Paul Scott,66,1537,W1,0,1159,2.37,0.1,2
+8,2017-10-13,Joel Chung,Colin Chambers,113,1240,W1,1,1178,2.77,0.4,3
+9,2017-10-14,Joel Chung,Chris Peters,NA,1527,E1,0.5,1191,2.87,0.1,3.5
+10,2017-10-14,Joel Chung,Daniel Chung,110,1261,W1,0,1179,3.25,0.38,3.5
+11,2017-10-15,Joel Chung,Jeremy Jones,NA,1536,E1,0,1176,3.35,0.1,3.5
+12,2017-10-15,Joel Chung,Ashika Shahameeran,NA,916,E1,0,1150,4.17,0.82,3.5
+13,2017-10-20,Joel Chung,June Evans,140,1056,W1,1,1160,4.83,0.66,4.5
+14,2017-10-25,Joel Chung,Andrew Smith,48,1662,W1,0,1157,4.93,0.1,4.5
+15,2017-11-17,Joel Chung,Sean Denton,83,1407,W1,0,1151,5.13,0.2,4.5
+16,2017-11-18,Joel Chung,Joe Spooner,129,1101,W1,1,1164,5.73,0.6,5.5
+17,2017-11-18,Joel Chung,Daniel Chung,110,1261,W1,1,1183,6.11,0.38,6.5
+18,2017-11-19,Joel Chung,Margaret Baron,NA,850,D1,1,1188,6.98,0.87,7.5
+19,2017-11-19,Joel Chung,Albert Easton,84,1400,W1,0.5,1197,7.19,0.21,8
+20,2017-11-21,Joel Chung,Bill Flew,88,1346,W1,0,1188,7.46,0.27,8
+21,2017-12-05,Joel Chung,Aidan Reilly,105,1000,W1,0,1165,8.19,0.73,8
+1,2017-09-19,John Davies,Peter George,67,1525,W1,0,1275,0.19,0.19,0
+2,2017-09-20,John Davies,Alan Bean,109,1267,W1,1,1290,0.71,0.52,1
+3,2017-10-06,John Davies,Calum Newton,144,1043,W1,1,1297,1.51,0.8,2
+4,2017-10-25,John Davies,Ian Jones,18,2000,W1,0,1293,1.61,0.1,2
+5,2017-11-02,John Davies,Alan Rosser,106,1288,W1,0.5,1294,2.1,0.49,2.5
+6,2017-11-09,John Davies,Ken Huntley,86,1377,W1,1,1314,2.47,0.37,3.5
+7,2017-11-14,John Davies,June Evans,140,1056,W1,1,1321,3.26,0.79,4.5
+1,2017-09-21,John Porter,Ken Huntley,86,1377,W1,1,1001,0.1,0.1,1
+2,2017-10-04,John Porter,Norman Speak,152,962,W1,0,984,0.61,0.51,1
+3,2017-11-02,John Porter,Dylan Greenway,156,980,W1,0,969,1.1,0.49,1
+4,2017-11-10,John Porter,Alice Potter,154,962,W1,0,952,1.61,0.51,1
+5,2017-11-30,John Porter,Carl Halpin,115,1224,W1,0,946,1.8,0.19,1
+6,2017-12-06,John Porter,Janet Evans,159,912,W1,1,960,2.38,0.58,2
+1,2017-09-12,John Ward,Albert Easton,84,1400,W1,0,1032,0.1,0.1,0
+2,2017-09-19,John Ward,Rishi Choudhuri,111,1259,W1,0,1025,0.31,0.21,0
+3,2017-10-11,John Ward,Manuel Zoller,26,1200,W1,0,1016,0.59,0.28,0
+4,2017-10-19,John Ward,Sean Denton,83,1407,W1,1,1045,0.69,0.1,1
+5,2017-10-26,John Ward,Paul Bevan,90,1332,W1,0,1040,0.84,0.15,1
+6,2017-11-09,John Ward,Jonathan Davies,114,1240,W1,0,1033,1.07,0.23,1
+7,2017-11-17,John Ward,Paul Bevan,90,1332,W1,0,1028,1.22,0.15,1
+8,2017-12-12,John Ward,Louis Ba Thein,74,1470,W1,1,1057,1.32,0.1,2
+1,2017-09-14,Jon Jenkins,Peter Smith,56,1618,W1,1,1279,0.1,0.1,1
+2,2017-10-05,Jon Jenkins,Robert Wood,61,1579,W1,0.5,1291,0.22,0.12,1.5
+3,2017-10-13,Jon Jenkins,Ken Huntley,86,1377,W1,0,1280,0.55,0.33,1.5
+4,2017-10-27,Jon Jenkins,Eleanor Collins,94,1304,W1,0,1267,0.97,0.42,1.5
+5,2017-11-08,Jon Jenkins,Alan Bean,109,1267,W1,0,1252,1.45,0.48,1.5
+1,2017-10-05,Jonathan Davies,Yoon Nam,119,1100,W1,1,1250,0.69,0.69,1
+2,2017-10-13,Jonathan Davies,Ella Toner,101,900,W1,1,1253,1.58,0.89,2
+3,2017-10-18,Jonathan Davies,Max Browning,93,1322,W1,0,1241,1.97,0.39,2
+4,2017-11-09,Jonathan Davies,John Ward,137,1035,W1,1,1248,2.74,0.77,3
+5,2017-11-22,Jonathan Davies,Ian Evans,141,1002,W1,0,1223,3.54,0.8,3
+6,2017-11-24,Jonathan Davies,Ioan Phillips,99,904,W1,1,1227,4.42,0.88,4
+7,2017-11-30,Jonathan Davies,Roger Llewellyn,125,1155,W1,0.5,1223,5.04,0.62,4.5
+8,2017-12-07,Jonathan Davies,Dennis Thomas,136,1062,W1,1,1231,5.78,0.74,5.5
+1,2017-10-11,Joseph Addis,Andrew Smith,48,1662,W1,0,1440,0.22,0.22,0
+2,2017-10-18,Joseph Addis,Kelvin Haines,73,1483,W1,1,1458,0.67,0.45,1
+3,2017-11-15,Joseph Addis,Chandon Brown,107,1287,W1,0.5,1451,1.38,0.71,1.5
+4,2017-11-29,Joseph Addis,Martyn Griffiths,36,1793,W1,1,1479,1.49,0.11,2.5
+5,2017-12-06,Joseph Addis,Ian Eustis,35,1806,W1,0,1476,1.59,0.1,2.5
+6,2017-12-13,Joseph Addis,Alan Bean,109,1267,W1,1,1484,2.33,0.74,3.5
+1,2017-09-19,Joseph Cura,Leighton Anthony,138,1033,W1,0,1126,0.66,0.66,0
+2,2017-11-01,Joseph Cura,Chandon Brown,107,1287,W1,0,1116,0.97,0.31,0
+3,2017-11-14,Joseph Cura,Anthony Beck,60,1581,W1,1,1145,1.07,0.1,1
+4,2017-11-23,Joseph Cura,Ken Huntley,86,1377,W1,0,1138,1.28,0.21,1
+1,2017-09-13,Julian Bradshaw,Norman Speak,152,962,W1,0,906,0.44,0.44,0
+2,2017-10-04,Julian Bradshaw,Mike Osborn,155,893,W1,0,889,0.98,0.54,0
+3,2017-11-29,Julian Bradshaw,Kristian Wilkins,102,900,W1,1,904,1.51,0.53,1
+1,2017-09-27,June Evans,Albert Easton,84,1400,W1,0,1052,0.11,0.11,0
+2,2017-10-04,June Evans,Derek Bellamy,124,1162,W1,0,1041,0.46,0.35,0
+3,2017-10-18,June Evans,Ian Evans,141,1002,W1,0,1023,1.04,0.58,0
+4,2017-10-20,June Evans,Joel Chung,122,1171,W1,0,1012,1.38,0.34,0
+5,2017-10-25,June Evans,Albert Easton,84,1400,W1,0,1008,1.49,0.11,0
+6,2017-11-08,June Evans,Minjae Park,132,1100,W1,1,1026,1.93,0.44,1
+7,2017-11-14,June Evans,John Davies,108,1281,W1,0,1020,2.14,0.21,1
+8,2017-11-23,June Evans,Lyndon Todd,92,1327,W1,0,1014,2.31,0.17,1
+9,2017-12-07,June Evans,Mike Osborn,155,893,W1,1,1023,3.03,0.72,2
+1,2017-09-26,Juraj Sokolsky,Mike Cleaves,43,1713,W1,1,1892,0.73,0.73,1
+2,2017-10-03,Juraj Sokolsky,David Guy,30,1865,W1,0.5,1892,1.26,0.53,1.5
+3,2017-10-04,Juraj Sokolsky,Tomasz Miga,45,1694,W1,0.5,1886,2.01,0.75,2
+4,2017-10-19,Juraj Sokolsky,Dave Conway,116,1222,W1,1,1888,2.91,0.9,3
+5,2017-10-23,Juraj Sokolsky,Richard Morgan,54,1622,W1,1,1892,3.73,0.82,4
+6,2017-10-30,Juraj Sokolsky,Tom Winfield,38,1781,W1,1,1901,4.37,0.64,5
+7,2017-11-06,Juraj Sokolsky,Martyn Griffiths,36,1793,W1,0.5,1898,5,0.63,5.5
+8,2017-11-28,Juraj Sokolsky,Andrew Di-Vetta,NA,1825,E3,1,1908,5.59,0.59,6.5
+1,2017-08-13,Keith Downey,Vladimir Epishin,NA,2541,GM,0,1783,0.1,0.1,0
+2,2017-08-13,Keith Downey,Philippe Blot,NA,1598,,1,1789,0.85,0.75,1
+3,2017-08-14,Keith Downey,Stefaan Temmerman,NA,1400,,1,1791,1.75,0.9,2
+4,2017-08-14,Keith Downey,Gianluca Mameli,NA,1995,,0,1785,1.98,0.23,2
+5,2017-08-15,Keith Downey,Jacques Mahieu,NA,1628,,1,1792,2.69,0.71,3
+6,2017-08-15,Keith Downey,Rudy Van de Wynkele,NA,1991,,0.5,1799,2.92,0.23,3.5
+7,2017-08-16,Keith Downey,Chris J Beckett,NA,2206,,0,1797,3.02,0.1,3.5
+8,2017-08-16,Keith Downey,Franky Nolf,NA,1666,,1,1805,3.68,0.66,4.5
+9,2017-08-17,Keith Downey,Benny Todts,NA,1954,,0.5,1810,3.96,0.28,5
+10,2017-09-12,Keith Downey,Carl Strugnell,2,2348,FM,0,1808,4.06,0.1,5
+11,2017-09-27,Keith Downey,Jason Garcia,12,2078,,0,1804,4.21,0.15,5
+12,2017-10-11,Keith Downey,Markus Obendrauf,97,1600,,1,1810,4.95,0.74,6
+13,2017-10-12,Keith Downey,Andrew Di-Vetta,NA,1745,,1,1821,5.51,0.56,7
+14,2017-10-17,Keith Downey,Andrew Gibbons,16,2010,,0,1816,5.72,0.21,7
+15,2017-10-24,Keith Downey,Rob Saunders,11,2084,,0.5,1824,5.87,0.15,7.5
+16,2017-10-31,Keith Downey,Andrew Di-Vetta,NA,1745,,0.5,1823,6.43,0.56,8
+17,2017-11-02,Keith Downey,Gerry Heap,NA,2132,,0,1820,6.54,0.11,8
+18,2017-11-05,Keith Downey,Julie Van Kemenade,NA,1752,,1,1831,7.09,0.55,9
+19,2017-11-08,Keith Downey,Markus Obendrauf,97,1600,,1,1837,7.83,0.74,10
+20,2017-11-09,Keith Downey,Mike Burrows,29,1867,,0.5,1840,8.22,0.39,10.5
+21,2017-11-15,Keith Downey,Neil Stuart,46,1689,,0.5,1837,8.85,0.63,11
+22,2017-11-28,Keith Downey,David Buttell,25,1788,,0.5,1837,9.35,0.5,11.5
+1,2017-09-12,Kelvin Haines,Joe Spooner,129,1101,W1,1,1486,0.9,0.9,1
+2,2017-09-21,Kelvin Haines,Andrew Smith,48,1662,W1,0,1478,1.16,0.26,1
+3,2017-09-26,Kelvin Haines,Anthony Beck,60,1581,W1,0.5,1482,1.52,0.36,1.5
+4,2017-09-27,Kelvin Haines,Greg Goold,121,1173,W1,1,1487,2.38,0.86,2.5
+5,2017-10-12,Kelvin Haines,Malcolm Probert,50,1641,W1,0,1478,2.67,0.29,2.5
+6,2017-10-18,Kelvin Haines,Joseph Addis,78,1447,W1,0,1460,3.22,0.55,2.5
+7,2017-11-09,Kelvin Haines,Tony Goodchild,89,1345,W1,0.5,1454,3.91,0.69,3
+8,2017-11-14,Kelvin Haines,Bob Moore,21,1977,W1,0,1451,4.01,0.1,3
+9,2017-11-22,Kelvin Haines,Chandon Brown,107,1287,W1,1,1458,4.77,0.76,4
+10,2017-12-06,Kelvin Haines,Prasanth Lakshmi-Narasimhan,117,1500,W1,1,1475,5.25,0.48,5
+11,2017-12-07,Kelvin Haines,Steve Smith,34,1821,W1,0.5,1487,5.37,0.12,5.5
+1,2017-09-12,Ken Huntley,Michael Beck,52,1632,W1,0,1371,0.18,0.18,0
+2,2017-09-21,Ken Huntley,John Porter,146,972,W1,0,1342,1.08,0.9,0
+3,2017-09-29,Ken Huntley,Calum Newton,144,1043,W1,1,1346,1.96,0.88,1
+4,2017-10-11,Ken Huntley,Alan Bean,109,1267,W1,1,1357,2.61,0.65,2
+5,2017-10-13,Ken Huntley,Jon Jenkins,112,1250,W1,1,1368,3.28,0.67,3
+6,2017-10-30,Ken Huntley,Paul Scott,66,1537,W1,0.5,1375,3.57,0.29,3.5
+7,2017-11-09,Ken Huntley,John Davies,108,1281,W1,0,1355,4.2,0.63,3.5
+8,2017-11-10,Ken Huntley,Eleanor Collins,94,1304,W1,0.5,1351,4.8,0.6,4
+9,2017-11-23,Ken Huntley,Joseph Cura,127,1147,W1,1,1358,5.59,0.79,5
+10,2017-12-06,Ken Huntley,Alan Bean,109,1267,W1,1,1369,6.24,0.65,6
+1,2017-09-13,Ken James,Greg Goold,121,1173,W1,0,1114,0.44,0.44,0
+1,2017-10-19,Kevin Cullen,Eleanor Collins,94,1304,W1,0,996,0.14,0.14,0
+2,2017-10-26,Kevin Cullen,Derek Bellamy,124,1162,W1,0,987,0.42,0.28,0
+3,2017-12-12,Kevin Cullen,Aidan Reilly,105,1000,W1,0,971,0.92,0.5,0
+1,2017-09-12,Leighton Anthony,Colin Chambers,113,1240,W1,0,1026,0.23,0.23,0
+2,2017-09-19,Leighton Anthony,Joseph Cura,127,1147,W1,1,1047,0.57,0.34,1
+3,2017-09-26,Leighton Anthony,Ian Evans,141,1002,W1,0,1029,1.11,0.54,1
+4,2017-11-27,Leighton Anthony,Greg Goold,121,1173,W1,0,1020,1.42,0.31,1
+1,2017-09-26,Les Philpin,Tomasz Miga,45,1694,W1,0.5,1528,0.27,0.27,0.5
+2,2017-11-17,Les Philpin,Tomasz Miga,45,1694,W1,0.5,1536,0.54,0.27,1
+3,2017-11-18,Les Philpin,Liam Penny,NA,1716,E1,1,1560,0.79,0.25,2
+4,2017-11-19,Les Philpin,Stephen Horrell,NA,1723,G1,0,1552,1.03,0.24,2
+5,2017-11-19,Les Philpin,Robert Dineen,NA,1802,E1,0,1547,1.19,0.16,2
+1,2017-09-19,Louis Ba Thein,Mike Cleaves,43,1713,W1,0,1464,0.2,0.2,0
+2,2017-09-20,Louis Ba Thein,Bill Flew,88,1346,W1,1,1474,0.87,0.67,1
+3,2017-09-26,Louis Ba Thein,Albert Easton,84,1400,W1,0,1455,1.47,0.6,1
+4,2017-11-09,Louis Ba Thein,Peter Smith,56,1618,W1,0,1445,1.77,0.3,1
+5,2017-11-17,Louis Ba Thein,Daniel Chung,110,1261,W1,1,1453,2.54,0.77,2
+6,2017-11-18,Louis Ba Thein,Paul Bevan,90,1332,W1,1,1463,3.23,0.69,3
+7,2017-11-18,Louis Ba Thein,Eleanor Collins,94,1304,W1,0,1440,3.95,0.72,3
+8,2017-11-19,Louis Ba Thein,Sean Denton,83,1407,W1,0,1421,4.54,0.59,3
+9,2017-11-19,Louis Ba Thein,Margaret Baron,NA,850,D1,1,1424,5.44,0.9,4
+10,2017-12-05,Louis Ba Thein,David Toner,70,1500,W1,0,1409,5.9,0.46,4
+11,2017-12-12,Louis Ba Thein,John Ward,137,1035,W1,0,1380,6.8,0.9,4
+1,2017-09-19,Lyndon Todd,Byron Jones,148,1061,W1,0,1300,0.83,0.83,0
+2,2017-09-21,Lyndon Todd,Sean Denton,83,1407,W1,0,1288,1.22,0.39,0
+3,2017-10-05,Lyndon Todd,Minjae Park,132,1100,W1,1,1295,2.01,0.79,1
+4,2017-10-13,Lyndon Todd,Daniel Chung,110,1261,W1,0.5,1292,2.6,0.59,1.5
+5,2017-11-23,Lyndon Todd,June Evans,140,1056,W1,1,1297,3.43,0.83,2.5
+6,2017-11-24,Lyndon Todd,Cameron Bale,153,960,W1,1,1300,4.33,0.9,3.5
+7,2017-11-30,Lyndon Todd,Vaughan Thomas,95,1300,W1,0.5,1299,4.87,0.54,4
+1,2017-09-26,Mal Kingman,Chris Howells,NA,1867,E1,0,1715,0.3,0.3,0
+2,2017-10-04,Mal Kingman,Markus Obendrauf,97,1600,W1,0.5,1711,0.97,0.67,0.5
+3,2017-10-18,Mal Kingman,Adam May,15,2036,W1,0,1708,1.1,0.13,0.5
+4,2017-10-31,Mal Kingman,Tony Crossman,47,1663,W1,0,1694,1.68,0.58,0.5
+5,2017-11-29,Mal Kingman,Donovan Sipho,65,1540,W1,1,1700,2.42,0.74,1.5
+1,2017-09-01,Malcolm Probert,John Waterfield,NA,2037,G1,0,1639,0.1,0.1,0
+2,2017-09-02,Malcolm Probert,Bob Hurn,NA,1664,E1,0.5,1639,0.57,0.47,0.5
+3,2017-09-02,Malcolm Probert,Kevin O'Rourke,NA,1175,E1,1,1642,1.47,0.9,1.5
+4,2017-09-03,Malcolm Probert,John Cox,NA,1492,E1,1,1649,2.17,0.7,2.5
+5,2017-09-03,Malcolm Probert,D Ian W Reynolds,NA,1990,ECF,0.5,1658,2.28,0.11,3
+6,2017-09-12,Malcolm Probert,Peter Bevan,22,1965,W1,0,1655,2.41,0.13,3
+7,2017-09-19,Malcolm Probert,Nicholas Evans,13,2051,W1,0,1653,2.51,0.1,3
+8,2017-10-10,Malcolm Probert,Hywel Griffiths,33,1823,W1,0.5,1659,2.77,0.26,3.5
+9,2017-10-12,Malcolm Probert,Kelvin Haines,73,1483,W1,1,1665,3.48,0.71,4.5
+10,2017-10-13,Malcolm Probert,Dai James,NA,1893,E1,0.5,1673,3.67,0.19,5
+11,2017-10-14,Malcolm Probert,Liam Penny,NA,1716,E1,0,1663,4.07,0.4,5
+12,2017-10-14,Malcolm Probert,Stephen Williams (Cwm),NA,1740,G2,1,1679,4.43,0.36,6
+13,2017-10-15,Malcolm Probert,Sam Jukes,NA,1880,E2,0,1674,4.63,0.2,6
+14,2017-10-15,Malcolm Probert,Andrew Di-Vetta,NA,1745,E2,0,1665,4.99,0.36,6
+15,2017-10-17,Malcolm Probert,Chris Sims,28,1882,W1,0,1660,5.19,0.2,6
+16,2017-10-24,Malcolm Probert,Bob Moore,21,1977,W1,0,1658,5.31,0.12,6
+17,2017-10-31,Malcolm Probert,Dennis Jones,51,1638,W1,0.5,1658,5.81,0.5,6.5
+18,2017-11-02,Malcolm Probert,Jason Garcia,12,2078,W1,0,1655,5.91,0.1,6.5
+19,2017-11-07,Malcolm Probert,Andrew Gibbons,16,2010,W1,0.5,1665,6.01,0.1,7
+20,2017-11-17,Malcolm Probert,Thomas van Veelen,20,1993,W1,0,1662,6.12,0.11,7
+21,2017-11-18,Malcolm Probert,Moss McCarthy,23,1950,W1,0,1659,6.26,0.14,7
+22,2017-11-18,Malcolm Probert,Chris Boyd,NA,1950,G1,0,1655,6.4,0.14,7
+23,2017-11-19,Malcolm Probert,Colin Denham,NA,1643,D1,0,1643,6.9,0.5,7
+24,2017-11-19,Malcolm Probert,David Buttell,25,1913,W1,0,1639,7.07,0.17,7
+25,2017-12-06,Malcolm Probert,Jason Garcia,12,2078,W1,0,1637,7.17,0.1,7
+1,2017-10-11,Manuel Zoller,John Ward,137,1035,W1,1,1209,0.72,0.72,1
+2,2017-11-15,Manuel Zoller,Ian Evans,141,1002,W1,1,1217,1.48,0.76,2
+3,2017-12-06,Manuel Zoller,Sean Denton,83,1407,W1,0.5,1225,1.71,0.23,2.5
+4,2017-12-13,Manuel Zoller,Ian Dyer,143,1048,W1,1,1235,2.41,0.7,3.5
+1,2017-09-12,Mark Evans,Roger Jenkins,NA,1490,E1,1,1943,0.9,0.9,1
+2,2017-09-26,Mark Evans,Peter Bevan,22,1965,W1,0.5,1944,1.37,0.47,1.5
+3,2017-10-12,Mark Evans,David Buttell,25,1913,W1,0.5,1943,1.91,0.54,2
+4,2017-10-17,Mark Evans,Chris Daniel,40,1725,W1,0.5,1936,2.69,0.78,2.5
+5,2017-10-24,Mark Evans,Huw Jones,55,1621,W1,0.5,1928,3.56,0.87,3
+6,2017-11-07,Mark Evans,Mike Richards,87,1350,W1,1,1930,4.46,0.9,4
+7,2017-11-14,Mark Evans,Roger Jenkins,NA,1490,E1,1,1932,5.36,0.9,5
+8,2017-11-29,Mark Evans,Sebastian Hay,62,1573,W1,1,1935,6.26,0.9,6
+9,2017-12-13,Mark Evans,Adam May,15,2036,W1,0.5,1938,6.63,0.37,6.5
+1,2017-09-12,Mark Livingston,Martyn Griffiths,36,1793,W1,0,1421,0.1,0.1,0
+2,2017-10-11,Mark Livingston,Bill Flew,88,1346,W1,0.5,1417,0.71,0.61,0.5
+3,2017-11-23,Mark Livingston,Rishi Choudhuri,111,1259,W1,0.5,1410,1.43,0.72,1
+4,2017-11-30,Mark Livingston,Mike Richards,87,1350,W1,0,1391,2.03,0.6,1
+1,2017-10-04,Markus Obendrauf,Mal Kingman,42,1722,W1,0.5,1604,0.33,0.33,0.5
+2,2017-10-11,Markus Obendrauf,Keith Downey,37,1785,W1,0,1598,0.59,0.26,0.5
+3,2017-11-01,Markus Obendrauf,Moss McCarthy,23,1950,W1,0,1595,0.7,0.11,0.5
+4,2017-11-08,Markus Obendrauf,Keith Downey,37,1785,W1,0,1589,0.96,0.26,0.5
+5,2017-11-15,Markus Obendrauf,Chris Daniel,40,1725,W1,0.5,1593,1.29,0.33,1
+6,2017-11-17,Markus Obendrauf,Roy Thomas,NA,1763,E1,0,1586,1.57,0.28,1
+7,2017-11-22,Markus Obendrauf,Chris Daniel,40,1725,W1,1,1602,1.9,0.33,2
+8,2017-11-29,Markus Obendrauf,Craig Evans,9,2093,W1,0,1600,2,0.1,2
+9,2017-12-06,Markus Obendrauf,Andrew Di-Vetta,NA,1825,E3,1,1619,2.21,0.21,3
+1,2017-09-12,Martyn Griffiths,Mark Livingston,80,1424,W1,1,1795,0.9,0.9,1
+2,2017-09-26,Martyn Griffiths,Peter George,67,1525,W1,1,1799,1.73,0.83,2
+3,2017-10-10,Martyn Griffiths,Guto Neave,59,1585,W1,0,1781,2.5,0.77,2
+4,2017-10-19,Martyn Griffiths,Vaughan Thomas,95,1300,W1,1,1783,3.4,0.9,3
+5,2017-11-02,Martyn Griffiths,Paul Bevan,90,1332,W1,1,1786,4.3,0.9,4
+6,2017-11-06,Martyn Griffiths,Juraj Sokolsky,27,1886,W1,0.5,1789,4.67,0.37,4.5
+7,2017-11-14,Martyn Griffiths,Eleanor Collins,94,1304,W1,1,1791,5.57,0.9,5.5
+8,2017-11-29,Martyn Griffiths,Joseph Addis,78,1447,W1,0,1770,6.46,0.89,5.5
+9,2017-12-12,Martyn Griffiths,Dave Conway,116,1222,W1,1,1772,7.36,0.9,6.5
+1,2017-09-13,Matthew Davies,Tom Brown,NA,2092,,0.5,2008,0.38,0.38,0.5
+2,2017-09-19,Matthew Davies,Paul Scott,66,1537,,0,1994,1.28,0.9,0.5
+3,2017-09-25,Matthew Davies,Femi Adebajo,NA,1993,,0,1985,1.8,0.52,0.5
+4,2017-10-03,Matthew Davies,Tim Kett,NA,2269,,0,1982,1.98,0.18,0.5
+5,2017-10-16,Matthew Davies,Joe Fathallah,NA,2023,,0.5,1983,2.46,0.48,1
+6,2017-10-31,Matthew Davies,Tim Kett,NA,2269,,0.5,1988,2.64,0.18,1.5
+7,2017-11-05,Matthew Davies,Shayanna Sivarajasingam,NA,1830,WCM,0.5,1984,3.37,0.73,2
+8,2017-11-06,Matthew Davies,Jon Gilbert,NA,2103,,0.5,1986,3.74,0.37,2.5
+9,2017-11-11,Matthew Davies,Eldar A Alizada,NA,2050,,1,1995,4.18,0.44,3.5
+10,2017-11-12,Matthew Davies,Tom Farrand,NA,2166,,0,1990,4.47,0.29,3.5
+11,2017-11-22,Matthew Davies,Joel Visa Jordana,NA,2229,,0,1987,4.69,0.22,3.5
+12,2017-11-28,Matthew Davies,Peter Bevan,22,2012,,0.5,1987,5.18,0.49,4
+13,2017-11-30,Matthew Davies,John Waterfield,NA,1993,,0.5,1987,5.7,0.52,4.5
+14,2017-12-20,Matthew Davies,Steve Curtis,NA,2041,,0.5,1988,6.15,0.45,5
+1,2017-10-11,Max Browning,Steve Lockley,98,1203,W1,1,1333,0.66,0.66,1
+2,2017-10-18,Max Browning,Jonathan Davies,114,1240,W1,1,1345,1.27,0.61,2
+3,2017-11-29,Max Browning,Aidan Reilly,105,1000,W1,1,1350,2.14,0.87,3
+1,2017-09-12,Michael Beck,Ken Huntley,86,1377,W1,1,1636,0.82,0.82,1
+2,2017-10-10,Michael Beck,Mike Richards,87,1350,W1,1,1640,1.66,0.84,2
+3,2017-10-19,Michael Beck,Alan Rosser,106,1288,W1,1,1643,2.55,0.89,3
+4,2017-11-06,Michael Beck,Sean Denton,83,1407,W1,1,1648,3.34,0.79,4
+5,2017-11-14,Michael Beck,Rishi Choudhuri,111,1259,W1,0.5,1638,4.24,0.9,4.5
+6,2017-12-07,Michael Beck,Albert Easton,84,1400,W1,1,1643,5.03,0.79,5.5
+1,2017-11-01,Mike Burrows,Jack Bevan,58,1485,W1,1,1869,0.9,0.9,1
+2,2017-11-09,Mike Burrows,Keith Downey,37,1785,W1,0.5,1867,1.51,0.61,1.5
+1,2017-09-12,Mike Cleaves,Rob Saunders,11,2084,W1,0,1711,0.1,0.1,0
+2,2017-09-19,Mike Cleaves,Louis Ba Thein,74,1470,W1,1,1715,0.9,0.8,1
+3,2017-09-26,Mike Cleaves,Juraj Sokolsky,27,1886,W1,0,1709,1.17,0.27,1
+4,2017-10-18,Mike Cleaves,Jason Garcia,12,2078,W1,0,1707,1.27,0.1,1
+5,2017-10-25,Mike Cleaves,Greg Goold,121,1173,W1,1,1709,2.17,0.9,2
+6,2017-10-31,Mike Cleaves,Chris Daniel,40,1725,W1,0.5,1709,2.65,0.48,2.5
+7,2017-11-14,Mike Cleaves,Jeff Burrows,72,1484,W1,1,1714,3.44,0.79,3.5
+8,2017-11-28,Mike Cleaves,Chris Howells,NA,1867,E1,0,1707,3.73,0.29,3.5
+1,2017-09-14,Mike Osborn,Thang Ngyuen,133,1100,W1,1,918,0.23,0.23,1
+2,2017-09-21,Mike Osborn,Derek Bellamy,124,1162,W1,0,912,0.4,0.17,1
+3,2017-10-04,Mike Osborn,Julian Bradshaw,157,920,W1,1,929,0.86,0.46,2
+4,2017-10-05,Mike Osborn,Claire Roberts,100,900,W1,1,946,1.35,0.49,3
+5,2017-10-13,Mike Osborn,Jack Cummine,96,1100,W1,1,970,1.58,0.23,4
+6,2017-11-10,Mike Osborn,Kristian Wilkins,102,900,W1,1,987,2.07,0.49,5
+7,2017-12-07,Mike Osborn,June Evans,140,1056,W1,0,978,2.35,0.28,5
+1,2017-09-13,Mike Richards,Jason Garcia,12,2078,W1,0,1347,0.1,0.1,0
+2,2017-09-26,Mike Richards,Steve Lockley,98,1203,W1,0.5,1340,0.8,0.7,0.5
+3,2017-09-27,Mike Richards,Ian Evans,141,1002,W1,0.5,1328,1.69,0.89,1
+4,2017-10-04,Mike Richards,Paul Scott,66,1537,W1,0,1320,1.94,0.25,1
+5,2017-10-10,Mike Richards,Michael Beck,52,1632,W1,0,1315,2.1,0.16,1
+6,2017-10-18,Mike Richards,Greg Goold,121,1173,W1,1,1323,2.83,0.73,2
+7,2017-11-01,Mike Richards,Steve Lockley,98,1203,W1,1,1333,3.53,0.7,3
+8,2017-11-07,Mike Richards,Mark Evans,24,1941,W1,0,1330,3.63,0.1,3
+9,2017-11-15,Mike Richards,Jack Bevan,58,1485,W1,0.5,1336,3.95,0.32,3.5
+10,2017-11-22,Mike Richards,Roger Jenkins,NA,1490,E1,0.5,1342,4.26,0.31,4
+11,2017-11-28,Mike Richards,Guto Llywelyn,69,1501,W1,0.5,1348,4.56,0.3,4.5
+12,2017-11-30,Mike Richards,Mark Livingston,80,1424,W1,1,1367,4.96,0.4,5.5
+1,2017-09-14,Minjae Park,Alan Rosser,106,1288,W1,0,1092,0.25,0.25,0
+2,2017-10-05,Minjae Park,Lyndon Todd,92,1327,W1,0,1085,0.46,0.21,0
+3,2017-11-08,Minjae Park,June Evans,140,1056,W1,0,1067,1.02,0.56,0
+1,2017-11-08,Mitri Shariha,Greg Goold,121,1173,W1,1,1119,0.4,0.4,1
+1,2017-10-11,Mohammad Farhadi,Dave Conway,116,1222,W1,0,1310,0.65,0.65,0
+2,2017-10-18,Mohammad Farhadi,Carl Halpin,115,1224,W1,0,1289,1.3,0.65,0
+1,2017-09-12,Moss McCarthy,James Evans,53,1624,W1,1,1953,0.88,0.88,1
+2,2017-09-19,Moss McCarthy,Andrew Gibbons,16,2010,W1,0,1943,1.3,0.42,1
+3,2017-09-26,Moss McCarthy,Andrew Di-Vetta,NA,1806,E1,1,1950,1.99,0.69,2
+4,2017-10-03,Moss McCarthy,Jason Garcia,12,2078,W1,0,1942,2.32,0.33,2
+5,2017-10-25,Moss McCarthy,Steve Lockley,98,1203,W1,1,1945,3.22,0.9,3
+6,2017-11-01,Moss McCarthy,Markus Obendrauf,97,1600,W1,1,1947,4.11,0.89,4
+7,2017-11-09,Moss McCarthy,Adam May,15,2036,W1,0.5,1950,4.49,0.38,4.5
+8,2017-11-17,Moss McCarthy,Adam Musson,4,2121,W1,0,1944,4.76,0.27,4.5
+9,2017-11-18,Moss McCarthy,Malcolm Probert,50,1641,W1,1,1947,5.62,0.86,5.5
+10,2017-11-18,Moss McCarthy,Peter Bevan,22,1965,W1,0,1936,6.1,0.48,5.5
+11,2017-11-19,Moss McCarthy,Andrew Di-Vetta,NA,1745,E2,1,1941,6.87,0.77,6.5
+12,2017-11-19,Moss McCarthy,William Hewitt,6,2110,W1,0,1934,7.16,0.29,6.5
+13,2017-11-28,Moss McCarthy,Bob Moore,21,1977,W1,0,1923,7.62,0.46,6.5
+14,2017-12-01,Moss McCarthy,Joe Spooner,129,1101,W1,1,1926,8.52,0.9,7.5
+1,2017-09-02,Neil Stuart,Andrew Jeanes,NA,1622,E1,0.5,1687,0.59,0.59,0.5
+2,2017-09-02,Neil Stuart,Peter Watkins,NA,1314,E1,1,1689,1.49,0.9,1.5
+3,2017-09-03,Neil Stuart,Richard Livermore,NA,1697,G1,0.5,1689,1.98,0.49,2
+4,2017-09-03,Neil Stuart,Susanna Fraser,NA,1655,E1,1,1700,2.53,0.55,3
+5,2017-10-04,Neil Stuart,Bob Moore,21,1977,W1,0.5,1709,2.68,0.15,3.5
+6,2017-11-01,Neil Stuart,Ian Jones,18,2000,W1,0.5,1717,2.82,0.14,4
+7,2017-11-08,Neil Stuart,Jason Garcia,12,2078,W1,0,1715,2.92,0.1,4
+8,2017-11-15,Neil Stuart,Keith Downey,37,1785,W1,0.5,1718,3.29,0.37,4.5
+9,2017-11-18,Neil Stuart,Robert Dineen,NA,1802,E1,1,1734,3.63,0.34,5.5
+10,2017-11-18,Neil Stuart,Tomasz Miga,45,1694,W1,0.5,1734,4.12,0.49,6
+11,2017-11-19,Neil Stuart,Roger Greatorex,NA,1802,N1,0,1726,4.46,0.34,6
+12,2017-11-19,Neil Stuart,Tony Goodchild,89,1345,W1,1,1729,5.35,0.89,7
+13,2017-11-22,Neil Stuart,Tomasz Miga,45,1694,W1,1,1741,5.84,0.49,8
+14,2017-11-29,Neil Stuart,Andrew Gibbons,16,2010,W1,0,1738,5.97,0.13,8
+15,2017-12-06,Neil Stuart,Bob Moore,21,1977,W1,0,1734,6.12,0.15,8
+1,2017-09-13,Nicholas Evans,Tony Crossman,47,1663,W1,1,2053,0.9,0.9,1
+2,2017-09-19,Nicholas Evans,Malcolm Probert,50,1641,W1,1,2054,1.8,0.9,2
+3,2017-09-27,Nicholas Evans,David Guy,30,1865,W1,0,2042,2.54,0.74,2
+1,2017-09-13,Nick Hale,Bill Flew,88,1346,W1,0,1186,0.3,0.3,0
+2,2017-09-27,Nick Hale,Roger Jenkins,NA,1490,E1,0.5,1198,0.45,0.15,0.5
+3,2017-10-11,Nick Hale,Paul Bevan,90,1332,W1,0,1187,0.77,0.32,0.5
+4,2017-12-07,Nick Hale,Clive Gosling,139,1026,W1,1,1196,1.5,0.73,1.5
+1,2017-09-14,Nikolay Lidzhiev,Paul Bevan,90,1332,W1,0,1093,0.21,0.21,0
+2,2017-10-13,Nikolay Lidzhiev,Roger Llewellyn,125,1155,W1,1,1112,0.63,0.42,1
+3,2017-10-27,Nikolay Lidzhiev,Calum Newton,144,1043,W1,1,1125,1.21,0.58,2
+1,2017-09-13,Norman Speak,Julian Bradshaw,157,920,W1,1,976,0.56,0.56,1
+2,2017-09-22,Norman Speak,Ella Toner,101,900,W1,0.5,973,1.15,0.59,1.5
+3,2017-09-27,Norman Speak,Colin Chambers,113,1240,W1,0,968,1.31,0.16,1.5
+4,2017-10-04,Norman Speak,John Porter,146,972,W1,1,984,1.8,0.49,2.5
+5,2017-10-17,Norman Speak,Dylan Greenway,156,980,W1,0,969,2.27,0.47,2.5
+6,2017-11-08,Norman Speak,Yoon Nam,119,1100,W1,1,991,2.58,0.31,3.5
+7,2017-11-23,Norman Speak,Carl Halpin,115,1224,W1,0,986,2.76,0.18,3.5
+8,2017-11-29,Norman Speak,Cameron Bale,153,960,W1,0,970,3.26,0.5,3.5
+9,2017-12-06,Norman Speak,Roger Llewellyn,125,1155,W1,1,994,3.51,0.25,4.5
+1,2017-09-12,Paul Bevan,Anthony Beck,60,1581,W1,0,1326,0.19,0.19,0
+2,2017-09-14,Paul Bevan,Nikolay Lidzhiev,130,1100,W1,1,1333,0.98,0.79,1
+3,2017-09-21,Paul Bevan,Clive Gosling,139,1026,W1,1,1337,1.84,0.86,2
+4,2017-09-29,Paul Bevan,Alice Potter,154,962,W1,1,1340,2.74,0.9,3
+5,2017-10-05,Paul Bevan,David Toner,70,1500,W1,0,1331,3.02,0.28,3
+6,2017-10-11,Paul Bevan,Nick Hale,118,1196,W1,1,1342,3.7,0.68,4
+7,2017-10-25,Paul Bevan,David Toner,70,1500,W1,1,1365,3.98,0.28,5
+8,2017-10-26,Paul Bevan,John Ward,137,1035,W1,1,1369,4.83,0.85,6
+9,2017-10-30,Paul Bevan,Sean Denton,83,1407,W1,0,1357,5.23,0.4,6
+10,2017-11-02,Paul Bevan,Martyn Griffiths,36,1793,W1,0,1353,5.33,0.1,6
+11,2017-11-09,Paul Bevan,Dennis Thomas,136,1062,W1,1,1359,6.16,0.83,7
+12,2017-11-10,Paul Bevan,Calum Newton,144,1043,W1,1,1364,7.01,0.85,8
+13,2017-11-17,Paul Bevan,John Ward,137,1035,W1,1,1368,7.86,0.85,9
+14,2017-11-18,Paul Bevan,Louis Ba Thein,74,1470,W1,0,1359,8.17,0.31,9
+15,2017-11-18,Paul Bevan,Albert Easton,84,1400,W1,0,1346,8.57,0.4,9
+16,2017-11-30,Paul Bevan,Albert Easton,84,1400,W1,1,1365,8.97,0.4,10
+17,2017-12-06,Paul Bevan,Greg Goold,121,1173,W1,0,1342,9.68,0.71,10
+18,2017-12-07,Paul Bevan,Ben Mora,64,1590,W1,0,1336,9.86,0.18,10
+1,2017-09-19,Paul Scott,Matthew Davies,17,2006,W1,1,1566,0.1,0.1,1
+2,2017-09-21,Paul Scott,Albert Easton,84,1400,W1,0.5,1560,0.79,0.69,1.5
+3,2017-09-27,Paul Scott,Zane Allford,NA,1789,G1,1,1586,0.98,0.19,2.5
+4,2017-10-04,Paul Scott,Mike Richards,87,1350,W1,1,1594,1.73,0.75,3.5
+5,2017-10-11,Paul Scott,Richard Livermore,NA,1682,G2,0.5,1600,2.03,0.3,4
+6,2017-10-12,Paul Scott,Joel Chung,122,1171,W1,1,1603,2.93,0.9,5
+7,2017-10-25,Paul Scott,Jonathan Dyment,NA,1606,G1,0,1590,3.33,0.4,5
+8,2017-10-30,Paul Scott,Ken Huntley,86,1377,W1,0.5,1584,4.04,0.71,5.5
+9,2017-11-06,Paul Scott,Hywel Griffiths,33,1823,W1,0,1579,4.2,0.16,5.5
+10,2017-11-08,Paul Scott,Hiram Rogers,NA,1628,G1,0,1567,4.57,0.37,5.5
+11,2017-11-22,Paul Scott,Steve Horrell,NA,1723,G1,0.5,1574,4.83,0.26,6
+12,2017-11-23,Paul Scott,Dave Williams,NA,1711,G1,0,1566,5.1,0.27,6
+1,2017-07-08,Peter Bevan,Benjamin Jaberansari,NA,921,,1,1967,0.9,0.9,1
+2,2017-07-08,Peter Bevan,Petr Marusenko,NA,2350,IM,1,1989,1,0.1,2
+3,2017-07-10,Peter Bevan,Narayanan Jyothilal,NA,2070,,0,1980,1.36,0.36,2
+4,2017-07-10,Peter Bevan,David J Ledger,NA,2318,FM,0,1978,1.47,0.11,2
+5,2017-07-12,Peter Bevan,Tim Kett,NA,2269,,0,1974,1.61,0.14,2
+6,2017-07-12,Peter Bevan,Steve Williams (Cwm),NA,1765,,0.5,1968,2.37,0.76,2.5
+7,2017-07-13,Peter Bevan,Andrew Jeanes,NA,1622,,1,1971,3.26,0.89,3.5
+8,2017-07-14,Peter Bevan,Mark A Whitehead,NA,2006,,1,1984,3.7,0.44,4.5
+9,2017-09-02,Peter Bevan,Roger Greatorex,NA,1802,,1,1991,4.42,0.72,5.5
+10,2017-09-02,Peter Bevan,Robert Taylor,NA,1956,,1,2003,4.93,0.51,6.5
+11,2017-09-03,Peter Bevan,Rudy Van Kemenade,NA,2028,,0.5,2005,5.34,0.41,7
+12,2017-09-03,Peter Bevan,Lee Davis,NA,2025,,0.5,2007,5.76,0.42,7.5
+13,2017-09-12,Peter Bevan,Malcolm Probert,50,1641,,1,2010,6.63,0.87,8.5
+14,2017-09-19,Peter Bevan,Rob Saunders,11,2084,,0,2002,6.97,0.34,8.5
+15,2017-09-26,Peter Bevan,Mark Evans,24,1941,,0.5,2001,7.5,0.53,9
+16,2017-10-03,Peter Bevan,Gerry Heap,NA,2132,,0,1994,7.78,0.28,9
+17,2017-10-13,Peter Bevan,Andrew Di-Vetta,NA,1745,,1,2000,8.56,0.78,10
+18,2017-10-14,Peter Bevan,John Cox,NA,1492,,1,2002,9.46,0.9,11
+19,2017-10-14,Peter Bevan,Liam Penny,NA,1716,,1,2007,10.27,0.81,12
+20,2017-10-15,Peter Bevan,Dai James,NA,1893,,0.5,2004,10.87,0.6,12.5
+21,2017-10-15,Peter Bevan,Sam Jukes,NA,1880,,0.5,2001,11.49,0.62,13
+22,2017-10-22,Peter Bevan,Matthew Parry,NA,1980,,0.5,2002,11.97,0.48,13.5
+23,2017-10-25,Peter Bevan,Daniel Chung,110,1261,,1,2004,12.87,0.9,14.5
+24,2017-11-18,Peter Bevan,Tom Brown,NA,2112,,0,1997,13.17,0.3,14.5
+25,2017-11-18,Peter Bevan,Moss McCarthy,23,1950,,1,2008,13.69,0.52,15.5
+26,2017-11-19,Peter Bevan,Allan Pleasants,3,2198,,0.5,2016,13.89,0.2,16
+27,2017-11-19,Peter Bevan,Sven Zeidler,NA,2230,,0,2012,14.06,0.17,16
+28,2017-11-21,Peter Bevan,Tony Goodchild,89,1345,,1,2014,0.9,0.9,1
+29,2017-11-28,Peter Bevan,Matthew Davies,17,2006,,0.5,2014,1.41,0.51,1.5
+1,2017-09-12,Peter George,Dave Conway,116,1222,W1,1,1529,0.86,0.86,1
+2,2017-09-19,Peter George,John Davies,108,1281,W1,1,1536,1.67,0.81,2
+3,2017-09-21,Peter George,Adrian Davies,44,1698,W1,0.5,1543,1.94,0.27,2.5
+4,2017-09-26,Peter George,Martyn Griffiths,36,1793,W1,0,1537,2.11,0.17,2.5
+5,2017-09-27,Peter George,Alan Bean,109,1267,W1,0.5,1527,2.93,0.82,3
+6,2017-10-18,Peter George,Sai Prarnedth,63,1480,W1,0.5,1525,3.49,0.56,3.5
+7,2017-11-01,Peter George,Bill Flew,88,1346,W1,0.5,1518,4.23,0.74,4
+8,2017-11-22,Peter George,Guto Neave,59,1585,W1,0.5,1520,4.65,0.42,4.5
+9,2017-12-07,Peter George,Hywel Griffiths,33,1823,W1,0,1515,4.8,0.15,4.5
+1,2017-08-12,Peter Merrifield,Michael J Corbett,NA,1510,ECF,0,1150,0.1,0.1,0
+2,2017-08-12,Peter Merrifield,Rohan Chopra,NA,1262,ECF,0.5,1155,0.45,0.35,0.5
+3,2017-08-12,Peter Merrifield,John M McGann,NA,1262,ECF,0,1143,0.8,0.35,0.5
+4,2017-08-13,Peter Merrifield,Robert J Samuels,NA,1662,ECF,0,1140,0.9,0.1,0.5
+5,2017-08-13,Peter Merrifield,Karan Chopra,NA,990,ECF,0,1117,1.62,0.72,0.5
+6,2017-09-23,Peter Merrifield,Barry S Miles,NA,1550,ECF,0,1114,1.72,0.1,0.5
+7,2017-09-23,Peter Merrifield,Andrew MacLeod,NA,1374,ECF,1,1139,1.94,0.22,1.5
+8,2017-09-23,Peter Merrifield,John R MacDonald,NA,1550,ECF,0,1136,2.04,0.1,1.5
+9,2017-09-23,Peter Merrifield,Kavin Thooran,NA,1206,ECF,1,1154,2.47,0.43,2.5
+10,2017-11-13,Peter Merrifield,Kenneth C Kwabiah,NA,1398,ECF,0.5,1164,2.66,0.19,3
+11,2017-12-04,Peter Merrifield,Nick Goulbourne,NA,1542,ECF,0,1161,2.76,0.1,3
+12,2017-12-05,Peter Merrifield,Garam You,NA,1442,FIDE,0,1156,2.91,0.15,3
+1,2017-09-12,Peter Smith,Steve Smith,34,1821,W1,0,1612,0.24,0.24,0
+2,2017-09-14,Peter Smith,Jon Jenkins,112,1250,W1,0,1591,1.14,0.9,0
+3,2017-09-21,Peter Smith,Roger Llewellyn,125,1155,W1,1,1593,2.04,0.9,1
+4,2017-10-19,Peter Smith,Steve Smith,34,1821,W1,0,1587,2.28,0.24,1
+5,2017-10-26,Peter Smith,Steve Lockley,98,1203,W1,1,1590,3.18,0.9,2
+6,2017-10-30,Peter Smith,Ian Eustis,35,1806,W1,0.5,1596,3.43,0.25,2.5
+7,2017-11-09,Peter Smith,Louis Ba Thein,74,1470,W1,1,1603,4.13,0.7,3.5
+8,2017-11-23,Peter Smith,Tony Goodchild,89,1345,W1,1,1607,4.96,0.83,4.5
+9,2017-11-30,Peter Smith,Guto Neave,59,1585,W1,0.5,1606,5.51,0.55,5
+1,2017-10-11,Prasanth Lakshmi-Narasimhan,Huw Jones,55,1621,W1,1,1521,0.33,0.33,1
+2,2017-12-06,Prasanth Lakshmi-Narasimhan,Kelvin Haines,73,1483,W1,0,1505,0.85,0.52,1
+3,2017-12-13,Prasanth Lakshmi-Narasimhan,Ralph Cook,57,1596,W1,0,1493,1.22,0.37,1
+1,2017-09-20,Ralph Cook,Steve Smith,34,1821,W1,0,1589,0.21,0.21,0
+2,2017-11-01,Ralph Cook,Robert Wood,61,1579,W1,0.5,1589,0.73,0.52,0.5
+3,2017-12-13,Ralph Cook,Prasanth Lakshmi-Narasimhan,117,1500,W1,1,1600,1.36,0.63,1.5
+1,2017-09-19,Richard Cleveland,Adam Musson,4,2121,W1,1,2101,0.46,0.46,1
+2,2017-10-03,Richard Cleveland,William Hewitt,6,2110,W1,0,2093,0.93,0.47,1
+1,2017-09-20,Richard Morgan,Hywel Griffiths,33,1823,W1,0,1616,0.24,0.24,0
+2,2017-10-11,Richard Morgan,Tom Winfield,38,1781,W1,0,1609,0.53,0.29,0
+3,2017-10-18,Richard Morgan,Tomasz Miga,45,1694,W1,0.5,1612,0.93,0.4,0.5
+4,2017-10-23,Richard Morgan,Juraj Sokolsky,27,1886,W1,0,1607,1.11,0.18,0.5
+5,2017-11-01,Richard Morgan,Steve Morgan,49,1647,W1,0.5,1608,1.57,0.46,1
+6,2017-11-27,Richard Morgan,Andrew Smith,48,1662,W1,0.5,1610,2.01,0.44,1.5
+7,2017-12-13,Richard Morgan,George Searle,75,1455,W1,0.5,1604,2.73,0.72,2
+1,2017-07-08,Richard S Jones,Brian GE Gosling,NA,1902,,1,2415,0.9,0.9,1
+2,2017-07-08,Richard S Jones,Peter Heaven,NA,2088,,1,2416,1.78,0.88,2
+3,2017-07-09,Richard S Jones,Boris Chatalbashev,NA,2552,GM,1,2423,2.09,0.31,3
+4,2017-07-10,Richard S Jones,Peter K Wells,NA,2542,GM,0.5,2425,2.42,0.33,3.5
+5,2017-07-10,Richard S Jones,Marian Petrov,NA,2466,GM,0,2421,2.85,0.43,3.5
+6,2017-07-12,Richard S Jones,Narayanan Jyothilal,NA,1982,,1,2422,3.75,0.9,4.5
+7,2017-07-12,Richard S Jones,Keith Arkell,NA,2526,GM,0.5,2423,4.1,0.35,5
+8,2017-07-13,Richard S Jones,David J Ledger,NA,2318,FM,0.5,2422,4.73,0.63,5.5
+9,2017-07-14,Richard S Jones,Allan Pleasants,3,2159,,0,2414,5.55,0.82,5.5
+10,2017-10-27,Richard S Jones,Gary Losh,NA,1500,,1,2415,6.45,0.9,6.5
+11,2017-10-28,Richard S Jones,Geert Geesink,NA,1612,,1,2416,7.35,0.9,7.5
+12,2017-10-28,Richard S Jones,Fritz W Van Der Wal,NA,1829,,1,2417,8.25,0.9,8.5
+13,2017-10-28,Richard S Jones,Inguh Kim,NA,1860,,1,2418,9.15,0.9,9.5
+14,2017-10-29,Richard S Jones,Hoai Nam Nguyen,NA,2247,,1,2420,9.87,0.72,10.5
+15,2017-10-29,Richard S Jones,Matthew Clarke,NA,1815,,0.5,2416,10.77,0.9,11
+1,2017-09-19,Rishi Choudhuri,John Ward,137,1035,W1,1,1266,0.79,0.79,1
+2,2017-10-12,Rishi Choudhuri,Ian Eustis,35,1806,W1,0,1263,0.89,0.1,1
+3,2017-11-14,Rishi Choudhuri,Michael Beck,52,1632,W1,0.5,1275,0.99,0.1,1.5
+4,2017-11-18,Rishi Choudhuri,Roy Thomas,NA,1763,E1,0,1272,1.09,0.1,1.5
+5,2017-11-18,Rishi Choudhuri,Steve Morgan,49,1647,W1,0,1269,1.19,0.1,1.5
+6,2017-11-23,Rishi Choudhuri,Mark Livingston,80,1424,W1,0.5,1276,1.47,0.28,2
+1,2017-09-12,Rob Saunders,Mike Cleaves,43,1713,,1,2086,0.9,0.9,1
+2,2017-09-19,Rob Saunders,Peter Bevan,22,1965,,1,2091,1.56,0.66,2
+3,2017-10-10,Rob Saunders,Adam May,15,2036,,0.5,2090,2.13,0.57,2.5
+4,2017-10-22,Rob Saunders,Iolo C Jones,NA,2241,FM,0,2085,2.42,0.29,2.5
+5,2017-10-24,Rob Saunders,Keith Downey,37,1785,,0.5,2080,3.27,0.85,3
+6,2017-11-05,Rob Saunders,Paul Hatchett,NA,2065,,0.5,2079,3.8,0.53,3.5
+7,2017-11-29,Rob Saunders,Thomas van Veelen,20,1993,,1,2085,4.43,0.63,4.5
+8,2017-12-13,Rob Saunders,William Hewitt,6,2110,,0,2078,4.89,0.46,4.5
+1,2017-09-12,Robert Wood,Tony Goodchild,89,1345,W1,0.5,1569,0.8,0.8,0.5
+2,2017-09-21,Robert Wood,Ian Eustis,35,1806,W1,0.5,1579,1.01,0.21,1
+3,2017-09-26,Robert Wood,Hywel Griffiths,33,1823,W1,0,1573,1.2,0.19,1
+4,2017-10-05,Robert Wood,Jon Jenkins,112,1250,W1,0.5,1560,2.08,0.88,1.5
+5,2017-11-01,Robert Wood,Ralph Cook,57,1596,W1,0.5,1561,2.56,0.48,2
+6,2017-11-22,Robert Wood,James Evans,53,1624,W1,0,1547,3,0.44,2
+1,2017-09-21,Roger Llewellyn,Peter Smith,56,1618,W1,0,1152,0.1,0.1,0
+2,2017-09-29,Roger Llewellyn,Harri Beale,151,964,W1,1,1160,0.85,0.75,1
+3,2017-10-04,Roger Llewellyn,Ian Dyer,143,1048,W1,1,1171,1.5,0.65,2
+4,2017-10-05,Roger Llewellyn,Ella Toner,101,900,W1,1,1177,2.32,0.82,3
+5,2017-10-13,Roger Llewellyn,Nikolay Lidzhiev,130,1100,W1,0,1158,2.9,0.58,3
+6,2017-11-02,Roger Llewellyn,Dennis Thomas,136,1062,W1,0,1138,3.53,0.63,3
+7,2017-11-10,Roger Llewellyn,Cameron Bale,153,960,W1,1,1146,4.28,0.75,4
+8,2017-11-30,Roger Llewellyn,Jonathan Davies,114,1240,W1,0.5,1150,4.66,0.38,4.5
+9,2017-12-06,Roger Llewellyn,Norman Speak,152,962,W1,0,1126,5.41,0.75,4.5
+1,2017-11-11,Roy Phillips,Stuart A White,NA,2198,ECF,0.5,2200,0.5,0.5,0.5
+2,2017-11-12,Roy Phillips,Paul E Littlewood,NA,2270,ECF,0.5,2202,0.9,0.4,1
+3,2017-11-29,Roy Phillips,Stephen Meek,NA,2150,ECF,0.5,2200,1.47,0.57,1.5
+4,2017-12-14,Roy Phillips,Arturo V Wong (snr),NA,2142,ECF,0.5,2199,2.05,0.58,2
+1,2017-11-29,Sagun Sudhir,Steve Smith,34,1821,W1,0,1397,0.1,0.1,0
+1,2017-10-18,Sai Prarnedth,Peter George,67,1525,W1,0.5,1482,0.44,0.44,0.5
+2,2017-11-15,Sai Prarnedth,Guto Neave,59,1585,W1,0,1470,0.8,0.36,0.5
+3,2017-12-06,Sai Prarnedth,Andrew Smith,48,1662,W1,0,1462,1.06,0.26,0.5
+1,2017-09-19,Sean Denton,Dave Conway,116,1222,W1,1,1415,0.74,0.74,1
+2,2017-09-21,Sean Denton,Lyndon Todd,92,1327,W1,1,1428,1.35,0.61,2
+3,2017-10-04,Sean Denton,Chandon Brown,107,1287,W1,1,1439,2.01,0.66,3
+4,2017-10-12,Sean Denton,Ella Toner,101,900,W1,1,1442,2.91,0.9,4
+5,2017-10-19,Sean Denton,John Ward,137,1035,W1,0,1413,3.81,0.9,4
+6,2017-10-23,Sean Denton,Alan Bean,109,1267,W1,0,1391,4.5,0.69,4
+7,2017-10-25,Sean Denton,Dennis Thomas,136,1062,W1,0,1363,5.39,0.89,4
+8,2017-10-30,Sean Denton,Paul Bevan,90,1332,W1,1,1375,5.99,0.6,5
+9,2017-11-01,Sean Denton,Tomasz Miga,45,1694,W1,0,1370,6.15,0.16,5
+10,2017-11-06,Sean Denton,Michael Beck,52,1632,W1,0,1363,6.36,0.21,5
+11,2017-11-09,Sean Denton,Jeff Burrows,72,1484,W1,0,1351,6.75,0.39,5
+12,2017-11-17,Sean Denton,Joel Chung,122,1171,W1,1,1357,7.55,0.8,6
+13,2017-11-18,Sean Denton,Albert Easton,84,1400,W1,0.5,1357,8.06,0.51,6.5
+14,2017-11-19,Sean Denton,Louis Ba Thein,74,1470,W1,1,1376,8.47,0.41,7.5
+15,2017-11-19,Sean Denton,Daniel Chung,110,1261,W1,0.5,1370,9.17,0.7,8
+16,2017-11-21,Sean Denton,Steve Lockley,98,1203,W1,0.5,1361,9.93,0.76,8.5
+17,2017-11-23,Sean Denton,Tom Winfield,38,1781,W1,0,1358,10.03,0.1,8.5
+18,2017-11-27,Sean Denton,Ben Mora,64,1590,W1,0,1350,10.29,0.26,8.5
+19,2017-12-06,Sean Denton,Manuel Zoller,26,1200,W1,0.5,1341,11.06,0.77,9
+1,2017-10-04,Sebastian Hay,Steve Morgan,49,1647,W1,0.5,1576,0.4,0.4,0.5
+2,2017-10-11,Sebastian Hay,Tony Crossman,47,1663,W1,0,1564,0.78,0.38,0.5
+3,2017-11-08,Sebastian Hay,Chris Daniel,40,1725,W1,1,1586,1.08,0.3,1.5
+4,2017-11-15,Sebastian Hay,Tony Crossman,47,1663,W1,0,1574,1.46,0.38,1.5
+5,2017-11-29,Sebastian Hay,Mark Evans,24,1941,W1,0,1571,1.56,0.1,1.5
+1,2017-09-19,Stephen Lloyd-Brown,Colin Chambers,113,1240,W1,1,1084,0.26,0.26,1
+2,2017-10-17,Stephen Lloyd-Brown,Greg Goold,121,1173,W1,0,1073,0.6,0.34,1
+3,2017-12-05,Stephen Lloyd-Brown,Ella Toner,101,900,W1,1,1082,1.31,0.71,2
+1,2017-09-19,Steve Lockley,Tony Goodchild,89,1345,W1,0,1193,0.31,0.31,0
+2,2017-09-26,Steve Lockley,Mike Richards,87,1350,W1,0.5,1199,0.61,0.3,0.5
+3,2017-10-11,Steve Lockley,Max Browning,93,1322,W1,0,1189,0.95,0.34,0.5
+4,2017-10-19,Steve Lockley,Ian Eustis,35,1806,W1,0,1185,1.05,0.1,0.5
+5,2017-10-25,Steve Lockley,Moss McCarthy,23,1950,W1,0,1182,1.15,0.1,0.5
+6,2017-10-26,Steve Lockley,Peter Smith,56,1618,W1,0,1179,1.25,0.1,0.5
+7,2017-11-01,Steve Lockley,Mike Richards,87,1350,W1,0,1169,1.55,0.3,0.5
+8,2017-11-21,Steve Lockley,Sean Denton,83,1407,W1,0.5,1178,1.79,0.24,1
+1,2017-09-12,Steve Morgan,Andrew Gibbons,16,2010,W1,0.5,1657,0.1,0.1,0.5
+2,2017-09-26,Steve Morgan,Steve Smith,34,1821,W1,0.5,1662,0.37,0.27,1
+3,2017-10-04,Steve Morgan,Sebastian Hay,62,1573,W1,0.5,1660,0.97,0.6,1.5
+4,2017-10-12,Steve Morgan,Chris Daniel,40,1725,W1,0.5,1662,1.36,0.39,2
+5,2017-10-18,Steve Morgan,David Guy,30,1865,W1,0.5,1669,1.58,0.22,2.5
+6,2017-10-31,Steve Morgan,Tomasz Miga,45,1694,W1,0.5,1671,2.01,0.43,3
+7,2017-11-01,Steve Morgan,Richard Morgan,54,1622,W1,0.5,1670,2.55,0.54,3.5
+8,2017-11-14,Steve Morgan,Chris Sims,28,1882,W1,0.5,1677,2.75,0.2,4
+9,2017-11-18,Steve Morgan,Martin C Jones,NA,1749,D1,0.5,1680,3.11,0.36,4.5
+10,2017-11-18,Steve Morgan,Rishi Choudhuri,111,1259,W1,1,1683,4.01,0.9,5.5
+11,2017-11-19,Steve Morgan,Tomasz Miga,45,1694,W1,0.5,1684,4.44,0.43,6
+12,2017-11-19,Steve Morgan,Steve Williams (Cwm),NA,1740,G2,0,1676,4.81,0.37,6
+1,2017-09-12,Steve Smith,Peter Smith,56,1618,W1,1,1827,0.76,0.76,1
+2,2017-09-20,Steve Smith,Ralph Cook,57,1596,W1,1,1832,1.55,0.79,2
+3,2017-09-26,Steve Smith,Steve Morgan,49,1647,W1,0.5,1826,2.28,0.73,2.5
+4,2017-10-10,Steve Smith,Tomasz Miga,45,1694,W1,0,1810,2.95,0.67,2.5
+5,2017-10-19,Steve Smith,Peter Smith,56,1618,W1,1,1816,3.71,0.76,3.5
+6,2017-11-06,Steve Smith,Andrew Smith,48,1662,W1,1,1823,4.42,0.71,4.5
+7,2017-11-11,Steve Smith,Dan M Lambourne,NA,2078,ECF,0,1819,4.6,0.18,4.5
+8,2017-11-12,Steve Smith,Kamlesh Karia,NA,1630,ECF,1,1825,5.35,0.75,5.5
+9,2017-11-14,Steve Smith,Andrew Smith,48,1662,W1,0.5,1820,6.06,0.71,6
+10,2017-11-29,Steve Smith,Sagun Sudhir,123,1400,W1,1,1822,6.96,0.9,7
+11,2017-12-07,Steve Smith,Kelvin Haines,73,1483,W1,0.5,1813,7.84,0.88,7.5
+12,2017-12-12,Steve Smith,Tony Goodchild,89,1345,W1,1,1815,8.74,0.9,8.5
+1,2017-10-13,Stuart Thomas,Christian Taren,134,1100,W1,0,892,0.24,0.24,0
+1,2017-09-14,Thang Ngyuen,Mike Osborn,155,893,W1,0,1075,0.77,0.77,0
+2,2017-10-05,Thang Ngyuen,Carl Halpin,115,1224,W1,0,1065,1.1,0.33,0
+3,2017-10-27,Thang Ngyuen,Ioan Phillips,99,904,W1,1,1072,1.86,0.76,1
+4,2017-11-08,Thang Ngyuen,Janet Evans,159,912,W1,0,1048,2.61,0.75,1
+1,2017-10-04,Thomas van Veelen,Andrew Gibbons,16,2010,W1,0.5,1993,0.48,0.48,0.5
+2,2017-10-11,Thomas van Veelen,David Buttell,25,1913,W1,1,2003,1.09,0.61,1.5
+3,2017-11-08,Thomas van Veelen,Alan Young,8,2101,W1,0.5,2006,1.44,0.35,2
+4,2017-11-15,Thomas van Veelen,David Buttell,25,1913,W1,1,2016,2.05,0.61,3
+5,2017-11-17,Thomas van Veelen,Malcolm Probert,50,1641,W1,1,2018,2.94,0.89,4
+6,2017-11-18,Thomas van Veelen,William Hewitt,6,2110,W1,1,2034,3.28,0.34,5
+7,2017-11-18,Thomas van Veelen,Tim Kett,NA,2278,E2,0,2030,3.44,0.16,5
+8,2017-11-19,Thomas van Veelen,Ian Jones,18,2000,W1,0.5,2031,3.93,0.49,5.5
+9,2017-11-19,Thomas van Veelen,Pete Heaven,NA,2088,E1,0.5,2034,4.3,0.37,6
+10,2017-11-22,Thomas van Veelen,David Buttell,25,1788,W2,1,2039,5.07,0.77,7
+11,2017-11-29,Thomas van Veelen,Rob Saunders,11,2084,W1,0,2030,5.44,0.37,7
+12,2017-12-06,Thomas van Veelen,Andrew Gibbons,16,2010,W1,1,2043,5.92,0.48,8
+1,2017-09-12,Tom Winfield,Hywel Griffiths,33,1823,W1,1,1794,0.44,0.44,1
+2,2017-10-11,Tom Winfield,Richard Morgan,54,1622,W1,1,1801,1.15,0.71,2
+3,2017-10-26,Tom Winfield,Dave Conway,116,1222,W1,1,1804,2.05,0.9,3
+4,2017-10-30,Tom Winfield,Juraj Sokolsky,27,1886,W1,0,1795,2.41,0.36,3
+5,2017-11-23,Tom Winfield,Sean Denton,83,1407,W1,1,1798,3.31,0.9,4
+6,2017-11-30,Tom Winfield,James Evans,53,1624,W1,1,1805,4.02,0.71,5
+1,2017-09-12,Tomasz Miga,Ian Jones,18,2000,W1,0,1691,0.14,0.14,0
+2,2017-09-13,Tomasz Miga,Gerry Heap,NA,2132,D1,0,1688,0.24,0.1,0
+3,2017-09-19,Tomasz Miga,Jason Garcia,12,2078,W1,0,1686,0.34,0.1,0
+4,2017-09-26,Tomasz Miga,Les Philpin,68,1521,W1,0.5,1680,1.07,0.73,0.5
+5,2017-09-27,Tomasz Miga,Tony Crossman,47,1663,W1,1,1691,1.61,0.54,1.5
+6,2017-10-04,Tomasz Miga,Juraj Sokolsky,27,1886,W1,0.5,1697,1.86,0.25,2
+7,2017-10-10,Tomasz Miga,Steve Smith,34,1821,W1,1,1713,2.19,0.33,3
+8,2017-10-18,Tomasz Miga,Richard Morgan,54,1622,W1,0.5,1711,2.79,0.6,3.5
+9,2017-10-31,Tomasz Miga,Steve Morgan,49,1647,W1,0.5,1709,3.36,0.57,4
+10,2017-11-01,Tomasz Miga,Sean Denton,83,1407,W1,1,1713,4.2,0.84,5
+11,2017-11-02,Tomasz Miga,Alan Young,8,2101,W1,0,1711,4.3,0.1,5
+12,2017-11-07,Tomasz Miga,Craig Evans,9,2093,W1,0,1708,4.4,0.1,5
+13,2017-11-17,Tomasz Miga,Les Philpin,68,1521,W1,0.5,1703,5.13,0.73,5.5
+14,2017-11-18,Tomasz Miga,Chris P Smith,NA,1460,G1,1,1708,5.93,0.8,6.5
+15,2017-11-18,Tomasz Miga,Neil Stuart,46,1689,W1,0.5,1707,6.44,0.51,7
+16,2017-11-19,Tomasz Miga,Steve Morgan,49,1647,W1,0.5,1706,7.01,0.57,7.5
+17,2017-11-19,Tomasz Miga,Andrew Smith,48,1662,W1,1,1717,7.56,0.55,8.5
+18,2017-11-22,Tomasz Miga,Neil Stuart,46,1689,W1,0,1704,8.07,0.51,8.5
+19,2017-11-28,Tomasz Miga,Chris Daniel,40,1725,W1,1,1717,8.53,0.46,9.5
+20,2017-11-30,Tomasz Miga,Chris Price,19,2000,W1,0,1714,8.67,0.14,9.5
+21,2017-12-06,Tomasz Miga,Alan Young,8,2101,W1,0.5,1724,8.77,0.1,10
+1,2017-09-13,Tony Crossman,Nicholas Evans,13,2051,W1,0,1661,0.1,0.1,0
+2,2017-09-19,Tony Crossman,Adam May,15,2036,W1,0,1658,0.2,0.1,0
+3,2017-09-27,Tony Crossman,Tomasz Miga,45,1694,W1,0,1647,0.66,0.46,0
+4,2017-10-11,Tony Crossman,Sebastian Hay,62,1573,W1,1,1656,1.28,0.62,1
+5,2017-10-17,Tony Crossman,Bob Moore,21,1977,W1,1,1677,1.41,0.13,2
+6,2017-10-31,Tony Crossman,Mal Kingman,42,1722,W1,1,1691,1.83,0.42,3
+7,2017-11-08,Tony Crossman,Donovan Sipho,65,1540,W1,1,1699,2.5,0.67,4
+8,2017-11-15,Tony Crossman,Sebastian Hay,62,1573,W1,1,1708,3.12,0.62,5
+9,2017-11-22,Tony Crossman,Donovan Sipho,65,1540,W1,0,1692,3.79,0.67,5
+10,2017-11-28,Tony Crossman,Huw Jones,55,1621,W1,0,1679,4.35,0.56,5
+11,2017-12-06,Tony Crossman,Adam May,15,2036,W1,0,1676,4.45,0.1,5
+1,2017-09-12,Tony Goodchild,Robert Wood,61,1579,W1,0.5,1355,0.2,0.2,0.5
+2,2017-09-19,Tony Goodchild,Steve Lockley,98,1203,W1,1,1365,0.89,0.69,1.5
+3,2017-10-25,Tony Goodchild,Janet Evans,159,912,W1,1,1368,1.79,0.9,2.5
+4,2017-10-26,Tony Goodchild,Chris Price,19,2000,W1,0,1365,1.89,0.1,2.5
+5,2017-11-01,Tony Goodchild,Guto Neave,59,1585,W1,0.5,1374,2.09,0.2,3
+6,2017-11-09,Tony Goodchild,Kelvin Haines,73,1483,W1,0.5,1380,2.4,0.31,3.5
+7,2017-11-14,Tony Goodchild,Hywel Griffiths,33,1823,W1,0,1377,2.5,0.1,3.5
+8,2017-11-17,Tony Goodchild,Andrew Smith,48,1662,W1,0,1373,2.63,0.13,3.5
+9,2017-11-18,Tony Goodchild,Steve Williams (Cwm),NA,1740,G2,0,1370,2.73,0.1,3.5
+10,2017-11-19,Tony Goodchild,Donovan Sipho,65,1540,W1,0.5,1378,2.98,0.25,4
+11,2017-11-19,Tony Goodchild,Neil Stuart,46,1689,W1,0,1374,3.09,0.11,4
+12,2017-11-21,Tony Goodchild,Peter Bevan,22,2012,W2,0,1371,3.19,0.1,4
+13,2017-11-23,Tony Goodchild,Peter Smith,56,1618,W1,0,1365,3.36,0.17,4
+14,2017-12-12,Tony Goodchild,Steve Smith,34,1821,W1,0,1362,3.46,0.1,4
+1,2017-10-27,Vaness Reid,Michael J Tracey,NA,1608,FIDE,1,1829,0.78,0.78,1
+2,2017-10-28,Vaness Reid,Michael Russell,NA,1292,Aus,1,1832,1.68,0.9,2
+3,2017-10-28,Vaness Reid,Ian Bull,NA,1864,Aus,1,1845,2.12,0.44,3
+4,2017-10-28,Vaness Reid,Hoai Nam Nguyen,NA,2247,Aus,0,1843,2.22,0.1,3
+5,2017-10-29,Vaness Reid,Matthew Clarke,NA,1815,Aus,0,1830,2.73,0.51,3
+6,2017-10-29,Vaness Reid,Ralph Shaw,NA,1295,Aus,1,1833,3.63,0.9,4
+1,2017-09-29,Vaughan Thomas,Kristian Wilkins,102,900,W1,1,1303,0.9,0.9,1
+2,2017-10-05,Vaughan Thomas,Daniel Chung,110,1261,W1,0,1286,1.45,0.55,1
+3,2017-10-11,Vaughan Thomas,Ian Dyer,143,1048,W1,0.5,1276,2.26,0.81,1.5
+4,2017-10-19,Vaughan Thomas,Martyn Griffiths,36,1793,W1,0,1272,2.36,0.1,1.5
+5,2017-11-30,Vaughan Thomas,Lyndon Todd,92,1327,W1,0.5,1274,2.82,0.46,2
+6,2017-12-07,Vaughan Thomas,Alan Bean,109,1267,W1,0.5,1272,3.37,0.55,2.5
+1,2017-07-08,William Hewitt,Mark Emblem,NA,1482,,1,2112,0.9,0.9,1
+2,2017-07-08,William Hewitt,Keith Arkell,NA,2526,GM,0,2110,1,0.1,1
+3,2017-07-09,William Hewitt,Shayanna Sivarajasingam,NA,1842,,1,2113,1.83,0.83,2
+4,2017-07-10,William Hewitt,Jack Rudd,NA,2310,IM,0,2109,2.07,0.24,2
+5,2017-07-10,William Hewitt,Robert G Taylor,NA,1956,,0.5,2106,2.78,0.71,2.5
+6,2017-07-11,William Hewitt,Tom Brown,NA,2117,,0.5,2106,3.27,0.49,3
+7,2017-07-12,William Hewitt,Sam Jukes,NA,1899,,0.5,2101,4.04,0.77,3.5
+8,2017-07-12,William Hewitt,Kimberley Chong,NA,1356,,0,2087,4.94,0.9,3.5
+9,2017-09-13,William Hewitt,David Guy,30,1865,,0.5,2082,5.75,0.81,4
+10,2017-10-03,William Hewitt,Richard Cleveland,10,2092,,1,2090,6.28,0.53,5
+11,2017-10-10,William Hewitt,Alan Bennett,14,2049,,1,2096,6.87,0.59,6
+12,2017-10-18,William Hewitt,Andrew Gibbons,16,2010,,0.5,2094,7.51,0.64,6.5
+13,2017-10-22,William Hewitt,Charles Morris,NA,2151,,0,2087,7.95,0.44,6.5
+14,2017-11-05,William Hewitt,Rudy Van Kemenade,NA,2040,AGM,1,2093,8.55,0.6,7.5
+15,2017-11-11,William Hewitt,Mark V Taylor,NA,1966,,0.5,2090,9.24,0.69,8
+16,2017-11-12,William Hewitt,Paul B Conway,NA,1942,,1,2095,9.96,0.72,9
+17,2017-11-17,William Hewitt,Chris Boyd,NA,1950,,1,2099,10.67,0.71,10
+18,2017-11-18,William Hewitt,Thomas van Veelen,20,1993,,0,2089,11.33,0.66,10
+19,2017-11-18,William Hewitt,Tony Haigh,NA,1875,,1,2092,12.13,0.8,11
+20,2017-11-19,William Hewitt,Gerry Heap,NA,2132,,0,2084,12.6,0.47,11
+21,2017-11-19,William Hewitt,Moss McCarthy,23,1950,,1,2089,13.31,0.71,12
+22,2017-12-13,William Hewitt,Rob Saunders,11,2084,,1,2096,13.85,0.54,13
+1,2017-10-05,Yoon Nam,Jonathan Davies,114,1240,W1,0,1090,0.31,0.31,0
+2,2017-10-27,Yoon Nam,Cameron Bale,153,960,W1,0,1068,1,0.69,0
+3,2017-11-08,Yoon Nam,Norman Speak,152,962,W1,0,1046,1.69,0.69,0
