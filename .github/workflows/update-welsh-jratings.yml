@@ -1,0 +1,47 @@
+name: Update Welsh J-Ratings
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * 1"
+
+permissions:
+  contents: write
+
+jobs:
+  update-welsh-jratings:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Install R packages
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            any::rvest
+            any::dplyr
+            any::stringr
+            any::readr
+            any::lubridate
+            any::curl
+            any::tidyr
+            any::jsonlite
+            any::purrr
+            any::tibble
+            any::tictoc
+
+      - name: Run Welsh J-Ratings update
+        run: Rscript scripts/00_welsh_jratings.r
+
+      - name: Commit updated data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update Welsh J-Ratings data
+          file_pattern: |
+            data/**
+            pipeline_data/cache/**
