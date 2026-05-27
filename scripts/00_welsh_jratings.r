@@ -492,7 +492,8 @@ effective_calc_start <- if (!is.null(snapshot)) {
 }
 
 # Filter halves to those on/after the half containing effective_calc_start
-half_defs <- half_defs_all #%>% filter(start_date >= half_start_for(effective_calc_start))
+half_defs <- half_defs_all %>%
+  filter(label == "CURRENT")
 
 # ── Cache paths keyed by label ────────────────────────────────────────────
 players_csv <- setNames(file.path(cache_dir, paste0("players_", tolower(half_defs$label), ".csv")), half_defs$label)
