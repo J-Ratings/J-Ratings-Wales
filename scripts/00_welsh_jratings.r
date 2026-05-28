@@ -190,8 +190,58 @@ half_defs_all <- bind_rows(extra_legacy_halves, legacy_halves, modern_halves)
 # ── Constants & helpers for ratings ───────────────────────────────────────
 is_welsh_type <- function(x) grepl("^[DEGNW]\\d+$", toupper(trimws(x)))
 conv_pre_2024 <- function(x) ifelse(is.na(x), NA_real_, ifelse(x < 2000, x*0.6 + 800, x))
-update_elo    <- function(Ra, Rb, result, k = 20) { Ea <- 1/(1 + 10^((Rb - Ra)/400)); Ra + k*(result - Ea) }
-pick_k        <- function(r) ifelse(is.na(r), NA_real_, ifelse(r >= 2200, 10, ifelse(r >= 1800, 20, 30)))
+
+update_elo <- function(Ra, Rb, result, k = 20) {
+  Ea <- 1 / (1 + 10 ^ ((Rb - Ra) / 400))
+  Ra + k * (result - Ea)
+}
+
+elo_expected <- function(player_elo, opponent_elo) {
+  1 / (1 + 10 ^ ((opponent_elo - player_elo) / 400))
+}
+
+clamp <- function(x, lo, hi) {
+  pmax(lo, pmin(hi, x))
+}
+
+draw_rate_from_gap <- function(abs_gap) {
+  abs_gap <- as.numeric(abs_gap)
+  
+  max_draw <- 0.33
+  scale <- 360
+  shape <- 1.45
+  
+  max_draw * exp(-((abs_gap / scale) ^ shape))
+}
+
+expected_wdl_from_elo <- function(player_elo, opponent_elo) {
+  expected <- elo_expected(player_elo, opponent_elo)
+  abs_gap <- abs(player_elo - opponent_elo)
+  
+  draw_prob <- draw_rate_from_gap(abs_gap)
+  
+  max_allowed_draw <- 2 * pmin(expected, 1 - expected)
+  draw_prob <- pmin(draw_prob, max_allowed_draw)
+  
+  win_prob <- expected - draw_prob / 2
+  loss_prob <- 1 - expected - draw_prob / 2
+  
+  win_prob <- clamp(win_prob, 0, 1)
+  draw_prob <- clamp(draw_prob, 0, 1)
+  loss_prob <- clamp(loss_prob, 0, 1)
+  
+  total <- win_prob + draw_prob + loss_prob
+  
+  tibble(
+    win_prob = win_prob / total,
+    draw_prob = draw_prob / total,
+    loss_prob = loss_prob / total
+  )
+}
+
+pick_k <- function(r) {
+  ifelse(is.na(r), NA_real_, ifelse(r >= 2200, 10, ifelse(r >= 1800, 20, 30)))
+}
 prefer_new <- function(old_df, new_df, keys) {
   if (!nrow(new_df)) return(old_df)
   if (!nrow(old_df)) return(new_df)
@@ -1250,13 +1300,39 @@ if (nrow(players_json)) {
         result_num <= 0.25 ~ "Loss",
         TRUE               ~ "Draw"
       ),
+      
+      wdl = purrr::map2(playerElo, opponentElo, expected_wdl_from_elo),
+      winPct = purrr::map_dbl(wdl, ~ .x$win_prob[[1]]) * 100,
+      drawPct = purrr::map_dbl(wdl, ~ .x$draw_prob[[1]]) * 100,
+      lossPct = purrr::map_dbl(wdl, ~ .x$loss_prob[[1]]) * 100,
+      
+      winPct = as.integer(round(winPct)),
+      drawPct = as.integer(round(drawPct)),
+      lossPct = as.integer(round(lossPct)),
+      
       delta       = ifelse(!is.na(delta_num), sprintf("%+0.1f", round(delta_num, 1)), NA_character_),
       playerElo   = as.integer(round(playerElo)),
       opponentElo = as.integer(round(opponentElo)),
       new         = ifelse(!is.na(playerNew), as.integer(round(playerNew)), NA_integer_),
       date        = format(date, "%Y-%m-%d")
     ) %>%
-    select(gi, date, player, playerId, playerElo, opponent, opponentId, opponentElo, result, delta, new, src) %>%
+    select(
+      gi,
+      date,
+      player,
+      playerId,
+      playerElo,
+      opponent,
+      opponentId,
+      opponentElo,
+      result,
+      winPct,
+      drawPct,
+      lossPct,
+      delta,
+      new,
+      src
+    ) %>%
     arrange(.data$date, .data$src) %>%
     select(-src)
   

@@ -4,16 +4,30 @@
   <meta charset="utf-8">
   <title>Player — J-Ratings</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
   <style>
+    :root{
+      --wdl-win:#14b85a;
+      --wdl-draw:#f4c430;
+      --wdl-loss:#e53935;
+    }
+
     .player-head{
       display:flex;
       justify-content:space-between;
       align-items:flex-end;
       margin:12px 0;
       padding-right:12px;
+      gap:1rem;
+    }
+
+    h2#pname{
+      margin:0;
+      padding:0;
+      border-bottom:none;
     }
 
     .badge{
@@ -39,8 +53,15 @@
       font-variant-numeric:tabular-nums;
     }
 
-    #stats-j .muted{color:#1f77b4;font-weight:bold;}
-    #stats-wcu .muted{color:#ff7f0e;font-weight:bold;}
+    #stats-j .muted{
+      color:#1f77b4;
+      font-weight:bold;
+    }
+
+    #stats-wcu .muted{
+      color:#ff7f0e;
+      font-weight:bold;
+    }
 
     .btn-mini{
       background:#0f1623;
@@ -94,38 +115,262 @@
       box-shadow:inset 0 0 0 1px rgba(255,255,255,.55);
     }
 
-    #games{
-      margin-top:1.5rem;
-      width:100%;
-      border-collapse:collapse;
+    h3.section-title{
+      text-align:center;
+      font-size:1.6rem;
+      margin-top:20px;
+      margin-bottom:10px;
     }
 
-    #games th,
-    #games td{
-      padding:6px 10px;
-      border-bottom:1px solid #333;
-      text-align:center !important;
+    #gamesWrap{
+      max-height:520px;
+      overflow:auto;
+      margin-top:12px;
+    }
+
+    table.games{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      font-size:1rem;
+      table-layout:fixed;
+    }
+
+    table.games th,
+    table.games td{
+      padding:10px 12px;
+      border-bottom:1px solid var(--border);
+      border-right:1px solid rgba(128,128,128,0.45);
+      text-align:center;
       vertical-align:middle;
       white-space:nowrap;
-      border-right:3px double rgba(255,255,255,0.25);
     }
 
-    #games th:last-child,
-    #games td:last-child{
-      border-right:none;
+    table.games th:first-child,
+    table.games td:first-child{
+      border-left:1px solid rgba(128,128,128,0.45);
     }
 
-    #games th:nth-child(6),
-    #games td:nth-child(6){
-      border-right:3px double rgba(128,128,128,0.6);
+    table.games th{
+      position:sticky;
+      top:0;
+      z-index:2;
+      background-color:var(--card, #161b22);
     }
 
-    .result-win{color:#34c759;font-weight:bold;}
-    .result-draw{color:#ffb833;font-weight:bold;}
-    .result-loss{color:#e53935;font-weight:bold;}
-    .delta-pos{color:#34c759;font-weight:bold;}
-    .delta-neg{color:#e53935;font-weight:bold;}
-    .delta-zero{color:#ffb833;font-weight:bold;}
+    table.games th:nth-child(1),
+    table.games td:nth-child(1){
+      width:120px;
+    }
+
+    table.games th:nth-child(2),
+    table.games td:nth-child(2),
+    table.games th:nth-child(4),
+    table.games td:nth-child(4){
+      width:170px;
+    }
+
+    table.games th:nth-child(3),
+    table.games td:nth-child(3),
+    table.games th:nth-child(5),
+    table.games td:nth-child(5){
+      width:72px;
+    }
+
+    table.games th:nth-child(6),
+    table.games td:nth-child(6){
+      width:190px;
+    }
+
+    table.games th:nth-child(7),
+    table.games td:nth-child(7){
+      width:90px;
+    }
+
+    table.games th:nth-child(8),
+    table.games td:nth-child(8){
+      width:80px;
+    }
+
+    table.games th:nth-child(9),
+    table.games td:nth-child(9){
+      width:80px;
+    }
+
+    .player-cell{
+      text-align:left;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .player-cell a{
+      color:inherit;
+      text-decoration:underline;
+      text-underline-offset:2px;
+    }
+
+    .player-cell a:hover{
+      opacity:.9;
+    }
+
+    .player-cell .profile-player,
+    .player-cell a.profile-player{
+      font-weight:900;
+      text-decoration-thickness:2px;
+    }
+
+    .result{
+      font-weight:800;
+    }
+
+    .result.win,
+    .result-win{
+      color:var(--wdl-win);
+    }
+
+    .result.draw,
+    .result-draw{
+      color:var(--wdl-draw);
+    }
+
+    .result.loss,
+    .result-loss{
+      color:var(--wdl-loss);
+    }
+
+    .delta{
+      font-weight:800;
+    }
+
+    .delta.pos,
+    .delta-pos{
+      color:var(--wdl-win);
+    }
+
+    .delta.neg,
+    .delta-neg{
+      color:var(--wdl-loss);
+    }
+
+    .delta.zero,
+    .delta-zero{
+      color:var(--wdl-draw);
+    }
+
+    .wdl-cell{
+      min-width:170px;
+    }
+
+    .wdl-bar{
+      display:flex;
+      width:168px;
+      height:26px;
+      border-radius:7px;
+      overflow:hidden;
+      border:1px solid rgba(128,128,128,0.45);
+      background:rgba(255,255,255,0.04);
+      margin:0 auto;
+    }
+
+    .wdl-seg{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:.76rem;
+      font-weight:900;
+      color:#111;
+      overflow:hidden;
+    }
+
+    .wdl-win{
+      background:var(--wdl-win);
+    }
+
+    .wdl-draw{
+      background:var(--wdl-draw);
+    }
+
+    .wdl-loss{
+      background:var(--wdl-loss);
+    }
+
+    .wdl-seg span{
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:clip;
+    }
+
+    @media (max-width:700px){
+      .player-head{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      h3.section-title{
+        font-size:1.25rem;
+      }
+
+      table.games{
+        font-size:.92rem;
+      }
+
+      table.games th,
+      table.games td{
+        padding:8px 10px;
+      }
+
+      table.games th:nth-child(1),
+      table.games td:nth-child(1){
+        width:110px;
+      }
+
+      table.games th:nth-child(2),
+      table.games td:nth-child(2),
+      table.games th:nth-child(4),
+      table.games td:nth-child(4){
+        width:145px;
+      }
+
+      table.games th:nth-child(3),
+      table.games td:nth-child(3),
+      table.games th:nth-child(5),
+      table.games td:nth-child(5){
+        width:68px;
+      }
+
+      table.games th:nth-child(6),
+      table.games td:nth-child(6){
+        width:150px;
+      }
+
+      table.games th:nth-child(7),
+      table.games td:nth-child(7){
+        width:85px;
+      }
+
+      table.games th:nth-child(8),
+      table.games td:nth-child(8){
+        width:75px;
+      }
+
+      table.games th:nth-child(9),
+      table.games td:nth-child(9){
+        width:75px;
+      }
+
+      .wdl-cell{
+        min-width:132px;
+      }
+
+      .wdl-bar{
+        width:132px;
+        height:24px;
+      }
+
+      .wdl-seg{
+        font-size:.68rem;
+      }
+    }
   </style>
 </head>
 
@@ -142,14 +387,17 @@
   <section class="panel">
     <div class="player-head">
       <h2 id="pname">Player</h2>
+
       <div class="badge">
         <button id="toggle" class="btn-mini" type="button" title="Toggle WCU overlay">Show WCU</button>
+
         <div class="stack">
           <div id="stats-j">
             <span class="muted">J Live:</span> <strong id="live-j">–</strong>
             <span class="muted">Peak:</span> <strong id="peak-j">–</strong>
             <span class="muted">K:</span> <strong id="kval-j">–</strong>
           </div>
+
           <div id="stats-wcu" style="display:none">
             <span class="muted">WCU Live:</span> <strong id="live-wcu">–</strong>
             <span class="muted">Peak:</span> <strong id="peak-wcu">–</strong>
@@ -182,25 +430,30 @@
 
     <div id="chart"></div>
 
-    <h3>Games</h3>
-    <table id="games">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Opponent</th>
-          <th>Elo</th>
-          <th>Result</th>
-          <th>Δ</th>
-          <th>New</th>
-        </tr>
-      </thead>
-      <tbody id="games-body"></tbody>
-    </table>
+    <h3 class="section-title">Games</h3>
+
+    <div id="gamesWrap">
+      <table id="games" class="games">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Player</th>
+            <th>Elo</th>
+            <th>Opponent</th>
+            <th>Elo</th>
+            <th>Expected W/D/L</th>
+            <th>Result</th>
+            <th>Δ</th>
+            <th>New</th>
+          </tr>
+        </thead>
+        <tbody id="games-body"></tbody>
+      </table>
+    </div>
   </section>
 </main>
 
 <script>
-/* ---------- constants ---------- */
 const params = new URLSearchParams(location.search);
 const idRaw = params.get('id');
 
@@ -214,11 +467,15 @@ const HIST_URL    = id => `data/history/${encodeURIComponent(id)}.json`;
 const HIST_WCU    = id => `data/history/${encodeURIComponent(id)}_wcu.json`;
 const GAMES_URL   = id => `data/games/${encodeURIComponent(id)}.json`;
 
-const COLORS = { J:'#1f77b4', WCU:'#ff7f0e' };
+const COLORS = {
+  J: '#1f77b4',
+  WCU: '#ff7f0e'
+};
+
 const kFromRating = r => (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
 
-/* ---------- state ---------- */
 let me = null;
+let playersAll = [];
 let rawLive = [];
 let rawWCU = [];
 let seriesLive = null;
@@ -227,14 +484,13 @@ let showWCU = false;
 let dataMin = null;
 let dataMax = null;
 let initialRangeApplied = false;
-let rememberedXRange = null;   // [x0, x1] as yyyy-mm-dd
+let rememberedXRange = null;
 let activeRangeKey = '2022';
 let ratingByDate = Object.create(null);
 
-/* ---------- helpers ---------- */
 const iso = d => new Date(d).toISOString().slice(0, 10);
 
-function normalise(series){
+function normalise(series) {
   return series
     .filter(p => p && p.x && Number.isFinite(+p.y))
     .map(p => ({ x: p.x, y: +p.y }))
@@ -271,7 +527,7 @@ function setTickLabelsEvery(yMin, yMax, step) {
   });
 }
 
-function aggregateExpanded(series, mode){
+function aggregateExpanded(series, mode) {
   if (mode === 'daily') return normalise(series);
 
   const buckets = Object.create(null);
@@ -332,29 +588,36 @@ function aggregateExpanded(series, mode){
   return normalise(out);
 }
 
-function makeTrace(series, name, colour){
+function makeTrace(series, name, colour) {
   return {
     x: series.map(p => p.x),
     y: series.map(p => p.y),
     mode: 'lines',
-    line: { width: 3, shape: 'linear', color: colour },
+    line: {
+      width: 3,
+      shape: 'linear',
+      color: colour
+    },
     name,
     hovertemplate: '%{y:.0f}<extra>' + name + '</extra>',
     connectgaps: true
   };
 }
 
-function extentFrom(...seriesList){
+function extentFrom(...seriesList) {
   const xs = [];
 
   for (const s of seriesList) {
     if (!s) continue;
+
     for (const p of s) {
       if (p?.x) xs.push(new Date(p.x));
     }
   }
 
-  if (!xs.length) return { min: null, max: null };
+  if (!xs.length) {
+    return { min: null, max: null };
+  }
 
   return {
     min: new Date(Math.min(...xs)),
@@ -362,16 +625,18 @@ function extentFrom(...seriesList){
   };
 }
 
-function computeMetrics(series){
+function computeMetrics(series) {
   const y = series?.map(p => p.y) ?? [];
   const live = y.length ? Math.round(y[y.length - 1]) : null;
   const peak = y.length ? Math.round(Math.max(...y)) : null;
   const kval = Number.isFinite(live) ? kFromRating(live) : null;
+
   return { live, peak, kval };
 }
 
-function refreshBadge(){
+function refreshBadge() {
   const j = computeMetrics(rawLive);
+
   document.getElementById('live-j').textContent = j.live ?? '–';
   document.getElementById('peak-j').textContent = j.peak ?? '–';
   document.getElementById('kval-j').textContent =
@@ -381,9 +646,11 @@ function refreshBadge(){
 
   if (showWCU && rawWCU.length) {
     const w = computeMetrics(rawWCU);
+
     document.getElementById('live-wcu').textContent = w.live ?? '–';
     document.getElementById('peak-wcu').textContent = w.peak ?? '–';
     document.getElementById('kval-wcu').textContent = w.kval ?? '–';
+
     wcuRow.style.display = '';
   } else {
     wcuRow.style.display = 'none';
@@ -392,31 +659,7 @@ function refreshBadge(){
   document.getElementById('toggle').textContent = showWCU ? 'Hide WCU' : 'Show WCU';
 }
 
-function ratingOnOrBefore(dateStr) {
-  if (!dateStr) return null;
-
-  const key = dateStr.slice(0, 10);
-
-  if (Object.prototype.hasOwnProperty.call(ratingByDate, key)) {
-    return ratingByDate[key];
-  }
-
-  const target = new Date(key);
-  let best = null;
-
-  for (const p of rawLive) {
-    if (!p || !p.x) continue;
-    const d = new Date(p.x);
-
-    if (d <= target && (!best || d > best.d)) {
-      best = { d, r: p.y };
-    }
-  }
-
-  return best ? best.r : null;
-}
-
-function clampRangeStartOnly(range){
+function clampRangeStartOnly(range) {
   if (!range || !dataMin) return range;
 
   const [x0, x1] = range.map(x => new Date(x));
@@ -425,23 +668,20 @@ function clampRangeStartOnly(range){
   return [iso(lo), iso(x1)];
 }
 
-function makePaddedEnd(start, endData){
+function makePaddedEnd(start, endData) {
   const oneDay = 86400000;
   const spanMs = Math.max(oneDay, +endData - +start);
-
-  // 2% of visible span, minimum 3 days, maximum 14 days
   const padMs = Math.max(3 * oneDay, Math.min(14 * oneDay, spanMs * 0.02));
 
   return new Date(+endData + padMs);
 }
 
-function updateActiveRangeButton(){
+function updateActiveRangeButton() {
   document.querySelectorAll('.range-buttons .seg').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.range === activeRangeKey);
   });
 }
 
-/* ---------- custom Y gridlines ---------- */
 function makeYGridShapes(yMin, yMax, step) {
   if (!Number.isFinite(yMin) || !Number.isFinite(yMax) || !step) return [];
 
@@ -450,7 +690,8 @@ function makeYGridShapes(yMin, yMax, step) {
   const shapes = [];
 
   for (let y = lo; y <= hi; y += step) {
-    let width, color;
+    let width;
+    let color;
 
     if (step === 100) {
       width = 2.2;
@@ -514,10 +755,8 @@ function adjustYToVisible(x0, x1) {
   });
 }
 
-/* ---------- chart ---------- */
-function draw(){
+function draw() {
   const mode = document.getElementById('agg').value;
-
   const gd = document.getElementById('chart');
   const liveLayout = gd && gd._fullLayout ? gd._fullLayout.xaxis : null;
 
@@ -529,16 +768,25 @@ function draw(){
   seriesWCU = rawWCU.length ? aggregateExpanded(rawWCU, mode) : null;
 
   const traces = [makeTrace(seriesLive, 'J-Ratings', COLORS.J)];
-  if (showWCU && seriesWCU) traces.push(makeTrace(seriesWCU, 'WCU', COLORS.WCU));
+
+  if (showWCU && seriesWCU) {
+    traces.push(makeTrace(seriesWCU, 'WCU', COLORS.WCU));
+  }
 
   const ext = extentFrom(seriesLive, seriesWCU);
   dataMin = ext.min;
   dataMax = ext.max;
 
   const allY = [];
-  for (const p of seriesLive || []) if (Number.isFinite(p.y)) allY.push(p.y);
+
+  for (const p of seriesLive || []) {
+    if (Number.isFinite(p.y)) allY.push(p.y);
+  }
+
   if (showWCU && seriesWCU) {
-    for (const p of seriesWCU) if (Number.isFinite(p.y)) allY.push(p.y);
+    for (const p of seriesWCU) {
+      if (Number.isFinite(p.y)) allY.push(p.y);
+    }
   }
 
   const yMin0 = allY.length ? Math.min(...allY) : 0;
@@ -620,50 +868,193 @@ function draw(){
   });
 }
 
-/* ---------- table helpers ---------- */
-function getId(g, base){
+function getId(g, base) {
   return g[base + 'Id'] ?? g[base + '_id'] ?? g[base + 'ID'] ?? null;
 }
 
-function resultClass(r){
-  if (r === 'Win') return 'result-win';
-  if (r === 'Draw') return 'result-draw';
-  if (r === 'Loss') return 'result-loss';
-  return '';
+function resultClass(r) {
+  if (r === 'Win') return 'result win';
+  if (r === 'Draw') return 'result draw';
+  if (r === 'Loss') return 'result loss';
+  return 'result';
 }
 
-function deltaClass(d){
-  if (!d) return '';
-  if (d.startsWith('+')) return 'delta-pos';
-  if (d.startsWith('-')) return 'delta-neg';
-  return 'delta-zero';
+function deltaClass(d) {
+  if (!d) return 'delta';
+  if (String(d).startsWith('+')) return 'delta pos';
+  if (String(d).startsWith('-')) return 'delta neg';
+  return 'delta zero';
 }
 
-function parseDelta(deltaVal){
+function parseDelta(deltaVal) {
   if (deltaVal == null) return null;
-  if (typeof deltaVal === 'number' && Number.isFinite(deltaVal)) return deltaVal;
+
+  if (typeof deltaVal === 'number' && Number.isFinite(deltaVal)) {
+    return deltaVal;
+  }
+
   if (typeof deltaVal === 'string') {
     const x = parseFloat(deltaVal);
     return Number.isFinite(x) ? x : null;
   }
+
   return null;
 }
 
-function computeGameNewRaw(g){
+function ratingOnOrBefore(dateStr) {
+  if (!dateStr) return null;
+
+  const key = dateStr.slice(0, 10);
+
+  if (Object.prototype.hasOwnProperty.call(ratingByDate, key)) {
+    return ratingByDate[key];
+  }
+
+  const target = new Date(key);
+  let best = null;
+
+  for (const p of rawLive) {
+    if (!p || !p.x) continue;
+
+    const d = new Date(p.x);
+
+    if (d <= target && (!best || d > best.d)) {
+      best = { d, r: p.y };
+    }
+  }
+
+  return best ? best.r : null;
+}
+
+function computeGameNewRaw(g) {
   if (g.new != null && Number.isFinite(+g.new)) return +g.new;
   if (g.playerNew != null && Number.isFinite(+g.playerNew)) return +g.playerNew;
 
   const pe = (g.playerElo != null && Number.isFinite(+g.playerElo)) ? +g.playerElo : null;
   const de = parseDelta(g.delta);
+
   if (pe != null && de != null) return pe + de;
 
   const r = ratingOnOrBefore(g.date);
   return Number.isFinite(r) ? +r : null;
 }
 
-function renderGamesTable(games){
+function drawRateFromGap(absGap) {
+  const maxDraw = 0.33;
+  const scale = 360;
+  const shape = 1.45;
+
+  return maxDraw * Math.exp(-Math.pow(absGap / scale, shape));
+}
+
+function expectedWdlFromElo(playerElo, opponentElo) {
+  const expected = 1 / (1 + Math.pow(10, (opponentElo - playerElo) / 400));
+  const absGap = Math.abs(playerElo - opponentElo);
+
+  let drawProb = drawRateFromGap(absGap);
+  const maxAllowedDraw = 2 * Math.min(expected, 1 - expected);
+
+  drawProb = Math.min(drawProb, maxAllowedDraw);
+
+  let winProb = expected - drawProb / 2;
+  let lossProb = 1 - expected - drawProb / 2;
+
+  winProb = Math.max(0, Math.min(1, winProb));
+  drawProb = Math.max(0, Math.min(1, drawProb));
+  lossProb = Math.max(0, Math.min(1, lossProb));
+
+  const total = winProb + drawProb + lossProb;
+
+  return {
+    win: Math.round(100 * winProb / total),
+    draw: Math.round(100 * drawProb / total),
+    loss: Math.round(100 * lossProb / total)
+  };
+}
+
+function renderWdlBar(g) {
+  let win = Number(g.winPct);
+  let draw = Number(g.drawPct);
+  let loss = Number(g.lossPct);
+
+  if (!Number.isFinite(win) || !Number.isFinite(draw) || !Number.isFinite(loss)) {
+    const playerElo = Number(g.playerElo);
+    const opponentElo = Number(g.opponentElo);
+
+    if (!Number.isFinite(playerElo) || !Number.isFinite(opponentElo)) {
+      return document.createTextNode('');
+    }
+
+    const calc = expectedWdlFromElo(playerElo, opponentElo);
+
+    win = calc.win;
+    draw = calc.draw;
+    loss = calc.loss;
+  }
+
+  const safeWin = Math.max(0, Math.min(100, win));
+  const safeDraw = Math.max(0, Math.min(100, draw));
+  const safeLoss = Math.max(0, Math.min(100, loss));
+
+  const wrap = document.createElement('div');
+  wrap.className = 'wdl-bar';
+  wrap.title = `Win ${safeWin}% / Draw ${safeDraw}% / Loss ${safeLoss}%`;
+
+  const winSeg = document.createElement('div');
+  winSeg.className = 'wdl-seg wdl-win';
+  winSeg.style.width = `${safeWin}%`;
+  winSeg.innerHTML = `<span>${safeWin}%</span>`;
+
+  const drawSeg = document.createElement('div');
+  drawSeg.className = 'wdl-seg wdl-draw';
+  drawSeg.style.width = `${safeDraw}%`;
+  drawSeg.innerHTML = `<span>${safeDraw}%</span>`;
+
+  const lossSeg = document.createElement('div');
+  lossSeg.className = 'wdl-seg wdl-loss';
+  lossSeg.style.width = `${safeLoss}%`;
+  lossSeg.innerHTML = `<span>${safeLoss}%</span>`;
+
+  wrap.appendChild(winSeg);
+  wrap.appendChild(drawSeg);
+  wrap.appendChild(lossSeg);
+
+  return wrap;
+}
+
+function renderPlayerCell(playerId, playerName, isProfilePlayer) {
+  const tdContent = document.createDocumentFragment();
+  const label = playerName || '';
+
+  if (playerId) {
+    const a = document.createElement('a');
+    a.href = `player.html?id=${encodeURIComponent(playerId)}`;
+    a.textContent = label;
+
+    if (isProfilePlayer) {
+      a.className = 'profile-player';
+    }
+
+    tdContent.appendChild(a);
+  } else {
+    const span = document.createElement('span');
+    span.textContent = label;
+
+    if (isProfilePlayer) {
+      span.className = 'profile-player';
+    }
+
+    tdContent.appendChild(span);
+  }
+
+  return tdContent;
+}
+
+function renderGamesTable(games) {
   const tbody = document.getElementById('games-body');
   tbody.innerHTML = '';
+
+  let added = 0;
 
   for (const g of games) {
     if (
@@ -675,45 +1066,84 @@ function renderGamesTable(games){
     }
 
     const tr = document.createElement('tr');
-    const cols = ['date', 'opponent', 'opponentElo', 'result', 'delta', 'jNew'];
 
-    for (const col of cols) {
-      const td = document.createElement('td');
+    const playerName = g.player || me?.name || '';
+    const playerId = g.playerId || me?.id || idRaw;
 
-      if (col === 'opponent') {
-        const name = g[col] ?? '';
-        const id = getId(g, col);
+    const opponentName = g.opponent || '';
+    const opponentId = getId(g, 'opponent');
 
-        if (id) {
-          const a = document.createElement('a');
-          a.href = `player.html?id=${encodeURIComponent(id)}`;
-          a.textContent = name;
-          td.appendChild(a);
-        } else {
-          td.textContent = name;
-        }
-      } else if (col === 'jNew') {
-        td.textContent = (g.jNew != null) ? g.jNew : '';
-      } else {
-        td.textContent =
-          (col === 'playerElo' || col === 'opponentElo')
-            ? (g[col] != null ? Math.round(g[col]) : '')
-            : (g[col] ?? '');
-      }
+    const playerElo = Number(g.playerElo);
+    const opponentElo = Number(g.opponentElo);
 
-      if (col === 'result') td.className = resultClass(g[col]);
-      if (col === 'delta') td.className = deltaClass(g[col]);
+    const cells = [];
 
+    const tdDate = document.createElement('td');
+    tdDate.textContent = g.date || '';
+    cells.push(tdDate);
+
+    const tdPlayer = document.createElement('td');
+    tdPlayer.className = 'player-cell';
+    tdPlayer.appendChild(renderPlayerCell(playerId, playerName, true));
+    cells.push(tdPlayer);
+
+    const tdPlayerElo = document.createElement('td');
+    tdPlayerElo.textContent = Number.isFinite(playerElo) ? String(Math.round(playerElo)) : '';
+    cells.push(tdPlayerElo);
+
+    const tdOpponent = document.createElement('td');
+    tdOpponent.className = 'player-cell';
+    tdOpponent.appendChild(renderPlayerCell(opponentId, opponentName, false));
+    cells.push(tdOpponent);
+
+    const tdOpponentElo = document.createElement('td');
+    tdOpponentElo.textContent = Number.isFinite(opponentElo) ? String(Math.round(opponentElo)) : '';
+    cells.push(tdOpponentElo);
+
+    const tdWdl = document.createElement('td');
+    tdWdl.className = 'wdl-cell';
+    tdWdl.appendChild(renderWdlBar(g));
+    cells.push(tdWdl);
+
+    const tdResult = document.createElement('td');
+    tdResult.textContent = g.result || '';
+    tdResult.className = resultClass(g.result);
+    cells.push(tdResult);
+
+    const tdDelta = document.createElement('td');
+    tdDelta.textContent = g.delta ?? '';
+    tdDelta.className = deltaClass(g.delta);
+    cells.push(tdDelta);
+
+    const tdNew = document.createElement('td');
+    tdNew.textContent = (g.jNew != null) ? g.jNew : (g.new != null ? g.new : '');
+    cells.push(tdNew);
+
+    for (const td of cells) {
       tr.appendChild(td);
     }
 
     tbody.appendChild(tr);
+    added++;
+  }
+
+  if (!added) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+
+    td.colSpan = 9;
+    td.textContent = 'No games';
+
+    tr.appendChild(td);
+    tbody.appendChild(tr);
   }
 }
 
-/* ---------- load ---------- */
-async function load(){
+async function load() {
   try {
+    document.getElementById('games-body').innerHTML =
+      '<tr><td colspan="9">Loading…</td></tr>';
+
     const [playersRes, liveRes, wcuRes, gamesRes] = await Promise.all([
       fetch(PLAYERS_URL, { cache: 'no-cache' }),
       fetch(HIST_URL(idRaw), { cache: 'no-cache' }),
@@ -724,8 +1154,8 @@ async function load(){
     if (!playersRes.ok) throw new Error('players.json not found');
     if (!liveRes.ok) throw new Error('live history not found');
 
-    const players = await playersRes.json();
-    me = players.find(p => p.id === idRaw);
+    playersAll = await playersRes.json();
+    me = playersAll.find(p => p.id === idRaw);
 
     if (!me) throw new Error('player id not in players.json');
 
@@ -738,16 +1168,21 @@ async function load(){
       .filter(p => Number.isFinite(p.y));
 
     ratingByDate = Object.create(null);
+
     for (const d of liveData) {
       const key = (d.date || '').slice(0, 10);
       const val = +d.rating;
-      if (Number.isFinite(val)) ratingByDate[key] = val;
+
+      if (Number.isFinite(val)) {
+        ratingByDate[key] = val;
+      }
     }
 
     if (wcuRes && wcuRes.ok) {
       rawWCU = (await wcuRes.json())
         .map(d => ({ x: d.date, y: +d.rating }))
         .filter(p => Number.isFinite(p.y));
+
       document.getElementById('toggle').disabled = false;
     } else {
       rawWCU = [];
@@ -770,7 +1205,9 @@ async function load(){
     if (gamesRes && gamesRes.ok) {
       const games = await gamesRes.json();
 
-      games.forEach((g, idx) => { g.__i = idx; });
+      games.forEach((g, idx) => {
+        g.__i = idx;
+      });
 
       for (const g of games) {
         g._jNewRaw = computeGameNewRaw(g);
@@ -785,19 +1222,25 @@ async function load(){
 
         const ga = Number.isFinite(+a.gi) ? +a.gi : 0;
         const gb = Number.isFinite(+b.gi) ? +b.gi : 0;
+
         return gb - ga;
       });
 
       renderGamesTable(games);
+    } else {
+      document.getElementById('games-body').innerHTML =
+        '<tr><td colspan="9">No games</td></tr>';
     }
   } catch (e) {
     console.error(e);
+
     document.getElementById('chart').textContent = 'No Games';
+    document.getElementById('games-body').innerHTML =
+      '<tr><td colspan="9">Error loading games</td></tr>';
   }
 }
 
-/* ---------- range presets ---------- */
-function setPreset(key){
+function setPreset(key) {
   if (!dataMin || !dataMax) return;
 
   let start;
@@ -818,18 +1261,19 @@ function setPreset(key){
   }
 
   start = new Date(Math.max(+start, +dataMin));
-  const end = makePaddedEnd(start, dataMax);
 
+  const end = makePaddedEnd(start, dataMax);
   const range = [iso(start), iso(end)];
+
   rememberedXRange = range;
   activeRangeKey = key;
+
   updateActiveRangeButton();
 
   Plotly.relayout('chart', { 'xaxis.range': range })
     .then(() => adjustYToVisible(range[0], range[1]));
 }
 
-/* ---------- interactions ---------- */
 document.addEventListener('click', e => {
   if (e.target.id === 'toggle' && !e.target.disabled) {
     showWCU = !showWCU;
