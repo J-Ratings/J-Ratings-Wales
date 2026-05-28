@@ -1379,6 +1379,29 @@ if (nrow(players_json)) {
     
     
     new_rows <- new_rows %>%
+      mutate(
+        playerElo = suppressWarnings(as.numeric(.data$playerElo)),
+        opponentElo = suppressWarnings(as.numeric(.data$opponentElo)),
+        
+        wdl = purrr::map2(playerElo, opponentElo, expected_wdl_from_elo),
+        
+        winPct = ifelse(
+          !is.na(playerElo) & !is.na(opponentElo),
+          as.integer(round(purrr::map_dbl(wdl, ~ .x$win_prob[[1]]) * 100)),
+          NA_integer_
+        ),
+        drawPct = ifelse(
+          !is.na(playerElo) & !is.na(opponentElo),
+          as.integer(round(purrr::map_dbl(wdl, ~ .x$draw_prob[[1]]) * 100)),
+          NA_integer_
+        ),
+        lossPct = ifelse(
+          !is.na(playerElo) & !is.na(opponentElo),
+          as.integer(round(purrr::map_dbl(wdl, ~ .x$loss_prob[[1]]) * 100)),
+          NA_integer_
+        )
+      ) %>%
+      select(-wdl) %>%
       mutate(date_d = as.Date(.data$date)) %>%
       arrange(desc(.data$date_d), desc(.data$gi)) %>%
       select(-date_d)
