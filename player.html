@@ -992,9 +992,23 @@ function renderWdlBar(g) {
     loss = calc.loss;
   }
 
-  const safeWin = Math.max(0, Math.min(100, win));
-  const safeDraw = Math.max(0, Math.min(100, draw));
-  const safeLoss = Math.max(0, Math.min(100, loss));
+let safeWin = Math.max(0, Math.min(100, Math.round(win)));
+let safeDraw = Math.max(0, Math.min(100, Math.round(draw)));
+let safeLoss = Math.max(0, Math.min(100, Math.round(loss)));
+
+const totalPct = safeWin + safeDraw + safeLoss;
+
+if (totalPct !== 100) {
+  const diff = 100 - totalPct;
+
+  if (safeWin >= safeDraw && safeWin >= safeLoss) {
+    safeWin += diff;
+  } else if (safeDraw >= safeWin && safeDraw >= safeLoss) {
+    safeDraw += diff;
+  } else {
+    safeLoss += diff;
+  }
+}
 
   const wrap = document.createElement('div');
   wrap.className = 'wdl-bar';
