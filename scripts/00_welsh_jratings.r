@@ -208,8 +208,8 @@ draw_rate_from_gap <- function(abs_gap) {
   abs_gap <- as.numeric(abs_gap)
   
   max_draw <- 0.33
-  scale <- 360
-  shape <- 1.45
+  scale <- 340
+  shape <- 1.60
   
   max_draw * exp(-((abs_gap / scale) ^ shape))
 }
