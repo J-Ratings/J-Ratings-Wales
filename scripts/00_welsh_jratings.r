@@ -204,7 +204,7 @@ clamp <- function(x, lo, hi) {
   pmax(lo, pmin(hi, x))
 }
 
-draw_rate_from_gap <- function(abs_gap) {
+draw_rate_from_gap_base <- function(abs_gap) {
   abs_gap <- as.numeric(abs_gap)
   
   max_draw <- 0.33
@@ -214,11 +214,29 @@ draw_rate_from_gap <- function(abs_gap) {
   max_draw * exp(-((abs_gap / scale) ^ shape))
 }
 
+rating_draw_multiplier <- function(avg_elo) {
+  case_when(
+    avg_elo < 1500 ~ 0.60,
+    avg_elo < 1700 ~ 0.98,
+    avg_elo < 1900 ~ 1.10,
+    avg_elo < 2100 ~ 1.26,
+    avg_elo < 2300 ~ 1.28,
+    TRUE ~ 1.30
+  )
+}
+
+draw_rate_from_gap <- function(abs_gap, avg_elo) {
+  raw <- draw_rate_from_gap_base(abs_gap) * rating_draw_multiplier(avg_elo)
+  
+  pmin(raw, 0.46)
+}
+
 expected_wdl_from_elo <- function(player_elo, opponent_elo) {
   expected <- elo_expected(player_elo, opponent_elo)
   abs_gap <- abs(player_elo - opponent_elo)
+  avg_elo <- (player_elo + opponent_elo) / 2
   
-  draw_prob <- draw_rate_from_gap(abs_gap)
+  draw_prob <- draw_rate_from_gap(abs_gap, avg_elo)
   
   max_allowed_draw <- 2 * pmin(expected, 1 - expected)
   draw_prob <- pmin(draw_prob, max_allowed_draw)
