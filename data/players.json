@@ -49,7 +49,7 @@
     "name": "Grzegorz Toczek",
     "zone": "E1",
     "club": "2CD",
-    "rating": 2264,
+    "rating": 2263,
     "peak": 2334,
     "k": 10
   },
@@ -175,7 +175,7 @@
     "name": "Tom Brown",
     "zone": "E1",
     "club": "2CD",
-    "rating": 2134,
+    "rating": 2135,
     "peak": 2229,
     "k": 20
   },
@@ -553,7 +553,7 @@
     "name": "Matthew Davies",
     "zone": "E1",
     "club": "2CD",
-    "rating": 1970,
+    "rating": 1969,
     "peak": 2074,
     "k": 20
   },
@@ -697,7 +697,7 @@
     "name": "George Turner",
     "zone": "E1",
     "club": "2CD",
-    "rating": 1939,
+    "rating": 1940,
     "peak": 2021,
     "k": 20
   },
@@ -783,21 +783,21 @@
     "k": 20
   },
   {
-    "id": "e1 georgi korovski",
-    "name": "Georgi Korovski",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1916,
-    "peak": 2006,
-    "k": 20
-  },
-  {
     "id": "n1 denys podcherniaeva",
     "name": "Denys Podcherniaeva",
     "zone": "N1",
     "club": "1CB",
     "rating": 1916,
     "peak": 1926.0863,
+    "k": 20
+  },
+  {
+    "id": "e1 georgi korovski",
+    "name": "Georgi Korovski",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1916,
+    "peak": 2006,
     "k": 20
   },
   {
@@ -819,21 +819,21 @@
     "k": 20
   },
   {
-    "id": "d1 stuart warner",
-    "name": "Stuart Warner",
-    "zone": "D1",
-    "club": "4FG",
-    "rating": 1911,
-    "peak": 1916.1763,
-    "k": 20
-  },
-  {
     "id": "n1 ray j holland",
     "name": "Ray J Holland",
     "zone": "N1",
     "club": "1WX",
     "rating": 1911,
     "peak": 1972,
+    "k": 20
+  },
+  {
+    "id": "d1 stuart warner",
+    "name": "Stuart Warner",
+    "zone": "D1",
+    "club": "4FG",
+    "rating": 1911,
+    "peak": 1916.1763,
     "k": 20
   },
   {
@@ -1395,15 +1395,6 @@
     "k": 20
   },
   {
-    "id": "e1 steve jones",
-    "name": "Steve Jones",
-    "zone": "E1",
-    "club": "2BY",
-    "rating": 1824,
-    "peak": 1849,
-    "k": 20
-  },
-  {
     "id": "g1 yoganand kumar kunche",
     "name": "Yoganand Kumar Kunche",
     "zone": "G1",
@@ -1473,6 +1464,15 @@
     "club": "5MO",
     "rating": 1820,
     "peak": 1936,
+    "k": 20
+  },
+  {
+    "id": "e1 steve jones",
+    "name": "Steve Jones",
+    "zone": "E1",
+    "club": "2BY",
+    "rating": 1820,
+    "peak": 1849,
     "k": 20
   },
   {
@@ -1899,21 +1899,21 @@
     "k": 30
   },
   {
-    "id": "e1 bill harle",
-    "name": "Bill Harle",
-    "zone": "E1",
-    "club": "2CD",
-    "rating": 1757,
-    "peak": 1867,
-    "k": 30
-  },
-  {
     "id": "e1 david rovaretti",
     "name": "David Rovaretti",
     "zone": "E1",
     "club": "2NE",
     "rating": 1757,
     "peak": 1889,
+    "k": 30
+  },
+  {
+    "id": "e1 bill harle",
+    "name": "Bill Harle",
+    "zone": "E1",
+    "club": "2CD",
+    "rating": 1757,
+    "peak": 1867,
     "k": 30
   },
   {
@@ -2048,7 +2048,7 @@
     "zone": "E1",
     "club": "2CD",
     "rating": 1737,
-    "peak": 1737,
+    "peak": 1737.1809,
     "k": 30
   },
   {
@@ -2448,21 +2448,21 @@
     "k": 30
   },
   {
-    "id": "n1 gary slegg",
-    "name": "Gary Slegg",
-    "zone": "N1",
-    "club": "1WX",
-    "rating": 1672,
-    "peak": 1815,
-    "k": 30
-  },
-  {
     "id": "g1 andrew balfe",
     "name": "Andrew Balfe",
     "zone": "G1",
     "club": "3NP",
     "rating": 1672,
     "peak": 1673,
+    "k": 30
+  },
+  {
+    "id": "n1 gary slegg",
+    "name": "Gary Slegg",
+    "zone": "N1",
+    "club": "1WX",
+    "rating": 1672,
+    "peak": 1815,
     "k": 30
   },
   {
@@ -3429,12 +3429,6 @@
     "k": 30
   },
   {
-    "name": "Ieuan Bevan Jones",
-    "rating": 1524,
-    "peak": 1524.1285,
-    "k": 30
-  },
-  {
     "id": "w1 ian phillips",
     "name": "Ian Phillips",
     "zone": "W1",
@@ -3471,21 +3465,21 @@
     "k": 30
   },
   {
-    "id": "d1 paul stonhold",
-    "name": "Paul Stonhold",
-    "zone": "D1",
-    "club": "4FG",
-    "rating": 1516,
-    "peak": 1526,
-    "k": 30
-  },
-  {
     "id": "g1 elijah daniel",
     "name": "Elijah Daniel",
     "zone": "G1",
     "club": "3AG",
     "rating": 1516,
     "peak": 1534.0737,
+    "k": 30
+  },
+  {
+    "id": "d1 paul stonhold",
+    "name": "Paul Stonhold",
+    "zone": "D1",
+    "club": "4FG",
+    "rating": 1516,
+    "peak": 1526,
     "k": 30
   },
   {
@@ -4479,15 +4473,6 @@
     "k": 30
   },
   {
-    "id": "e1 kieran judge",
-    "name": "Kieran Judge",
-    "zone": "E1",
-    "club": "2BY",
-    "rating": 1401,
-    "peak": 1420.259,
-    "k": 30
-  },
-  {
     "id": "e1 mateusz graczyk",
     "name": "Mateusz Graczyk",
     "zone": "E1",
@@ -4503,6 +4488,15 @@
     "club": "4FG",
     "rating": 1401,
     "peak": 1433,
+    "k": 30
+  },
+  {
+    "id": "e1 kieran judge",
+    "name": "Kieran Judge",
+    "zone": "E1",
+    "club": "2BY",
+    "rating": 1401,
+    "peak": 1420.259,
     "k": 30
   },
   {
@@ -4663,7 +4657,7 @@
     "name": "Peter Merrifield",
     "zone": "W1",
     "club": "WCU",
-    "rating": 1373,
+    "rating": 1374,
     "peak": 1631,
     "k": 30
   },
@@ -4929,19 +4923,19 @@
     "k": 30
   },
   {
-    "id": "e1 osian holgate",
-    "name": "Osian Holgate",
-    "zone": "E1",
-    "club": "2CD",
+    "id": "w1 aarush ram",
+    "name": "Aarush Ram",
+    "zone": "W1",
+    "club": "5CN",
     "rating": 1344,
     "peak": 1345,
     "k": 30
   },
   {
-    "id": "w1 aarush ram",
-    "name": "Aarush Ram",
-    "zone": "W1",
-    "club": "5CN",
+    "id": "e1 osian holgate",
+    "name": "Osian Holgate",
+    "zone": "E1",
+    "club": "2CD",
     "rating": 1344,
     "peak": 1345,
     "k": 30
