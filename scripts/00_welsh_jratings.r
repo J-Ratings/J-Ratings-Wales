@@ -1354,7 +1354,6 @@ if (nrow(players_json)) {
     arrange(.data$date, .data$src) %>%
     select(-src)
   
-  games_written <- 0L
   normalise_games_export <- function(df) {
     empty <- tibble(
       gi          = integer(),
