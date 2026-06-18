@@ -385,10 +385,15 @@ table.games td:nth-child(9){
 
 <main class="wrap">
   <section class="panel">
-    <div class="player-head">
-      <h2 id="pname">Player</h2>
+<div class="player-head">
+  <h2 id="pname">Player</h2>
 
-      <div class="badge">
+  <div class="badge" id="best-results">
+    <div><span class="muted">Best Win:</span> <strong id="best-win">–</strong></div>
+    <div><span class="muted">Best Draw:</span> <strong id="best-draw">–</strong></div>
+  </div>
+
+  <div class="badge">
         <button id="toggle" class="btn-mini" type="button" title="Toggle WCU overlay">Show WCU</button>
 
         <div class="stack">
@@ -1064,6 +1069,35 @@ function renderPlayerCell(playerId, playerName, isProfilePlayer) {
   return tdContent;
 }
 
+function refreshBestResults(games) {
+  let bestWin = null;
+  let bestDraw = null;
+
+  for (const g of games) {
+    const oppElo = Number(g.opponentElo);
+
+    if (!Number.isFinite(oppElo) || oppElo < 500) continue;
+
+    if (g.result === 'Win') {
+      if (!bestWin || oppElo > bestWin.elo) {
+        bestWin = { elo: oppElo, opponent: g.opponent || '', date: g.date || '' };
+      }
+    }
+
+    if (g.result === 'Draw') {
+      if (!bestDraw || oppElo > bestDraw.elo) {
+        bestDraw = { elo: oppElo, opponent: g.opponent || '', date: g.date || '' };
+      }
+    }
+  }
+
+  document.getElementById('best-win').textContent =
+    bestWin ? `${Math.round(bestWin.elo)} vs ${bestWin.opponent}` : '–';
+
+  document.getElementById('best-draw').textContent =
+    bestDraw ? `${Math.round(bestDraw.elo)} vs ${bestDraw.opponent}` : '–';
+}
+
 function renderGamesTable(games) {
   const tbody = document.getElementById('games-body');
   tbody.innerHTML = '';
@@ -1216,10 +1250,12 @@ async function load() {
       btn.addEventListener('click', () => setPreset(btn.dataset.range));
     });
 
-    if (gamesRes && gamesRes.ok) {
-      const games = await gamesRes.json();
+if (gamesRes && gamesRes.ok) {
+  const games = await gamesRes.json();
 
-      games.forEach((g, idx) => {
+  refreshBestResults(games);
+
+  games.forEach((g, idx) => {
         g.__i = idx;
       });
 
