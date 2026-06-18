@@ -1366,7 +1366,7 @@ if (nrow(players_json)) {
         old <- as_tibble(old)
         
         if (!is.null(SCRAPE_FROM_DATE) && !identical(SCRAPE_FROM_DATE, "all")) {
-          cutoff <- as.Date(SCRAPE_FROM_DATE)
+          cutoff <- as.Date(effective_calc_start)
           
           old_keep <- old %>%
             mutate(date = as.Date(.data$date)) %>%
