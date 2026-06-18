@@ -956,13 +956,18 @@ function computeGameNewRaw(g) {
   if (g.new != null && Number.isFinite(+g.new)) return +g.new;
   if (g.playerNew != null && Number.isFinite(+g.playerNew)) return +g.playerNew;
 
-  const pe = (g.playerElo != null && Number.isFinite(+g.playerElo)) ? +g.playerElo : null;
-  const de = parseDelta(g.delta);
+  const playerElo =
+    (g.playerElo != null && Number.isFinite(+g.playerElo))
+      ? +g.playerElo
+      : null;
 
-  if (pe != null && de != null) return pe + de;
+  const delta = parseDelta(g.delta);
 
-  const r = ratingOnOrBefore(g.date);
-  return Number.isFinite(r) ? +r : null;
+  if (playerElo != null && delta != null) {
+    return playerElo + delta;
+  }
+
+  return null;
 }
 
 function drawRateFromGap(absGap) {
@@ -1184,9 +1189,9 @@ function renderGamesTable(games) {
     tdDelta.className = deltaClass(g.delta);
     cells.push(tdDelta);
 
-    const tdNew = document.createElement('td');
-    tdNew.textContent = (g.jNew != null) ? g.jNew : (g.new != null ? g.new : '');
-    cells.push(tdNew);
+const tdNew = document.createElement('td');
+tdNew.textContent = Number.isFinite(g.jNew) ? String(g.jNew) : '';
+cells.push(tdNew);
 
     for (const td of cells) {
       tr.appendChild(td);
