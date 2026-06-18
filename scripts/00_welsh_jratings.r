@@ -1355,39 +1355,95 @@ if (nrow(players_json)) {
     select(-src)
   
   games_written <- 0L
+  normalise_games_export <- function(df) {
+    empty <- tibble(
+      gi          = integer(),
+      date        = character(),
+      player      = character(),
+      playerId    = character(),
+      playerElo   = double(),
+      opponent    = character(),
+      opponentId  = character(),
+      opponentElo = double(),
+      result      = character(),
+      winPct      = integer(),
+      drawPct     = integer(),
+      lossPct     = integer(),
+      delta       = character(),
+      new         = integer()
+    )
+    
+    if (is.null(df) || !nrow(df)) return(empty)
+    
+    must <- names(empty)
+    
+    for (m in must) {
+      if (!m %in% names(df)) df[[m]] <- NA
+    }
+    
+    df %>%
+      transmute(
+        gi          = suppressWarnings(as.integer(.data$gi)),
+        date        = format(as.Date(.data$date), "%Y-%m-%d"),
+        player      = as.character(.data$player),
+        playerId    = as.character(.data$playerId),
+        playerElo   = suppressWarnings(as.numeric(.data$playerElo)),
+        opponent    = as.character(.data$opponent),
+        opponentId  = as.character(.data$opponentId),
+        opponentElo = suppressWarnings(as.numeric(.data$opponentElo)),
+        result      = as.character(.data$result),
+        winPct      = suppressWarnings(as.integer(.data$winPct)),
+        drawPct     = suppressWarnings(as.integer(.data$drawPct)),
+        lossPct     = suppressWarnings(as.integer(.data$lossPct)),
+        delta       = as.character(.data$delta),
+        new         = suppressWarnings(as.integer(.data$new))
+      )
+  }
+  
+  games_written <- 0L
+  
   for (nm in names(name_to_id)) {
     pid <- name_to_id[[nm]]
-    new_rows <- games_long %>% filter(.data$player == nm)
+    
+    new_rows <- games_long %>%
+      filter(.data$player == nm) %>%
+      normalise_games_export()
     
     out_path <- file.path(games_out_dir, paste0(pid, ".json"))
+    
     if (file.exists(out_path)) {
       old <- jsonlite::read_json(out_path, simplifyVector = TRUE)
+      
       if (is.data.frame(old) && nrow(old)) {
-        old <- as_tibble(old)
+        old <- as_tibble(old) %>%
+          normalise_games_export()
         
         if (!is.null(SCRAPE_FROM_DATE) && !identical(SCRAPE_FROM_DATE, "all")) {
           cutoff <- as.Date(effective_calc_start)
           
           old_keep <- old %>%
-            mutate(date = as.Date(.data$date)) %>%
-            filter(.data$date < cutoff) %>%
-            mutate(date = format(.data$date, "%Y-%m-%d"))
+            mutate(date_d = as.Date(.data$date)) %>%
+            filter(.data$date_d < cutoff) %>%
+            select(-date_d)
           
           new_keep <- new_rows %>%
-            mutate(date = as.Date(.data$date)) %>%
-            filter(.data$date >= cutoff) %>%
-            mutate(date = format(.data$date, "%Y-%m-%d"))
+            mutate(date_d = as.Date(.data$date)) %>%
+            filter(.data$date_d >= cutoff) %>%
+            select(-date_d)
           
-          new_rows <- bind_rows(old_keep, new_keep)
+          new_rows <- bind_rows(old_keep, new_keep) %>%
+            normalise_games_export()
           
         } else if (identical(SCRAPE_FROM_DATE, "all")) {
-          # Full rebuild: ignore old completely
-          # new_rows stays as-is
+          # Full rebuild: ignore old completely.
+          # new_rows stays as-is.
           
         } else {
-          # No scrape window specified: keep your previous behaviour
+          # No scrape window specified: keep previous behaviour,
+          # but normalise schema first to avoid JSON type clashes.
           new_rows <- bind_rows(old, new_rows) %>%
-            arrange(.data$date, .data$player, .data$opponent) %>%
+            normalise_games_export() %>%
+            arrange(.data$date, .data$player, .data$opponent, .data$gi) %>%
             group_by(.data$date, .data$player, .data$opponent) %>%
             slice_tail(n = 1) %>%
             ungroup()
@@ -1395,41 +1451,39 @@ if (nrow(players_json)) {
       }
     }
     
-    
     new_rows <- new_rows %>%
       mutate(
         playerElo = suppressWarnings(as.numeric(.data$playerElo)),
         opponentElo = suppressWarnings(as.numeric(.data$opponentElo)),
         
-        wdl = purrr::map2(playerElo, opponentElo, expected_wdl_from_elo),
+        wdl = purrr::map2(playerElo, opponentElo, function(pe, oe) {
+          if (is.na(pe) || is.na(oe)) {
+            tibble(
+              win_prob = NA_real_,
+              draw_prob = NA_real_,
+              loss_prob = NA_real_
+            )
+          } else {
+            expected_wdl_from_elo(pe, oe)
+          }
+        }),
         
-        winPct = ifelse(
-          !is.na(playerElo) & !is.na(opponentElo),
-          as.integer(round(purrr::map_dbl(wdl, ~ .x$win_prob[[1]]) * 100)),
-          NA_integer_
-        ),
-        drawPct = ifelse(
-          !is.na(playerElo) & !is.na(opponentElo),
-          as.integer(round(purrr::map_dbl(wdl, ~ .x$draw_prob[[1]]) * 100)),
-          NA_integer_
-        ),
-        lossPct = ifelse(
-          !is.na(playerElo) & !is.na(opponentElo),
-          as.integer(round(purrr::map_dbl(wdl, ~ .x$loss_prob[[1]]) * 100)),
-          NA_integer_
-        )
+        winPct = as.integer(round(purrr::map_dbl(wdl, ~ .x$win_prob[[1]]) * 100)),
+        drawPct = as.integer(round(purrr::map_dbl(wdl, ~ .x$draw_prob[[1]]) * 100)),
+        lossPct = as.integer(round(purrr::map_dbl(wdl, ~ .x$loss_prob[[1]]) * 100))
       ) %>%
       select(-wdl) %>%
       mutate(date_d = as.Date(.data$date)) %>%
       arrange(desc(.data$date_d), desc(.data$gi)) %>%
-      select(-date_d)
+      select(-date_d) %>%
+      normalise_games_export()
     
     if (nrow(new_rows)) {
       jsonlite::write_json(new_rows, out_path, auto_unbox = TRUE, na = "null")
       games_written <- games_written + 1L
     }
   }
-} else {
+  } else {
   games_written <- 0L
 }
 
