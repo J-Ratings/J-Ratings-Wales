@@ -646,21 +646,37 @@ games_by_half   <- list()
         else paste0("since ", format(as.Date(SCRAPE_FROM_DATE), "%Y-%m-%d"))
       ))
       
-      # keys robust to duplicates; GameNo can be NA, so Date+PairKey is useful too
+      # Scrape selected current players, but when a player has been scraped,
+      # replace that player's cached games from effective_calc_start onwards.
+      # SCRAPE_FROM_DATE decides who to scrape; effective_calc_start decides
+      # how much of their rating-relevant game cache must be refreshed.
       new_games_raw <- if (nrow(to_scrape)) scrape_games(to_scrape) else prev_games[0, ]
       
       if (!is.null(SCRAPE_FROM_DATE) && !identical(SCRAPE_FROM_DATE, "all")) {
-        cutoff <- as.Date(SCRAPE_FROM_DATE)
+        replace_from <- as.Date(effective_calc_start)
         
-        prev_keep <- prev_games %>%
-          mutate(Date = as.Date(.data$Date)) %>%
-          filter(.data$Date < cutoff)
+        scraped_names <- new_games_raw %>%
+          filter(!is.na(.data$Player1), nzchar(.data$Player1)) %>%
+          distinct(.data$Player1) %>%
+          pull(.data$Player1)
         
-        new_keep <- new_games_raw %>%
-          mutate(Date = as.Date(.data$Date)) %>%
-          filter(.data$Date >= cutoff)
-        
-        games_current <- bind_rows(prev_keep, new_keep)
+        if (length(scraped_names)) {
+          prev_keep <- prev_games %>%
+            mutate(Date = as.Date(.data$Date)) %>%
+            filter(!(.data$Player1 %in% scraped_names & .data$Date >= replace_from))
+          
+          new_keep <- new_games_raw %>%
+            mutate(Date = as.Date(.data$Date)) %>%
+            filter(.data$Player1 %in% scraped_names, .data$Date >= replace_from)
+          
+          games_current <- bind_rows(prev_keep, new_keep) %>%
+            arrange(.data$Player1, .data$Date, coalesce(.data$GameNo, 999999L)) %>%
+            group_by(.data$Player1, .data$Date, .data$Player2, .data$GameNo) %>%
+            slice_tail(n = 1) %>%
+            ungroup()
+        } else {
+          games_current <- prev_games
+        }
         
       } else if (identical(SCRAPE_FROM_DATE, "all")) {
         games_current <- new_games_raw
