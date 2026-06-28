@@ -29,15 +29,27 @@ CALC_FROM_DATE <- RUN_DATE %m-% months(1)
 # Normal weekly scrape: look back 7 days.
 NORMAL_SCRAPE_DAYS <- 7
 
-# Deep scrape: every 8 ISO weeks, look back 1 month.
+# Scheduled deep scrape: every 4 ISO weeks, look back 1 month.
 DEEP_REFRESH_EVERY_WEEKS <- 4
 DEEP_REFRESH_MONTHS <- 1
+
+# Temporary repair scrape.
+# This lets GitHub Actions automatically scrape deeper for a few days,
+# then return to the normal short scrape without manual intervention.
+FORCE_DEEP_REFRESH_UNTIL <- as.Date("2026-06-25")
 
 is_deep_refresh_week <- function(d = Sys.Date()) {
   lubridate::isoweek(d) %% DEEP_REFRESH_EVERY_WEEKS == 0
 }
 
-SCRAPE_FROM_DATE <- if (is_deep_refresh_week(RUN_DATE)) {
+is_forced_deep_refresh <- function(d = Sys.Date()) {
+  !is.na(FORCE_DEEP_REFRESH_UNTIL) && d <= FORCE_DEEP_REFRESH_UNTIL
+}
+
+SCRAPE_FROM_DATE <- if (
+  is_forced_deep_refresh(RUN_DATE) ||
+  is_deep_refresh_week(RUN_DATE)
+) {
   RUN_DATE %m-% months(DEEP_REFRESH_MONTHS)
 } else {
   RUN_DATE - NORMAL_SCRAPE_DAYS
@@ -646,21 +658,37 @@ games_by_half   <- list()
         else paste0("since ", format(as.Date(SCRAPE_FROM_DATE), "%Y-%m-%d"))
       ))
       
-      # keys robust to duplicates; GameNo can be NA, so Date+PairKey is useful too
+      # Scrape selected current players, but when a player has been scraped,
+      # replace that player's cached games from effective_calc_start onwards.
+      # SCRAPE_FROM_DATE decides who to scrape; effective_calc_start decides
+      # how much of their rating-relevant game cache must be refreshed.
       new_games_raw <- if (nrow(to_scrape)) scrape_games(to_scrape) else prev_games[0, ]
       
       if (!is.null(SCRAPE_FROM_DATE) && !identical(SCRAPE_FROM_DATE, "all")) {
-        cutoff <- as.Date(SCRAPE_FROM_DATE)
+        replace_from <- as.Date(effective_calc_start)
         
-        prev_keep <- prev_games %>%
-          mutate(Date = as.Date(.data$Date)) %>%
-          filter(.data$Date < cutoff)
+        scraped_names <- new_games_raw %>%
+          filter(!is.na(.data$Player1), nzchar(.data$Player1)) %>%
+          distinct(.data$Player1) %>%
+          pull(.data$Player1)
         
-        new_keep <- new_games_raw %>%
-          mutate(Date = as.Date(.data$Date)) %>%
-          filter(.data$Date >= cutoff)
-        
-        games_current <- bind_rows(prev_keep, new_keep)
+        if (length(scraped_names)) {
+          prev_keep <- prev_games %>%
+            mutate(Date = as.Date(.data$Date)) %>%
+            filter(!(.data$Player1 %in% scraped_names & .data$Date >= replace_from))
+          
+          new_keep <- new_games_raw %>%
+            mutate(Date = as.Date(.data$Date)) %>%
+            filter(.data$Player1 %in% scraped_names, .data$Date >= replace_from)
+          
+          games_current <- bind_rows(prev_keep, new_keep) %>%
+            arrange(.data$Player1, .data$Date, coalesce(.data$GameNo, 999999L)) %>%
+            group_by(.data$Player1, .data$Date, .data$Player2, .data$GameNo) %>%
+            slice_tail(n = 1) %>%
+            ungroup()
+        } else {
+          games_current <- prev_games
+        }
         
       } else if (identical(SCRAPE_FROM_DATE, "all")) {
         games_current <- new_games_raw
@@ -1037,53 +1065,247 @@ for (i in seq_len(nrow(games))){
 }
 
 # ── 7) Daily series & exports (safe with empties) ─────────────────────────
+# ── 7) Daily series & exports from one source of truth ────────────────────
+# Source of truth:
+#   game_history
+#
+# Everything below is derived from that:
+#   - players.json live/peak
+#   - data/history/<id>.json graph
+#   - data/games/<id>.json games table
+#
+# Old JSON is kept only before effective_calc_start. From effective_calc_start
+# onwards, the new rating pass wins.
+
 players_with_games <- union(game_history$Player1, game_history$Player2)
 players_with_games <- players_with_games[!is.na(players_with_games) & players_with_games != ""]
 
+safe_expected_wdl <- function(player_elo, opponent_elo) {
+  if (is.na(player_elo) || is.na(opponent_elo)) {
+    return(tibble(
+      win_prob  = NA_real_,
+      draw_prob = NA_real_,
+      loss_prob = NA_real_
+    ))
+  }
+  
+  expected_wdl_from_elo(player_elo, opponent_elo)
+}
+
+normalise_games_export <- function(df) {
+  empty <- tibble(
+    gi          = integer(),
+    date        = character(),
+    player      = character(),
+    playerId    = character(),
+    playerElo   = integer(),
+    opponent    = character(),
+    opponentId  = character(),
+    opponentElo = integer(),
+    result      = character(),
+    winPct      = integer(),
+    drawPct     = integer(),
+    lossPct     = integer(),
+    delta       = character(),
+    new         = integer()
+  )
+  
+  if (is.null(df) || !nrow(df)) return(empty)
+  
+  must <- names(empty)
+  
+  for (m in must) {
+    if (!m %in% names(df)) df[[m]] <- NA
+  }
+  
+  df %>%
+    transmute(
+      gi          = suppressWarnings(as.integer(.data$gi)),
+      date        = format(as.Date(.data$date), "%Y-%m-%d"),
+      player      = as.character(.data$player),
+      playerId    = as.character(.data$playerId),
+      playerElo   = suppressWarnings(as.integer(round(as.numeric(.data$playerElo)))),
+      opponent    = as.character(.data$opponent),
+      opponentId  = as.character(.data$opponentId),
+      opponentElo = suppressWarnings(as.integer(round(as.numeric(.data$opponentElo)))),
+      result      = as.character(.data$result),
+      winPct      = suppressWarnings(as.integer(.data$winPct)),
+      drawPct     = suppressWarnings(as.integer(.data$drawPct)),
+      lossPct     = suppressWarnings(as.integer(.data$lossPct)),
+      delta       = as.character(.data$delta),
+      new         = suppressWarnings(as.integer(round(as.numeric(.data$new))))
+    )
+}
+
+# ── 7a) Build one per-game export table directly from game_history ────────
+
+p1_view <- game_history %>%
+  transmute(
+    gi             = .data$GameIndex,
+    date           = as.Date(.data$Date),
+    player         = .data$Player1,
+    playerId       = as.character(pkey_lookup[.data$Player1]),
+    playerEloRaw   = .data$Rating1_Before,
+    playerNewRaw   = .data$Rating1_After,
+    opponent       = .data$Player2,
+    opponentId     = as.character(pkey_lookup[.data$Player2]),
+    opponentEloRaw = .data$Rating2_Before,
+    result_num     = .data$Result
+  )
+
+p2_view <- game_history %>%
+  filter(!is.na(.data$Rating2_Before), !is.na(.data$Rating2_After)) %>%
+  transmute(
+    gi             = .data$GameIndex,
+    date           = as.Date(.data$Date),
+    player         = .data$Player2,
+    playerId       = as.character(pkey_lookup[.data$Player2]),
+    playerEloRaw   = .data$Rating2_Before,
+    playerNewRaw   = .data$Rating2_After,
+    opponent       = .data$Player1,
+    opponentId     = as.character(pkey_lookup[.data$Player1]),
+    opponentEloRaw = .data$Rating1_Before,
+    result_num     = 1 - .data$Result
+  )
+
+games_long <- bind_rows(p1_view, p2_view) %>%
+  filter(!is.na(.data$date), !is.na(.data$player), nzchar(.data$player)) %>%
+  arrange(.data$date, .data$gi, .data$player, .data$opponent) %>%
+  mutate(
+    result = case_when(
+      is.na(.data$result_num)  ~ NA_character_,
+      .data$result_num >= 0.75 ~ "Win",
+      .data$result_num <= 0.25 ~ "Loss",
+      TRUE                     ~ "Draw"
+    ),
+    
+    delta_num = .data$playerNewRaw - .data$playerEloRaw,
+    
+    wdl = purrr::map2(.data$playerEloRaw, .data$opponentEloRaw, safe_expected_wdl),
+    
+    winPct  = as.integer(round(purrr::map_dbl(.data$wdl, ~ .x$win_prob[[1]])  * 100)),
+    drawPct = as.integer(round(purrr::map_dbl(.data$wdl, ~ .x$draw_prob[[1]]) * 100)),
+    lossPct = as.integer(round(purrr::map_dbl(.data$wdl, ~ .x$loss_prob[[1]]) * 100)),
+    
+    delta = ifelse(
+      !is.na(.data$delta_num),
+      sprintf("%+0.1f", round(.data$delta_num, 1)),
+      NA_character_
+    ),
+    
+    playerElo   = as.integer(round(.data$playerEloRaw)),
+    opponentElo = as.integer(round(.data$opponentEloRaw)),
+    new         = as.integer(round(.data$playerNewRaw)),
+    date        = format(.data$date, "%Y-%m-%d")
+  ) %>%
+  select(
+    gi,
+    date,
+    player,
+    playerId,
+    playerElo,
+    opponent,
+    opponentId,
+    opponentElo,
+    result,
+    winPct,
+    drawPct,
+    lossPct,
+    delta,
+    new
+  ) %>%
+  normalise_games_export()
+
+# ── 7b) Build daily graph series from the same game_history chain ─────────
+
 p1_updates <- game_history %>%
-  filter(Player1 %in% players_with_games) %>%
-  transmute(Date = as.Date(.data$Date), player = .data$Player1, rating = .data$Rating1_After, event_order = 1)
+  filter(.data$Player1 %in% players_with_games) %>%
+  transmute(
+    Date        = as.Date(.data$Date),
+    player      = .data$Player1,
+    rating      = .data$Rating1_After,
+    event_order = as.integer(.data$GameIndex)
+  )
 
 p2_updates <- game_history %>%
-  filter(Player2 %in% players_with_games, !is.na(.data$Rating2_After)) %>%
-  transmute(Date = as.Date(.data$Date), player = .data$Player2, rating = .data$Rating2_After, event_order = 1)
+  filter(.data$Player2 %in% players_with_games, !is.na(.data$Rating2_After)) %>%
+  transmute(
+    Date        = as.Date(.data$Date),
+    player      = .data$Player2,
+    rating      = .data$Rating2_After,
+    event_order = as.integer(.data$GameIndex)
+  )
 
 core_updates <- bind_rows(p1_updates, p2_updates) %>%
   filter(!is.na(.data$Date), .data$Date <= RUN_DATE) %>%
   arrange(.data$player, .data$Date, .data$event_order)
 
-snap_events <- bind_rows(lapply(unique(core_updates$player), function(pl){
-  u <- core_updates %>% filter(.data$player == pl) %>% arrange(.data$Date, .data$event_order)
-  if (!nrow(u)) return(NULL)
-  dmin <- min(u$Date); dmax <- max(u$Date); horizon <- RUN_DATE
-  yrs <- seq(year(dmin), year(horizon), by = 1)
-  sdates <- sort(as.Date(c(paste0(yrs, "-01-01"), paste0(yrs, "-07-01"))))
-  out <- lapply(sdates, function(s){
-    prior <- u %>% filter(.data$Date <= s)
-    if (!nrow(prior)) return(NULL)
-    r_prev <- prior$rating[nrow(prior)]
-    if (!is.na(r_prev) && r_prev < 1310) tibble(Date = s, player = pl, rating = 1310, event_order = 0) else NULL
-  })
-  bind_rows(out)
-}))
+snap_events <- tibble(
+  Date        = as.Date(character()),
+  player      = character(),
+  rating      = double(),
+  event_order = integer()
+)
 
-all_updates <- bind_rows(core_updates, snap_events) %>% arrange(.data$player, .data$Date, .data$event_order)
-
-if (!nrow(all_updates)) {
-  ratings_daily <- tibble(player = character(), Date = as.Date(character()), rating = double())
-} else {
-  ratings_daily <- all_updates %>%
-    filter(!is.na(.data$Date)) %>%
-    group_by(.data$player) %>%
-    arrange(.data$Date, .data$event_order) %>%
-    complete(
-      Date = {
-        d_min <- suppressWarnings(min(.data$Date, na.rm = TRUE))
-        if (!is.finite(d_min) || is.na(d_min) || d_min > RUN_DATE) as.Date(character())
-        else seq(d_min, RUN_DATE, by = "day")
+if (nrow(core_updates)) {
+  snap_events <- bind_rows(lapply(unique(core_updates$player), function(pl) {
+    u <- core_updates %>%
+      filter(.data$player == pl) %>%
+      arrange(.data$Date, .data$event_order)
+    
+    if (!nrow(u)) return(NULL)
+    
+    dmin <- min(u$Date, na.rm = TRUE)
+    horizon <- RUN_DATE
+    
+    yrs <- seq(year(dmin), year(horizon), by = 1)
+    sdates <- sort(as.Date(c(paste0(yrs, "-01-01"), paste0(yrs, "-07-01"))))
+    
+    out <- lapply(sdates, function(s) {
+      prior <- u %>% filter(.data$Date <= s)
+      
+      if (!nrow(prior)) return(NULL)
+      
+      r_prev <- prior$rating[nrow(prior)]
+      
+      if (!is.na(r_prev) && r_prev < 1310) {
+        tibble(
+          Date        = s,
+          player      = pl,
+          rating      = 1310,
+          event_order = 0L
+        )
+      } else {
+        NULL
       }
-    ) %>%
+    })
+    
+    bind_rows(out)
+  }))
+}
+
+all_updates <- bind_rows(core_updates, snap_events) %>%
+  filter(!is.na(.data$Date), !is.na(.data$player), !is.na(.data$rating)) %>%
+  arrange(.data$player, .data$Date, .data$event_order)
+
+daily_updates <- all_updates %>%
+  arrange(.data$player, .data$Date, .data$event_order) %>%
+  group_by(.data$player, .data$Date) %>%
+  summarise(rating = last(.data$rating), .groups = "drop")
+
+if (!nrow(daily_updates)) {
+  ratings_daily <- tibble(
+    player = character(),
+    Date   = as.Date(character()),
+    rating = double()
+  )
+} else {
+  ratings_daily <- daily_updates %>%
+    group_by(.data$player) %>%
+    arrange(.data$Date) %>%
+    complete(Date = seq(min(.data$Date), RUN_DATE, by = "day")) %>%
     tidyr::fill(.data$rating, .direction = "down") %>%
+    filter(!is.na(.data$rating)) %>%
     ungroup()
 }
 
@@ -1095,32 +1317,36 @@ ratings_wide_daily <- ratings_daily %>%
 
 write_csv(ratings_wide_daily, file.path(cache_dir, "ratings_wide_daily.csv"))
 
-# Snap through today for live values
-for (nm in names(current_ratings)) apply_snaps_until(nm, Sys.Date())
+# Snap through today for live values.
+for (nm in names(current_ratings)) {
+  apply_snaps_until(nm, RUN_DATE)
+}
 
-# Fallback live ratings from the engine (covers players with no games in the calc window)
 live_from_engine <- tibble(
   name = names(current_ratings),
   rating_engine = round(as.numeric(current_ratings))
 )
 
+live_from_series <- if (nrow(ratings_daily)) {
+  ratings_daily %>%
+    group_by(.data$player) %>%
+    arrange(.data$Date) %>%
+    slice_tail(n = 1) %>%
+    ungroup() %>%
+    transmute(player = .data$player, rating = round(.data$rating))
+} else {
+  tibble(player = character(), rating = double())
+}
 
-# Live ratings for site
-live_from_series <- ratings_daily %>%
-  group_by(.data$player) %>%
-  arrange(.data$Date) %>% slice_tail(n = 1) %>%
-  ungroup() %>%
-  transmute(player = .data$player, rating = round(.data$rating))
+peak_from_series <- if (nrow(ratings_daily)) {
+  ratings_daily %>%
+    group_by(.data$player) %>%
+    summarise(run_peak = max(.data$rating, na.rm = TRUE), .groups = "drop")
+} else {
+  tibble(player = character(), run_peak = double())
+}
 
-recent_names <- keep_names
-
-# Calculate peaks from ratings_daily
-# Peak from this run only
-peak_from_series <- ratings_daily %>%
-  group_by(player) %>%
-  summarise(run_peak = max(rating, na.rm = TRUE), .groups = "drop")
-
-# Existing stored peak from players.json
+# Existing stored peak from players.json.
 existing_players_path <- file.path(data_dir, "players.json")
 
 existing_peak <- if (file.exists(existing_players_path)) {
@@ -1137,302 +1363,244 @@ existing_peak <- if (file.exists(existing_players_path)) {
   tibble(id = character(), existing_peak = double())
 }
 
+recent_names <- keep_names
+
 players_json <- players_master %>%
-  filter(name %in% recent_names) %>%
-  mutate(id = player_key) %>%
+  filter(.data$name %in% recent_names) %>%
+  mutate(id = .data$player_key) %>%
   left_join(live_from_series, by = c("name" = "player")) %>%
   left_join(live_from_engine, by = "name") %>%
   left_join(peak_from_series, by = c("name" = "player")) %>%
   left_join(existing_peak, by = "id") %>%
   mutate(
-    rating = coalesce(rating, rating_engine, round(baseline_grade)),
-    peak   = pmax(existing_peak, run_peak, rating, na.rm = TRUE),
-    k      = pick_k(rating)
+    rating = coalesce(.data$rating, .data$rating_engine, round(.data$baseline_grade)),
+    peak   = pmax(.data$existing_peak, .data$run_peak, .data$rating, na.rm = TRUE),
+    k      = pick_k(.data$rating)
   ) %>%
   select(id, name, zone, club, rating, peak, k) %>%
-  arrange(desc(rating))
+  arrange(desc(.data$rating))
 
-
-# Write players.json only if non-empty
 if (nrow(players_json)) {
-  jsonlite::write_json(players_json, file.path(data_dir, "players.json"), pretty = TRUE, auto_unbox = TRUE)
+  jsonlite::write_json(
+    players_json,
+    file.path(data_dir, "players.json"),
+    pretty = TRUE,
+    auto_unbox = TRUE
+  )
 } else {
   message("No players_json rows; skipping players.json write to avoid wiping with empty content.")
 }
 
-# WCU orange (forward-filled)
 name_to_id <- setNames(players_json$id %||% character(), players_json$name %||% character())
-today <- Sys.Date()
+
+# ── 7c) WCU orange history export ─────────────────────────────────────────
 
 wcu_wrote <- 0L
 valid_names <- intersect(unique(wcu_points$Player1), names(name_to_id))
+
 for (nm in valid_names) {
   pid <- unname(name_to_id[nm])
   
   df_new <- wcu_points %>%
     filter(.data$Player1 == nm) %>%
     arrange(.data$Date) %>%
-    transmute(Date = .data$Date, rating = as.numeric(.data$rating))
+    transmute(Date = as.Date(.data$Date), rating = as.numeric(.data$rating))
   
   old_path <- file.path(wcu_hist_dir, paste0(pid, "_wcu.json"))
+  
   if (file.exists(old_path)) {
-    old <- jsonlite::read_json(old_path, simplifyVector = TRUE)
+    old <- tryCatch(
+      jsonlite::read_json(old_path, simplifyVector = TRUE),
+      error = function(e) NULL
+    )
+    
     if (is.data.frame(old) && nrow(old)) {
-      df_old <- tibble(Date = as.Date(old$date), rating = as.numeric(old$rating)) %>%
+      df_old <- tibble(
+        Date   = as.Date(old$date),
+        rating = as.numeric(old$rating)
+      ) %>%
         filter(!is.na(.data$Date), .data$Date <= RUN_DATE)
+      
       df_new <- bind_rows(df_old, df_new) %>%
         arrange(.data$Date) %>%
-        group_by(.data$Date) %>% slice_tail(n = 1) %>% ungroup()
+        group_by(.data$Date) %>%
+        slice_tail(n = 1) %>%
+        ungroup()
     }
   }
   
-  df_out <- df_new %>%
-    complete(Date = seq(min(.data$Date), RUN_DATE, by = "day")) %>%
-    fill(.data$rating, .direction = "down") %>%
-    filter(!is.na(.data$rating)) %>%
-    transmute(date = as.character(.data$Date), rating = as.integer(round(.data$rating)))
-  
-  if (nrow(df_out)) {
-    jsonlite::write_json(df_out, old_path, auto_unbox = TRUE)
-    wcu_wrote <- wcu_wrote + 1L
+  if (nrow(df_new)) {
+    df_out <- df_new %>%
+      filter(!is.na(.data$Date), .data$Date <= RUN_DATE) %>%
+      complete(Date = seq(min(.data$Date), RUN_DATE, by = "day")) %>%
+      tidyr::fill(.data$rating, .direction = "down") %>%
+      filter(!is.na(.data$rating)) %>%
+      transmute(
+        date   = format(.data$Date, "%Y-%m-%d"),
+        rating = as.integer(round(.data$rating))
+      )
+    
+    if (nrow(df_out)) {
+      jsonlite::write_json(df_out, old_path, auto_unbox = TRUE, na = "null")
+      wcu_wrote <- wcu_wrote + 1L
+    }
   }
 }
 
-# J-Ratings blue (stitch and forward fill) — ALWAYS extend to today, never beyond
+# ── 7d) J-Ratings blue history export from the same daily chain ───────────
+# Keep old history before effective_calc_start.
+# From effective_calc_start onwards, write ratings_daily only.
+
 j_wrote <- 0L
+
 if (nrow(players_json)) {
-  
   for (i in seq_len(nrow(players_json))) {
     pid <- players_json$id[i]
     nm  <- players_json$name[i]
+    
     out_path <- file.path(hist_dir, paste0(pid, ".json"))
     
-    # New data from this run (may be empty)
-    j_new <- ratings_daily %>%
-      filter(.data$player == nm) %>%
-      transmute(date = as.Date(.data$Date), rating = as.numeric(round(.data$rating, 0))) %>%
-      filter(!is.na(.data$date), .data$date <= RUN_DATE) %>%
-      arrange(.data$date)
-    
-    # Existing history (may be empty)
     j_old <- tibble(date = as.Date(character()), rating = double())
+    
     if (file.exists(out_path)) {
-      old <- tryCatch(jsonlite::read_json(out_path, simplifyVector = TRUE), error = function(e) NULL)
-      if (is.data.frame(old) && nrow(old) && all(c("date","rating") %in% names(old))) {
+      old <- tryCatch(
+        jsonlite::read_json(out_path, simplifyVector = TRUE),
+        error = function(e) NULL
+      )
+      
+      if (is.data.frame(old) && nrow(old) && all(c("date", "rating") %in% names(old))) {
         j_old <- tibble(
           date   = as.Date(old$date),
           rating = as.numeric(old$rating)
         ) %>%
-          filter(!is.na(.data$date), .data$date <= RUN_DATE) %>%
+          filter(
+            !is.na(.data$date),
+            !is.na(.data$rating),
+            .data$date < effective_calc_start,
+            .data$date <= RUN_DATE
+          ) %>%
           arrange(.data$date)
       }
     }
     
-    # If both are empty, seed a single point then fill to today
+    j_new <- ratings_daily %>%
+      filter(.data$player == nm) %>%
+      transmute(
+        date   = as.Date(.data$Date),
+        rating = as.numeric(round(.data$rating, 0))
+      ) %>%
+      filter(
+        !is.na(.data$date),
+        !is.na(.data$rating),
+        .data$date >= effective_calc_start,
+        .data$date <= RUN_DATE
+      ) %>%
+      arrange(.data$date)
+    
     if (!nrow(j_old) && !nrow(j_new)) {
       seed_date <- as.Date(baseline_of[nm])
-      if (is.na(seed_date) || seed_date > RUN_DATE) seed_date <- RUN_DATE
+      
+      if (is.na(seed_date) || seed_date > RUN_DATE) {
+        seed_date <- RUN_DATE
+      }
       
       seed_rating <- as.numeric(current_ratings[nm])
+      
       if (is.na(seed_rating)) {
         seed_rating <- players_master$baseline_grade[match(nm, players_master$name)]
       }
       
-      j_combined <- tibble(date = seed_date, rating = round(seed_rating, 0))
+      j_combined <- tibble(
+        date   = seed_date,
+        rating = round(seed_rating, 0)
+      )
     } else {
       j_combined <- bind_rows(j_old, j_new) %>%
+        filter(!is.na(.data$date), !is.na(.data$rating), .data$date <= RUN_DATE) %>%
+        arrange(.data$date) %>%
         group_by(.data$date) %>%
         slice_tail(n = 1) %>%
-        ungroup() %>%
-        arrange(.data$date)
+        ungroup()
     }
     
-    # Final: cap to RUN_DATE and forward-fill to RUN_DATE
-    j_df <- j_combined %>%
-      filter(!is.na(.data$date), .data$date <= RUN_DATE) %>%
-      complete(date = seq(min(.data$date), RUN_DATE, by = "day")) %>%
-      tidyr::fill(.data$rating, .direction = "down") %>%
-      filter(!is.na(.data$rating)) %>%
-      mutate(
-        date   = format(.data$date, "%Y-%m-%d"),
-        rating = as.numeric(round(.data$rating, 0))
-      )
-    
-    jsonlite::write_json(j_df, out_path, auto_unbox = TRUE, na = "null")
-    j_wrote <- j_wrote + 1L
+    if (nrow(j_combined)) {
+      j_df <- j_combined %>%
+        complete(date = seq(min(.data$date), RUN_DATE, by = "day")) %>%
+        tidyr::fill(.data$rating, .direction = "down") %>%
+        filter(!is.na(.data$rating)) %>%
+        transmute(
+          date   = format(.data$date, "%Y-%m-%d"),
+          rating = as.numeric(round(.data$rating, 0))
+        )
+      
+      jsonlite::write_json(j_df, out_path, auto_unbox = TRUE, na = "null")
+      j_wrote <- j_wrote + 1L
+    }
   }
 }
 
-
-# ── Per-player games list (for player.html table) ─────────────────────────
+# ── 7e) Per-player games export from the same game_history chain ──────────
+# Keep old games before effective_calc_start.
+# From effective_calc_start onwards, write games_long only.
 
 games_out_dir <- file.path(data_dir, "games")
 dir.create(games_out_dir, recursive = TRUE, showWarnings = FALSE)
 
+games_written <- 0L
+
 if (nrow(players_json)) {
-  
-  p1_view <- game_history %>%
-    transmute(
-      gi          = .data$GameIndex,               # <-- ADD THIS
-      date        = as.Date(.data$Date),
-      player      = .data$Player1,
-      playerId    = pkey_lookup[.data$Player1],
-      playerElo   = .data$Rating1_Before,
-      playerNew   = .data$Rating1_After,
-      opponent    = .data$Player2,
-      opponentId  = pkey_lookup[.data$Player2],
-      opponentElo = .data$Rating2_Before,
-      result_num  = .data$Result,
-      delta_num   = .data$Rating1_After - .data$Rating1_Before,
-      src         = 1L
-    )
-  
-  p2_view <- game_history %>%
-    filter(!is.na(.data$Rating2_Before)) %>%
-    transmute(
-      gi          = .data$GameIndex,               # <-- ADD THIS
-      date        = as.Date(.data$Date),
-      player      = .data$Player2,
-      playerId    = pkey_lookup[.data$Player2],
-      playerElo   = .data$Rating2_Before,
-      playerNew   = .data$Rating2_After,
-      opponent    = .data$Player1,
-      opponentId  = pkey_lookup[.data$Player1],
-      opponentElo = .data$Rating1_Before,
-      result_num  = 1 - .data$Result,
-      delta_num   = ifelse(is.na(.data$Rating2_After), NA_real_,
-                           .data$Rating2_After - .data$Rating2_Before),
-      src         = 2L
-    )
-  
-  
-  games_long <- bind_rows(p1_view, p2_view) %>%
-    arrange(.data$date, .data$player, .data$opponent, .data$src) %>%
-    group_by(.data$date, .data$player, .data$opponent) %>%
-    slice_head(n = 1) %>%
-    ungroup() %>%
-    mutate(
-      result = case_when(
-        is.na(result_num)  ~ NA_character_,
-        result_num >= 0.75 ~ "Win",
-        result_num <= 0.25 ~ "Loss",
-        TRUE               ~ "Draw"
-      ),
-      
-      wdl = purrr::map2(playerElo, opponentElo, expected_wdl_from_elo),
-      winPct = purrr::map_dbl(wdl, ~ .x$win_prob[[1]]) * 100,
-      drawPct = purrr::map_dbl(wdl, ~ .x$draw_prob[[1]]) * 100,
-      lossPct = purrr::map_dbl(wdl, ~ .x$loss_prob[[1]]) * 100,
-      
-      winPct = as.integer(round(winPct)),
-      drawPct = as.integer(round(drawPct)),
-      lossPct = as.integer(round(lossPct)),
-      
-      delta       = ifelse(!is.na(delta_num), sprintf("%+0.1f", round(delta_num, 1)), NA_character_),
-      playerElo   = as.integer(round(playerElo)),
-      opponentElo = as.integer(round(opponentElo)),
-      new         = ifelse(!is.na(playerNew), as.integer(round(playerNew)), NA_integer_),
-      date        = format(date, "%Y-%m-%d")
-    ) %>%
-    select(
-      gi,
-      date,
-      player,
-      playerId,
-      playerElo,
-      opponent,
-      opponentId,
-      opponentElo,
-      result,
-      winPct,
-      drawPct,
-      lossPct,
-      delta,
-      new,
-      src
-    ) %>%
-    arrange(.data$date, .data$src) %>%
-    select(-src)
-  
-  games_written <- 0L
   for (nm in names(name_to_id)) {
     pid <- name_to_id[[nm]]
-    new_rows <- games_long %>% filter(.data$player == nm)
-    
     out_path <- file.path(games_out_dir, paste0(pid, ".json"))
+    
+    new_rows <- games_long %>%
+      filter(.data$player == nm) %>%
+      normalise_games_export()
+    
+    old_keep <- tibble(
+      gi          = integer(),
+      date        = character(),
+      player      = character(),
+      playerId    = character(),
+      playerElo   = integer(),
+      opponent    = character(),
+      opponentId  = character(),
+      opponentElo = integer(),
+      result      = character(),
+      winPct      = integer(),
+      drawPct     = integer(),
+      lossPct     = integer(),
+      delta       = character(),
+      new         = integer()
+    )
+    
     if (file.exists(out_path)) {
-      old <- jsonlite::read_json(out_path, simplifyVector = TRUE)
+      old <- tryCatch(
+        jsonlite::read_json(out_path, simplifyVector = TRUE),
+        error = function(e) NULL
+      )
+      
       if (is.data.frame(old) && nrow(old)) {
-        old <- as_tibble(old)
-        
-        if (!is.null(SCRAPE_FROM_DATE) && !identical(SCRAPE_FROM_DATE, "all")) {
-          cutoff <- as.Date(SCRAPE_FROM_DATE)
-          
-          old_keep <- old %>%
-            mutate(date = as.Date(.data$date)) %>%
-            filter(.data$date < cutoff) %>%
-            mutate(date = format(.data$date, "%Y-%m-%d"))
-          
-          new_keep <- new_rows %>%
-            mutate(date = as.Date(.data$date)) %>%
-            filter(.data$date >= cutoff) %>%
-            mutate(date = format(.data$date, "%Y-%m-%d"))
-          
-          new_rows <- bind_rows(old_keep, new_keep)
-          
-        } else if (identical(SCRAPE_FROM_DATE, "all")) {
-          # Full rebuild: ignore old completely
-          # new_rows stays as-is
-          
-        } else {
-          # No scrape window specified: keep your previous behaviour
-          new_rows <- bind_rows(old, new_rows) %>%
-            arrange(.data$date, .data$player, .data$opponent) %>%
-            group_by(.data$date, .data$player, .data$opponent) %>%
-            slice_tail(n = 1) %>%
-            ungroup()
-        }
+        old_keep <- as_tibble(old) %>%
+          normalise_games_export() %>%
+          mutate(date_d = as.Date(.data$date)) %>%
+          filter(!is.na(.data$date_d), .data$date_d < effective_calc_start) %>%
+          select(-date_d)
       }
     }
     
-    
-    new_rows <- new_rows %>%
-      mutate(
-        playerElo = suppressWarnings(as.numeric(.data$playerElo)),
-        opponentElo = suppressWarnings(as.numeric(.data$opponentElo)),
-        
-        wdl = purrr::map2(playerElo, opponentElo, expected_wdl_from_elo),
-        
-        winPct = ifelse(
-          !is.na(playerElo) & !is.na(opponentElo),
-          as.integer(round(purrr::map_dbl(wdl, ~ .x$win_prob[[1]]) * 100)),
-          NA_integer_
-        ),
-        drawPct = ifelse(
-          !is.na(playerElo) & !is.na(opponentElo),
-          as.integer(round(purrr::map_dbl(wdl, ~ .x$draw_prob[[1]]) * 100)),
-          NA_integer_
-        ),
-        lossPct = ifelse(
-          !is.na(playerElo) & !is.na(opponentElo),
-          as.integer(round(purrr::map_dbl(wdl, ~ .x$loss_prob[[1]]) * 100)),
-          NA_integer_
-        )
-      ) %>%
-      select(-wdl) %>%
+    out_rows <- bind_rows(old_keep, new_rows) %>%
+      normalise_games_export() %>%
       mutate(date_d = as.Date(.data$date)) %>%
       arrange(desc(.data$date_d), desc(.data$gi)) %>%
       select(-date_d)
     
-    if (nrow(new_rows)) {
-      jsonlite::write_json(new_rows, out_path, auto_unbox = TRUE, na = "null")
+    if (nrow(out_rows)) {
+      jsonlite::write_json(out_rows, out_path, auto_unbox = TRUE, na = "null")
       games_written <- games_written + 1L
     }
   }
-} else {
-  games_written <- 0L
 }
-
 # ── 8) Snapshot for future fast runs ──────────────────────────────────────
 if (WRITE_SNAPSHOT) {
   snap_list <- list(

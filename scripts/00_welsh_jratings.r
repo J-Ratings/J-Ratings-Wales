@@ -73,6 +73,29 @@ PRE_2024_CUTOFF   <- as.Date("2024-07-01")
 PROFILE_CUTOFF    <- as.Date("2022-01-01")
 DIFF_REPORT_DATE  <- as.Date("2025-07-01")  # optional report date; set NA to skip
 
+# ── External rating-source overrides ──────────────────────────────────────
+# These players remain WCU players for identity/profile purposes.
+# Their own post-from_date rating feed is rebuilt from an external source.
+# WCU games are kept only on dates where the external source has no game.
+external_rating_overrides <- tribble(
+  ~name,          ~player_key,        ~from_date,            ~source, ~profile_url,
+  "Dave McGhee",  "e1 dave mcghee",   as.Date("2025-02-01"), "ECF",   "https://rating.englishchess.org.uk/players/games?domain=S&year=ALL&show_games=on&show_ratings=on&ECF_code=327912B"
+)
+
+external_override_names <- external_rating_overrides$name
+
+player_rebuild_start <- function(nm) {
+  d <- external_rating_overrides$from_date[
+    match(nm, external_rating_overrides$name)
+  ]
+  
+  if (length(d) == 1 && !is.na(d)) {
+    as.Date(d)
+  } else {
+    as.Date(effective_calc_start)
+  }
+}
+
 # ── CSV schemas (required for empty Current files) ────────────────────────
 
 games_col_types <- cols(
@@ -548,6 +571,128 @@ scrape_games <- function(players_df){
   bind_rows(out)
 }
 
+
+# ── ECF scraper for external override players ─────────────────────────────
+parse_ecf_result <- function(x) {
+  x <- str_squish(as.character(x))
+  x <- str_replace_all(x, "\u00bd", "1/2")
+  
+  case_when(
+    x %in% c("1", "1-0", "+")          ~ 1,
+    x %in% c("0", "0-1", "-")          ~ 0,
+    x %in% c("1/2", "0.5", ".5", "=") ~ 0.5,
+    TRUE                                 ~ suppressWarnings(as.numeric(x))
+  )
+}
+
+scrape_ecf_games <- function(player_name, profile_url, from_date, run_date = RUN_DATE) {
+  pg <- safe_html(profile_url)
+  if (is.null(pg)) return(normalize_games_frame(tibble()))
+  
+  rows <- pg %>% html_elements("tr.game_row")
+  if (!length(rows)) return(normalize_games_frame(tibble()))
+  
+  num <- function(x) suppressWarnings(as.numeric(gsub("[^0-9.-]", "", x)))
+  
+  out <- bind_rows(lapply(seq_along(rows), function(i) {
+    tr <- rows[[i]]
+    tds <- tr %>% html_elements("td")
+    if (length(tds) < 8) return(NULL)
+    
+    date_order <- tds[[1]] %>% html_attr("data-order")
+    date_txt <- tds[[1]] %>%
+      html_text(trim = TRUE) %>%
+      str_replace_all("\u00a0", " ") %>%
+      str_squish()
+    
+    game_date <- suppressWarnings(lubridate::ymd(date_order))
+    if (is.na(game_date)) {
+      game_date <- suppressWarnings(lubridate::dmy(date_txt))
+    }
+    
+    # ECF game rows are usually:
+    # Date, colour/board marker, result, +/-, player rating, opponent, ...,
+    # opponent revised rating, ECF category, federation, sex, ECF code, event.
+    result_txt <- tds[[3]] %>% html_text(trim = TRUE)
+    
+    opp_node <- tr %>% html_element(xpath = ".//a[contains(@href, '/players/games')]")
+    opponent <- if (!inherits(opp_node, "xml_missing") && !is.null(opp_node)) {
+      opp_node %>% html_text(trim = TRUE) %>% str_squish()
+    } else {
+      NA_character_
+    }
+    
+    rating_nodes <- tr %>% html_elements("td.revised_rating")
+    opp_rating_txt <- if (length(rating_nodes)) {
+      rating_nodes[[length(rating_nodes)]] %>% html_text(trim = TRUE)
+    } else {
+      NA_character_
+    }
+    
+    tibble(
+      source_row         = i,
+      GameNo             = i,
+      Date               = as.Date(game_date),
+      Player1            = player_name,
+      Player2            = opponent,
+      OppKey             = NA_character_,
+      OppRating_Display  = num(opp_rating_txt),
+      RatingType         = "ECF",
+      Result             = parse_ecf_result(result_txt),
+      New                = NA_real_,
+      Tot                = NA_real_,
+      Exp                = NA_real_,
+      Pts                = NA_real_,
+      daily_ord          = NA_integer_
+    )
+  }))
+  
+  if (!nrow(out)) return(normalize_games_frame(tibble()))
+  
+  out %>%
+    filter(
+      !is.na(.data$Date),
+      .data$Date >= as.Date(from_date),
+      .data$Date <= as.Date(run_date),
+      !is.na(.data$Result),
+      !is.na(.data$Player2),
+      nzchar(.data$Player2),
+      !is.na(.data$OppRating_Display),
+      .data$OppRating_Display >= 500
+    ) %>%
+    arrange(.data$Date, .data$source_row) %>%
+    group_by(.data$Date) %>%
+    mutate(daily_ord = row_number()) %>%
+    ungroup() %>%
+    mutate(GameNo = row_number()) %>%
+    select(-source_row) %>%
+    normalize_games_frame()
+}
+
+scrape_external_override_games <- function(overrides) {
+  if (is.null(overrides) || !nrow(overrides)) {
+    return(normalize_games_frame(tibble()))
+  }
+  
+  bind_rows(lapply(seq_len(nrow(overrides)), function(i) {
+    x <- overrides[i, ]
+    
+    if (!identical(x$source, "ECF")) {
+      return(normalize_games_frame(tibble()))
+    }
+    
+    message("ECF override scrape: ", x$name)
+    
+    scrape_ecf_games(
+      player_name = x$name,
+      profile_url = x$profile_url,
+      from_date = x$from_date,
+      run_date = RUN_DATE
+    )
+  })) %>%
+    normalize_games_frame()
+}
+
 # ── Utility: choose half-start boundary ────────────────────────────────────
 half_start_for <- function(d){
   if (is.na(d)) return(NA_Date_)
@@ -768,8 +913,8 @@ for (h in backfill_labels) {
 players_by_half_all <- lapply(players_by_half_all, normalize_players_frame)
 games_by_half_all   <- lapply(games_by_half_all,   normalize_games_frame)
 
-# FULL games spanning all halves (no date filter)
-games_all_by_page_full <- bind_rows(games_by_half_all) %>%
+# FULL WCU games spanning all loaded/cached halves, no date filter.
+games_all_by_page_full_wcu <- bind_rows(games_by_half_all) %>%
   mutate(
     Date = as_date(.data$Date),
     RatingType = toupper(trimws(.data$RatingType))
@@ -777,13 +922,221 @@ games_all_by_page_full <- bind_rows(games_by_half_all) %>%
   filter(!is.na(.data$Result)) %>%
   filter(!is.na(.data$Date), .data$Date <= RUN_DATE) %>%
   arrange(.data$Player1, .data$Date, .data$GameNo) %>%
-  mutate(Date = as.Date(.data$Date))
+  mutate(Date = as.Date(.data$Date)) %>%
+  normalize_games_frame()
+
+# Existing exported games are used only as a fallback for override players.
+# This preserves Welsh-only games that are not on ECF and may no longer be
+# available from the short WCU scrape/cache window.
+
+result_text_to_num <- function(x) {
+  x <- str_squish(as.character(x))
+  
+  case_when(
+    x == "Win"  ~ 1,
+    x == "Draw" ~ 0.5,
+    x == "Loss" ~ 0,
+    TRUE        ~ suppressWarnings(as.numeric(x))
+  )
+}
+
+read_existing_override_games_export <- function(overrides) {
+  if (is.null(overrides) || !nrow(overrides)) {
+    return(normalize_games_frame(tibble()))
+  }
+  
+  bind_rows(lapply(seq_len(nrow(overrides)), function(i) {
+    nm <- overrides$name[i]
+    pid <- overrides$player_key[i]
+    from_date <- as.Date(overrides$from_date[i])
+    
+    if (is.na(pid) || !nzchar(pid)) {
+      return(normalize_games_frame(tibble()))
+    }
+    
+    p <- file.path(data_dir, "games", paste0(pid, ".json"))
+    if (!file.exists(p)) return(normalize_games_frame(tibble()))
+    
+    old <- tryCatch(
+      jsonlite::read_json(p, simplifyVector = TRUE),
+      error = function(e) NULL
+    )
+    
+    if (is.null(old) || !is.data.frame(old) || !nrow(old)) {
+      return(normalize_games_frame(tibble()))
+    }
+    
+    old <- tibble::as_tibble(old)
+    
+    required <- c("date", "player", "opponent", "opponentElo", "result")
+    if (!all(required %in% names(old))) {
+      return(normalize_games_frame(tibble()))
+    }
+    
+    old %>%
+      mutate(Date = as.Date(.data$date)) %>%
+      filter(
+        .data$player == nm,
+        !is.na(.data$Date),
+        .data$Date >= from_date,
+        .data$Date <= RUN_DATE
+      ) %>%
+      arrange(.data$Date) %>%
+      transmute(
+        GameNo             = row_number(),
+        Date               = .data$Date,
+        Player1            = as.character(.data$player),
+        Player2            = as.character(.data$opponent),
+        OppKey             = NA_character_,
+        OppRating_Display  = suppressWarnings(as.numeric(.data$opponentElo)),
+        RatingType         = "EXPORT_FALLBACK",
+        Result             = result_text_to_num(.data$result),
+        New                = NA_real_,
+        Tot                = NA_real_,
+        Exp                = NA_real_,
+        Pts                = NA_real_,
+        daily_ord          = NA_integer_
+      ) %>%
+      filter(
+        !is.na(.data$Date),
+        !is.na(.data$Player2),
+        nzchar(.data$Player2),
+        !is.na(.data$OppRating_Display),
+        !is.na(.data$Result)
+      ) %>%
+      group_by(.data$Date) %>%
+      mutate(daily_ord = row_number()) %>%
+      ungroup() %>%
+      normalize_games_frame()
+  })) %>%
+    normalize_games_frame()
+}
+
+# External rows are scraped fresh every run. For Dave this means the ECF page
+# is treated as the truth on dates where it has games.
+ecf_override_games <- scrape_external_override_games(external_rating_overrides)
+
+# Existing exported games are used only as a fallback for override players.
+# ECF dates win; fallback rows are kept only where ECF has no game on that date.
+export_override_fallback_games <- read_existing_override_games_export(
+  external_rating_overrides
+)
+
+ecf_override_dates <- ecf_override_games %>%
+  distinct(.data$Player1, .data$Date) %>%
+  mutate(.ecf_override_date = TRUE)
 
 
-# Engine/points set: only from CALC_FROM_DATE
-games_all_by_page <- games_all_by_page_full %>%
-  filter(.data$Date >= effective_calc_start)
+# override player. On these dates the ECF rows are used for that player's feed.
+ecf_wcu_date_conflicts <- games_all_by_page_full_wcu %>%
+  inner_join(
+    ecf_override_dates %>% select(Player1, Date),
+    by = c("Player1", "Date")
+  ) %>%
+  filter(.data$Player1 %in% external_override_names) %>%
+  group_by(.data$Player1, .data$Date) %>%
+  summarise(
+    wcu_rows = n(),
+    wcu_opponents = paste(unique(.data$Player2), collapse = "; "),
+    .groups = "drop"
+  ) %>%
+  left_join(
+    ecf_override_games %>%
+      group_by(.data$Player1, .data$Date) %>%
+      summarise(
+        ecf_rows = n(),
+        ecf_opponents = paste(unique(.data$Player2), collapse = "; "),
+        .groups = "drop"
+      ),
+    by = c("Player1", "Date")
+  )
 
+if (nrow(ecf_wcu_date_conflicts)) {
+  write_csv(
+    ecf_wcu_date_conflicts,
+    file.path(cache_dir, "ecf_wcu_date_conflicts.csv")
+  )
+}
+
+# Merge WCU and ECF feeds.
+# For override players after from_date:
+#   - ECF dates win.
+#   - WCU-only dates are kept.
+#   - Export fallback is used only where neither ECF nor WCU has that game.
+#   - WCU before from_date is untouched.
+wcu_kept_for_rating <- games_all_by_page_full_wcu %>%
+  left_join(
+    external_rating_overrides %>%
+      filter(.data$source == "ECF") %>%
+      select(Player1 = name, from_date),
+    by = "Player1"
+  ) %>%
+  left_join(
+    ecf_override_dates,
+    by = c("Player1", "Date")
+  ) %>%
+  filter(
+    is.na(.data$from_date) |
+      .data$Date < .data$from_date |
+      is.na(.data$.ecf_override_date)
+  ) %>%
+  select(-any_of(c("from_date", ".ecf_override_date")))
+
+wcu_override_keys <- wcu_kept_for_rating %>%
+  filter(.data$Player1 %in% external_override_names) %>%
+  mutate(
+    opponent_norm = str_squish(str_to_lower(.data$Player2))
+  ) %>%
+  distinct(.data$Player1, .data$Date, .data$opponent_norm) %>%
+  mutate(.wcu_override_key = TRUE)
+
+fallback_kept_for_rating <- export_override_fallback_games %>%
+  mutate(
+    opponent_norm = str_squish(str_to_lower(.data$Player2))
+  ) %>%
+  left_join(
+    ecf_override_dates,
+    by = c("Player1", "Date")
+  ) %>%
+  left_join(
+    wcu_override_keys,
+    by = c("Player1", "Date", "opponent_norm")
+  ) %>%
+  filter(
+    is.na(.data$.ecf_override_date),
+    is.na(.data$.wcu_override_key)
+  ) %>%
+  select(-any_of(c(".ecf_override_date", ".wcu_override_key", "opponent_norm")))
+
+games_all_by_page_full <- bind_rows(
+  wcu_kept_for_rating,
+  fallback_kept_for_rating,
+  ecf_override_games
+) %>%
+  normalize_games_frame() %>%
+  mutate(
+    Date = as.Date(.data$Date),
+    RatingType = toupper(trimws(.data$RatingType))
+  ) %>%
+  filter(!is.na(.data$Result)) %>%
+  filter(!is.na(.data$Date), .data$Date <= RUN_DATE) %>%
+  arrange(.data$Player1, .data$Date, coalesce(.data$GameNo, 999999L))
+
+filter_games_for_rating_window <- function(df) {
+  df %>%
+    left_join(
+      external_rating_overrides %>%
+        select(Player1 = name, calc_from = from_date),
+      by = "Player1"
+    ) %>%
+    mutate(calc_from = coalesce(.data$calc_from, as.Date(effective_calc_start))) %>%
+    filter(.data$Date >= .data$calc_from) %>%
+    select(-calc_from)
+}
+
+# Engine set: normal current window for everyone, but a longer player-specific
+# window for external override players.
+games_all_by_page <- filter_games_for_rating_window(games_all_by_page_full)
 
 # Who has played since EXPORT_ACTIVE_SINCE, across ALL halves (cached)
 active_names <- games_all_by_page_full %>%
@@ -802,6 +1155,7 @@ current_names <- (players_by_half_all[["CURRENT"]] %||% tibble(name=character(),
   unique()
 
 keep_names <- union(active_names, current_names)
+keep_names <- union(keep_names, external_override_names)
 
 
 
@@ -861,20 +1215,41 @@ if (!is.null(snapshot) && is.null(CALC_FROM_DATE)) {
 
 
 # ── 3b) Seed baselines from existing J-history to avoid July-1 jump ───────
+read_hist_on_or_before <- function(pid, date_limit) {
+  p <- file.path(hist_dir, paste0(pid, ".json"))
+  if (!file.exists(p)) return(NULL)
+  
+  df <- tryCatch(
+    jsonlite::read_json(p, simplifyVector = TRUE),
+    error = function(e) NULL
+  )
+  
+  if (
+    is.null(df) ||
+    !is.data.frame(df) ||
+    !nrow(df) ||
+    !all(c("date", "rating") %in% names(df))
+  ) {
+    return(NULL)
+  }
+  
+  df <- tibble::as_tibble(df)
+  suppressWarnings(df$date <- as.Date(df$date))
+  
+  df <- df %>%
+    filter(!is.na(.data$date), .data$date <= as.Date(date_limit)) %>%
+    arrange(.data$date)
+  
+  if (!nrow(df)) return(NULL)
+  
+  list(
+    rating = as.numeric(df$rating[nrow(df)]),
+    date   = as.Date(df$date[nrow(df)])
+  )
+}
+
 if (!is.null(CALC_FROM_DATE)) {
   target_seed_date <- as.Date(CALC_FROM_DATE) - 1
-  
-  read_hist_on_or_before <- function(pid, date_limit) {
-    p <- file.path(hist_dir, paste0(pid, ".json"))
-    if (!file.exists(p)) return(NULL)
-    df <- tryCatch(jsonlite::read_json(p, simplifyVector = TRUE), error = function(e) NULL)
-    if (is.null(df) || !is.data.frame(df) || !nrow(df) || !all(c("date","rating") %in% names(df))) return(NULL)
-    df <- tibble::as_tibble(df)
-    suppressWarnings(df$date <- as.Date(df$date))
-    df <- df %>% dplyr::filter(!is.na(.data$date), .data$date <= date_limit) %>% dplyr::arrange(.data$date)
-    if (!nrow(df)) return(NULL)
-    list(rating = as.numeric(df$rating[nrow(df)]), date = as.Date(df$date[nrow(df)]))
-  }
   
   seed_rating <- rep(NA_real_, nrow(players_master))
   seed_date   <- rep(as.Date(NA), nrow(players_master))
@@ -882,8 +1257,13 @@ if (!is.null(CALC_FROM_DATE)) {
   for (i in seq_len(nrow(players_master))) {
     pid <- players_master$player_key[i]
     if (is.na(pid) || !nzchar(pid)) next
+    
     s <- read_hist_on_or_before(pid, target_seed_date)
-    if (!is.null(s)) { seed_rating[i] <- s$rating; seed_date[i] <- s$date }
+    
+    if (!is.null(s)) {
+      seed_rating[i] <- s$rating
+      seed_date[i]   <- s$date
+    }
   }
   
   players_master <- players_master %>%
@@ -893,18 +1273,80 @@ if (!is.null(CALC_FROM_DATE)) {
     )
 }
 
-# ── 4) Union games and trim to start ──────────────────────────────────────
+# External override players get their own older seed date.
+# Dave is seeded from the last stored J-Rating on or before 2025-01-31,
+# then rebuilt from 2025-02-01 onwards.
+if (nrow(external_rating_overrides)) {
+  for (i in seq_len(nrow(external_rating_overrides))) {
+    nm <- external_rating_overrides$name[i]
+    from_date <- as.Date(external_rating_overrides$from_date[i])
+    
+    idx <- match(nm, players_master$name)
+    if (is.na(idx)) {
+      warning("External override player not found in players_master: ", nm)
+      next
+    }
+    
+    pid <- players_master$player_key[idx]
+    seed <- read_hist_on_or_before(pid, from_date - 1)
+    
+    if (is.null(seed)) {
+      old_games_path <- file.path(data_dir, "games", paste0(pid, ".json"))
+      
+      old_games <- tryCatch(
+        jsonlite::read_json(old_games_path, simplifyVector = TRUE),
+        error = function(e) NULL
+      )
+      
+      if (
+        is.data.frame(old_games) &&
+        nrow(old_games) &&
+        all(c("date", "player", "playerElo") %in% names(old_games))
+      ) {
+        old_games <- tibble::as_tibble(old_games) %>%
+          mutate(date = as.Date(.data$date)) %>%
+          filter(
+            .data$player == nm,
+            !is.na(.data$date),
+            .data$date >= from_date
+          ) %>%
+          arrange(.data$date)
+        
+        if (nrow(old_games)) {
+          seed <- list(
+            rating = as.numeric(old_games$playerElo[[1]]),
+            date   = from_date - 1
+          )
+        }
+      }
+    }
+    
+    if (is.null(seed)) {
+      warning(
+        "Cannot find existing J-history seed or old games seed for ", nm,
+        " on or before ",
+        format(from_date - 1, "%Y-%m-%d"),
+        ". Falling back to baseline_grade at ",
+        format(from_date - 1, "%Y-%m-%d"),
+        "."
+      )
+      
+      seed <- list(
+        rating = players_master$baseline_grade[idx],
+        date   = from_date - 1
+      )
+    }
+    
+    players_master$baseline_grade[idx] <- seed$rating
+    players_master$baseline_date[idx]  <- seed$date
+  }
+}
 
-games_all_by_page <- bind_rows(games_by_half_all) %>%
-  mutate(
-    Date = as_date(.data$Date),
-    RatingType = toupper(trimws(.data$RatingType))
-  ) %>%
-  filter(!is.na(.data$Result)) %>%
-  filter(!is.na(.data$Date), .data$Date <= RUN_DATE) %>%
-  arrange(.data$Player1, .data$Date, .data$GameNo) %>%
-  mutate(Date = as.Date(.data$Date)) %>%
-  filter(.data$Date >= effective_calc_start)
+# ── 4) Union games and trim to start ──────────────────────────────────────
+# games_all_by_page_full and games_all_by_page have already been built above
+# from the merged WCU/ECF feed. Reapply the window here so later code keeps a
+# single source of truth.
+games_all_by_page <- filter_games_for_rating_window(games_all_by_page_full)
 
 pkey_lookup <- setNames(players_master$player_key, players_master$name)
 
@@ -914,21 +1356,24 @@ wcu_exclusions <- tribble(
   "Sam Jukes",    as.Date("2025-10-22"), "Jai Hrithvik Adithya Are"
 )
 
-wcu_points <- games_all_by_page %>%
+wcu_points_source <- filter_games_for_rating_window(games_all_by_page_full_wcu)
+
+wcu_points <- wcu_points_source %>%
   filter(!is.na(.data$Date), .data$Date <= RUN_DATE, !is.na(.data$New)) %>%
   # Drop the specific bad WCU update
   anti_join(
     wcu_exclusions,
     by = c("Player1" = "Player1", "Date" = "Date", "Player2" = "Opponent")
   ) %>%
-  
   arrange(.data$Player1, .data$Date, coalesce(.data$GameNo, 999999L)) %>%
   group_by(.data$Player1, .data$Date) %>%
   summarise(raw = last(.data$New), .groups = "drop") %>%
   mutate(
-    rating = if_else(.data$Date < PRE_2024_CUTOFF,
-                     conv_pre_2024(.data$raw),
-                     .data$raw)
+    rating = if_else(
+      .data$Date < PRE_2024_CUTOFF,
+      conv_pre_2024(.data$raw),
+      .data$raw
+    )
   ) %>%
   select(Player1, Date, rating)
 
@@ -1074,8 +1519,9 @@ for (i in seq_len(nrow(games))){
 #   - data/history/<id>.json graph
 #   - data/games/<id>.json games table
 #
-# Old JSON is kept only before effective_calc_start. From effective_calc_start
-# onwards, the new rating pass wins.
+# Old JSON is kept before each player's rebuild start.
+# For normal players that is effective_calc_start.
+# For external override players such as Dave McGhee, it is their from_date.
 
 players_with_games <- union(game_history$Player1, game_history$Player2)
 players_with_games <- players_with_games[!is.na(players_with_games) & players_with_games != ""]
@@ -1448,8 +1894,8 @@ for (nm in valid_names) {
 }
 
 # ── 7d) J-Ratings blue history export from the same daily chain ───────────
-# Keep old history before effective_calc_start.
-# From effective_calc_start onwards, write ratings_daily only.
+# Keep old history before each player's rebuild start.
+# From that date onwards, write ratings_daily only.
 
 j_wrote <- 0L
 
@@ -1457,6 +1903,7 @@ if (nrow(players_json)) {
   for (i in seq_len(nrow(players_json))) {
     pid <- players_json$id[i]
     nm  <- players_json$name[i]
+    rebuild_from <- player_rebuild_start(nm)
     
     out_path <- file.path(hist_dir, paste0(pid, ".json"))
     
@@ -1476,7 +1923,7 @@ if (nrow(players_json)) {
           filter(
             !is.na(.data$date),
             !is.na(.data$rating),
-            .data$date < effective_calc_start,
+            .data$date < rebuild_from,
             .data$date <= RUN_DATE
           ) %>%
           arrange(.data$date)
@@ -1492,7 +1939,7 @@ if (nrow(players_json)) {
       filter(
         !is.na(.data$date),
         !is.na(.data$rating),
-        .data$date >= effective_calc_start,
+        .data$date >= rebuild_from,
         .data$date <= RUN_DATE
       ) %>%
       arrange(.data$date)
@@ -1540,8 +1987,8 @@ if (nrow(players_json)) {
 }
 
 # ── 7e) Per-player games export from the same game_history chain ──────────
-# Keep old games before effective_calc_start.
-# From effective_calc_start onwards, write games_long only.
+# Keep old games before each player's rebuild start.
+# From that date onwards, write games_long only.
 
 games_out_dir <- file.path(data_dir, "games")
 dir.create(games_out_dir, recursive = TRUE, showWarnings = FALSE)
@@ -1552,10 +1999,14 @@ if (nrow(players_json)) {
   for (nm in names(name_to_id)) {
     pid <- name_to_id[[nm]]
     out_path <- file.path(games_out_dir, paste0(pid, ".json"))
+    rebuild_from <- player_rebuild_start(nm)
     
     new_rows <- games_long %>%
       filter(.data$player == nm) %>%
-      normalise_games_export()
+      normalise_games_export() %>%
+      mutate(date_d = as.Date(.data$date)) %>%
+      filter(!is.na(.data$date_d), .data$date_d >= rebuild_from) %>%
+      select(-date_d)
     
     old_keep <- tibble(
       gi          = integer(),
@@ -1584,7 +2035,7 @@ if (nrow(players_json)) {
         old_keep <- as_tibble(old) %>%
           normalise_games_export() %>%
           mutate(date_d = as.Date(.data$date)) %>%
-          filter(!is.na(.data$date_d), .data$date_d < effective_calc_start) %>%
+          filter(!is.na(.data$date_d), .data$date_d < rebuild_from) %>%
           select(-date_d)
       }
     }
