@@ -226,6 +226,10 @@ half_defs_all <- bind_rows(extra_legacy_halves, legacy_halves, modern_halves)
 is_welsh_type <- function(x) grepl("^[DEGNW]\\d+$", toupper(trimws(x)))
 conv_pre_2024 <- function(x) ifelse(is.na(x), NA_real_, ifelse(x < 2000, x*0.6 + 800, x))
 
+conv_ecf_to_wcu <- function(x) {
+  ifelse(is.na(x), NA_real_, ifelse(x < 2000, x * 0.6 + 800, x))
+}
+
 update_elo <- function(Ra, Rb, result, k = 20) {
   Ea <- 1 / (1 + 10 ^ ((Rb - Ra) / 400))
   Ra + k * (result - Ea)
@@ -636,7 +640,7 @@ scrape_ecf_games <- function(player_name, profile_url, from_date, run_date = RUN
       Player1            = player_name,
       Player2            = opponent,
       OppKey             = NA_character_,
-      OppRating_Display  = num(opp_rating_txt),
+      OppRating_Display  = conv_ecf_to_wcu(num(opp_rating_txt)),
       RatingType         = "ECF",
       Result             = parse_ecf_result(result_txt),
       New                = NA_real_,
@@ -645,7 +649,7 @@ scrape_ecf_games <- function(player_name, profile_url, from_date, run_date = RUN
       Pts                = NA_real_,
       daily_ord          = NA_integer_
     )
-  }))
+    }))
   
   if (!nrow(out)) return(normalize_games_frame(tibble()))
   
