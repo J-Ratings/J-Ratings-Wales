@@ -224,10 +224,10 @@ half_defs_all <- bind_rows(extra_legacy_halves, legacy_halves, modern_halves)
 
 # ── Constants & helpers for ratings ───────────────────────────────────────
 is_welsh_type <- function(x) grepl("^[DEGNW]\\d+$", toupper(trimws(x)))
-conv_pre_2024 <- function(x) ifelse(is.na(x), NA_real_, ifelse(x < 1750, x*0.6 + 700, x))
+conv_pre_2024 <- function(x) ifelse(is.na(x), NA_real_, ifelse(x < 2000, x*0.6 + 800, x))
 
 conv_ecf_to_wcu <- function(x) {
-  ifelse(is.na(x), NA_real_, ifelse(x < 2000, x * 0.6 + 800, x))
+  ifelse(is.na(x), NA_real_, ifelse(x < 1750, x * 0.6 + 700, x))
 }
 
 update_elo <- function(Ra, Rb, result, k = 20) {
