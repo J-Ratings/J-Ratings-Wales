@@ -25,7 +25,7 @@ RUN_DATE <- Sys.Date()                         # Guard: do not include dates aft
 
 # Recalculate from one month before the run date.
  CALC_FROM_DATE <- RUN_DATE %m-% months(1)
-# CALC_FROM_DATE <- as.Date("2026-03-01")
+# CALC_FROM_DATE <- as.Date("2026-01-01")
 
 # Normal weekly scrape: look back 7 days.
 NORMAL_SCRAPE_DAYS <- 7
