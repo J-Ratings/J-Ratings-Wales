@@ -508,63 +508,197 @@ scrape_players_legacy <- function(base_url, players_file){
 
 scrape_games <- function(players_df){
   if (!nrow(players_df)) return(tibble())
+  
   out <- vector("list", nrow(players_df))
+  
   for (i in seq_len(nrow(players_df))){
     this_url  <- players_df$profile_url[i]
     this_name <- players_df$name[i]
+    
     message(sprintf("[%d/%d] %s", i, nrow(players_df), this_name))
+    
     pg_prof <- safe_html(this_url)
-    if (is.null(pg_prof)) { out[[i]] <- tibble(); next }
+    
+    if (is.null(pg_prof)) {
+      out[[i]] <- tibble()
+      next
+    }
+    
     nodes <- pg_prof %>% html_elements(
       xpath = "//table[.//th[normalize-space()='No']
                     and .//th[normalize-space()='Date']
                     and .//th[normalize-space()='Opponent']]"
     )
-    if (!length(nodes)) { out[[i]] <- tibble(); next }
-    num <- function(x) suppressWarnings(as.numeric(gsub("[^0-9.-]", "", x)))
+    
+    if (!length(nodes)) {
+      out[[i]] <- tibble()
+      next
+    }
+    
+    num <- function(x) {
+      suppressWarnings(
+        readr::parse_number(as.character(x))
+      )
+    }
+    
     first_numeric_after <- function(tds, start_idx){
       n <- length(tds)
+      
       for (j in seq.int(start_idx + 1L, n)){
         v <- num(html_text(tds[[j]], trim = TRUE))
-        if (!is.na(v)) return(list(val = v, idx = j))
+        
+        if (!is.na(v)) {
+          return(list(val = v, idx = j))
+        }
       }
+      
       list(val = NA_real_, idx = NA_integer_)
     }
+    
     df <- bind_rows(lapply(nodes, function(node){
       rows <- node %>% html_elements(xpath = ".//tr[td]")
+      
       if (!length(rows)) return(NULL)
+      
       bind_rows(lapply(rows, function(tr){
-        tds <- tr %>% html_elements("td"); if (!length(tds)) return(NULL)
+        tds <- tr %>% html_elements("td")
+        
+        if (!length(tds)) return(NULL)
+        
         n <- length(tds)
-        iNo  <- 1L; iDate <- 2L; iRes <- 5L; iOpp <- 6L
-        iNew <- n;  iTot  <- n-1L; iExp <- n-2L; iPts <- n-3L; iType <- n-4L
+        
+        iNo   <- 1L
+        iDate <- 2L
+        iRes  <- 5L
+        iOpp  <- 6L
+        
+        iNew  <- n
+        iTot  <- n - 1L
+        iExp  <- n - 2L
+        iPts  <- n - 3L
+        iType <- n - 4L
+        
         opp_a <- tds[[iOpp]] %>% html_element("a")
-        opp_h <- if (!is.null(opp_a) && length(opp_a) > 0) html_attr(opp_a, "href") else NA_character_
+        
+        opp_h <- if (
+          !is.null(opp_a) &&
+          length(opp_a) > 0 &&
+          !inherits(opp_a, "xml_missing")
+        ) {
+          html_attr(opp_a, "href")
+        } else {
+          NA_character_
+        }
+        
         oppkey <- if (!is.na(opp_h)) {
-          k <- URLdecode(sub(".*[?&](?:id|key|player|pid|pk)=?([^&]+).*", "\\1", opp_h))
-          if (identical(k, opp_h) || is.na(k) || k == "") k <- sub("\\.php.*$", "", basename(opp_h))
+          k <- URLdecode(
+            sub(
+              ".*[?&](?:id|key|player|pid|pk)=?([^&]+).*",
+              "\\1",
+              opp_h
+            )
+          )
+          
+          if (
+            identical(k, opp_h) ||
+            is.na(k) ||
+            k == ""
+          ) {
+            k <- sub("\\.php.*$", "", basename(opp_h))
+          }
+          
           k
-        } else NA_character_
+        } else {
+          NA_character_
+        }
+        
         fr <- first_numeric_after(tds, iOpp)
+        
         tibble(
-          GameNo  = suppressWarnings(as.integer(html_text(tds[[iNo]],  trim = TRUE))),
-          Date    = suppressWarnings(lubridate::dmy(html_text(tds[[iDate]], trim = TRUE))),
+          GameNo = suppressWarnings(
+            as.integer(html_text(tds[[iNo]], trim = TRUE))
+          ),
+          
+          Date = suppressWarnings(
+            lubridate::dmy(
+              html_text(tds[[iDate]], trim = TRUE)
+            )
+          ),
+          
           Player1 = this_name,
-          Player2 = str_squish(html_text(tds[[iOpp]], trim = TRUE)),
-          OppKey  = oppkey,
+          
+          Player2 = str_squish(
+            html_text(tds[[iOpp]], trim = TRUE)
+          ),
+          
+          OppKey = oppkey,
+          
           OppRating_Display = fr$val,
-          RatingType = if (iType >= 1 && iType <= n) html_text(tds[[iType]], trim = TRUE) else NA_character_,
-          Result  = suppressWarnings(as.numeric(html_text(tds[[iRes]],  trim = TRUE))),
-          New     = if (iNew >= 1 && iNew <= n) num(html_text(tds[[iNew]], trim = TRUE)) else NA_real_,
-          Tot     = if (iTot >= 1 && iTot <= n) num(html_text(tds[[iTot]], trim = TRUE)) else NA_real_,
-          Exp     = if (iExp >= 1 && iExp <= n) num(html_text(tds[[iExp]], trim = TRUE)) else NA_real_,
-          Pts     = if (iPts >= 1 && iPts <= n) num(html_text(tds[[iPts]], trim = TRUE)) else NA_real_
+          
+          RatingType = if (
+            iType >= 1 &&
+            iType <= n
+          ) {
+            html_text(tds[[iType]], trim = TRUE)
+          } else {
+            NA_character_
+          },
+          
+          Result = suppressWarnings(
+            as.numeric(
+              html_text(tds[[iRes]], trim = TRUE)
+            )
+          ),
+          
+          New = if (
+            iNew >= 1 &&
+            iNew <= n
+          ) {
+            num(html_text(tds[[iNew]], trim = TRUE))
+          } else {
+            NA_real_
+          },
+          
+          Tot = if (
+            iTot >= 1 &&
+            iTot <= n
+          ) {
+            num(html_text(tds[[iTot]], trim = TRUE))
+          } else {
+            NA_real_
+          },
+          
+          Exp = if (
+            iExp >= 1 &&
+            iExp <= n
+          ) {
+            num(html_text(tds[[iExp]], trim = TRUE))
+          } else {
+            NA_real_
+          },
+          
+          Pts = if (
+            iPts >= 1 &&
+            iPts <= n
+          ) {
+            num(html_text(tds[[iPts]], trim = TRUE))
+          } else {
+            NA_real_
+          }
         )
       }))
     }))
-    if (is.null(df) || !is.data.frame(df) || !nrow(df) || !"Result" %in% names(df)) {
-      out[[i]] <- tibble(); next
+    
+    if (
+      is.null(df) ||
+      !is.data.frame(df) ||
+      !nrow(df) ||
+      !"Result" %in% names(df)
+    ) {
+      out[[i]] <- tibble()
+      next
     }
+    
     out[[i]] <- df %>%
       filter(!is.na(.data$Result)) %>%
       group_by(.data$Date) %>%
@@ -573,9 +707,9 @@ scrape_games <- function(players_df){
     
     Sys.sleep(runif(1, 0.5, 1))
   }
+  
   bind_rows(out)
 }
-
 
 # ── ECF scraper for external override players ─────────────────────────────
 parse_ecf_result <- function(x) {
