@@ -156,10 +156,15 @@ h2#pname{
       white-space:nowrap;
     }
 
-    table.games th:first-child,
-    table.games td:first-child{
-      border-left:1px solid rgba(128,128,128,0.45);
-    }
+table.games th:first-child,
+table.games td:first-child{
+  border-left:1px solid rgba(128,128,128,0.45);
+}
+
+/* Separate groups of games when more than one calendar day is missing */
+table.games tr.date-gap-before td{
+  border-top:3px solid rgba(128,128,128,0.75);
+}
 
     table.games th{
       position:sticky;
@@ -1128,18 +1133,35 @@ function renderGamesTable(games) {
   const tbody = document.getElementById('games-body');
   tbody.innerHTML = '';
 
-  let added = 0;
+let added = 0;
+let previousRenderedDate = null;
 
-  for (const g of games) {
-    if (
-      g.opponentElo != null &&
-      Number.isFinite(+g.opponentElo) &&
-      +g.opponentElo < 500
-    ) {
-      continue;
+for (const g of games) {
+  if (
+    g.opponentElo != null &&
+    Number.isFinite(+g.opponentElo) &&
+    +g.opponentElo < 500
+  ) {
+    continue;
+  }
+
+  const tr = document.createElement('tr');
+  const currentDate = dateKey(g.date);
+
+  if (previousRenderedDate && currentDate) {
+    const previousTime = Date.parse(`${previousRenderedDate}T00:00:00Z`);
+    const currentTime = Date.parse(`${currentDate}T00:00:00Z`);
+    const differenceInDays =
+      Math.abs(previousTime - currentTime) / 86400000;
+
+    if (differenceInDays > 1) {
+      tr.classList.add('date-gap-before');
     }
+  }
 
-    const tr = document.createElement('tr');
+  if (currentDate) {
+    previousRenderedDate = currentDate;
+  }
 
     const playerName = g.player || me?.name || '';
     const playerId = g.playerId || me?.id || idRaw;
