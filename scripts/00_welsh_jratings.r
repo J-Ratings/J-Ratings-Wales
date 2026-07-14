@@ -506,6 +506,22 @@ scrape_players_legacy <- function(base_url, players_file){
     group_by(.data$name) %>% slice_max(coalesce(.data$grade, -Inf), n = 1, with_ties = FALSE) %>% ungroup()
 }
 
+# function to order tournament games
+extract_round_number <- function(event_text) {
+  numbers <- stringr::str_extract_all(
+    as.character(event_text),
+    "\\d+"
+  )
+  
+  purrr::map_int(numbers, function(x) {
+    if (!length(x)) {
+      return(NA_integer_)
+    }
+    
+    suppressWarnings(as.integer(tail(x, 1)))
+  })
+}
+
 scrape_games <- function(players_df){
   if (!nrow(players_df)) return(tibble())
   
@@ -566,11 +582,12 @@ scrape_games <- function(players_df){
         if (!length(tds)) return(NULL)
         
         n <- length(tds)
-        
-        iNo   <- 1L
-        iDate <- 2L
-        iRes  <- 5L
-        iOpp  <- 6L
+
+        iNo    <- 1L
+        iDate  <- 2L
+        iEvent <- 4L
+        iRes   <- 5L
+        iOpp   <- 6L
         
         iNew  <- n
         iTot  <- n - 1L
@@ -623,6 +640,10 @@ scrape_games <- function(players_df){
             lubridate::dmy(
               html_text(tds[[iDate]], trim = TRUE)
             )
+          ),
+          
+          RoundNo = extract_round_number(
+            html_text(tds[[iEvent]], trim = TRUE)
           ),
           
           Player1 = this_name,
@@ -701,9 +722,14 @@ scrape_games <- function(players_df){
     
     out[[i]] <- df %>%
       filter(!is.na(.data$Result)) %>%
+      arrange(
+        .data$Date,
+        coalesce(.data$RoundNo, .data$GameNo, 999999L)
+      ) %>%
       group_by(.data$Date) %>%
       mutate(daily_ord = row_number()) %>%
-      ungroup()
+      ungroup() %>%
+      select(-RoundNo)
     
     Sys.sleep(runif(1, 0.5, 1))
   }
@@ -1527,7 +1553,11 @@ games <- games_all_by_page %>%
     )
   ) %>%
   filter(!is.na(.data$Date)) %>%
-  arrange(.data$Date, .data$PairKey, .data$GameNo) %>%
+  arrange(
+    .data$Date,
+    coalesce(.data$daily_ord, .data$GameNo, 999999L),
+    .data$PairKey
+  ) %>%
   distinct(.data$Date, .data$PairKey, .keep_all = TRUE) %>%
   mutate(Date = as.Date(.data$Date))
 
