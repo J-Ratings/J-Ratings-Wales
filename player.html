@@ -1154,7 +1154,7 @@ for (const g of games) {
     const differenceInDays =
       Math.abs(previousTime - currentTime) / 86400000;
 
-if (differenceInDays >= 2 && differenceInDays <= 3) {
+    if (differenceInDays > 2) {
       tr.classList.add('date-gap-before');
     }
   }
