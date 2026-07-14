@@ -27,8 +27,8 @@ RUN_DATE <- Sys.Date()                         # Guard: do not include dates aft
  CALC_FROM_DATE <- RUN_DATE %m-% months(1)
 # CALC_FROM_DATE <- as.Date("2026-01-01")
 
-# Normal weekly scrape: look back 7 days.
-NORMAL_SCRAPE_DAYS <- 7
+# Normal weekly scrape: look back x days.
+NORMAL_SCRAPE_DAYS <- 10
 
 # Scheduled deep scrape: every 4 ISO weeks, look back 1 month.
 DEEP_REFRESH_EVERY_WEEKS <- 4
