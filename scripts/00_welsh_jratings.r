@@ -343,29 +343,50 @@ normalize_players_frame <- function(df){
     select(all_of(must))
 }
 
-normalize_games_frame <- function(df){
-  must <- c("GameNo","Date","Player1","Player2","OppKey",
-            "OppRating_Display","RatingType","Result","New","Tot","Exp","Pts","daily_ord")
-  if (is.null(df) || !nrow(df)) {
-    return(tibble(!!!setNames(vector("list", length(must)), must))[0,])
+normalize_games_frame <- function(df) {
+  empty_games <- tibble(
+    GameNo            = integer(),
+    Date              = as.Date(character()),
+    Player1           = character(),
+    Player2           = character(),
+    OppKey             = character(),
+    OppRating_Display = double(),
+    RatingType        = character(),
+    Result             = double(),
+    New                = double(),
+    Tot                = double(),
+    Exp                = double(),
+    Pts                = double(),
+    daily_ord          = integer()
+  )
+  
+  if (is.null(df) || !is.data.frame(df) || !nrow(df)) {
+    return(empty_games)
   }
-  for (m in must) if (!m %in% names(df)) df[[m]] <- NA
+  
+  must <- names(empty_games)
+  
+  for (m in must) {
+    if (!m %in% names(df)) {
+      df[[m]] <- NA
+    }
+  }
+  
   df %>%
     mutate(
-      GameNo            = suppressWarnings(as.integer(GameNo)),
-      Date              = as.Date(Date),
-      Player1           = as.character(Player1),
-      Player2           = as.character(Player2),
-      OppKey            = as.character(OppKey),
-      OppRating_Display = suppressWarnings(as.numeric(OppRating_Display)),
-      RatingType        = as.character(RatingType),
-      Result            = suppressWarnings(as.numeric(Result)),
-      New               = suppressWarnings(as.numeric(New)),
-      Tot               = suppressWarnings(as.numeric(Tot)),
-      Exp               = suppressWarnings(as.numeric(Exp)),
-      Pts               = suppressWarnings(as.numeric(Pts)),
-      daily_ord = suppressWarnings(as.integer(daily_ord))
-      
+      GameNo            = suppressWarnings(as.integer(.data$GameNo)),
+      Date              = as.Date(.data$Date),
+      Player1           = as.character(.data$Player1),
+      Player2           = as.character(.data$Player2),
+      OppKey             = as.character(.data$OppKey),
+      OppRating_Display = suppressWarnings(as.numeric(.data$OppRating_Display)),
+      RatingType        = as.character(.data$RatingType),
+      Result            = suppressWarnings(as.numeric(.data$Result)),
+      New                = suppressWarnings(as.numeric(.data$New)),
+      Tot                = suppressWarnings(as.numeric(.data$Tot)),
+      Exp                = suppressWarnings(as.numeric(.data$Exp)),
+      Pts                = suppressWarnings(as.numeric(.data$Pts)),
+      daily_ord          = suppressWarnings(as.integer(.data$daily_ord))
     ) %>%
     select(all_of(must))
 }
@@ -751,11 +772,56 @@ parse_ecf_result <- function(x) {
 }
 
 scrape_ecf_games <- function(player_name, profile_url, from_date, run_date = RUN_DATE) {
-  pg <- safe_html(profile_url)
-  if (is.null(pg)) return(normalize_games_frame(tibble()))
+  response <- tryCatch(
+    curl::curl_fetch_memory(profile_url),
+    error = function(e) {
+      warning(
+        "ECF download failed for ", player_name,
+        ": ", conditionMessage(e),
+        ". Existing exported data will be used."
+      )
+      NULL
+    }
+  )
+  
+  if (is.null(response)) {
+    return(normalize_games_frame(tibble()))
+  }
+  
+  if (response$status_code != 200) {
+    warning(
+      "ECF request failed for ", player_name,
+      " with HTTP status ", response$status_code,
+      ". Existing exported data will be used."
+    )
+    return(normalize_games_frame(tibble()))
+  }
+  
+  pg <- tryCatch(
+    xml2::read_html(rawToChar(response$content)),
+    error = function(e) {
+      warning(
+        "ECF response could not be parsed for ", player_name,
+        ": ", conditionMessage(e),
+        ". Existing exported data will be used."
+      )
+      NULL
+    }
+  )
+  
+  if (is.null(pg)) {
+    return(normalize_games_frame(tibble()))
+  }
   
   rows <- pg %>% html_elements("tr.game_row")
-  if (!length(rows)) return(normalize_games_frame(tibble()))
+  
+  if (!length(rows)) {
+    warning(
+      "No ECF game rows found for ", player_name,
+      ". Existing exported data will be used."
+    )
+    return(normalize_games_frame(tibble()))
+  }
   
   num <- function(x) suppressWarnings(as.numeric(gsub("[^0-9.-]", "", x)))
   
