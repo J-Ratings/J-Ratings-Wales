@@ -26,8 +26,11 @@ RUN_DATE <- Sys.Date()                         # Guard: do not include dates aft
 # Recalculate from one month before the run date.
 CALC_FROM_DATE <- RUN_DATE %m-% months(1)
 requested_rebuild <- Sys.getenv("JRATINGS_REBUILD_FROM")
-cache_only_rebuild <- nzchar(requested_rebuild)
-if (cache_only_rebuild) {
+requested_wcu_refresh <- Sys.getenv("JRATINGS_WCU_REFRESH_FROM")
+rebuilding <- nzchar(requested_rebuild)
+refreshing_wcu <- nzchar(requested_wcu_refresh)
+cache_only_rebuild <- rebuilding && !refreshing_wcu
+if (rebuilding) {
   CALC_FROM_DATE <- as.Date(requested_rebuild, format = "%Y-%m-%d")
   stopifnot(!is.na(CALC_FROM_DATE), CALC_FROM_DATE <= RUN_DATE)
 }
@@ -59,6 +62,13 @@ SCRAPE_FROM_DATE <- if (
   RUN_DATE %m-% months(DEEP_REFRESH_MONTHS)
 } else {
   RUN_DATE - NORMAL_SCRAPE_DAYS
+}
+
+WCU_REPLACE_FROM <- CALC_FROM_DATE
+if (refreshing_wcu) {
+  SCRAPE_FROM_DATE <- as.Date(requested_wcu_refresh, format = "%Y-%m-%d")
+  stopifnot(rebuilding, !is.na(SCRAPE_FROM_DATE), SCRAPE_FROM_DATE <= RUN_DATE)
+  WCU_REPLACE_FROM <- SCRAPE_FROM_DATE
 }
 
 FORCE_SCRAPE_NAMES <- c()                      # If empty, SCRAPE_FROM_DATE is used instead.
@@ -1021,13 +1031,13 @@ games_by_half   <- list()
       ))
       
       # Scrape selected current players, but when a player has been scraped,
-      # replace that player's cached games from effective_calc_start onwards.
-      # SCRAPE_FROM_DATE decides who to scrape; effective_calc_start decides
+      # replace that player's cached games from WCU_REPLACE_FROM onwards.
+      # SCRAPE_FROM_DATE decides who to scrape; WCU_REPLACE_FROM decides
       # how much of their rating-relevant game cache must be refreshed.
       new_games_raw <- if (nrow(to_scrape)) scrape_games(to_scrape) else prev_games[0, ]
       
       if (!is.null(SCRAPE_FROM_DATE) && !identical(SCRAPE_FROM_DATE, "all")) {
-        replace_from <- as.Date(effective_calc_start)
+        replace_from <- as.Date(WCU_REPLACE_FROM %||% effective_calc_start)
         
         scraped_names <- new_games_raw %>%
           filter(!is.na(.data$Player1), nzchar(.data$Player1)) %>%
@@ -1232,7 +1242,7 @@ read_existing_override_games_export <- function(overrides) {
 # External rows are scraped fresh every run. For Dave this means the ECF page
 # is treated as the truth on dates where it has games.
 ecf_override_games <- scrape_external_override_games(external_rating_overrides)
-if (cache_only_rebuild && !nrow(ecf_override_games)) {
+if (rebuilding && !nrow(ecf_override_games)) {
   stop("Rebuild requires a successful ECF games fetch.")
 }
 message("ECF API games accepted: ", nrow(ecf_override_games))
