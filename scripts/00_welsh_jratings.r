@@ -24,8 +24,13 @@ tic()
 RUN_DATE <- Sys.Date()                         # Guard: do not include dates after this.
 
 # Recalculate from one month before the run date.
- CALC_FROM_DATE <- RUN_DATE %m-% months(1)
-# CALC_FROM_DATE <- as.Date("2026-01-01")
+CALC_FROM_DATE <- RUN_DATE %m-% months(1)
+requested_rebuild <- Sys.getenv("JRATINGS_REBUILD_FROM")
+cache_only_rebuild <- nzchar(requested_rebuild)
+if (cache_only_rebuild) {
+  CALC_FROM_DATE <- as.Date(requested_rebuild, format = "%Y-%m-%d")
+  stopifnot(!is.na(CALC_FROM_DATE), CALC_FROM_DATE <= RUN_DATE)
+}
 
 # Normal weekly scrape: look back x days.
 NORMAL_SCRAPE_DAYS <- 10
@@ -79,11 +84,22 @@ DIFF_REPORT_DATE  <- as.Date("2025-07-01")  # optional report date; set NA to sk
 # Their own post-from_date rating feed is rebuilt from an external source.
 # WCU games are kept only on dates where the external source has no game.
 external_rating_overrides <- tribble(
-  ~name,          ~player_key,        ~from_date,            ~source, ~profile_url,
-  "Dave McGhee",  "e1 dave mcghee",   as.Date("2025-02-01"), "ECF",   "https://rating.englishchess.org.uk/players/games?domain=S&year=ALL&show_games=on&show_ratings=on&ECF_code=327912B"
+  ~name,         ~player_key,      ~from_date,             ~api_from_date,         ~source, ~profile_url,
+  "Dave McGhee", "e1 dave mcghee", as.Date("2025-02-01"),  as.Date("2026-06-24"), "ECF",   "https://rating.englishchess.org.uk/api/games?player_no=327912&domain=S&limit=100"
 )
 
 external_override_names <- external_rating_overrides$name
+
+# The ECF game page shows 0* for these games despite the API supplying estimates.
+ecf_unrated_games <- tribble(
+  ~Player1,      ~Date,                  ~opponent_no,
+  "Dave McGhee", as.Date("2026-06-24"),  379884L,
+  "Dave McGhee", as.Date("2026-09-15"),  391130L,
+  "Dave McGhee", as.Date("2026-09-22"),  391462L
+)
+
+lachlan_adjustment_date <- as.Date("2026-10-01")
+lachlan_adjustment_rating <- 2022
 
 player_rebuild_start <- function(nm) {
   d <- external_rating_overrides$from_date[
@@ -228,7 +244,9 @@ is_welsh_type <- function(x) grepl("^[DEGNW]\\d+$", toupper(trimws(x)))
 conv_pre_2024 <- function(x) ifelse(is.na(x), NA_real_, ifelse(x < 2000, x*0.6 + 800, x))
 
 conv_ecf_to_wcu <- function(x) {
-  ifelse(is.na(x), NA_real_, ifelse(x < 1750, x * 0.6 + 700, x))
+  converted <- ifelse(x < 1750, x * 0.6 + 700, x)
+  converted[!is.na(x) & x == 0] <- 1310
+  converted
 }
 
 update_elo <- function(Ra, Rb, result, k = 20) {
@@ -797,89 +815,37 @@ scrape_ecf_games <- function(player_name, profile_url, from_date, run_date = RUN
     return(normalize_games_frame(tibble()))
   }
   
-  pg <- tryCatch(
-    xml2::read_html(rawToChar(response$content)),
-    error = function(e) {
-      warning(
-        "ECF response could not be parsed for ", player_name,
-        ": ", conditionMessage(e),
-        ". Existing exported data will be used."
-      )
-      NULL
-    }
+  payload <- tryCatch(
+    jsonlite::fromJSON(rawToChar(response$content)),
+    error = function(e) NULL
   )
-  
-  if (is.null(pg)) {
+  rows <- payload$data$games
+  required <- c("game_date", "score", "opponent_name", "opponent_no", "opponent_rating")
+  if (!isTRUE(payload$success) || !is.data.frame(rows) || !nrow(rows) ||
+      !all(required %in% names(rows))) {
+    warning("No valid ECF API game rows for ", player_name,
+            ". Existing exported data will be used.")
     return(normalize_games_frame(tibble()))
   }
-  
-  rows <- pg %>% html_elements("tr.game_row")
-  
-  if (!length(rows)) {
-    warning(
-      "No ECF game rows found for ", player_name,
-      ". Existing exported data will be used."
-    )
-    return(normalize_games_frame(tibble()))
-  }
-  
-  num <- function(x) suppressWarnings(as.numeric(gsub("[^0-9.-]", "", x)))
-  
-  out <- bind_rows(lapply(seq_along(rows), function(i) {
-    tr <- rows[[i]]
-    tds <- tr %>% html_elements("td")
-    if (length(tds) < 8) return(NULL)
-    
-    date_order <- tds[[1]] %>% html_attr("data-order")
-    date_txt <- tds[[1]] %>%
-      html_text(trim = TRUE) %>%
-      str_replace_all("\u00a0", " ") %>%
-      str_squish()
-    
-    game_date <- suppressWarnings(lubridate::ymd(date_order))
-    if (is.na(game_date)) {
-      game_date <- suppressWarnings(lubridate::dmy(date_txt))
-    }
-    
-    # ECF game rows are usually:
-    # Date, colour/board marker, result, +/-, player rating, opponent, ...,
-    # opponent revised rating, ECF category, federation, sex, ECF code, event.
-    result_txt <- tds[[3]] %>% html_text(trim = TRUE)
-    
-    opp_node <- tr %>% html_element(xpath = ".//a[contains(@href, '/players/games')]")
-    opponent <- if (!inherits(opp_node, "xml_missing") && !is.null(opp_node)) {
-      opp_node %>% html_text(trim = TRUE) %>% str_squish()
-    } else {
-      NA_character_
-    }
-    
-    rating_nodes <- tr %>% html_elements("td.revised_rating")
-    opp_rating_txt <- if (length(rating_nodes)) {
-      rating_nodes[[length(rating_nodes)]] %>% html_text(trim = TRUE)
-    } else {
-      NA_character_
-    }
-    
-    tibble(
-      source_row         = i,
-      GameNo             = i,
-      Date               = as.Date(game_date),
-      Player1            = player_name,
-      Player2            = opponent,
-      OppKey             = NA_character_,
-      OppRating_Display  = conv_ecf_to_wcu(num(opp_rating_txt)),
-      RatingType         = "ECF",
-      Result             = parse_ecf_result(result_txt),
-      New                = NA_real_,
-      Tot                = NA_real_,
-      Exp                = NA_real_,
-      Pts                = NA_real_,
-      daily_ord          = NA_integer_
-    )
-    }))
-  
-  if (!nrow(out)) return(normalize_games_frame(tibble()))
-  
+
+  out <- rows %>%
+    transmute(
+      source_row = row_number(),
+      Date = as.Date(.data$game_date),
+      Player1 = player_name,
+      Player2 = str_squish(str_replace(.data$opponent_name, "^([^,]+), +(.+)$", "\\2 \\1")),
+      opponent_no = as.integer(.data$opponent_no),
+      raw_rating = suppressWarnings(as.numeric(str_remove(.data$opponent_rating, "[^0-9]+$"))),
+      Result = parse_ecf_result(.data$score)
+    ) %>%
+    left_join(mutate(ecf_unrated_games, unrated = TRUE),
+              by = c("Player1", "Date", "opponent_no")) %>%
+    mutate(
+      OppRating_Display = conv_ecf_to_wcu(if_else(coalesce(.data$unrated, FALSE), 0, .data$raw_rating)),
+      RatingType = "ECF"
+    ) %>%
+    select(-opponent_no, -raw_rating, -unrated)
+
   out %>%
     filter(
       !is.na(.data$Date),
@@ -917,7 +883,7 @@ scrape_external_override_games <- function(overrides) {
     scrape_ecf_games(
       player_name = x$name,
       profile_url = x$profile_url,
-      from_date = x$from_date,
+      from_date = x$api_from_date,
       run_date = RUN_DATE
     )
   })) %>%
@@ -971,10 +937,30 @@ games_by_half   <- list()
     
     have_cache <- file.exists(p_csv) && file.exists(g_csv)
     
-    if (!FORCE_REFRESH_CURRENT && have_cache) {
+    if (cache_only_rebuild && !have_cache) {
+      stop("Cache-only rebuild requires both players_current.csv and games_current.csv.")
+    }
+    if (cache_only_rebuild || (!FORCE_REFRESH_CURRENT && have_cache)) {
       players_by_half[[h]] <- read_csv(p_csv, col_types = players_col_types, show_col_types = FALSE)
       games_by_half[[h]]   <- read_csv(g_csv, col_types = games_col_types,   show_col_types = FALSE) %>%
         mutate(Date = lubridate::ymd(.data$Date))
+      if (cache_only_rebuild) {
+        cached_dates <- games_by_half[[h]]$Date
+        cached_dates <- cached_dates[!is.na(cached_dates) & cached_dates <= RUN_DATE]
+        published_paths <- list.files(file.path(data_dir, "games"), pattern = "[.]json$", full.names = TRUE)
+        published_paths <- published_paths[!basename(published_paths) %in%
+          paste0(external_rating_overrides$player_key, ".json")]
+        published_dates <- unlist(lapply(published_paths, function(path) {
+          jsonlite::read_json(path, simplifyVector = TRUE)$date
+        }), use.names = FALSE)
+        published_dates <- as.Date(published_dates)
+        published_dates <- published_dates[!is.na(published_dates) & published_dates <= RUN_DATE]
+        if (!length(cached_dates) ||
+            max(cached_dates) < max(c(CALC_FROM_DATE, published_dates))) {
+          stop("WCU cache is too old for this rebuild. Restore a current games_current.csv and players_current.csv.")
+        }
+        message("Cache-only rebuild: using saved WCU games through ", max(cached_dates))
+      }
     } else {
       if (is.null(SCRAPE_FROM_DATE) && !have_cache) {
         message("No CURRENT cache found; forcing a lightweight scrape of list only.")
@@ -1246,6 +1232,10 @@ read_existing_override_games_export <- function(overrides) {
 # External rows are scraped fresh every run. For Dave this means the ECF page
 # is treated as the truth on dates where it has games.
 ecf_override_games <- scrape_external_override_games(external_rating_overrides)
+if (cache_only_rebuild && !nrow(ecf_override_games)) {
+  stop("Rebuild requires a successful ECF games fetch.")
+}
+message("ECF API games accepted: ", nrow(ecf_override_games))
 
 # Existing exported games are used only as a fallback for override players.
 # ECF dates win; fallback rows are kept only where ECF has no game on that date.
@@ -1659,6 +1649,21 @@ apply_snaps_until <- function(player, upto_date){
   last_checked[player] <<- upto_date
 }
 
+lachlan_player <- players_master$name[match("e1 lachlan tyrrell", players_master$player_key)]
+lachlan_pending <- !is.na(lachlan_player) &&
+  effective_calc_start <= lachlan_adjustment_date && lachlan_adjustment_date <= RUN_DATE
+lachlan_adjustment_event <- NULL
+
+apply_lachlan_adjustment <- function() {
+  current_ratings[lachlan_player] <<- lachlan_adjustment_rating
+  last_checked[lachlan_player] <<- lachlan_adjustment_date
+  lachlan_pending <<- FALSE
+  lachlan_adjustment_event <<- tibble(
+    Date = lachlan_adjustment_date, player = lachlan_player,
+    rating = lachlan_adjustment_rating, event_order = 0L
+  )
+}
+
 # ── 6) Rating pass ────────────────────────────────────────────────────────
 game_history <- tibble(
   GameIndex      = integer(),
@@ -1681,6 +1686,7 @@ for (i in seq_len(nrow(games))){
   p2_txt <- g$Player2
   res <- g$Result
   if (is.na(g$Date)) next
+  if (lachlan_pending && g$Date >= lachlan_adjustment_date) apply_lachlan_adjustment()
   if (!nzchar(p1) || is.na(current_ratings[p1]) || length(res) != 1 || is.na(res)) next
   b1 <- baseline_of[p1]
   if (!is.na(b1) && g$Date < b1) next
@@ -1743,6 +1749,8 @@ for (i in seq_len(nrow(games))){
   current_ratings[p1] <- Ra_new
   if (used_live_for_p2 && !is.na(p2_name_live)) current_ratings[p2_name_live] <- Rb_new
 }
+
+if (lachlan_pending) apply_lachlan_adjustment()
 
 # ── 7) Daily series & exports (safe with empties) ─────────────────────────
 # ── 7) Daily series & exports from one source of truth ────────────────────
@@ -1965,7 +1973,7 @@ if (nrow(core_updates)) {
   }))
 }
 
-all_updates <- bind_rows(core_updates, snap_events) %>%
+all_updates <- bind_rows(core_updates, snap_events, lachlan_adjustment_event) %>%
   filter(!is.na(.data$Date), !is.na(.data$player), !is.na(.data$rating)) %>%
   arrange(.data$player, .data$Date, .data$event_order)
 
