@@ -1613,6 +1613,7 @@ games <- games_all_by_page %>%
   mutate(
     P1Key   = pkey_lookup[.data$Player1],
     P2Key   = coalesce(.data$OppKey, pkey_lookup[.data$Player2]),
+    linked_opponent = !is.na(.data$OppKey) & .data$OppKey %in% players_master$player_key,
     PairKey = case_when(
       !is.na(P1Key) & !is.na(P2Key) ~ paste(pmin(P1Key, P2Key), pmax(P1Key, P2Key), sep = "|"),
       TRUE ~ paste(pmin(.data$Player1, .data$Player2), pmax(.data$Player1, .data$Player2), sep = "|")
@@ -1624,6 +1625,9 @@ games <- games_all_by_page %>%
     coalesce(.data$daily_ord, .data$GameNo, 999999L),
     .data$PairKey
   ) %>%
+  group_by(.data$Date, .data$PairKey) %>%
+  filter(.data$linked_opponent == any(.data$linked_opponent)) %>%
+  ungroup() %>%
   distinct(.data$Date, .data$PairKey, .keep_all = TRUE) %>%
   mutate(Date = as.Date(.data$Date))
 
@@ -1702,10 +1706,9 @@ for (i in seq_len(nrow(games))){
   if (!is.na(b1) && g$Date < b1) next
   apply_snaps_until(p1, g$Date)
   Ra <- current_ratings[p1]
-  opponent_is_welsh <- is_welsh_type(g$RatingType)
   
   p2_name_live <- NA_character_
-  if (opponent_is_welsh && !is.na(g$OppKey)){
+  if (g$linked_opponent){
     idx <- which(players_master$player_key == g$OppKey)
     if (length(idx) == 1) p2_name_live <- players_master$name[idx]
   }
@@ -1713,7 +1716,7 @@ for (i in seq_len(nrow(games))){
   used_live_for_p2 <- FALSE
   Rb <- NA_real_
   
-  if (opponent_is_welsh && !is.na(p2_name_live) && !is.na(current_ratings[p2_name_live])){
+  if (!is.na(p2_name_live) && !is.na(current_ratings[p2_name_live])){
     b2 <- baseline_of[p2_name_live]
     if (!is.na(b2) && g$Date >= b2){
       apply_snaps_until(p2_name_live, g$Date)
