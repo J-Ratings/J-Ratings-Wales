@@ -145,6 +145,17 @@ h2#pname{
       margin-bottom:10px;
     }
 
+    #gamesWrap,#forecast-dialog{
+      color-scheme:dark;
+      scrollbar-color:#596273 var(--card);
+      scrollbar-width:thin;
+    }
+    #gamesWrap::-webkit-scrollbar,#forecast-dialog::-webkit-scrollbar{width:10px;height:10px}
+    #gamesWrap::-webkit-scrollbar-track,#forecast-dialog::-webkit-scrollbar-track{background:var(--card)}
+    #gamesWrap::-webkit-scrollbar-thumb,#forecast-dialog::-webkit-scrollbar-thumb{
+      background:#596273;border:2px solid var(--card);border-radius:8px;
+    }
+    #gamesWrap::-webkit-scrollbar-corner{background:var(--card)}
     #gamesWrap{
       max-height:520px;
       overflow:auto;
@@ -718,15 +729,19 @@ function wcuForecastChange(playerRating, opponentRating, score) {
   return kFromRating(playerRating) * (score - cappedExpected);
 }
 
-function aggregateForecast(history, forecast, mode) {
-  if (!forecast.length || !history.length) return [];
+function aggregateForecast(history, forecast, mode, rawHistory = history) {
+  if (forecast.length < 2 || !history.length) return [];
   const anchor = history.at(-1);
-  const buckets = aggregateExpanded(forecast.slice(1), mode);
+  const future = forecast.slice(1);
+  if (mode === 'daily') return [anchor, ...future];
+  const buckets = aggregateExpanded([...rawHistory, ...future], mode)
+    .filter(p => new Date(p.x) >= new Date(anchor.x));
   const points = buckets.map(p => ({
-    x: new Date(p.x) <= new Date(anchor.x) ? forecast.at(-1).x : p.x,
+    // An unfinished historical bucket extends to the first forecast date.
+    x: new Date(p.x) <= new Date(anchor.x) ? future[0].x : p.x,
     y: p.y
   }));
-  return [anchor, ...points];
+  return normalise([anchor, ...points]);
 }
 
 function makeTrace(series, name, colour) {
@@ -919,8 +934,8 @@ function draw(preserveRange = true) {
     traces.push(makeTrace(seriesWCU, 'WCU', COLORS.WCU));
   }
 
-  displayedForecast = aggregateForecast(seriesLive, forecastSeries, mode);
-  displayedWcuForecast = aggregateForecast(seriesWCU || [], wcuForecastSeries, mode);
+  displayedForecast = aggregateForecast(seriesLive, forecastSeries, mode, rawLive);
+  displayedWcuForecast = aggregateForecast(seriesWCU || [], wcuForecastSeries, mode, rawWCU);
   if (displayedForecast.length) {
     traces.push(makeTrace(displayedForecast, 'J-Ratings forecast', '#aa7cf0'));
   }
