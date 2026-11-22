@@ -212,6 +212,13 @@ table.games td:nth-child(9){
   width:70px;
 }
 
+    .forecast-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    #forecast-form{margin:0 0 1rem;padding:1rem;border:1px solid #8886;border-radius:8px}
+    .forecast-labels,.forecast-entry{display:grid;grid-template-columns:minmax(0,2fr) minmax(100px,1fr);gap:12px;margin-bottom:8px}
+    .forecast-entry input,.forecast-entry select{box-sizing:border-box;width:100%;min-width:0;padding:8px;font:inherit}
+    .forecast-actions{display:flex;gap:12px;margin-top:12px}
+    table.games tr.forecast-row td{background:rgba(110,130,230,.15)}
+    #forecast-error{color:var(--wdl-loss)}
     .player-cell{
       text-align:left;
       overflow:hidden;
@@ -461,7 +468,20 @@ table.games td{
 
     <div id="chart"></div>
 
-    <h3 class="section-title">Games</h3>
+    <div class="forecast-heading">
+      <h3 class="section-title">Games</h3>
+      <button type="button" id="forecast-toggle" aria-expanded="false" aria-controls="forecast-form" disabled>Forecast</button>
+    </div>
+    <form id="forecast-form" hidden>
+      <div class="forecast-labels"><span>Opponent</span><span>Result</span></div>
+      <div id="forecast-entries"></div>
+      <datalist id="forecast-opponents"></datalist>
+      <div class="forecast-actions">
+        <button type="button" id="forecast-add" aria-label="Add another game">+</button>
+        <button type="submit">Calculate</button>
+      </div>
+      <p id="forecast-error" role="alert" hidden></p>
+    </form>
 
     <div id="gamesWrap">
       <table id="games" class="games">
@@ -505,6 +525,7 @@ const COLORS = {
 
 const kFromRating = r => (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
 
+let savedGames = [];
 let me = null;
 let playersAll = [];
 let rawLive = [];
@@ -1146,6 +1167,10 @@ for (const g of games) {
   }
 
   const tr = document.createElement('tr');
+  if (g.forecast) {
+    tr.classList.add('forecast-row');
+    tr.setAttribute('aria-label', 'Forecast game');
+  }
   const currentDate = dateKey(g.date);
 
   if (previousRenderedDate && currentDate) {
@@ -1175,7 +1200,7 @@ for (const g of games) {
     const cells = [];
 
     const tdDate = document.createElement('td');
-    tdDate.textContent = g.date || '';
+    tdDate.textContent = g.forecast ? 'Forecast' : (g.date || '');
     cells.push(tdDate);
 
     const tdPlayer = document.createElement('td');
@@ -1235,6 +1260,84 @@ cells.push(tdNew);
   }
 }
 
+function addForecastEntry() {
+  const row = document.createElement('div');
+  row.className = 'forecast-entry';
+  const opponent = document.createElement('input');
+  opponent.type = 'text';
+  opponent.required = true;
+  opponent.setAttribute('list', 'forecast-opponents');
+  opponent.setAttribute('aria-label', 'Opponent name or Elo rating');
+  opponent.placeholder = 'Name or Elo';
+  const result = document.createElement('select');
+  result.setAttribute('aria-label', 'Result');
+  for (const [label, value] of [['Win', '1'], ['Draw', '0.5'], ['Loss', '0']]) {
+    result.add(new Option(label, value));
+  }
+  row.append(opponent, result);
+  document.getElementById('forecast-entries').append(row);
+  return opponent;
+}
+
+function setupForecast() {
+  const toggle = document.getElementById('forecast-toggle');
+  const form = document.getElementById('forecast-form');
+  const options = document.getElementById('forecast-opponents');
+  for (const player of playersAll.filter(p => p.id !== me.id)) {
+    const option = document.createElement('option');
+    option.value = player.name;
+    option.label = String(player.rating);
+    options.append(option);
+  }
+  addForecastEntry();
+  toggle.disabled = false;
+  toggle.addEventListener('click', () => {
+    form.hidden = !form.hidden;
+    toggle.setAttribute('aria-expanded', String(!form.hidden));
+    if (!form.hidden) form.querySelector('input').focus();
+  });
+  document.getElementById('forecast-add').addEventListener('click', () => addForecastEntry().focus());
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const error = document.getElementById('forecast-error');
+    error.hidden = true;
+    let rating = Number(me.rating);
+    const forecast = [];
+    const opponents = new Map();
+    for (const row of form.querySelectorAll('.forecast-entry')) {
+      const input = row.querySelector('input').value.trim();
+      const matches = playersAll.filter(p => p.name.toLowerCase() === input.toLowerCase() && p.id !== me.id);
+      const player = matches.length === 1 ? matches[0] : null;
+      const opponentRating = player
+        ? (opponents.get(player.id) ?? Number(player.rating))
+        : (/^\d+(\.\d+)?$/.test(input) ? Number(input) : NaN);
+      if (!Number.isFinite(opponentRating) || opponentRating < 500 || matches.length > 1) {
+        error.textContent = 'Choose an opponent from the list or enter an Elo rating of at least 500.';
+        error.hidden = false;
+        row.querySelector('input').focus();
+        return;
+      }
+      const score = Number(row.querySelector('select').value);
+      const expected = 1 / (1 + 10 ** ((opponentRating - rating) / 400));
+      const delta = kFromRating(rating) * (score - expected);
+      const next = rating + delta;
+      forecast.push({
+        forecast: true, player: me.name, playerId: me.id,
+        playerElo: rating, opponent: player?.name ?? input,
+        opponentId: player?.id, opponentElo: opponentRating,
+        result: score === 1 ? 'Win' : score === 0.5 ? 'Draw' : 'Loss',
+        delta: (delta >= 0 ? '+' : '') + delta.toFixed(1),
+        jNew: Math.round(next)
+      });
+      if (player) {
+        opponents.set(player.id, opponentRating + kFromRating(opponentRating) * (expected - score));
+      }
+      rating = next;
+    }
+    renderGamesTable([...forecast.reverse(), ...savedGames]);
+  });
+}
+
 async function load() {
   try {
     document.getElementById('games-body').innerHTML =
@@ -1286,6 +1389,7 @@ async function load() {
       document.getElementById('toggle').textContent = 'WCU N/A';
     }
 
+    setupForecast();
     draw();
     refreshBadge();
 
@@ -1324,6 +1428,7 @@ if (gamesRes && gamesRes.ok) {
         return gb - ga;
       });
 
+      savedGames = games;
       renderGamesTable(games);
     } else {
       document.getElementById('games-body').innerHTML =
