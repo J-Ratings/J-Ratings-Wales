@@ -217,7 +217,7 @@ table.games td:nth-child(9){
     .forecast-labels,.forecast-entry{display:grid;grid-template-columns:minmax(0,2fr) minmax(100px,1fr);gap:12px;margin-bottom:8px}
     .forecast-entry input,.forecast-entry select{box-sizing:border-box;width:100%;min-width:0;padding:8px;font:inherit}
     .forecast-actions{display:flex;gap:12px;margin-top:12px}
-    table.games tr.forecast-row td{background:rgba(110,130,230,.15)}
+    table.games tr.forecast-row td{background:rgba(255,190,110,.18)}
     #forecast-error{color:var(--wdl-loss)}
     .player-cell{
       text-align:left;
@@ -404,6 +404,42 @@ table.games td{
   font-size:.64rem;
 }
     }
+    #forecast-toggle,#forecast-form button{
+      background:var(--card);color:var(--text);border:1px solid var(--border);
+      border-radius:6px;padding:7px 14px;font:inherit;cursor:pointer;
+    }
+    #forecast-toggle:hover,#forecast-form button:hover{border-color:#e87924;background:#e879241a}
+    #forecast-toggle[aria-expanded="true"]{border-color:#e87924;color:#ffbd80}
+    #forecast-form{background:var(--card);border-color:var(--border)}
+    .forecast-entry input,.forecast-entry select{
+      color-scheme:dark;background:var(--bg);color:var(--text);
+      border:1px solid var(--border);border-radius:6px;
+    }
+    .forecast-entry input:focus,.forecast-entry select:focus{outline:2px solid #e87924;outline-offset:1px}
+    .forecast-entry input::placeholder{color:var(--muted)}
+    #gamesWrap table.games{width:100%;min-width:660px}
+    #gamesWrap table.games th,#gamesWrap table.games td{box-sizing:border-box;padding:6px 5px}
+    #gamesWrap table.games th:nth-child(1),#gamesWrap table.games td:nth-child(1){width:11%}
+    #gamesWrap table.games th:nth-child(2),#gamesWrap table.games td:nth-child(2),
+    #gamesWrap table.games th:nth-child(4),#gamesWrap table.games td:nth-child(4){width:16%}
+    #gamesWrap table.games th:nth-child(3),#gamesWrap table.games td:nth-child(3),
+    #gamesWrap table.games th:nth-child(5),#gamesWrap table.games td:nth-child(5){width:6%}
+    #gamesWrap table.games th:nth-child(6),#gamesWrap table.games td:nth-child(6){width:20%;min-width:0}
+    #gamesWrap table.games th:nth-child(7),#gamesWrap table.games td:nth-child(7){width:9%}
+    #gamesWrap table.games th:nth-child(8),#gamesWrap table.games td:nth-child(8),
+    #gamesWrap table.games th:nth-child(9),#gamesWrap table.games td:nth-child(9){width:8%}
+    #gamesWrap .wdl-bar{width:100%;max-width:150px}
+    #gamesWrap table.games th{white-space:normal}
+    #forecast-dialog{
+      position:fixed;inset:0;box-sizing:border-box;width:calc(100% - 32px);height:auto;
+      max-width:720px;max-height:85vh;margin:auto;padding:0;
+      border:1px solid var(--border);border-radius:12px;background:var(--card);color:var(--text);overflow:auto;
+    }
+    #forecast-dialog::backdrop{background:rgba(0,0,0,.6)}
+    #forecast-dialog #forecast-form{max-width:1000px;margin:0 auto;padding:clamp(16px,3vw,32px)}
+    #forecast-dialog .forecast-heading{margin-bottom:24px}
+    #forecast-title{margin:0}
+    body.forecast-open{overflow:hidden}
   </style>
 </head>
 
@@ -470,9 +506,14 @@ table.games td{
 
     <div class="forecast-heading">
       <h3 class="section-title">Games</h3>
-      <button type="button" id="forecast-toggle" aria-expanded="false" aria-controls="forecast-form" disabled>Forecast</button>
+      <button type="button" id="forecast-toggle" aria-expanded="false" aria-controls="forecast-dialog" disabled>Forecast</button>
     </div>
-    <form id="forecast-form" hidden>
+    <dialog id="forecast-dialog" aria-labelledby="forecast-title">
+    <form id="forecast-form">
+      <div class="forecast-heading">
+        <h2 id="forecast-title">Forecast</h2>
+        <button type="button" id="forecast-close" aria-label="Close forecast">Close</button>
+      </div>
       <div class="forecast-labels"><span>Opponent</span><span>Result</span></div>
       <div id="forecast-entries"></div>
       <datalist id="forecast-opponents"></datalist>
@@ -482,6 +523,7 @@ table.games td{
       </div>
       <p id="forecast-error" role="alert" hidden></p>
     </form>
+    </dialog>
 
     <div id="gamesWrap">
       <table id="games" class="games">
@@ -526,6 +568,7 @@ const COLORS = {
 const kFromRating = r => (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
 
 let savedGames = [];
+let forecastSeries = [];
 let me = null;
 let playersAll = [];
 let rawLive = [];
@@ -783,6 +826,11 @@ function adjustYToVisible(x0, x1) {
     }
   }
 
+  for (const p of forecastSeries) {
+    const d = new Date(p.x);
+    if (d >= lo && d <= hi && Number.isFinite(p.y)) values.push(p.y);
+  }
+
   if (showWCU && seriesWCU?.length) {
     for (const p of seriesWCU) {
       const d = new Date(p.x);
@@ -807,12 +855,12 @@ function adjustYToVisible(x0, x1) {
   });
 }
 
-function draw() {
+function draw(preserveRange = true) {
   const mode = document.getElementById('agg').value;
   const gd = document.getElementById('chart');
   const liveLayout = gd && gd._fullLayout ? gd._fullLayout.xaxis : null;
 
-  if (liveLayout && liveLayout.range) {
+  if (preserveRange && liveLayout && liveLayout.range) {
     rememberedXRange = [liveLayout.range[0], liveLayout.range[1]];
   }
 
@@ -825,7 +873,16 @@ function draw() {
     traces.push(makeTrace(seriesWCU, 'WCU', COLORS.WCU));
   }
 
-  const ext = extentFrom(seriesLive, seriesWCU);
+  if (forecastSeries.length) {
+    traces.push({
+      ...makeTrace(forecastSeries, 'Forecast', '#e86f13'),
+      mode: 'lines+markers',
+      line: { color: '#e86f13', width: 3 },
+      marker: { color: '#e86f13', size: 7 }
+    });
+  }
+
+  const ext = extentFrom(seriesLive, seriesWCU, forecastSeries);
   dataMin = ext.min;
   dataMax = ext.max;
 
@@ -840,6 +897,8 @@ function draw() {
       if (Number.isFinite(p.y)) allY.push(p.y);
     }
   }
+
+  for (const p of forecastSeries) allY.push(p.y);
 
   const yMin0 = allY.length ? Math.min(...allY) : 0;
   const yMax0 = allY.length ? Math.max(...allY) : 1;
@@ -1282,6 +1341,7 @@ function addForecastEntry() {
 function setupForecast() {
   const toggle = document.getElementById('forecast-toggle');
   const form = document.getElementById('forecast-form');
+  const dialog = document.getElementById('forecast-dialog');
   const options = document.getElementById('forecast-opponents');
   for (const player of playersAll.filter(p => p.id !== me.id)) {
     const option = document.createElement('option');
@@ -1292,9 +1352,16 @@ function setupForecast() {
   addForecastEntry();
   toggle.disabled = false;
   toggle.addEventListener('click', () => {
-    form.hidden = !form.hidden;
-    toggle.setAttribute('aria-expanded', String(!form.hidden));
-    if (!form.hidden) form.querySelector('input').focus();
+    dialog.showModal();
+    document.body.classList.add('forecast-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    form.querySelector('input').focus();
+  });
+  document.getElementById('forecast-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => {
+    document.body.classList.remove('forecast-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.focus();
   });
   document.getElementById('forecast-add').addEventListener('click', () => addForecastEntry().focus());
   form.addEventListener('submit', event => {
@@ -1334,7 +1401,28 @@ function setupForecast() {
       }
       rating = next;
     }
+    const lastReal = normalise(rawLive).at(-1);
+    if (lastReal) {
+      // Each hypothetical game occupies the next day so a single game draws a line.
+      const anchor = new Date(lastReal.x);
+      forecastSeries = [
+        { x: lastReal.x, y: lastReal.y },
+        ...forecast.map((game, index) => ({
+          x: iso(new Date(+anchor + (index + 1) * 86400000)),
+          y: game.jNew
+        }))
+      ];
+      const end = new Date(forecastSeries.at(-1).x);
+      const chart = document.getElementById('chart');
+      const range = chart?._fullLayout?.xaxis?.range;
+      if (range) {
+        const start = new Date(range[0]);
+        rememberedXRange = [iso(start), iso(makePaddedEnd(start, end))];
+      }
+      draw(false);
+    }
     renderGamesTable([...forecast.reverse(), ...savedGames]);
+    dialog.close();
   });
 }
 
