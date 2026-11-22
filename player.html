@@ -706,7 +706,8 @@ function wcuBatchBoundary(date = new Date()) {
 }
 
 function wcuBatchRating(history, boundary) {
-  const point = normalise(history).filter(p => dateKey(p.x) < boundary).at(-1);
+  const sorted = normalise(history);
+  const point = sorted.filter(p => dateKey(p.x) < boundary).at(-1) ?? sorted[0];
   if (!point) throw new Error('WCU batch rating unavailable before ' + boundary + '.');
   return point.y;
 }
