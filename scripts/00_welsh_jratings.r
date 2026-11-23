@@ -780,7 +780,7 @@ scrape_games <- function(players_df){
       ungroup() %>%
       select(-RoundNo)
     
-    Sys.sleep(runif(1, 0.5, 1))
+    Sys.sleep(runif(1, 1, 2))
   }
   
   bind_rows(out)
