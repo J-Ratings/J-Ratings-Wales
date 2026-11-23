@@ -581,7 +581,7 @@ table.games td{
         </div>
         <div id="performance-range" class="forecast-entry">
           <label>From <input type="date" id="performance-from" required></label>
-          <label>To <input type="date" id="performance-to" required></label>
+          <label>To <input type="text" id="performance-to" placeholder="Present" aria-label="To date, blank for Present"></label>
         </div>
         <div id="performance-games" hidden></div>
         <div class="forecast-actions"><button type="submit">Calculate</button></div>
@@ -1610,6 +1610,11 @@ function setupPerformance() {
   const from = document.getElementById('performance-from');
   const to = document.getElementById('performance-to');
   let available = [];
+  from.value = wcuBatchBoundary();
+  to.addEventListener('focus', () => { to.type = 'date'; });
+  to.addEventListener('blur', () => {
+    if (!to.value) to.type = 'text';
+  });
   const scoreOf = game => ({ Win: 1, Draw: 0.5, Loss: 0 })[game.result];
   document.getElementById('performance-toggle').disabled = false;
   document.getElementById('performance-toggle').addEventListener('click', () => {
@@ -1630,9 +1635,6 @@ function setupPerformance() {
       label.append(input, text);
       list.append(label);
     });
-    const dates = available.map(g => g.date).filter(Boolean).sort();
-    if (!from.value) from.value = dates[0] || '';
-    to.value = dates.at(-1) || '';
     dialog.showModal();
   });
   document.getElementById('performance-close').addEventListener('click', () => dialog.close());
@@ -1640,7 +1642,7 @@ function setupPerformance() {
     const select = form.querySelector('input[name="performance-mode"]:checked').value === 'select';
     list.hidden = !select;
     document.getElementById('performance-range').hidden = select;
-    from.required = to.required = !select;
+    from.required = !select;
   });
   form.addEventListener('submit', async event => {
     event.preventDefault();
@@ -1649,7 +1651,7 @@ function setupPerformance() {
     const mode = form.querySelector('input[name="performance-mode"]:checked').value;
     const chosen = mode === 'select'
       ? [...list.querySelectorAll('input:checked')].map(el => available[Number(el.value)])
-      : available.filter(g => g.date >= from.value && g.date <= to.value);
+      : available.filter(g => g.date >= from.value && (!to.value || g.date <= to.value));
     if (!chosen.length) {
       error.textContent = 'Choose at least one game.';
       error.hidden = false;
