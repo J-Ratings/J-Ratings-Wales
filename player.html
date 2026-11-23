@@ -1662,6 +1662,8 @@ function setupPerformance() {
       const response = await fetch('pipeline_data/cache/games_current.csv', { cache: 'no-cache' });
       if (!response.ok) throw new Error('WCU game cache unavailable');
       const sourceGames = parseWcuCsv(await response.text());
+      const playersResponse = await fetch('pipeline_data/cache/players_current.csv', { cache: 'no-cache' });
+      const sourcePlayers = playersResponse.ok ? parseWcuCsv(await playersResponse.text()) : [];
       const wcuGames = [];
       for (const game of chosen) {
         let rating = game.wcuOpponentElo;
@@ -1672,6 +1674,17 @@ function setupPerformance() {
           const ratings = [...new Set(rows.map(row => Number(row.OppRating_Display))
             .filter(value => Number.isFinite(value) && value >= 500))];
           if (ratings.length === 1) rating = ratings[0];
+          if (!Number.isFinite(rating)) {
+            const reverseRows = sourceGames.filter(row =>
+              row.Player1 === game.opponent && row.Player2 === me.name &&
+              row.Date === game.date && Number(row.Result) === 1 - scoreOf(game));
+            const opponent = sourcePlayers.find(player =>
+              player.player_key === getId(game, 'opponent'));
+            const sourceGrade = Number(opponent?.grade);
+            if (reverseRows.length && Number.isFinite(sourceGrade) && sourceGrade >= 500) {
+              rating = sourceGrade;
+            }
+          }
         }
         if (Number.isFinite(rating)) wcuGames.push({ rating, score: scoreOf(game) });
       }
