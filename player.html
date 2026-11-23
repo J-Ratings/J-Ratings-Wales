@@ -482,8 +482,8 @@ table.games td{
     .performance-game{display:flex;gap:10px;padding:8px;border-bottom:1px solid var(--border)}
     .performance-game.forecast-game{background:rgba(174,129,242,.18)}
     #performance-error{color:var(--wdl-loss)}
-    .performance-j{color:#1f77b4;font-weight:700}
-    .performance-wcu{color:#ff7f0e;font-weight:700}
+    .performance-j{color:#1f77b4;font-weight:400}
+    .performance-wcu{color:#ff7f0e;font-weight:400}
   </style>
 </head>
 
@@ -1524,6 +1524,7 @@ function setupForecast() {
         wcuForecastSeries.push(lastWcu);
         wcuGames.forEach((game, index) => {
           const opponent = wcuHistories[index] ?? game.opponentRating;
+          forecast[index].wcuOpponentElo = opponent;
           wcuRating += wcuForecastChange(batchRating, opponent, game.score);
           wcuForecastSeries.push({
             x: iso(new Date(Date.parse(lastWcu.x) + (index + 1) * 86400000)),
@@ -1564,6 +1565,25 @@ function setupForecast() {
     renderGamesTable([...forecastGames].reverse().concat(savedGames));
     dialog.close();
   });
+}
+
+function parseWcuCsv(text) {
+  const rows = [];
+  let row = [], field = '', quoted = false;
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    if (char === '"') {
+      if (quoted && text[i + 1] === '"') { field += '"'; i++; }
+      else quoted = !quoted;
+    } else if (char === ',' && !quoted) {
+      row.push(field); field = '';
+    } else if (char === '\n' && !quoted) {
+      row.push(field.replace(/\r$/, '')); rows.push(row); row = []; field = '';
+    } else field += char;
+  }
+  if (field || row.length) { row.push(field.replace(/\r$/, '')); rows.push(row); }
+  const headers = rows.shift() || [];
+  return rows.map(values => Object.fromEntries(headers.map((name, i) => [name, values[i]])));
 }
 
 function performanceRating(games) {
@@ -1639,37 +1659,40 @@ function setupPerformance() {
     button.disabled = true;
     try {
       const jGames = chosen.map(g => ({ rating: Number(g.opponentElo), score: scoreOf(g) }));
-      const histories = new Map();
+      const response = await fetch('pipeline_data/cache/games_current.csv', { cache: 'no-cache' });
+      if (!response.ok) throw new Error('WCU game cache unavailable');
+      const sourceGames = parseWcuCsv(await response.text());
       const wcuGames = [];
       for (const game of chosen) {
-        const opponentId = getId(game, 'opponent');
-        if (!opponentId) {
-          if (game.forecast) wcuGames.push({ rating: Number(game.opponentElo), score: scoreOf(game) });
-          continue;
+        let rating = game.wcuOpponentElo;
+        if (!game.forecast) {
+          const rows = sourceGames.filter(row =>
+            row.Player1 === me.name && row.Player2 === game.opponent &&
+            row.Date === game.date && Number(row.Result) === scoreOf(game));
+          const ratings = [...new Set(rows.map(row => Number(row.OppRating_Display))
+            .filter(value => Number.isFinite(value) && value >= 500))];
+          if (ratings.length === 1) rating = ratings[0];
         }
-        if (!histories.has(opponentId)) {
-          const response = await fetch(HIST_WCU(opponentId), { cache: 'no-cache' });
-          histories.set(opponentId, response.ok ? await response.json() : []);
-        }
-        const history = histories.get(opponentId);
-        if (history.length) {
-          const boundary = wcuBatchBoundary(new Date(game.date + 'T12:00:00'));
-          wcuGames.push({
-            rating: wcuBatchRating(history.map(p => ({ x: p.date, y: Number(p.rating) })), boundary),
-            score: scoreOf(game)
-          });
-        }
+        if (Number.isFinite(rating)) wcuGames.push({ rating, score: scoreOf(game) });
       }
       const summary = document.createElement('p');
       summary.textContent = chosen.length + ' games · Score ' + jGames.reduce((sum, g) => sum + g.score, 0) + '/' + chosen.length;
       const j = document.createElement('p');
       j.className = 'performance-j';
-      j.textContent = 'J-Ratings performance: ' + performanceRating(jGames);
+      j.append('J-Ratings performance: ');
+      const jValue = document.createElement('strong');
+      jValue.textContent = performanceRating(jGames);
+      j.append(jValue);
       const wcu = document.createElement('p');
       wcu.className = 'performance-wcu';
-      wcu.textContent = wcuGames.length === chosen.length
-        ? 'WCU performance: ' + performanceRating(wcuGames)
-        : 'WCU performance unavailable. WCU opponent ratings are missing for ' + (chosen.length - wcuGames.length) + ' selected games.';
+      if (wcuGames.length === chosen.length) {
+        wcu.append('WCU performance: ');
+        const wcuValue = document.createElement('strong');
+        wcuValue.textContent = performanceRating(wcuGames);
+        wcu.append(wcuValue);
+      } else {
+        wcu.textContent = 'WCU performance unavailable. WCU opponent ratings are missing for ' + (chosen.length - wcuGames.length) + ' selected games.';
+      }
       output.append(summary, j, wcu);
       if (jGames.every(g => g.score === 1) || jGames.every(g => g.score === 0)) {
         const note = document.createElement('p');
