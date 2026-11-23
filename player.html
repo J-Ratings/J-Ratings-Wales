@@ -465,17 +465,17 @@ table.games td{
     #forecast-dialog .forecast-heading{margin-bottom:24px}
     #forecast-title{margin:0}
     body.forecast-open{overflow:hidden}
-    #performance-toggle,#performance-dialog button{
+    #compare-toggle,#compare-dialog button,#performance-toggle,#performance-dialog button{
       background:var(--card);color:var(--text);border:1px solid var(--border);
       border-radius:6px;padding:7px 14px;font:inherit;cursor:pointer;
     }
-    #performance-dialog{
+    #compare-dialog,#performance-dialog{
       box-sizing:border-box;width:calc(100% - 32px);max-width:780px;max-height:85vh;
       padding:24px;border:1px solid var(--border);border-radius:12px;
       background:var(--card);color:var(--text);color-scheme:dark;
       scrollbar-color:#596273 var(--card);
     }
-    #performance-dialog::backdrop{background:rgba(0,0,0,.6)}
+    #compare-dialog::backdrop,#performance-dialog::backdrop{background:rgba(0,0,0,.6)}
     #performance-range{margin-top:20px}
     #performance-range input{display:block}
     #performance-games{max-height:40vh;overflow:auto;margin-top:16px;scrollbar-color:#596273 var(--card)}
@@ -551,7 +551,7 @@ table.games td{
 
     <div class="forecast-heading games-heading">
       <h3 class="section-title">Games</h3>
-      <div class="forecast-actions"><button type="button" id="performance-toggle" disabled>Performance</button>
+      <div class="forecast-actions"><button type="button" id="compare-toggle" disabled>Compare</button><button type="button" id="performance-toggle" disabled>Performance</button>
       <button type="button" id="forecast-toggle" aria-expanded="false" aria-controls="forecast-dialog" disabled>Forecast</button></div>
     </div>
     <dialog id="forecast-dialog" aria-labelledby="forecast-title">
@@ -569,6 +569,23 @@ table.games td{
       </div>
       <p id="forecast-error" role="alert" hidden></p>
     </form>
+    </dialog>
+
+    <dialog id="compare-dialog" aria-labelledby="compare-title">
+      <form id="compare-form">
+        <div class="forecast-heading">
+          <h2 id="compare-title">Compare</h2>
+          <button type="button" id="compare-close">Close</button>
+        </div>
+        <div class="forecast-entry">
+          <label>Opponent
+            <input id="compare-opponent" list="forecast-opponents" required autocomplete="off" placeholder="Player name">
+          </label>
+        </div>
+        <div class="forecast-actions"><button type="submit">Calculate</button></div>
+        <p id="compare-error" role="alert" hidden></p>
+        <div id="compare-result" aria-live="polite"></div>
+      </form>
     </dialog>
 
     <dialog id="performance-dialog" aria-labelledby="performance-title">
@@ -1292,6 +1309,10 @@ function refreshBestResults(games) {
     if (!Number.isFinite(oppElo) || oppElo < 500) continue;
 
     if (g.result === 'Win') {
+      // WCU lists a known incorrect opponent rating for this game.
+      if (idRaw === 'n1 ifan rathbone-jones' &&
+          dateKey(g.date) === '2026-09-20' &&
+          g.opponent === 'Yazeed Alshnaiber') continue;
       if (!bestWin || oppElo > bestWin.elo) {
         bestWin = { elo: oppElo, opponent: g.opponent || '', date: g.date || '' };
       }
@@ -1601,6 +1622,58 @@ function performanceRating(games) {
   return Math.round(average + difference);
 }
 
+function setupCompare() {
+  const dialog = document.getElementById('compare-dialog');
+  const form = document.getElementById('compare-form');
+  const input = document.getElementById('compare-opponent');
+  const error = document.getElementById('compare-error');
+  const output = document.getElementById('compare-result');
+  const toggle = document.getElementById('compare-toggle');
+  toggle.disabled = false;
+  toggle.addEventListener('click', () => {
+    dialog.showModal();
+    input.focus();
+  });
+  document.getElementById('compare-close').addEventListener('click', () => dialog.close());
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    output.replaceChildren();
+    error.hidden = true;
+    const matches = playersAll.filter(player =>
+      player.id !== me.id && player.name.toLowerCase() === input.value.trim().toLowerCase());
+    if (matches.length !== 1) {
+      error.textContent = 'Choose another player from the list.';
+      error.hidden = false;
+      input.focus();
+      return;
+    }
+    const opponent = matches[0];
+    const rating = Number(me.rating);
+    const opponentRating = Number(opponent.rating);
+    if (!Number.isFinite(rating) || !Number.isFinite(opponentRating)) {
+      error.textContent = 'Current ratings are unavailable for this comparison.';
+      error.hidden = false;
+      return;
+    }
+    const heading = document.createElement('p');
+    heading.textContent = me.name + ' (' + Math.round(rating) + ') vs ' +
+      opponent.name + ' (' + Math.round(opponentRating) + ')';
+    const odds = expectedWdlFromElo(rating, opponentRating);
+    const bar = renderWdlBar({
+      playerElo: rating, opponentElo: opponentRating,
+      winPct: odds.win, drawPct: odds.draw, lossPct: odds.loss
+    });
+    bar.style.width = '100%';
+    bar.style.maxWidth = 'none';
+    const labels = document.createElement('p');
+    labels.textContent = me.name + ': Win ' + odds.win + '% · Draw ' + odds.draw +
+      '% · Loss ' + odds.loss + '%';
+    const note = document.createElement('p');
+    note.textContent = 'Based on current published J-Ratings.';
+    output.append(heading, bar, labels, note);
+  });
+}
+
 function setupPerformance() {
   const dialog = document.getElementById('performance-dialog');
   const form = document.getElementById('performance-form');
@@ -1776,6 +1849,7 @@ async function load() {
 
     setupForecast();
     setupPerformance();
+    setupCompare();
     draw();
     refreshBadge();
 
