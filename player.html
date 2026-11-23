@@ -464,6 +464,25 @@ table.games td{
     #forecast-dialog .forecast-heading{margin-bottom:24px}
     #forecast-title{margin:0}
     body.forecast-open{overflow:hidden}
+    #performance-toggle,#performance-dialog button{
+      background:var(--card);color:var(--text);border:1px solid var(--border);
+      border-radius:6px;padding:7px 14px;font:inherit;cursor:pointer;
+    }
+    #performance-dialog{
+      box-sizing:border-box;width:calc(100% - 32px);max-width:780px;max-height:85vh;
+      padding:24px;border:1px solid var(--border);border-radius:12px;
+      background:var(--card);color:var(--text);color-scheme:dark;
+      scrollbar-color:#596273 var(--card);
+    }
+    #performance-dialog::backdrop{background:rgba(0,0,0,.6)}
+    #performance-range{margin-top:20px}
+    #performance-range input{display:block}
+    #performance-games{max-height:40vh;overflow:auto;margin-top:16px;scrollbar-color:#596273 var(--card)}
+    .performance-game{display:flex;gap:10px;padding:8px;border-bottom:1px solid var(--border)}
+    .performance-game.forecast-game{background:rgba(174,129,242,.18)}
+    #performance-error{color:var(--wdl-loss)}
+    .performance-j{color:#1f77b4;font-weight:700}
+    .performance-wcu{color:#ff7f0e;font-weight:700}
   </style>
 </head>
 
@@ -531,7 +550,8 @@ table.games td{
 
     <div class="forecast-heading">
       <h3 class="section-title">Games</h3>
-      <button type="button" id="forecast-toggle" aria-expanded="false" aria-controls="forecast-dialog" disabled>Forecast</button>
+      <div class="forecast-actions"><button type="button" id="performance-toggle" disabled>Performance</button>
+      <button type="button" id="forecast-toggle" aria-expanded="false" aria-controls="forecast-dialog" disabled>Forecast</button></div>
     </div>
     <dialog id="forecast-dialog" aria-labelledby="forecast-title">
     <form id="forecast-form">
@@ -548,6 +568,25 @@ table.games td{
       </div>
       <p id="forecast-error" role="alert" hidden></p>
     </form>
+    </dialog>
+
+    <dialog id="performance-dialog" aria-labelledby="performance-title">
+      <form id="performance-form">
+        <div class="forecast-heading"><h2 id="performance-title">Performance</h2>
+          <button type="button" id="performance-close">Close</button></div>
+        <div class="forecast-actions">
+          <label><input type="radio" name="performance-mode" value="range" checked> Range</label>
+          <label><input type="radio" name="performance-mode" value="select"> Select</label>
+        </div>
+        <div id="performance-range" class="forecast-entry">
+          <label>From <input type="date" id="performance-from" required></label>
+          <label>To <input type="date" id="performance-to" required></label>
+        </div>
+        <div id="performance-games" hidden></div>
+        <div class="forecast-actions"><button type="submit">Calculate</button></div>
+        <p id="performance-error" role="alert" hidden></p>
+        <div id="performance-result" aria-live="polite"></div>
+      </form>
     </dialog>
 
     <div id="gamesWrap">
@@ -593,6 +632,7 @@ const COLORS = {
 const kFromRating = r => (r >= 2200 ? 10 : r >= 1800 ? 20 : 30);
 
 let savedGames = [];
+let forecastGames = [];
 let forecastSeries = [];
 let wcuForecastSeries = [];
 let displayedForecast = [];
@@ -1517,8 +1557,130 @@ function setupForecast() {
       }
       draw(false);
     }
-    renderGamesTable([...forecast.reverse(), ...savedGames]);
+    forecastGames = forecast.map((game, index) => ({
+      ...game, date: forecastSeries[index + 1].x
+    }));
+    renderGamesTable([...forecastGames].reverse().concat(savedGames));
     dialog.close();
+  });
+}
+
+function performanceRating(games) {
+  // FIDE fractional-score conversion table for scores from 50% to 100%.
+  const differences = [
+    0,7,14,21,29,36,43,50,57,65,72,80,87,95,102,110,117,
+    125,133,141,149,158,166,175,184,193,202,211,220,230,240,
+    251,262,273,284,296,309,322,336,351,366,383,401,422,444,
+    470,501,538,589,677,800
+  ];
+  const score = games.reduce((sum, g) => sum + g.score, 0);
+  const percent = Math.round(100 * score / games.length);
+  const difference = differences[Math.abs(percent - 50)] * (percent < 50 ? -1 : 1);
+  const average = games.reduce((sum, g) => sum + g.rating, 0) / games.length;
+  return Math.round(average + difference);
+}
+
+function setupPerformance() {
+  const dialog = document.getElementById('performance-dialog');
+  const form = document.getElementById('performance-form');
+  const list = document.getElementById('performance-games');
+  const error = document.getElementById('performance-error');
+  const output = document.getElementById('performance-result');
+  const from = document.getElementById('performance-from');
+  const to = document.getElementById('performance-to');
+  let available = [];
+  const scoreOf = game => ({ Win: 1, Draw: 0.5, Loss: 0 })[game.result];
+  document.getElementById('performance-toggle').disabled = false;
+  document.getElementById('performance-toggle').addEventListener('click', () => {
+    const selected = new Set([...list.querySelectorAll('input:checked')].map(el => el.dataset.key));
+    available = [...forecastGames].reverse().concat(savedGames)
+      .filter(g => Number.isFinite(scoreOf(g)) && Number.isFinite(Number(g.opponentElo)));
+    list.replaceChildren();
+    available.forEach((game, index) => {
+      const label = document.createElement('label');
+      label.className = 'performance-game' + (game.forecast ? ' forecast-game' : '');
+      const input = document.createElement('input');
+      input.type = 'checkbox';
+      input.value = String(index);
+      input.dataset.key = [game.forecast || false, game.date, game.gi ?? index, game.opponent].join('|');
+      input.checked = selected.has(input.dataset.key);
+      const text = document.createElement('span');
+      text.textContent = (game.forecast ? 'Forecast · ' : '') + game.date + ' · ' + game.opponent + ' · ' + game.result;
+      label.append(input, text);
+      list.append(label);
+    });
+    const dates = available.map(g => g.date).filter(Boolean).sort();
+    if (!from.value) from.value = dates[0] || '';
+    to.value = dates.at(-1) || '';
+    dialog.showModal();
+  });
+  document.getElementById('performance-close').addEventListener('click', () => dialog.close());
+  form.addEventListener('change', () => {
+    const select = form.querySelector('input[name="performance-mode"]:checked').value === 'select';
+    list.hidden = !select;
+    document.getElementById('performance-range').hidden = select;
+    from.required = to.required = !select;
+  });
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    error.hidden = true;
+    output.replaceChildren();
+    const mode = form.querySelector('input[name="performance-mode"]:checked').value;
+    const chosen = mode === 'select'
+      ? [...list.querySelectorAll('input:checked')].map(el => available[Number(el.value)])
+      : available.filter(g => g.date >= from.value && g.date <= to.value);
+    if (!chosen.length) {
+      error.textContent = 'Choose at least one game.';
+      error.hidden = false;
+      return;
+    }
+    const button = form.querySelector('button[type="submit"]');
+    button.disabled = true;
+    try {
+      const jGames = chosen.map(g => ({ rating: Number(g.opponentElo), score: scoreOf(g) }));
+      const histories = new Map();
+      const wcuGames = [];
+      for (const game of chosen) {
+        const opponentId = getId(game, 'opponent');
+        if (!opponentId) {
+          if (game.forecast) wcuGames.push({ rating: Number(game.opponentElo), score: scoreOf(game) });
+          continue;
+        }
+        if (!histories.has(opponentId)) {
+          const response = await fetch(HIST_WCU(opponentId), { cache: 'no-cache' });
+          histories.set(opponentId, response.ok ? await response.json() : []);
+        }
+        const history = histories.get(opponentId);
+        if (history.length) {
+          const boundary = wcuBatchBoundary(new Date(game.date + 'T12:00:00'));
+          wcuGames.push({
+            rating: wcuBatchRating(history.map(p => ({ x: p.date, y: Number(p.rating) })), boundary),
+            score: scoreOf(game)
+          });
+        }
+      }
+      const summary = document.createElement('p');
+      summary.textContent = chosen.length + ' games · Score ' + jGames.reduce((sum, g) => sum + g.score, 0) + '/' + chosen.length;
+      const j = document.createElement('p');
+      j.className = 'performance-j';
+      j.textContent = 'J-Ratings performance: ' + performanceRating(jGames);
+      const wcu = document.createElement('p');
+      wcu.className = 'performance-wcu';
+      wcu.textContent = wcuGames.length === chosen.length
+        ? 'WCU performance: ' + performanceRating(wcuGames)
+        : 'WCU performance unavailable. WCU opponent ratings are missing for ' + (chosen.length - wcuGames.length) + ' selected games.';
+      output.append(summary, j, wcu);
+      if (jGames.every(g => g.score === 1) || jGames.every(g => g.score === 0)) {
+        const note = document.createElement('p');
+        note.textContent = 'FIDE uses a conventional adjustment of +800 or −800 for these scores.';
+        output.append(note);
+      }
+    } catch (e) {
+      error.textContent = 'Could not load WCU ratings. Please try again.';
+      error.hidden = false;
+    } finally {
+      button.disabled = false;
+    }
   });
 }
 
@@ -1574,6 +1736,7 @@ async function load() {
     }
 
     setupForecast();
+    setupPerformance();
     draw();
     refreshBadge();
 
