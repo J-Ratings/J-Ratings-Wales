@@ -32,6 +32,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-09-15,Aaron Davies,Jordan Heatman,w1 jordan heatman,1835,W1,1,1647,0.23,0.23,1,1
 2,2026-10-14,Aaron Davies,Kai Palmer,w1 kai palmer,1320,W1,0,1622,1.08,0.8500000000000001,1,1
 3,2026-11-17,Aaron Davies,Julien Potier,w1 julien potier,1653,W1,1,1638,1.54,0.46,2,1
+4,2026-11-25,Aaron Davies,Mark Thomas,w1 mark thomas,1991,W1,0,1635,1.6500000000000001,0.11,2,1
 1,2026-02-24,Aarush Ram,Stuart Thomas,w1 stuart thomas,1310,W1,1,1404,0.62,0.62,1,1
 2,2026-03-10,Aarush Ram,Robert Bradley,w1 robert bradley,1580,W1,0,1396,0.87,0.25,1,1
 3,2026-03-20,Aarush Ram,Sion Davies,w1 sion davies,1310,W1,1,1407,1.49,0.62,2,1
@@ -58,11 +59,13 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 2,2026-11-04,Adam Barry,Andrei Zhuravlev,e1 andrei zhuravlev,1404,E1,1,1451,0.96,0.5700000000000001,1,1
 3,2026-11-11,Adam Barry,Simeon Enoch,e1 simeon enoch,1327,E1,1,1461,1.6300000000000001,0.6699999999999999,2,1
 4,2026-11-18,Adam Barry,Jamie Wilson,e1 jamie wilson,1417,E1,1,1475,2.18,0.55,3,1
+5,2026-11-25,Adam Barry,Andrew Jeanes,e1 andrew jeanes,1638,E1,1,1497,2.4299999999999997,0.25,4,1
 1,2026-10-05,Adam Chinnick,Wayne Holland,e1 wayne holland,1382,E1,1,1328,0.4,0.4,1,1
 2,2026-11-02,Adam Chinnick,Keylee Richards,e1 keylee richards,1310,E1,1,1343,0.9,0.5,2,1
 3,2026-11-09,Adam Chinnick,Clive Silver,e1 clive silver,1512,E1,0,1336,1.1400000000000001,0.24000000000000002,2,1
 4,2026-11-16,Adam Chinnick,Brendan Lee,e1 brendan lee,1377,E1,0,1324,1.54,0.4,2,1
 5,2026-11-17,Adam Chinnick,Adeline Wong,e1 adeline wong,1310,E1,1,1339,2.04,0.5,3,1
+6,2026-11-24,Adam Chinnick,Clara Deng,e1 clara deng,1470,E1,0,1330,2.32,0.28,3,1
 1,2026-01-26,Adam Christopher,Kieran Judge,e1 kieran judge,1393,E1,1,1699,0.85,0.85,1,1
 2,2026-02-16,Adam Christopher,Andrew Jeanes,e1 andrew jeanes,1667,E1,0.5,1698,1.39,0.54,1.5,1
 3,2026-03-10,Adam Christopher,Antony Phillips,e1 antony phillips,1398,E1,1,1703,2.24,0.85,2.5,1
@@ -72,6 +75,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-09-08,Adam Christopher,Chris White,e1 chris white,1699,E1,1,1736,0.53,0.53,1,1
 2,2026-09-21,Adam Christopher,Callum Williams,e1 callum williams,1354,E1,1,1739,1.42,0.89,2,1
 3,2026-11-09,Adam Christopher,Constantine Popov,e1 constantine popov,1489,E1,1,1745,2.21,0.7899999999999999,3,1
+4,2026-11-23,Adam Christopher,John Callan,e1 john callan,1443,E1,1,1750,3.04,0.8300000000000001,4,1
 1,2026-02-04,Adam Cooper,Lyn Holland,g1 lyn holland,1464,G1,0,1370,0.38,0.38,0,1
 1,2026-09-07,Adam Dalton,Gareth Yeo,e1 gareth yeo,2068,E1,0,2082,0.54,0.54,0,1
 2,2026-09-08,Adam Dalton,Steve Smith,w1 steve smith,1946,W1,1,2088,1.24,0.7,1,1
@@ -121,6 +125,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 15,2026-11-21,Adam May,Carl Halpin,w1 carl halpin,1634,W1,1,1976,10.450000000000001,0.8600000000000001,11.5,1
 16,2026-11-21,Adam May,Jake Hurley,e1 jake hurley,1962,E1,0.5,1976,10.94,0.49,12,2
 17,2026-11-22,Adam May,Adam Woodruff,d1 adam woodruff,1987,D1,0,1967,11.39,0.45,12,1
+18,2026-11-25,Adam May,Josh Dudley-Price,w1 josh dudley-price,1669,W1,0,1950,12.229999999999999,0.8400000000000001,12,1
 1,2026-04-21,Adam Morris,Anshul Swamy,e1 anshul swamy,1615,E1,1,1505,0.32,0.32,1,1
 1,2026-01-07,Adam Musson,Jack Mason,w1 jack mason,1517,W1,1,2061,0.9,0.9,1,1
 2,2026-01-14,Adam Musson,Alan Young,w1 alan young,2014,W1,1,2070,1.46,0.56,2,1
@@ -379,6 +384,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 23,2026-10-26,Alan Chapman,Gwyn Havard,e1 gwyn havard,1773,E1,1,1936,11.58,0.73,11,1
 25,2026-11-01,Alan Chapman,Grzegorz Toczek,e1 grzegorz toczek,2285,E1,0,1923,12.239999999999998,0.13,11,1
 24,2026-11-02,Alan Chapman,George Turner,e1 george turner,1929,E1,0,1925,12.11,0.53,11,1
+26,2026-11-09,Alan Chapman,David Perrett,e1 david perrett,1948,E1,0.5,1923,12.739999999999998,0.5,11.5,1
 1,2026-01-21,Alan Keene,Dave Williams,g1 dave williams,1733,G1,1,1883,0.7,0.7,1,1
 2,2026-02-04,Alan Keene,Chris Dixon,g1 chris dixon,1838,G1,0.5,1882,1.26,0.56,1.5,1
 1,2026-02-13,Alan M Llewellyn,Alfie Melia,NA,2125,ENG,0,1679,0.1,0.1,0,1
@@ -444,6 +450,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 15,2026-11-21,Alan Young,Adam Dalton,w1 adam dalton,2093,W1,0.5,2047,9.19,0.4,10.5,2
 16,2026-11-22,Alan Young,Sven Zeidler,n1 sven zeidler,2236,N1,0.5,2053,9.41,0.22,11,1
 17,2026-11-22,Alan Young,Dave Turner,g1 dave turner,1926,G1,1,2060,10.04,0.63,12,2
+18,2026-11-25,Alan Young,John Arnold,w1 john arnold,1671,W1,1,2062,10.92,0.88,13,1
 1,2026-01-06,Aled Roberts,Chris Peters,e1 chris peters,1725,E1,0,1652,0.41,0.41,0,1
 2,2026-02-09,Aled Roberts,Bob Hurn,e1 bob hurn,1706,E1,0,1638,0.85,0.44,0,1
 3,2026-03-03,Aled Roberts,Ricardo Galicia,e1 ricardo galicia,1500,E1,1,1647,1.57,0.72,1,1
@@ -580,6 +587,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 57,2026-11-04,Alex Bullen,Tim Kett,e1 tim kett,2210,E1,0,2126,40.91,0.49,33,1
 58,2026-11-11,Alex Bullen,Daniel Wilmot,e1 daniel wilmot,2039,E1,1,2129,41.63,0.72,34,1
 59,2026-11-18,Alex Bullen,Tim Kett,e1 tim kett,2210,E1,0,2124,42.120000000000005,0.49,34,1
+60,2026-11-25,Alex Bullen,Tom Brown,e1 tom brown,2107,E1,0,2117,42.760000000000005,0.64,34,1
 1,2026-01-10,Alex Freeland,Kenneth G Coates,NA,1879,ENG,1,2090,0.77,0.77,1,1
 2,2026-01-11,Alex Freeland,Suzie G Cooke,NA,2044,ENG,0.5,2089,1.33,0.56,1.5,1
 3,2026-01-17,Alex Freeland,John S Garnet,NA,1937,ENG,1,2094,2.03,0.7,2.5,1
@@ -804,6 +812,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 28,2026-11-16,Andrei Zhuravlev,Dave Parsons,e1 dave parsons,1868,E1,0.5,1562,8.7,0.1,14,1
 29,2026-11-18,Andrei Zhuravlev,Charlie Duffin,e1 charlie duffin,1326,E1,0.5,1559,9.31,0.61,14.5,2
 30,2026-11-18,Andrei Zhuravlev,Maya Hurst,e1 maya hurst,1600,E1,0,1552,9.55,0.24000000000000002,14.5,1
+31,2026-11-25,Andrei Zhuravlev,Robert Wallace,e1 robert wallace,1563,E1,0,1543,9.84,0.29000000000000004,14.5,1
 1,2026-01-07,Andrew Balfe,Charlie Smith,g1 charlie smith,1412,G1,1,1675,0.81,0.81,1,1
 2,2026-01-14,Andrew Balfe,Ben Richards,g1 ben richards,1621,G1,0,1658,1.38,0.57,1,1
 3,2026-02-25,Andrew Balfe,Robert Palser,g1 robert palser,1604,G1,1,1670,1.97,0.59,2,1
@@ -929,6 +938,17 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 33,2026-10-31,Andrew Di-Vetta,Josh Dolan,NA,1857,ENG,0.5,1787,15.39,0.47000000000000003,13,2
 34,2026-11-01,Andrew Di-Vetta,Nikesh Acharya,NA,1806,ENG,0,1776,15.93,0.54,13,1
 30,2026-11-04,Andrew Di-Vetta,Reginald Mba,e1 reginald mba,1977,E1,0.5,1798,14.350000000000001,0.31,12.5,1
+36,2026-11-10,Andrew Di-Vetta,Stephen Homer,NA,2109,ENG,1,1783,16.610000000000003,0.17,14,1
+37,2026-11-10,Andrew Di-Vetta,Nurlykhan Kudaibergen,NA,2236,ENG,0,1781,16.71,0.1,14,2
+38,2026-11-11,Andrew Di-Vetta,Qixuan Han,NA,2129,ENG,0,1778,16.87,0.16,14,1
+39,2026-11-11,Andrew Di-Vetta,Petr Marusenko,NA,2103,ENG,0,1774,17.05,0.18,14,2
+40,2026-11-12,Andrew Di-Vetta,George Lekoudis,NA,1807,ENG,0.5,1773,17.59,0.54,14.5,1
+41,2026-11-13,Andrew Di-Vetta,Roger De Coverly,NA,1955,ENG,0,1767,17.919999999999998,0.32999999999999996,14.5,2
+43,2026-11-13,Andrew Di-Vetta,Peter J Mulleady,NA,1997,ENG,1,1779,18.3,0.28,15.5,1
+44,2026-11-14,Andrew Di-Vetta,Alan K Punnett,NA,1977,ENG,0.5,1783,18.610000000000003,0.31,16,1
+45,2026-11-14,Andrew Di-Vetta,John M Potter,NA,2202,ENG,0,1781,18.72,0.11,16,2
+42,2026-11-15,Andrew Di-Vetta,Tim Kett,e1 tim kett,2210,E1,0,1765,18.02,0.1,14.5,2
+46,2026-11-15,Andrew Di-Vetta,Steve Smith,w1 steve smith,1946,W1,1,1794,19.07,0.35,17,1
 1,2026-01-07,Andrew Gibbons,Andrew Smith,w1 andrew smith,1902,W1,0.5,2008,0.65,0.65,0.5,1
 2,2026-01-14,Andrew Gibbons,Matthew Billington,w1 matthew billington,1774,W1,0.5,2002,1.45,0.8,1,1
 3,2026-01-21,Andrew Gibbons,Peter Bevan,w1 peter bevan,1886,W1,0.5,1999,2.12,0.67,1.5,1
@@ -986,10 +1006,12 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 6,2026-10-06,Andrew Jeanes,David Hambrook,e1 david hambrook,1623,E1,0.5,1636,2.55,0.52,2.5,1
 7,2026-10-12,Andrew Jeanes,Thomas Mahoney,e1 thomas mahoney,1795,E1,0.5,1642,2.84,0.29000000000000004,3,1
 8,2026-10-19,Andrew Jeanes,John Callan,e1 john callan,1443,E1,1,1650,3.59,0.75,4,1
-9,2026-10-26,Andrew Jeanes,Jack Hannigan,e1 jack hannigan,1735,E1,0.5,1654,3.9499999999999997,0.36,4.5,1
+9,2026-10-26,Andrew Jeanes,Jack Hannigan,e1 jack hannigan,1735,E1,0.5,1654,3.95,0.36,4.5,1
 10,2026-10-27,Andrew Jeanes,Paul Bridges,e1 paul bridges,1821,E1,0.5,1661,4.21,0.26,5,1
 11,2026-11-09,Andrew Jeanes,Martin Ilett,e1 martin ilett,1568,E1,0.5,1658,4.81,0.6,5.5,1
 12,2026-11-16,Andrew Jeanes,Peter Slater,e1 peter slater,1606,E1,0.5,1657,5.359999999999999,0.55,6,1
+13,2026-11-24,Andrew Jeanes,David Rovaretti,e1 david rovaretti,1747,E1,0,1646,5.71,0.35,6,1
+14,2026-11-25,Andrew Jeanes,Adam Barry,e1 adam barry,1450,E1,0,1624,6.46,0.75,6,1
 1,2026-02-18,Andrew Miller,Oscar Owen,n1 oscar owen,1310,N1,1,1363,0.56,0.56,1,1
 2,2026-03-17,Andrew Miller,Steve Richards,n1 steve richards,1722,N1,0.5,1375,0.67,0.11,1.5,1
 3,2026-04-16,Andrew Miller,Edgar Reynolds,NA,1599,ENG,0,1369,0.86,0.19,1.5,1
@@ -1356,6 +1378,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 3,2026-11-17,Anthony Williams,John Cox,e1 john cox,1612,E1,0.5,1432,0.75,0.25,1,1
 1,2026-10-12,Anton Rogan,Wayne Olsen,e1 wayne olsen,1496,E1,0,1551,0.6,0.6,0,1
 2,2026-11-10,Anton Rogan,Charlie Duffin,e1 charlie duffin,1326,E1,1,1557,1.4,0.8,1,1
+3,2026-11-24,Anton Rogan,Antony Phillips,e1 antony phillips,1375,E1,1,1564,2.15,0.75,2,1
 1,2026-09-29,Antonio Stoyle,Tomi Ogden,w1 tomi ogden,1310,W1,0,1295,0.5,0.5,0,1
 1,2026-01-06,Antony Phillips,Sam White,e1 sam white,1496,E1,0,1387,0.36,0.36,0,1
 2,2026-01-27,Antony Phillips,Raga Sreya Mandadapu,e1 raga sreya mandadapu,1338,E1,1,1400,0.95,0.59,1,1
@@ -1367,6 +1390,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 8,2026-04-28,Antony Phillips,Ben Hannigan,e1 ben hannigan,1516,E1,0,1368,3,0.34,2,1
 1,2026-09-15,Antony Phillips,Mike Joslin,e1 mike joslin,1544,E1,0.5,1382,0.27,0.27,0.5,1
 2,2026-11-03,Antony Phillips,Stuart Enoch,e1 stuart enoch,1545,E1,0,1374,0.54,0.27,0.5,1
+3,2026-11-24,Antony Phillips,Anton Rogan,e1 anton rogan,1569,E1,0,1366,0.7899999999999999,0.25,0.5,1
 1,2026-01-06,Archie Jones,Angel Srivastava,e1 angel srivastava,1365,E1,1,1631,0.82,0.82,1,1
 2,2026-01-07,Archie Jones,Andrei Zhuravlev,e1 andrei zhuravlev,1638,E1,1,1647,1.3,0.48,2,1
 3,2026-01-13,Archie Jones,Ellis Jones,e1 ellis jones,1310,E1,1,1651,2.16,0.86,3,1
@@ -1473,6 +1497,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 41,2026-11-11,Archie Jones,Wutong Chen,e1 wutong chen,2000,E1,0,1702,23.66,0.25,18.5,1
 42,2026-11-18,Archie Jones,Samarth Chawla,e1 samarth chawla,1630,E1,1,1707,24.39,0.73,19.5,2
 43,2026-11-18,Archie Jones,Kristan Enoch,e1 kristan enoch,1891,E1,1,1720,24.77,0.38,20.5,1
+44,2026-11-24,Archie Jones,Jack Hannigan,e1 jack hannigan,1735,E1,1,1728,25.37,0.6,21.5,1
 1,2026-08-21,Arnost Gibiec,Callum Davies,e1 callum davies,1895,E1,1,2078,0.74,0.74,1,1
 2,2026-08-22,Arnost Gibiec,Alan Chapman,e1 alan chapman,1947,E1,0,2065,1.41,0.6699999999999999,1,1
 3,2026-08-22,Arnost Gibiec,Lucas Zheng,e1 lucas zheng,1714,E1,1,2067,2.3,0.89,2,2
@@ -1590,6 +1615,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-07-06,Ben Bickford,Richard Larg,e1 richard larg,1557,E1,0,1641,0.64,0.64,0,1
 2,2026-10-19,Ben Bickford,Suraj Prabhu,e1 suraj prabhu,1766,E1,0,1630,0.99,0.35,0,1
 3,2026-11-09,Ben Bickford,Paul Bridges,e1 paul bridges,1821,E1,0,1622,1.27,0.28,0,1
+4,2026-11-23,Ben Bickford,Justin Morgans,e1 justin morgans,1784,E1,1,1642,1.6,0.32999999999999996,1,1
 1,2026-01-13,Ben Brewer,Mark Paffard,d1 mark paffard,1652,D1,0.5,1916,0.83,0.83,0.5,1
 2,2026-02-02,Ben Brewer,Ewan Ferguson,d1 ewan ferguson,1832,D1,1,1924,1.46,0.63,1.5,1
 3,2026-02-15,Ben Brewer,Neil Stuart,w1 neil stuart,1628,W1,1,1927,2.31,0.85,2.5,1
@@ -1626,6 +1652,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 15,2026-10-26,Ben Hannigan,Martin Neil Jones,e1 martin neil jones,1310,E1,0.5,1439,7.109999999999999,0.75,5,1
 16,2026-10-28,Ben Hannigan,Zack Wilkins,e1 zack wilkins,1765,E1,0,1434,7.29,0.18,5,1
 17,2026-11-02,Ben Hannigan,Matthew Cobley,e1 matthew cobley,1400,E1,0,1415,7.930000000000001,0.64,5,1
+18,2026-11-24,Ben Hannigan,Constantine Popov,e1 constantine popov,1489,E1,1,1429,8.450000000000001,0.52,6,1
 1,2026-01-14,Ben Richards,Andrew Balfe,g1 andrew balfe,1669,G1,1,1638,0.43,0.43,1,1
 2,2026-01-20,Ben Richards,Bob Hurn,e1 bob hurn,1706,E1,0.5,1642,0.81,0.38,1.5,1
 3,2026-01-23,Ben Richards,Jordan Heatman,w1 jordan heatman,1786,W1,0.5,1648,1.09,0.28,2,1
@@ -1664,6 +1691,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 7,2026-11-02,Ben Trigg,Nigel Payne,e1 nigel payne,1500,E1,0,1522,3.3899999999999997,0.46,5,1
 8,2026-11-09,Ben Trigg,Richard Larg,e1 richard larg,1557,E1,0,1511,3.77,0.38,5,1
 9,2026-11-16,Ben Trigg,Wayne Olsen,e1 wayne olsen,1496,E1,1,1527,4.24,0.47000000000000003,6,1
+10,2026-11-23,Ben Trigg,Martin Ilett,e1 martin ilett,1568,E1,1,1546,4.609999999999999,0.37,7,1
 1,2026-01-14,Ben Tucker,Micah Matheson,g1 micah matheson,1359,G1,0,1545,0.77,0.77,0,1
 2,2026-01-28,Ben Tucker,Chris Morgan,g1 chris morgan,1766,G1,0,1538,1.01,0.24,0,1
 1,2026-01-13,Bence Szakmany,Andrii Boiechko,NA,1896,ENG,0,2024,0.69,0.69,0,1
@@ -1692,6 +1720,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 4,2026-11-02,Bill Harle,Dai James,e1 dai james,1820,E1,0.5,1810,2.38,0.48000000000000004,2.5,1
 5,2026-11-04,Bill Harle,Chris White,e1 chris white,1699,E1,0,1797,3.03,0.65,2.5,1
 6,2026-11-18,Bill Harle,Jake Hurley,e1 jake hurley,1962,E1,0,1791,3.32,0.29000000000000004,2.5,1
+7,2026-11-25,Bill Harle,Chris Fox,e1 chris fox,1515,E1,1,1795,4.159999999999999,0.8400000000000001,3.5,1
 1,2026-02-04,Bill Hunt,Angel Srivastava,e1 angel srivastava,1365,E1,0.5,1780,0.9,0.9,0.5,1
 2,2026-03-04,Bill Hunt,Reginald Mba,e1 reginald mba,1955,E1,0,1772,1.18,0.28,0.5,1
 3,2026-03-25,Bill Hunt,Simon Blackmore,e1 simon blackmore,1782,E1,1,1786,1.69,0.51,1.5,1
@@ -1793,6 +1822,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 38,2026-11-09,Bob Hurn,Russell Dodington,e1 russell dodington,1813,E1,0.5,1635,14.04,0.27,14,1
 39,2026-11-16,Bob Hurn,Rhys Davies,e1 rhys davies,1401,E1,1,1641,14.84,0.8,15,1
 40,2026-11-17,Bob Hurn,Kam Choo Yin,e1 kam choo yin,1635,E1,0,1626,15.34,0.5,15,1
+41,2026-11-23,Bob Hurn,Mark Cooke,e1 mark cooke,1601,E1,0,1609,15.89,0.55,15,1
 1,2026-04-01,Bob Moore,Blake Stone,w1 blake stone,1828,W1,0,1918,0.64,0.64,0,1
 2,2026-05-19,Bob Moore,Riley Fitzpatrick,w1 riley fitzpatrick,1404,W1,1,1920,1.54,0.9,1,1
 3,2026-05-27,Bob Moore,Adam Musson,w1 adam musson,2059,W1,0,1914,1.86,0.32,1,1
@@ -1841,6 +1871,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 2,2026-10-13,Bradley Evans,Huw Jones,w1 huw jones,1767,W1,0,1569,1.05,0.28,0,1
 3,2026-10-22,Bradley Evans,Mike Richards,w1 mike richards,1522,W1,1,1580,1.66,0.61,1,1
 4,2026-10-27,Bradley Evans,Jeff Boyce,w1 jeff boyce,1403,W1,1,1588,2.42,0.76,2,1
+5,2026-11-24,Bradley Evans,John Davies,w1 john davies,1460,W1,0,1567,3.11,0.69,2,1
 1,2026-11-16,Brendan Lee,Adam Chinnick,e1 adam chinnick,1310,E1,1,1389,0.6,0.6,1,1
 1,2026-06-13,Bronwen Tuson,Peter Evans,d1 peter evans,1604,D1,0,1521,0.4,0.4,0,1
 1,2026-08-21,Callum Davies,Arnost Gibiec,g1 arnost gibiec,2073,G1,0,1890,0.26,0.26,0,1
@@ -1884,6 +1915,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-09-14,Callum Williams,John Callan,e1 john callan,1443,E1,0,1343,0.37,0.37,0,1
 2,2026-09-21,Callum Williams,Adam Christopher,e1 adam christopher,1722,E1,0,1340,0.48,0.11,0,1
 3,2026-10-06,Callum Williams,Teilo Gruffydd,e1 teilo gruffydd,1399,E1,0,1326,0.92,0.44,0,1
+4,2026-11-23,Callum Williams,Kieran Judge,e1 kieran judge,1458,E1,0,1316,1.27,0.35,0,1
 1,2026-02-24,Cameron Ferguson,Nick Hale,w1 nick hale,1451,W1,1,1383,0.38,0.38,1,1
 2,2026-03-10,Cameron Ferguson,Stuart Thomas,w1 stuart thomas,1310,W1,1,1395,0.96,0.58,2,1
 3,2026-03-24,Cameron Ferguson,Kai palmer,w1 kai palmer,1310,W1,1,1408,1.54,0.58,3,1
@@ -1928,6 +1960,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 16,2026-11-21,Carl Halpin,Roy Thomas,e1 roy thomas,2021,E1,0,1621,5.94,0.1,5.5,2
 17,2026-11-22,Carl Halpin,Chris White,e1 chris white,1699,E1,0,1609,6.35,0.41000000000000003,5.5,1
 18,2026-11-22,Carl Halpin,Danylo Shevchenko,e1 danylo shevchenko,1813,E1,0,1601,6.609999999999999,0.26,5.5,2
+19,2026-11-25,Carl Halpin,Robert Bradley,w1 robert bradley,1606,W1,0.5,1600,7.1499999999999995,0.54,6,1
 1,2026-08-22,Carl Johnson,Kevin Lambert,g1 kevin lambert,1610,G1,0,1345,0.18,0.18,0,1
 2,2026-08-22,Carl Johnson,Tom Ferries,e1 tom ferries,1367,E1,1,1360,0.6599999999999999,0.48,1,2
 3,2026-08-23,Carl Johnson,Chris Thompson,g1 chris thompson,1453,G1,0,1350,1.02,0.36,1,1
@@ -2025,6 +2058,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 10,2026-11-03,Charlie Duffin,Mabon Hanczar,e1 mabon hanczar,1393,E1,1,1399,3.55,0.4,6,1
 13,2026-11-10,Charlie Duffin,Anton Rogan,e1 anton rogan,1569,E1,0,1426,4.659999999999999,0.2,8,1
 14,2026-11-18,Charlie Duffin,Andrei Zhuravlev,e1 andrei zhuravlev,1404,E1,0.5,1429,5.05,0.39,8.5,1
+15,2026-11-23,Charlie Duffin,Daniel Katchi,e1 daniel katchi,1310,E1,1,1443,5.57,0.52,9.5,1
 2,2026-01-07,Charlie Smith,Andrew Balfe,g1 andrew balfe,1669,G1,0,1400,0.42,0.19,0,1
 3,2026-01-12,Charlie Smith,Simon Tang,g1 simon tang,1706,G1,0,1395,0.58,0.16,0,1
 4,2026-01-28,Charlie Smith,John Newcombe,g1 john newcombe,1623,G1,0,1388,0.81,0.23,0,1
@@ -2108,6 +2142,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 2,2026-09-16,Chris Fox,Joseph Browse,e1 joseph browse,1842,E1,0,1503,0.39,0.13,0,1
 3,2026-11-11,Chris Fox,Gavin Jones,e1 gavin jones,1809,E1,1,1529,0.55,0.16,1,1
 4,2026-11-18,Chris Fox,Joe Walters,e1 joe walters,1310,E1,1,1536,1.31,0.76,2,1
+5,2026-11-25,Chris Fox,Bill Harle,e1 bill harle,1808,E1,0,1531,1.47,0.16,2,1
 1,2026-02-26,Chris Grier,Peter S Fisher,n1 peter s fisher,1884,N1,0.5,1834,0.43,0.43,0.5,1
 2,2026-03-12,Chris Grier,Gregory Barker,n1 gregory barker,1742,N1,0,1822,1.06,0.63,0.5,1
 3,2026-03-17,Chris Grier,Joe Muxlow,n1 joe muxlow,1829,N1,0.5,1822,1.57,0.51,1,1
@@ -2177,6 +2212,8 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 11,2026-10-05,Chris Peters,Gwynfor Rees,e1 gwynfor rees,2011,E1,0,1740,5.18,0.14,6.5,1
 12,2026-10-20,Chris Peters,John McGregor,e1 john mcgregor,1867,E1,0,1731,5.46,0.28,6.5,1
 13,2026-10-27,Chris Peters,Yimo Liu,e1 yimo liu,1472,E1,1,1738,6.25,0.7899999999999999,7.5,1
+14,2026-11-23,Chris Peters,Logan Cox,e1 logan cox,1600,E1,0,1718,6.89,0.64,7.5,1
+15,2026-11-24,Chris Peters,Emyr Roberts,e1 emyr roberts,1762,E1,1,1736,7.3,0.41000000000000003,8.5,1
 1,2026-01-10,Chris Thompson,Mike Stannard,g1 mike stannard,1479,G1,1,1481,0.48,0.48,1,1
 2,2026-01-10,Chris Thompson,Keith Middleton,NA,1657,ENG,0.5,1488,0.73,0.25,1.5,2
 3,2026-01-11,Chris Thompson,Philip Burnett,NA,1651,ENG,0.5,1495,0.99,0.26,2,1
@@ -2265,6 +2302,8 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 23,2026-10-20,Chris White,Archie Jones,e1 archie jones,1805,E1,0.5,1763,7.859999999999999,0.35,10,1
 24,2026-10-27,Chris White,Archie Jones,e1 archie jones,1805,E1,0.5,1767,8.209999999999999,0.35,10.5,1
 25,2026-11-04,Chris White,Bill Harle,e1 bill harle,1808,E1,1,1787,8.56,0.35,11.5,1
+26,2026-11-23,Chris White,Rishi Choudhuri,w1 rishi choudhuri,1602,W1,0.5,1783,9.2,0.64,12,1
+27,2026-11-24,Chris White,Teilo Gruffydd,e1 teilo gruffydd,1399,E1,0,1757,10.05,0.8500000000000001,12,1
 1,2026-04-21,Christopher Kitely,Nithvek Siddu,e1 nithvek siddu,1310,E1,1,1325,0.5,0.5,1,1
 2,2026-04-28,Christopher Kitely,Ishaan Marugonda,e1 ishaan marugonda,1310,E1,0.5,1325,1,0.5,1.5,1
 3,2026-05-05,Christopher Kitely,Ahmed Jamil,e1 ahmed jamil,1310,E1,0,1310,1.5,0.5,1.5,1
@@ -2293,6 +2332,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 7,2026-11-10,Claire Gorman,Janet Evans,w1 janet evans,1310,W1,1,1432,3.84,0.6799999999999999,3.5,1
 8,2026-11-20,Claire Gorman,Bob Hurn,e1 bob hurn,1637,E1,0,1425,4.09,0.25,3.5,1
 9,2026-11-21,Claire Gorman,John Ward,w1 john ward,1382,W1,1,1437,4.68,0.59,4.5,1
+10,2026-11-24,Claire Gorman,Serdar Gurdas,w1 serdar gurdas,1400,W1,0,1420,5.24,0.56,4.5,1
 1,2026-01-06,Clara Deng,Anievv Pirashanth,e1 anievv pirashanth,1429,E1,1,1451,0.51,0.51,1,1
 2,2026-01-13,Clara Deng,Teilo Gruffydd,e1 teilo gruffydd,1379,E1,1,1463,1.09,0.58,2,1
 3,2026-01-20,Clara Deng,Aya Jamil,e1 aya jamil,1317,E1,1,1473,1.75,0.66,3,1
@@ -2351,6 +2391,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 23,2026-10-14,Clara Deng,Teilo Gruffydd,e1 teilo gruffydd,1399,E1,1,1410,12.04,0.6,10,1
 24,2026-10-27,Clara Deng,David Jones,e1 david jones,1537,E1,0,1398,12.44,0.4,10,1
 27,2026-11-18,Clara Deng,Raga Sreya Mandadapu,e1 raga sreya mandadapu,1411,E1,1,1434,14.229999999999999,0.58,13,1
+28,2026-11-24,Clara Deng,Adam Chinnick,e1 adam chinnick,1310,E1,1,1443,14.950000000000001,0.72,14,1
 1,2026-01-12,Clem Jones,Bob Hurn,e1 bob hurn,1706,E1,0,1514,0.26,0.26,0,1
 2,2026-02-02,Clem Jones,Stefan Le Roy,e1 stefan le roy,1729,E1,0,1507,0.49,0.23,0,1
 3,2026-02-24,Clem Jones,Owain Dutfield,e1 owain dutfield,1652,E1,0,1498,0.81,0.32,0,1
@@ -2367,7 +2408,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 3,2026-04-20,Clive Silver,Tom Jenney,e1 tom jenney,1536,E1,0.5,1512,1.93,0.46,2,1
 1,2026-08-24,Clive Silver,Stuart Imm,g1 stuart imm,1501,G1,0.5,1512,0.52,0.52,0.5,1
 2,2026-09-21,Clive Silver,Mike Joslin,e1 mike joslin,1544,E1,0.5,1513,0.97,0.45,1,1
-3,2026-10-26,Clive Silver,Michael Evans,e1 michael evans,1400,E1,0.5,1508,1.6300000000000001,0.6599999999999999,1.5,1
+3,2026-10-26,Clive Silver,Michael Evans,e1 michael evans,1400,E1,0.5,1508,1.63,0.6599999999999999,1.5,1
 4,2026-11-02,Clive Silver,Martin Ricketts,e1 martin ricketts,1496,E1,0.5,1508,2.15,0.52,2,1
 5,2026-11-09,Clive Silver,Adam Chinnick,e1 adam chinnick,1310,E1,1,1515,2.9099999999999997,0.76,3,1
 6,2026-11-16,Clive Silver,Teilo Gruffydd,e1 teilo gruffydd,1399,E1,0.5,1510,3.57,0.6599999999999999,3.5,1
@@ -2428,6 +2469,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 26,2026-11-10,Constantine Popov,Jonathan Tay,e1 jonathan tay,1310,E1,1,1385,10.47,0.74,7,1
 27,2026-11-16,Constantine Popov,Neil Owen,e1 neil owen,1700,E1,0,1378,10.7,0.23,7,1
 28,2026-11-18,Constantine Popov,Zirui Xu,e1 zirui xu,1310,E1,1,1386,11.44,0.74,8,1
+29,2026-11-24,Constantine Popov,Ben Hannigan,e1 ben hannigan,1503,E1,0,1372,11.92,0.48000000000000004,8,1
 1,2026-01-23,Cory Workman,Oscar Purcell,w1 oscar purcell,1325,W1,1,1354,0.52,0.52,1,1
 2,2026-03-10,Cory Workman,Jakob Josh-Wright,w1 jakob josh-wright,1310,W1,0,1338,1.06,0.54,1,1
 3,2026-04-28,Cory Workman,Erik Elgersma,w1 erik elgersma,1318,W1,1,1352,1.59,0.53,2,1
@@ -2512,6 +2554,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 5,2026-11-03,Dafydd Davies,Torrigan Chapman,w1 torrigan chapman,1310,W1,1,1367,2.1,0.5,4,1
 6,2026-11-17,Dafydd Davies,Peter Ellis,w1 peter ellis,1490,W1,1,1389,2.36,0.26,5,1
 7,2026-11-18,Dafydd Davies,Elijah Wilshire,w1 elijah wilshire,1310,W1,1,1404,2.86,0.5,6,1
+8,2026-11-24,Dafydd Davies,Jack Mason,w1 jack mason,1476,W1,1,1426,3.14,0.28,7,1
 1,2026-01-06,Dafydd Roberts,Barrie Wells,n1 barrie wells,1710,N1,1,1514,0.22,0.22,1,1
 2,2026-01-28,Dafydd Roberts,Peter Coutts,n1 peter coutts,1683,N1,0,1507,0.47,0.25,1,1
 3,2026-03-17,Dafydd Roberts,Paul Maddock,n1 paul maddock,1650,N1,1,1528,0.76,0.29,2,1
@@ -2610,6 +2653,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 34,2026-11-15,Dale Westcott,Peter J Mulleady,NA,1997,ENG,0.5,1939,17.17,0.37,19,1
 35,2026-11-15,Dale Westcott,Steve Lenton,NA,1916,Est,0.5,1940,17.650000000000002,0.48000000000000004,19.5,2
 36,2026-11-18,Dale Westcott,Neil Stuart,w1 neil stuart,1637,W1,0,1923,18.47,0.8200000000000001,19.5,1
+37,2026-11-25,Dale Westcott,Les Philpin,w1 les philpin,1724,W1,1,1929,19.21,0.74,20.5,1
 1,2026-06-29,Dan Kite,Greg Musto,d1 greg musto,1400,D1,1,1511,0.64,0.64,1,1
 1,2026-07-27,Dan Kite,Richard Baker,d1 richard baker,1482,D1,1,1525,0.54,0.54,1,1
 2,2026-08-24,Dan Kite,Huw Holliday,d1 huw holliday,1367,D1,1,1534,1.24,0.7,2,1
@@ -2646,6 +2690,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 3,2026-08-24,Daniel Katchi,Summer Cooke,e1 summer cooke,1337,E1,1,1311,0.96,0.46,1,1
 5,2026-09-28,Daniel Katchi,Mike White,e1 mike white,1424,E1,0,1287,1.77,0.33999999999999997,1,1
 4,2026-10-19,Daniel Katchi,Dean Evans,e1 dean evans,1329,E1,0,1297,1.43,0.47,1,1
+6,2026-11-23,Daniel Katchi,Charlie Duffin,e1 charlie duffin,1326,E1,0,1273,2.25,0.48000000000000004,1,1
 3,2026-01-07,Daniel Smith,Gee Garel,g1 gee garel,1477,G1,0,1292,0.62,0.28,0,1
 4,2026-01-12,Daniel Smith,Bob Wiltshire,g1 bob wiltshire,1545,G1,0,1286,0.83,0.21,0,1
 5,2026-02-09,Daniel Smith,Dekota Sansome,g1 dekota sansome,1438,G1,0,1276,1.15,0.32,0,1
@@ -2680,8 +2725,10 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 14,2026-11-01,Daniel Wilmot,Joe Fathallah,e1 joe fathallah,2027,E1,1,2039,7.51,0.52,7.5,1
 13,2026-11-02,Daniel Wilmot,Grzegorz Toczek,e1 grzegorz toczek,2285,E1,0,2029,6.99,0.2,6.5,1
 12,2026-11-03,Daniel Wilmot,Lucas Zheng,e1 lucas zheng,1714,E1,1,2033,6.79,0.8700000000000001,6.5,1
-15,2026-11-11,Daniel Wilmot,Alex Bullen,e1 alex bullen,2205,E1,0,2033,7.79,0.28,7.5,1
-16,2026-11-16,Daniel Wilmot,Lachlan Tyrrell,e1 lachlan tyrrell,2022,E1,0,2023,8.31,0.52,7.5,1
+15,2026-11-09,Daniel Wilmot,Jonathan Gilbert,g1 jonathan gilbert,2023,G1,0,2028,8.03,0.52,7.5,1
+16,2026-11-11,Daniel Wilmot,Alex Bullen,e1 alex bullen,2205,E1,0,2023,8.31,0.28,7.5,1
+17,2026-11-16,Daniel Wilmot,Lachlan Tyrrell,e1 lachlan tyrrell,2022,E1,0,2012,8.83,0.52,7.5,1
+18,2026-11-24,Daniel Wilmot,Tim Kett,e1 tim kett,2210,E1,0,2007,9.1,0.27,7.5,1
 1,2026-01-13,Danni Ramayead,Llywelyn Gruffydd,e1 llywelyn gruffydd,1325,E1,1,1326,0.48,0.48,1,1
 2,2026-01-27,Danni Ramayead,Ahmed Jamil,e1 ahmed jamil,1310,E1,0,1311,0.98,0.5,1,1
 3,2026-02-03,Danni Ramayead,Teilo Gruffydd,e1 teilo gruffydd,1379,E1,0,1299,1.38,0.4,1,1
@@ -2749,6 +2796,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 8,2026-11-21,Darson Beeston,John A Williams,g1 john a williams,1693,G1,0.5,1760,3.5,0.53,5,1
 9,2026-11-22,Darson Beeston,Les Philpin,w1 les philpin,1724,W1,0.5,1761,3.9899999999999998,0.49,5.5,1
 10,2026-11-22,Darson Beeston,Wahid Ahmed,NA,6,Pending,0.5,1746,4.99,1,6,2
+11,2026-11-25,Darson Beeston,Jordan Heatman,w1 jordan heatman,1835,W1,0,1736,5.319999999999999,0.32999999999999996,6,1
 1,2026-01-21,Dave Connolly,Zane Allford,g1 zane allford,1830,G1,0,1672,0.3,0.3,0,1
 2,2026-03-25,Dave Connolly,Mike Stannard,g1 mike stannard,1479,G1,1,1679,1.06,0.76,1,1
 1,2026-10-07,Dave Connolly,Patrick Bourne,g1 patrick bourne,1731,G1,1,1696,0.4300000000000001,0.4300000000000001,1,1
@@ -2764,6 +2812,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 2,2026-08-10,Dave Mahoney,Joshua Phillips,e1 joshua phillips,1400,E1,0,1323,0.55,0.37,1,1
 3,2026-09-28,Dave Mahoney,Aya Jamil,e1 aya jamil,1310,E1,1,1338,1.05,0.5,2,1
 4,2026-11-02,Dave Mahoney,Shaun Jenkins,e1 shaun jenkins,1400,E1,0,1327,1.42,0.37,2,1
+5,2026-11-23,Dave Mahoney,Mabon Hanczar,e1 mabon hanczar,1393,E1,0,1316,1.8,0.38,2,1
 1,2026-01-06,Dave McGhee,Brandan Read,NA,1811,ENG,1,1961,0.7,0.7,1,1
 2,2026-01-20,Dave McGhee,Emile Doran,NA,1866,ENG,1,1969,1.33,0.63,2,1
 3,2026-01-24,Dave McGhee,Chris Dixon,g1 chris dixon,1838,G1,1,1975,1.99,0.66,3,1
@@ -2945,6 +2994,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 6,2026-10-28,David Guy,George Crockart,w1 george crockart,1976,W1,0.5,1814,3.79,0.31,2.5,1
 7,2026-11-04,David Guy,Tony Williams,w1 tony williams,1420,W1,1,1816,4.6899999999999995,0.9,3.5,1
 8,2026-11-18,David Guy,Moss McCarthy,w1 moss mccarthy,2053,W1,1,1832,4.92,0.23,4.5,1
+9,2026-11-25,David Guy,Guto Llywelyn,w1 guto llywelyn,1593,W1,1,1835,5.73,0.81,5.5,1
 1,2026-09-15,David Hambrook,Charlie Duffin,e1 charlie duffin,1326,E1,0,1598,0.8500000000000001,0.8500000000000001,0,1
 2,2026-09-22,David Hambrook,Zirui Xu,e1 zirui xu,1310,E1,1,1602,1.71,0.8600000000000001,1,1
 3,2026-10-06,David Hambrook,Andrew Jeanes,e1 andrew jeanes,1638,E1,0.5,1602,2.19,0.48,1.5,1
@@ -3051,8 +3101,10 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-09-07,David Perrett,Simon Blackmore,e1 simon blackmore,1678,E1,1,1951,0.8300000000000001,0.8300000000000001,1,1
 2,2026-10-05,David Perrett,Chris White,e1 chris white,1699,E1,0,1935,1.64,0.81,1,1
 3,2026-10-26,David Perrett,Alex Bullen,e1 alex bullen,2205,E1,0,1932,1.83,0.19,1,1
+4,2026-11-09,David Perrett,Alan Chapman,e1 alan chapman,1947,E1,0.5,1932,2.3299999999999996,0.5,1.5,1
 1,2026-10-05,David Reed,Ben Hannigan,e1 ben hannigan,1503,E1,1,1515,0.5,0.5,1,1
 2,2026-11-09,David Reed,Dimitri Zografos,e1 dimitri zografos,1343,E1,1,1524,1.21,0.71,2,1
+3,2026-11-23,David Reed,Gethin Stephens,e1 gethin stephens,1425,E1,1,1536,1.82,0.61,3,1
 1,2026-01-19,David Robinson,Steve Jones,e1 steve jones,1801,E1,0,1914,0.67,0.67,0,1
 2,2026-02-23,David Robinson,Steve Jones,e1 steve jones,1801,E1,0.5,1910,1.34,0.67,0.5,1
 3,2026-03-10,David Robinson,Jonathan James,e1 jonathan james,2052,E1,0,1903,1.67,0.33,0.5,1
@@ -3078,10 +3130,12 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 9,2026-10-14,David Rovaretti,Andrei Zhuravlev,e1 andrei zhuravlev,1404,E1,1,1749,4.930000000000001,0.88,5,1
 10,2026-10-27,David Rovaretti,Mark Chinnick,e1 mark chinnick,1604,E1,1,1758,5.619999999999999,0.69,6,1
 11,2026-11-17,David Rovaretti,Jonathan Edwards,e1 jonathan edwards,1441,E1,1,1763,6.470000000000001,0.8500000000000001,7,1
+12,2026-11-24,David Rovaretti,Andrew Jeanes,e1 andrew jeanes,1638,E1,1,1773,7.119999999999999,0.65,8,1
 1,2026-10-28,David Stacey,Stuart Thomas,w1 stuart thomas,1310,W1,0,1295,0.5,0.5,0,1
 2,2026-11-04,David Stacey,Nick Hale,w1 nick hale,1472,W1,0,1287,0.7799999999999999,0.28,0,1
 3,2026-11-11,David Stacey,Tony Williams,w1 tony williams,1420,W1,0,1276,1.1300000000000001,0.35,0,1
 4,2026-11-18,David Stacey,June Evans,w1 june evans,1341,W1,0,1262,1.59,0.46,0,1
+5,2026-11-25,David Stacey,Bradley Hughes,d1 bradley hughes,1310,D1,0,1247,2.09,0.5,0,1
 1,2026-01-28,David Tomboline,Stuart A White,NA,2160,ENG,0,1952,0.24,0.24,0,1
 2,2026-01-31,David Tomboline,Jeffrey Bryant,NA,1847,ENG,0,1939,0.89,0.65,0,1
 3,2026-01-31,David Tomboline,Craig Miller,NA,1808,ENG,0.5,1935,1.59,0.7,0.5,2
@@ -3161,6 +3215,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 6,2026-10-26,Derek Bellamy,Peter Evans,d1 peter evans,1598,D1,0,1478,2.06,0.4,0.5,1
 7,2026-11-04,Derek Bellamy,Nithan Krish,w1 nithan krish,1500,W1,1,1492,2.6,0.54,1.5,1
 8,2026-11-18,Derek Bellamy,Donovan Sipho,w1 donovan sipho,1802,W1,0,1487,2.77,0.17,1.5,1
+9,2026-11-25,Derek Bellamy,Spencer Ripley,w1 spencer ripley,1435,W1,0,1468,3.4,0.63,1.5,1
 1,2026-01-19,Derek Jones,Sergio Esteves,e1 sergio esteves,1829,E1,0,1931,0.66,0.66,0,1
 2,2026-01-20,Derek Jones,Anshul Swamy,e1 anshul swamy,1615,E1,1,1933,1.53,0.87,1,1
 3,2026-01-23,Derek Jones,Chris Dixon,g1 chris dixon,1838,G1,0.5,1930,2.18,0.65,1.5,1
@@ -3201,6 +3256,8 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 12,2026-10-27,Derek Jones,Jonathan James,e1 jonathan james,2068,E1,0,1967,5.91,0.32999999999999996,7,1
 13,2026-11-02,Derek Jones,Guy Wagner,e1 guy wagner,1895,E1,0.5,1965,6.48,0.5700000000000001,7.5,1
 14,2026-11-16,Derek Jones,Rishi Choudhuri,w1 rishi choudhuri,1602,W1,1,1968,7.359999999999999,0.88,8.5,1
+15,2026-11-24,Derek Jones,Otto Bartlett-Davis,e1 otto bartlett-davis,1773,E1,1,1973,8.09,0.73,9.5,1
+16,2026-11-25,Derek Jones,Piotr Graczyk,e1 piotr graczyk,1718,E1,1,1977,8.88,0.7899999999999999,10.5,1
 1,2026-03-07,Dexter Breese,Frankie Foster,e1 frankie foster,1406,E1,0,1299,0.37,0.37,0,1
 2,2026-03-07,Dexter Breese,Aarav Agrawal,e1 aarav agrawal,1310,E1,0.5,1299,0.87,0.5,0.5,2
 3,2026-03-07,Dexter Breese,Charlie Duffin,e1 charlie duffin,1310,E1,1,1314,1.37,0.5,1.5,3
@@ -3250,6 +3307,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 10,2026-11-21,Donovan Sipho,Ben Brewer,d1 ben brewer,1937,D1,0,1804,4.91,0.31,5,1
 11,2026-11-22,Donovan Sipho,Lucas Zheng,e1 lucas zheng,1714,E1,1,1811,5.53,0.62,6,1
 12,2026-11-22,Donovan Sipho,Roy Thomas,e1 roy thomas,2021,E1,0,1807,5.75,0.22,6,2
+13,2026-11-24,Donovan Sipho,Leon Vincent,w1 leon vincent,1589,W1,1,1811,6.52,0.77,7,1
 1,2026-03-18,Dragos Mihai-Pruna,Elijah McGinley,d1 elijah mcginley,1511,D1,0.5,1356,0.28,0.28,0.5,1
 2,2026-06-29,Dragos Mihai-Pruna,Evan Dansie,d1 evan dansie,1400,D1,1,1374,0.71,0.43,1.5,1
 1,2026-09-07,Dragos Mihai-Pruna,Kevin Heady,d1 kevin heady,1720,D1,0,1370,0.12,0.12,0,1
@@ -3321,6 +3379,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 7,2026-10-27,Dylan Greenway,Joseph Lake,w1 joseph lake,1479,W1,0,1423,3.18,0.45,2.5,1
 8,2026-11-11,Dylan Greenway,June Evans,w1 june evans,1341,W1,0,1404,3.82,0.64,2.5,1
 9,2026-11-17,Dylan Greenway,James Vincent,w1 james vincent,1325,W1,1,1414,4.48,0.6599999999999999,3.5,1
+10,2026-11-24,Dylan Greenway,Nma-Elietta Abdul-Obitayo,w1 nma-elietta abdul-obitayo,1310,W1,1,1424,5.159999999999999,0.6799999999999999,4.5,1
 1,2026-08-21,Dylan Orford,Chris Thompson,g1 chris thompson,1453,G1,0,1301,0.31,0.31,0,1
 2,2026-08-22,Dylan Orford,Ben Hannigan,e1 ben hannigan,1503,E1,0,1293,0.56,0.25,0,1
 3,2026-08-23,Dylan Orford,Clara Deng,e1 clara deng,1470,E1,0,1285,0.8400000000000001,0.28,0,1
@@ -3419,6 +3478,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 3,2026-10-28,Elliott Chapman,Robert Bradley,w1 robert bradley,1606,W1,1,1742,1.48,0.69,1.5,1
 4,2026-11-04,Elliott Chapman,Duncan Williams,w1 duncan williams,1895,W1,0,1733,1.77,0.29000000000000004,1.5,1
 5,2026-11-10,Elliott Chapman,Julien Potier,w1 julien potier,1653,W1,1,1744,2.3899999999999997,0.62,2.5,1
+6,2026-11-25,Elliott Chapman,Jonathan Thomas,w1 jonathan thomas,1924,W1,0,1737,2.65,0.26,2.5,1
 1,2026-01-06,Elliott MacNeil,Nicholas A Ward,NA,1939,ENG,0.5,2039,0.64,0.64,0.5,1
 2,2026-01-10,Elliott MacNeil,Edgar Wilson,NA,1997,ENG,0,2028,1.2,0.56,0.5,1
 3,2026-01-11,Elliott MacNeil,Dominic V Gibbs,NA,2071,ENG,0,2019,1.66,0.46,0.5,1
@@ -3545,6 +3605,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 26,2026-09-27,Emma Kong,Dema Alaa,NA,2010,FIDE,1,1928,12.7,0.36,13.5,1
 27,2026-10-26,Emma Kong,Gwynfor Rees,e1 gwynfor rees,2011,E1,1,1941,13.06,0.36,14.5,1
 28,2026-11-01,Emma Kong,Gavin Jones,e1 gavin jones,1809,E1,0,1928,13.7,0.64,14.5,1
+29,2026-11-25,Emma Kong,Thomas Mahoney,e1 thomas mahoney,1795,E1,1,1935,14.360000000000001,0.6599999999999999,15.5,1
 1,2026-01-06,Emyr Roberts,Chris White,e1 chris white,1761,E1,0.5,1785,0.54,0.54,0.5,1
 2,2026-02-09,Emyr Roberts,Justin Morgans,e1 justin morgans,1757,E1,0,1769,1.08,0.54,0.5,1
 3,2026-02-17,Emyr Roberts,Gavin Jones,e1 gavin jones,1816,E1,0,1755,1.54,0.46,0.5,1
@@ -3561,6 +3622,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 3,2026-09-28,Emyr Roberts,Robert Wallace,e1 robert wallace,1563,E1,1,1735,1.92,0.76,1,1
 4,2026-10-06,Emyr Roberts,Dai James,e1 dai james,1820,E1,0.5,1737,2.34,0.42,1.5,1
 5,2026-10-27,Emyr Roberts,Steve Jones,e1 steve jones,1826,E1,0,1725,2.75,0.41000000000000003,1.5,1
+6,2026-11-24,Emyr Roberts,Chris Peters,e1 chris peters,1700,E1,0,1707,3.34,0.59,1.5,1
 1,2026-01-13,Emyr-Wyn Francis,Derek Bellamy,w1 derek bellamy,1468,W1,0,1312,0.3,0.3,0,1
 2,2026-02-03,Emyr-Wyn Francis,Janet Evans,w1 janet evans,1310,W1,1,1327,0.82,0.52,1,1
 3,2026-03-04,Emyr-Wyn Francis,John Ward,w1 john ward,1370,W1,0,1314,1.25,0.43,1,1
@@ -3710,6 +3772,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 7,2026-10-27,Ewan Goodjohn,Adam Sarwar,e1 adam sarwar,1512,E1,1,1636,3.52,0.63,4.5,1
 9,2026-11-01,Ewan Goodjohn,Elijah Daniel,g1 elijah daniel,1527,G1,0.5,1652,4.5,0.61,6,1
 8,2026-11-02,Ewan Goodjohn,Neil Owen,e1 neil owen,1700,E1,1,1655,3.8899999999999997,0.37,5.5,1
+10,2026-11-23,Ewan Goodjohn,Gareth Harding,e1 gareth harding,1649,E1,1,1668,4.94,0.44,7,1
 1,2026-10-12,Fadil Parottil,Mike Joslin,e1 mike joslin,1544,E1,1,1613,0.58,0.58,1,1
 2,2026-10-19,Fadil Parottil,Leon Davies,e1 leon davies,1443,E1,0.5,1606,1.29,0.71,1.5,1
 1,2026-05-19,Farouq Nasir,Aarush Ram,w1 aarush ram,1392,W1,1,1719,0.87,0.87,1,1
@@ -3789,6 +3852,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-09-30,Finley Jones,Andrei Zhuravlev,e1 andrei zhuravlev,1404,E1,0,1422,0.55,0.55,0,1
 2,2026-10-07,Finley Jones,Sam White,e1 sam white,1571,E1,0,1412,0.8700000000000001,0.32,0,1
 3,2026-10-28,Finley Jones,Jamie Wilson,e1 jamie wilson,1417,E1,0,1396,1.4,0.53,0,1
+4,2026-11-25,Finley Jones,Ieuan Bevan-Jones,e1 ieuan bevan-jones,1529,E1,0,1385,1.77,0.37,0,1
 1,2026-01-06,Finn Jones,Nickolas Sharifi,e1 nickolas sharifi,1310,E1,1,1325,0.5,0.5,1,1
 2,2026-01-13,Finn Jones,Ahmed Jamil,e1 ahmed jamil,1310,E1,0,1310,1,0.5,1,1
 3,2026-01-27,Finn Jones,Aya Jamil,e1 aya jamil,1317,E1,0,1295,1.49,0.49,1,1
@@ -3845,6 +3909,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-03-09,Gareth Harding,Peter Watkins,e1 peter watkins,1454,E1,0.5,1675,0.79,0.79,0.5,1
 2,2026-03-30,Gareth Harding,Richard Swales,e1 richard swales,1344,E1,0,1649,1.67,0.88,0.5,1
 1,2026-10-26,Gareth Harding,Richard Larg,e1 richard larg,1557,E1,0.5,1645,0.63,0.63,0.5,1
+2,2026-11-23,Gareth Harding,Ewan Goodjohn,e1 ewan goodjohn,1607,E1,0,1628,1.1900000000000002,0.56,0.5,1
 1,2026-01-07,Gareth Harper,Rishi Choudhuri,w1 rishi choudhuri,1570,W1,0.5,1692,0.68,0.68,0.5,1
 2,2026-01-23,Gareth Harper,Naveen Daniel George,NA,1779,ENG,1,1710,1.06,0.38,1.5,1
 3,2026-01-24,Gareth Harper,Timur Ramzan,e1 timur ramzan,1602,E1,0,1691,1.69,0.63,1.5,1
@@ -3957,6 +4022,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 17,2026-11-01,Gareth Yeo,Moss McCarthy,w1 moss mccarthy,2053,W1,1,2096,11.57,0.52,13,1
 16,2026-11-02,Gareth Yeo,Bob Hurn,e1 bob hurn,1637,E1,1,2087,11.05,0.9,12,1
 18,2026-11-16,Gareth Yeo,Lucas Zheng,e1 lucas zheng,1714,E1,1,2099,12.450000000000001,0.88,14,1
+19,2026-11-23,Gareth Yeo,George Turner,e1 george turner,1929,E1,0,2085,13.139999999999999,0.69,14,1
 1,2026-02-02,Garmon Iago,Constantine Popov,e1 constantine popov,1418,E1,0,1499,0.64,0.64,0,1
 1,2026-01-08,Gary Fox,Will G Williams,n1 will g williams,1880,N1,0,1783,0.38,0.38,0,1
 2,2026-01-29,Gary Fox,Mohammed Ayad,n1 mohammed ayad,1851,N1,0,1770,0.8,0.42,0,1
@@ -4080,6 +4146,8 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 16,2026-11-09,Gavin Jones,Matthew Davies,e1 matthew davies,1978,E1,0,1835,7.6899999999999995,0.27,9,1
 17,2026-11-11,Gavin Jones,Chris Fox,e1 chris fox,1515,E1,0,1818,8.53,0.8400000000000001,9,1
 18,2026-11-16,Gavin Jones,Maya Hurst,e1 maya hurst,1600,E1,1,1823,9.3,0.77,10,1
+19,2026-11-24,Gavin Jones,Jonathan James,e1 jonathan james,2068,E1,1,1839,9.48,0.18,11,1
+20,2026-11-25,Gavin Jones,Patryk Bialowas,e1 patryk bialowas,1578,E1,0.5,1833,10.27,0.7899999999999999,11.5,1
 1,2026-01-07,Gee Garel,Daniel Smith,g1 daniel smith,1310,G1,1,1485,0.72,0.72,1,1
 2,2026-01-28,Gee Garel,Bob Stanworth,g1 bob stanworth,1549,G1,0.5,1488,1.12,0.4,1.5,1
 3,2026-02-09,Gee Garel,Simon Tang,g1 simon tang,1706,G1,0,1482,1.33,0.21,1.5,1
@@ -4190,6 +4258,8 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 9,2026-11-02,George Turner,Alan Chapman,e1 alan chapman,1947,E1,1,1973,4.28,0.47000000000000003,6.5,1
 10,2026-11-11,George Turner,Peter Quinn,e1 peter quinn,1768,E1,1,1979,5,0.72,7.5,1
 11,2026-11-18,George Turner,Lachlan Tyrrell,e1 lachlan tyrrell,2022,E1,0.5,1982,5.37,0.37,8,1
+12,2026-11-23,George Turner,Gareth Yeo,e1 gareth yeo,2068,E1,1,1995,5.68,0.31,9,1
+13,2026-11-25,George Turner,Joe Fathallah,e1 joe fathallah,2027,E1,0,1988,6.04,0.36,9,1
 1,2026-07-02,George Walters,Harry Harling,d1 harry harling,1341,D1,0,1382,0.58,0.58,0,1
 2,2026-10-27,George Walters,Harry Harling,d1 harry harling,1341,D1,0.5,1380,1.1600000000000001,0.58,0.5,1
 3,2026-11-17,George Walters,Osian Griffiths,d1 osian griffiths,1310,D1,1,1391,1.79,0.63,1.5,1
@@ -4215,6 +4285,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 3,2026-10-26,Gethin Stephens,Martin K Jones,e1 martin k jones,1549,E1,1,1454,1.52,0.32999999999999996,2.5,1
 4,2026-11-10,Gethin Stephens,Tim Whitchurch,e1 tim whitchurch,1591,E1,0,1446,1.8,0.28,2.5,1
 5,2026-11-16,Gethin Stephens,Stuart Enoch,e1 stuart enoch,1545,E1,0,1436,2.13,0.32999999999999996,2.5,1
+6,2026-11-23,Gethin Stephens,David Reed,e1 david reed,1500,E1,0,1424,2.52,0.39,2.5,1
 1,2026-03-16,Gideon Way,Chris Morton,g1 chris morton,1451,G1,0.5,1382,0.4,0.4,0.5,1
 1,2026-01-06,Glyn Hill,John Davies,w1 john davies,1457,W1,0.5,1512,0.58,0.58,0.5,1
 2,2026-01-09,Glyn Hill,Ramalakshmi Thiruvadi,NA,1310,Est,1,1519,1.34,0.76,1.5,1
@@ -4360,6 +4431,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 24,2026-11-21,Glyn Hill,John Ward,w1 john ward,1382,W1,1,1626,11.239999999999998,0.75,13,2
 25,2026-11-22,Glyn Hill,Robert Narayan-Taylor,d1 robert narayan-taylor,1575,D1,0,1611,11.739999999999998,0.5,13,1
 26,2026-11-22,Glyn Hill,Riley Fitzpatrick,w1 riley fitzpatrick,1369,W1,0,1588,12.5,0.76,13,2
+27,2026-11-24,Glyn Hill,Samuel Lee,w1 samuel lee,1500,W1,1,1600,13.1,0.6,14,1
 1,2026-01-06,Govind Anandkumar,Jonathan James,e1 jonathan james,2052,E1,0,1841,0.23,0.23,0,1
 2,2026-01-27,Govind Anandkumar,Otto Bartlett-Davis,e1 otto bartlett-davis,1659,E1,0.5,1836,0.98,0.75,0.5,1
 3,2026-02-17,Govind Anandkumar,Andrew Di-Vetta,e1 andrew di-vetta,1948,E1,1,1849,1.34,0.36,1.5,1
@@ -4397,6 +4469,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-09-16,Greg Goold,Tony Williams,w1 tony williams,1420,W1,1,1419,0.48,0.48,1,1
 2,2026-09-21,Greg Goold,Julie Ward,d1 julie ward,1596,D1,0,1411,0.73,0.25,1,1
 3,2026-09-30,Greg Goold,Spencer Ripley,w1 spencer ripley,1435,W1,1,1428,1.1800000000000002,0.45,2,1
+4,2026-11-25,Greg Goold,Ian Hayes,d1 ian hayes,1830,D1,0,1425,1.28,0.1,2,1
 1,2026-06-29,Greg Musto,Dan Kite,d1 dan kite,1500,D1,0,1389,0.36,0.36,0,1
 1,2026-09-21,Greg Musto,Wayne Edwards,d1 wayne edwards,1395,D1,0.5,1389,0.49,0.49,0.5,1
 1,2026-01-08,Gregory Barker,Matthew Fox,n1 matthew fox,1781,N1,1,1759,0.44,0.44,1,1
@@ -4469,6 +4542,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 6,2026-11-03,Guto Llywelyn,Glyn Hill,w1 glyn hill,1574,W1,0,1591,2.56,0.53,2.5,1
 7,2026-11-10,Guto Llywelyn,Andrew Powell,w1 andrew powell,1579,W1,1,1606,3.08,0.52,3.5,1
 8,2026-11-17,Guto Llywelyn,Tony Pickwick,w1 tony pickwick,1450,W1,0,1585,3.77,0.69,3.5,1
+9,2026-11-25,Guto Llywelyn,David Guy,w1 david guy,1840,W1,0,1579,3.96,0.19,3.5,1
 2,2026-01-07,Guy Wagner,Simon Blackmore,e1 simon blackmore,1782,E1,1,1895,1.11,0.63,2,1
 3,2026-01-12,Guy Wagner,Andrew Jeanes,e1 andrew jeanes,1667,E1,0.5,1889,1.88,0.77,2.5,1
 4,2026-01-14,Guy Wagner,James Tapp,e1 james tapp,2176,E1,0,1886,2.03,0.15,2.5,1
@@ -4517,6 +4591,8 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 26,2026-10-23,Guy Wagner,Anthony Hughes,g1 anthony hughes,1957,G1,0,1773,14.62,0.41,8.5,1
 28,2026-11-01,Guy Wagner,Constantine Popov,e1 constantine popov,1489,E1,1,1776,15.950000000000001,0.9,10,1
 27,2026-11-02,Guy Wagner,Derek Jones,e1 derek jones,1945,E1,0.5,1774,15.05,0.43000000000000005,9,1
+29,2026-11-23,Guy Wagner,Gwynfor Rees,e1 gwynfor rees,2011,E1,0,1769,16.29,0.33999999999999997,10,1
+30,2026-11-25,Guy Wagner,Nick Van Noorden,e1 nick van noorden,2007,E1,0,1763,16.630000000000003,0.33999999999999997,10,1
 1,2026-01-05,Gwawr Evans,Tomos Ilett,e1 tomos ilett,1515,E1,0,1303,0.24,0.24,0,1
 2,2026-01-26,Gwawr Evans,Tom Ferries,e1 tom ferries,1310,E1,0,1288,0.74,0.5,0,1
 3,2026-02-16,Gwawr Evans,Richard Swales,e1 richard swales,1344,E1,0,1274,1.19,0.45,0,1
@@ -4569,6 +4645,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 2,2026-10-05,Gwynfor Rees,Chris Peters,e1 chris peters,1700,E1,1,2017,1.71,0.8600000000000001,2,1
 3,2026-10-26,Gwynfor Rees,Emma Kong,e1 emma kong,1912,E1,0,2004,2.3499999999999996,0.64,2,1
 4,2026-10-28,Gwynfor Rees,Joe Fathallah,e1 joe fathallah,2027,E1,0,1995,2.8299999999999996,0.48000000000000004,2,1
+5,2026-11-23,Gwynfor Rees,Guy Wagner,e1 guy wagner,1895,E1,1,2001,3.4899999999999998,0.6599999999999999,3,1
 1,2026-01-07,Hamid Farani Sani,Alex Bullen,e1 alex bullen,2221,E1,0,1821,0.1,0.1,0,1
 2,2026-01-13,Hamid Farani Sani,Jeremy Jones,e1 jeremy jones,1643,E1,1,1826,0.84,0.74,1,1
 3,2026-01-21,Hamid Farani Sani,Bill Harle,e1 bill harle,1780,E1,0,1815,1.4,0.56,1,1
@@ -4709,9 +4786,9 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 23,2026-10-20,Henry Burton,Steven P Heath,NA,1616,ENG,1,1759,11.6,0.74,9.5,1
 24,2026-10-23,Henry Burton,Julian Cast,NA,2060,ENG,0,1755,11.78,0.18,9.5,1
 25,2026-10-24,Henry Burton,Michael Ridge,NA,2017,ENG,0.5,1761,12,0.22,10,1
-26,2026-10-24,Henry Burton,Stephen P Dilleigh,NA,2017,ENG,0,1756,12.219999999999999,0.22,10,2
+26,2026-10-24,Henry Burton,Stephen P Dilleigh,NA,2017,ENG,0,1756,12.22,0.22,10,2
 27,2026-10-25,Henry Burton,Robert Ashworth,NA,1967,ENG,0,1751,12.5,0.28,10,1
-28,2026-10-25,Henry Burton,Theodore Caira,NA,1911,ENG,1,1764,12.850000000000001,0.35,11,2
+28,2026-10-25,Henry Burton,Theodore Caira,NA,1911,ENG,1,1764,12.85,0.35,11,2
 29,2026-10-30,Henry Burton,Matt Gillings,NA,1961,ENG,0,1758,13.129999999999999,0.28,11,1
 30,2026-10-31,Henry Burton,Sohona Sengupta,NA,1870,ENG,1,1770,13.53,0.4,12,1
 31,2026-11-01,Henry Burton,Peter Hasson,NA,2068,ENG,0.5,1776,13.709999999999999,0.18,12.5,1
@@ -4821,6 +4898,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 7,2026-11-21,Hywel Griffiths,Andrew Smith,w1 andrew smith,1897,W1,1,1917,4.48,0.5,5.5,1
 8,2026-11-21,Hywel Griffiths,Rishi Choudhuri,w1 rishi choudhuri,1602,W1,0,1900,5.33,0.8500000000000001,5.5,2
 9,2026-11-22,Hywel Griffiths,Liam Penny,e1 liam penny,1794,E1,1,1908,5.970000000000001,0.64,6.5,1
+1,2026-11-24,Iain Keys,S Wyn Howells,e1 s wyn howells,1691,E1,0,1589,0.37,0.37,0,1
 1,2026-01-19,Ian Abraham,Kieran Judge,e1 kieran judge,1393,E1,0.5,1761,0.9,0.9,0.5,1
 1,2026-01-07,Ian Eustis,Ian Jones,w1 ian jones,1972,W1,0,1811,0.29,0.29,0,1
 2,2026-01-13,Ian Eustis,Dale Westcott,w1 dale westcott,1933,W1,0.5,1814,0.63,0.34,0.5,1
@@ -4842,6 +4920,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 6,2026-11-10,Ian Eustis,Donovan Sipho,w1 donovan sipho,1802,W1,1,1839,3.12,0.53,4,1
 7,2026-11-20,Ian Eustis,Jon Tuson,d1 jon tuson,1799,D1,0.5,1839,3.65,0.53,4.5,1
 8,2026-11-21,Ian Eustis,Liam Penny,e1 liam penny,1794,E1,0.5,1838,4.1899999999999995,0.54,5,1
+9,2026-11-25,Ian Eustis,Steve Smith,w1 steve smith,1946,W1,0.5,1841,4.52,0.32999999999999996,5.5,1
 1,2026-01-14,Ian Hayes,Toby Nash,d1 toby nash,1647,D1,1,1790,0.68,0.68,1,1
 2,2026-01-23,Ian Hayes,Adam Sarwar,e1 adam sarwar,1596,E1,1,1797,1.42,0.74,2,1
 3,2026-01-24,Ian Hayes,Robert Wallace,e1 robert wallace,1583,E1,1,1805,2.18,0.76,3,1
@@ -4970,6 +5049,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 6,2026-10-21,Ieuan Bevan-Jones,Angel Srivastava,e1 angel srivastava,1501,E1,1,1551,3.28,0.54,4,1
 7,2026-10-28,Ieuan Bevan-Jones,Adam Barry,e1 adam barry,1450,E1,1,1562,3.8899999999999997,0.61,5,1
 8,2026-11-11,Ieuan Bevan-Jones,Stuart Enoch,e1 stuart enoch,1545,E1,0,1548,4.37,0.48000000000000004,5,1
+9,2026-11-25,Ieuan Bevan-Jones,Finley Jones,e1 finley jones,1438,E1,1,1559,5,0.63,6,1
 1,2026-01-14,Ieuan Thomas,Finley Jones,e1 finley jones,1419,E1,0,1448,0.57,0.57,0,1
 2,2026-01-26,Ieuan Thomas,Ewan Goodjohn,e1 ewan goodjohn,1594,E1,0,1438,0.89,0.32,0,1
 3,2026-02-10,Ieuan Thomas,David Rovaretti,e1 david rovaretti,1752,E1,0.5,1449,1.05,0.16,0.5,1
@@ -5062,6 +5142,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 2,2026-01-11,Ioan Rees,Stephen Swanson,NA,2165,ENG,0,2347,1.44,0.74,1,1
 3,2026-02-07,Ioan Rees,Robert F Willmoth,NA,2237,ENG,1,2350,2.1,0.66,2,1
 4,2026-02-08,Ioan Rees,Andrew Dunn,NA,2153,ENG,1,2352,2.86,0.76,3,1
+1,2026-11-09,Ioan Rees,Roy Thomas,e1 roy thomas,2021,E1,1,2353,0.8700000000000001,0.8700000000000001,1,1
 1,2026-01-06,Ishaan Marugonda,Akshara Mandadapu,e1 akshara mandadapu,1340,E1,0,1296,0.46,0.46,0,1
 2,2026-01-13,Ishaan Marugonda,Alex Rees,e1 alex rees,1320,E1,1,1312,0.95,0.49,1,1
 3,2026-01-20,Ishaan Marugonda,Anievv Pirashanth,e1 anievv pirashanth,1429,E1,0,1302,1.29,0.34,1,1
@@ -5183,6 +5264,8 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 6,2026-08-23,Jack Hannigan,Chris Peters,e1 chris peters,1700,E1,0,1721,3.46,0.55,3,2
 7,2026-09-21,Jack Hannigan,Justin Morgans,e1 justin morgans,1784,E1,0,1708,3.89,0.4300000000000001,3,1
 8,2026-10-26,Jack Hannigan,Andrew Jeanes,e1 andrew jeanes,1638,E1,0.5,1704,4.53,0.64,3.5,1
+9,2026-11-09,Jack Hannigan,Sergio Esteves,e1 sergio esteves,1825,E1,0.5,1708,4.9,0.37,4,1
+10,2026-11-24,Jack Hannigan,Archie Jones,e1 archie jones,1805,E1,0,1696,5.3,0.4,4,1
 1,2026-10-14,Jack Knowles,Joe Walters,e1 joe walters,1310,E1,1,1363,0.56,0.56,1,1
 1,2026-01-07,Jack Mason,Adam Musson,w1 adam musson,2059,W1,0,1514,0.1,0.1,0,1
 2,2026-01-23,Jack Mason,John Giannini,w1 john giannini,1310,W1,1,1521,0.87,0.77,1,1
@@ -5201,6 +5284,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 7,2026-10-22,Jack Mason,Spencer Ripley,w1 spencer ripley,1435,W1,1,1480,3.87,0.56,4,1
 8,2026-10-28,Jack Mason,Neil Stuart,w1 neil stuart,1637,W1,0,1471,4.1499999999999995,0.28,4,1
 9,2026-11-18,Jack Mason,Samuel Lee,w1 samuel lee,1500,W1,0,1458,4.619999999999999,0.47000000000000003,4,1
+10,2026-11-24,Jack Mason,Dafydd Davies,w1 dafydd davies,1310,W1,0,1436,5.34,0.72,4,1
 1,2026-01-06,Jack Patullo,David Taylor,NA,1562,ENG,1,1518,0.41,0.41,1,1
 2,2026-01-13,Jack Patullo,Evan Hughes,NA,1448,ENG,0,1500,0.98,0.57,1,1
 3,2026-01-15,Jack Patullo,Nigel Scott,NA,1728,ENG,1,1524,1.19,0.21,2,1
@@ -5587,11 +5671,13 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 33,2026-10-28,James Tapp,Lachlan Tyrrell,e1 lachlan tyrrell,2022,E1,1,2185,21.57,0.74,20,1
 34,2026-11-01,James Tapp,Mark Adams,g1 mark adams,1954,G1,1,2187,22.38,0.81,21,1
 35,2026-11-11,James Tapp,Joe Fathallah,e1 joe fathallah,2027,E1,1,2190,23.110000000000003,0.73,22,1
+36,2026-11-25,James Tapp,Zack Wilkins,e1 zack wilkins,1765,E1,1,2191,24.01,0.9,23,1
 1,2026-09-23,James Vincent,Ramesh Arjunan,w1 ramesh arjunan,1366,W1,0,1312,0.44,0.44,0,1
 2,2026-09-29,James Vincent,Abel Griffiths,w1 abel griffiths,1310,W1,1,1326,0.96,0.52,1,1
 3,2026-10-18,James Vincent,Adam Sarwar,e1 adam sarwar,1512,E1,0,1318,1.21,0.25,1,1
 4,2026-10-27,James Vincent,John Ward,w1 john ward,1382,W1,0,1306,1.6300000000000001,0.42000000000000004,1,1
 5,2026-11-17,James Vincent,Dylan Greenway,w1 dylan greenway,1444,W1,0,1296,1.97,0.33999999999999997,1,1
+6,2026-11-24,James Vincent,Paul Thomas,w1 paul thomas,1427,W1,0,1285,2.3299999999999996,0.36,1,1
 1,2026-02-11,James Will,Catriona Coutts,n1 catriona coutts,1769,N1,0,1517,0.2,0.2,0,1
 2,2026-03-24,James Will,Stuart Hamilton,n1 stuart hamilton,1521,N1,0.5,1517,0.7,0.5,0.5,1
 3,2026-04-29,James Will,Thaarun Prabagar,n1 thaarun prabagar,1363,N1,1,1526,1.42,0.72,1.5,1
@@ -5610,6 +5696,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 2,2026-10-05,James Williams,Shaun Jenkins,e1 shaun jenkins,1400,E1,0,1382,1,0.52,0,1
 3,2026-10-13,James Williams,Tom Ferries,e1 tom ferries,1367,E1,1,1395,1.56,0.56,1,1
 4,2026-11-09,James Williams,Oliver Pici,e1 oliver pici,1310,E1,1,1406,2.2,0.64,2,1
+5,2026-11-24,James Williams,Rhys Davies,e1 rhys davies,1401,E1,0,1390,2.72,0.52,2,1
 1,2026-01-09,Jamie Roberts,Richard Szwajkun,NA,1830,ENG,0,1843,0.53,0.53,0,1
 2,2026-01-10,Jamie Roberts,Nicholas White,NA,1808,ENG,1,1852,1.1,0.57,1,1
 3,2026-01-10,Jamie Roberts,Mark Smith,NA,1831,ENG,1,1861,1.63,0.53,2,2
@@ -5749,6 +5836,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 6,2026-10-28,Janet Evans,Meirion Rees,w1 meirion rees,1310,W1,1,1284,2.88,0.5,2,1
 7,2026-11-04,Janet Evans,Oliver Lake,w1 oliver lake,1310,W1,1,1299,3.38,0.5,3,1
 8,2026-11-10,Janet Evans,Claire Gorman,w1 claire gorman,1442,W1,0,1289,3.7,0.32,3,1
+9,2026-11-25,Janet Evans,John Giannini,w1 john giannini,1310,W1,1,1304,4.2,0.5,4,1
 1,2026-01-27,Jason Garcia,Dale Westcott,w1 dale westcott,1933,W1,1,2086,0.7,0.7,1,1
 2,2026-02-10,Jason Garcia,George Crockart,w1 george crockart,1947,W1,0.5,2082,1.38,0.68,1.5,1
 3,2026-02-15,Jason Garcia,Mark Adams,g1 mark adams,1863,G1,0,2067,2.16,0.78,1.5,1
@@ -5780,6 +5868,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 8,2026-11-04,Jeff Boyce,Simon Browning,w1 simon browning,1310,W1,0,1327,3.54,0.63,1,1
 9,2026-11-11,Jeff Boyce,John Davies,w1 john davies,1460,W1,0,1314,3.96,0.42000000000000004,1,1
 10,2026-11-18,Jeff Boyce,Steve Edwards,w1 steve edwards,1591,W1,0.5,1322,4.21,0.25,1.5,1
+11,2026-11-25,Jeff Boyce,Robert Narayan-Taylor,d1 robert narayan-taylor,1575,D1,1,1344,4.48,0.27,2.5,1
 1,2026-01-13,Jeremy Jones,Hamid Farani Sani,e1 hamid farani sani,1823,E1,0,1635,0.26,0.26,0,1
 2,2026-04-07,Jeremy Jones,Andy Basford,e1 andy basford,1587,E1,0,1618,0.84,0.58,0,1
 3,2026-05-12,Jeremy Jones,Archie Jones,e1 archie jones,1626,E1,0.5,1617,1.36,0.52,0.5,1
@@ -5893,6 +5982,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 30,2026-11-04,Joe Fathallah,Lachlan Tyrrell,e1 lachlan tyrrell,2022,E1,0,2042,16.24,0.51,17,1
 32,2026-11-11,Joe Fathallah,James Tapp,e1 james tapp,2201,E1,0,2027,16.99,0.27,17,1
 33,2026-11-18,Joe Fathallah,Piotr Graczyk,e1 piotr graczyk,1718,E1,1,2030,17.85,0.8600000000000001,18,1
+34,2026-11-25,Joe Fathallah,George Turner,e1 george turner,1929,E1,1,2037,18.49,0.64,19,1
 1,2026-01-07,Joe Morton,Mark Rummery,d1 mark rummery,1546,D1,0,1712,0.75,0.75,0,1
 2,2026-01-14,Joe Morton,Ewan Ferguson,d1 ewan ferguson,1832,D1,0,1701,1.11,0.36,0,1
 3,2026-01-27,Joe Morton,Osian Griffiths,d1 osian griffiths,1310,D1,1,1704,2.01,0.9,1,1
@@ -6028,7 +6118,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 42,2026-10-23,John A Williams,Benjamin Topham,NA,1661,ENG,1,1555,20.630000000000003,0.55,16,1
 43,2026-10-24,John A Williams,Paul Salisbury,NA,1653,ENG,1,1568,21.19,0.56,17,1
 44,2026-10-24,John A Williams,Kieron Hooton,NA,1656,ENG,0,1552,21.74,0.55,17,2
-45,2026-10-25,John A Williams,Georges R Honore,NA,1646,ENG,1,1565,22.310000000000002,0.5700000000000001,18,1
+45,2026-10-25,John A Williams,Georges R Honore,NA,1646,ENG,1,1565,22.31,0.5700000000000001,18,1
 46,2026-10-25,John A Williams,David C Dunne,NA,1642,ENG,0,1548,22.88,0.5700000000000001,18,2
 47,2026-10-31,John A Williams,Yuqi Liu,NA,1530,ENG,1,1556,23.6,0.72,19,1
 48,2026-10-31,John A Williams,James Peel,NA,1717,ENG,0.5,1557,24.07,0.47000000000000003,19.5,2
@@ -6053,6 +6143,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 5,2026-11-04,John Arnold,Mark Thomas,w1 mark thomas,1991,W1,0,1677,1.3,0.14,1.5,1
 6,2026-11-10,John Arnold,Joshua Richards,w1 joshua richards,1717,W1,1,1694,1.73,0.43000000000000005,2.5,1
 7,2026-11-18,John Arnold,Andrew Smith,w1 andrew smith,1897,W1,0,1688,1.94,0.21000000000000002,2.5,1
+8,2026-11-25,John Arnold,Alan Young,w1 alan young,2021,W1,0,1684,2.06,0.12000000000000001,2.5,1
 1,2026-01-19,John Callan,Rohan Powell,e1 rohan powell,1364,E1,0,1479,0.69,0.69,0,1
 2,2026-01-20,John Callan,Rhys Davies,e1 rhys davies,1398,E1,0,1460,1.33,0.64,0,1
 3,2026-02-16,John Callan,Nadi Grewal,e1 nadi grewal,1393,E1,0.5,1456,1.98,0.65,0.5,1
@@ -6066,6 +6157,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 5,2026-10-26,John Callan,Bob Hurn,e1 bob hurn,1637,E1,0.5,1431,1.92,0.25,1.5,1
 6,2026-11-10,John Callan,David Jones,e1 david jones,1537,E1,0,1419,2.29,0.37,1.5,1
 7,2026-11-16,John Callan,Zack Wilkins,e1 zack wilkins,1765,E1,0,1415,2.4299999999999997,0.14,1.5,1
+8,2026-11-23,John Callan,Adam Christopher,e1 adam christopher,1722,E1,0,1410,2.6,0.17,1.5,1
 1,2026-03-02,John Cox,Ewan Goodjohn,e1 ewan goodjohn,1594,E1,0.5,1606,0.52,0.52,0.5,1
 2,2026-05-07,John Cox,George Bowkett,e1 george bowkett,1743,E1,0.5,1612,0.83,0.31,1,1
 1,2026-08-21,John Cox,Mateusz Gibiec,g1 mateusz gibiec,1843,G1,0,1606,0.21,0.21,0,1
@@ -6079,6 +6171,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 9,2026-10-19,John Cox,Nigel Payne,e1 nigel payne,1500,E1,0.5,1529,4.78,0.6599999999999999,2,1
 10,2026-11-17,John Cox,Anthony Williams,e1 anthony williams,1425,E1,0.5,1522,5.53,0.75,2.5,1
 1,2026-10-26,John D Thornton,Peter Quinn,e1 peter quinn,1768,E1,1,2019,0.81,0.81,1,1
+2,2026-11-23,John D Thornton,Zack Wilkins,e1 zack wilkins,1765,E1,1,2023,1.62,0.81,2,1
 1,2026-01-06,John Davies,Glyn Hill,w1 glyn hill,1514,W1,0.5,1459,0.42,0.42,0.5,1
 2,2026-01-13,John Davies,Tony Goodchild,w1 tony goodchild,1522,W1,0,1447,0.83,0.41,0.5,1
 3,2026-02-03,John Davies,Stuart Thomas,w1 stuart thomas,1310,W1,1,1456,1.53,0.7,1.5,1
@@ -6093,6 +6186,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 7,2026-11-10,John Davies,Spencer Ripley,w1 spencer ripley,1435,W1,1,1476,2.46,0.54,3,1
 8,2026-11-11,John Davies,Jeff Boyce,w1 jeff boyce,1403,W1,1,1489,3.04,0.58,4,1
 9,2026-11-17,John Davies,Jakob Josh-Wright,w1 jakob josh-wright,1357,W1,0,1470,3.68,0.64,4,1
+10,2026-11-24,John Davies,Bradley Evans,w1 bradley evans,1600,W1,1,1490,3.9899999999999998,0.31,5,1
 1,2026-01-05,John Fletcher,Phil Griffiths,NA,1909,ENG,0.5,2021,0.66,0.66,0.5,1
 2,2026-01-12,John Fletcher,David Ashcroft,NA,1912,ENG,1,2028,1.32,0.66,1.5,1
 3,2026-01-17,John Fletcher,Rory McLean,NA,1865,ENG,1,2033,2.03,0.71,2.5,1
@@ -6177,6 +6271,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 11,2026-11-21,John Giannini,Jonathan Edwards,e1 jonathan edwards,1441,E1,0,1268,3.9099999999999997,0.32,2.5,1
 12,2026-11-21,John Giannini,Tony Goodchild,w1 tony goodchild,1537,W1,0,1262,4.119999999999999,0.21000000000000002,2.5,2
 13,2026-11-22,John Giannini,Spencer Ripley,w1 spencer ripley,1435,W1,0,1252,4.45,0.32999999999999996,2.5,1
+14,2026-11-25,John Giannini,Janet Evans,w1 janet evans,1310,W1,0,1237,4.95,0.5,2.5,1
 1,2026-01-27,John Gorman,Ethan Challoner,n1 ethan challoner,1868,N1,0.5,1921,0.58,0.58,0.5,1
 2,2026-02-17,John Gorman,Tanmay Madhusudhan,n1 tanmay madhusudhan,1785,N1,1,1928,1.27,0.69,1.5,1
 3,2026-03-31,John Gorman,Rokas Valantinas,NA,2030,ENG,0,1921,1.62,0.35,1.5,1
@@ -6202,6 +6297,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 6,2026-11-03,John McGregor,Owen Tompkins Coll,e1 owen tompkins coll,1821,E1,0.5,1886,3.56,0.5700000000000001,4.5,1
 7,2026-11-10,John McGregor,Ivan De La Cruz,e1 ivan de la cruz,2133,E1,0.5,1892,3.74,0.18,5,1
 8,2026-11-18,John McGregor,Peter Quinn,e1 peter quinn,1768,E1,0.5,1890,4.38,0.64,5.5,1
+9,2026-11-24,John McGregor,Roy Thomas,e1 roy thomas,2021,E1,1,1904,4.67,0.29000000000000004,6.5,1
 2,2026-01-06,John Newcombe,Evan Morgan,g1 evan morgan,1394,G1,1,1636,1.56,0.79,2,1
 3,2026-01-28,John Newcombe,Charlie Smith,g1 charlie smith,1412,G1,1,1643,2.33,0.77,3,1
 4,2026-02-25,John Newcombe,Samson Muputa,g1 samson muputa,1345,G1,1,1648,3.16,0.83,4,1
@@ -6230,6 +6326,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 2,2026-04-28,John Smart,Samarth Chawla,e1 samarth chawla,1440,E1,0,1295,0.51,0.32,0,1
 1,2026-09-14,John Smart,Gethin Stephens,e1 gethin stephens,1425,E1,0,1300,0.33999999999999997,0.33999999999999997,0,1
 2,2026-10-12,John Smart,Mark Cooke,e1 mark cooke,1601,E1,0,1295,0.5,0.16,0,1
+3,2026-11-23,John Smart,Matthew Cobley,e1 matthew cobley,1400,E1,0,1284,0.8700000000000001,0.37,0,1
 1,2026-01-10,John Trevelyan,Mark Waterfield,NA,1981,ENG,0,1868,0.35,0.35,0,1
 2,2026-01-11,John Trevelyan,Simon N Gilmore,NA,1986,ENG,1,1881,0.7,0.35,1,1
 3,2026-02-07,John Trevelyan,Stephen Potter,NA,1901,ENG,1,1892,1.16,0.46,2,1
@@ -6279,6 +6376,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 13,2026-11-21,John Ward,Glyn Hill,w1 glyn hill,1574,W1,0,1325,5.91,0.25,4,2
 14,2026-11-22,John Ward,Chris Thompson,g1 chris thompson,1453,G1,0,1313,6.31,0.4,4,1
 15,2026-11-22,John Ward,Daarshik Haldar,d1 daarshik haldar,1384,D1,0,1298,6.81,0.5,4,2
+16,2026-11-24,John Ward,Oscar Purcell,w1 oscar purcell,1310,W1,1,1310,7.41,0.6,5,1
 1,2026-01-05,John Watts,Martin K Jones,e1 martin k jones,1566,E1,1,1720,0.7,0.7,1,1
 2,2026-01-19,John Watts,James Powell,e1 james powell,1611,E1,1,1731,1.34,0.64,2,1
 3,2026-02-02,John Watts,Mark Reckless,e1 mark reckless,1482,E1,1,1737,2.13,0.79,3,1
@@ -6299,6 +6397,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 5,2026-11-03,John Watts,David Belochkin,e1 david belochkin,1538,E1,1,1801,3.2600000000000002,0.8,4,1
 7,2026-11-09,John Watts,Thomas Mahoney,e1 thomas mahoney,1795,E1,0,1783,4.35,0.48000000000000004,4.5,1
 8,2026-11-16,John Watts,Khushi Bagga,e1 khushi bagga,1608,E1,1,1791,5.08,0.73,5.5,1
+9,2026-11-24,John Watts,Russell Dodington,e1 russell dodington,1813,E1,1,1808,5.53,0.45,6.5,1
 1,2026-01-07,John Williams (W),June Evans,w1 june evans,1310,W1,0,1295,0.5,0.5,0,1
 2,2026-01-14,John Williams (W),Nick Hale,w1 nick hale,1451,W1,0,1286,0.81,0.31,0,1
 3,2026-01-21,John Williams (W),Glyn Hill,w1 glyn hill,1514,W1,0,1279,1.05,0.24,0,1
@@ -6367,6 +6466,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 4,2026-11-03,Jonathan Baker,Carl Halpin,w1 carl halpin,1634,W1,0,1547,2.16,0.38,2,1
 5,2026-11-10,Jonathan Baker,Cameron Ferguson,w1 cameron ferguson,1408,W1,1,1556,2.86,0.7,3,1
 6,2026-11-11,Jonathan Baker,Paul Headon,w1 paul headon,1674,W1,0,1546,3.19,0.32999999999999996,3,1
+7,2026-11-25,Jonathan Baker,Matthew Billington,w1 matthew billington,1922,W1,0,1543,3.3,0.11,3,1
 1,2026-01-23,Jonathan Edwards,Chris Peters,e1 chris peters,1725,E1,0,1419,0.15,0.15,0,1
 2,2026-01-24,Jonathan Edwards,Thomas Phillips,e1 thomas phillips,1475,E1,0,1407,0.58,0.43,0,1
 3,2026-01-24,Jonathan Edwards,Glyn Hill,w1 glyn hill,1514,W1,1,1425,0.95,0.37,1,2
@@ -6413,6 +6513,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 2,2026-10-14,Jonathan James,Reginald Mba,e1 reginald mba,1977,E1,0.5,2060,1.39,0.63,1,1
 3,2026-10-27,Jonathan James,Derek Jones,e1 derek jones,1945,E1,1,2067,2.06,0.6699999999999999,2,1
 4,2026-11-09,Jonathan James,Suraj Prabhu,e1 suraj prabhu,1766,E1,0,2050,2.9099999999999997,0.8500000000000001,2,1
+5,2026-11-24,Jonathan James,Gavin Jones,e1 gavin jones,1809,E1,0,2034,3.73,0.8200000000000001,2,1
 1,2026-01-10,Jonathan LB Blackburn,Kacper Kacprzak,NA,2435,ENG,0.5,2314,0.33,0.33,0.5,1
 2,2026-01-11,Jonathan LB Blackburn,Neil Berry,NA,2277,ENG,0.5,2313,0.88,0.55,1,1
 3,2026-01-19,Jonathan LB Blackburn,Ethan Norris,NA,2232,ENG,0,2307,1.49,0.61,1,1
@@ -6514,6 +6615,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 10,2026-10-22,Jonathan Thomas,Saiansh Biswal,NA,1743,FIDE,0.5,1895,5.94,0.74,4.5,1
 11,2026-11-01,Jonathan Thomas,Dave Turner,g1 dave turner,1926,G1,0.5,1895,6.44,0.5,5,1
 12,2026-11-11,Jonathan Thomas,Alan Young,w1 alan young,2021,W1,0.5,1898,6.8,0.36,5.5,1
+13,2026-11-25,Jonathan Thomas,Elliott Chapman,w1 elliott chapman,1741,W1,1,1903,7.54,0.74,6.5,1
 1,2026-01-21,Jordan Heatman,Ralph Cook,w1 ralph cook,1633,W1,1,1795,0.71,0.71,1,1
 2,2026-01-23,Jordan Heatman,Ben Richards,g1 ben richards,1621,G1,0.5,1788,1.43,0.72,1.5,1
 3,2026-01-24,Jordan Heatman,Mike Stannard,g1 mike stannard,1479,G1,1,1793,2.28,0.85,2.5,1
@@ -6552,6 +6654,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 19,2026-11-21,Jordan Heatman,Ewan Ferguson,d1 ewan ferguson,1839,D1,1,1812,11.15,0.49,10,1
 20,2026-11-21,Jordan Heatman,George Crockart,w1 george crockart,1976,W1,0,1806,11.46,0.31,10,2
 21,2026-11-22,Jordan Heatman,Ovidiu Pintea,w1 ovidiu pintea,1783,W1,0.5,1804,12.03,0.5700000000000001,10.5,1
+22,2026-11-25,Jordan Heatman,Darson Beeston,w1 darson beeston,1715,W1,1,1811,12.7,0.6699999999999999,11.5,1
 1,2026-02-07,Jose Camacho Collados,Finlay Bowcott-Terry,NA,2375,ENG,0.5,2438,0.59,0.59,0.5,1
 2,2026-02-08,Jose Camacho Collados,Martin R Taylor,NA,2381,ENG,0.5,2437,1.17,0.58,1,1
 3,2026-03-21,Jose Camacho Collados,Eldar Gasanov,NA,2544,ENG,0,2434,1.52,0.35,1,1
@@ -6687,6 +6790,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 19,2026-06-09,Josh Dudley-Price,Andrew Powell,w1 andrew powell,1570,W1,1,1685,11.51,0.66,11.5,1
 20,2026-06-13,Josh Dudley-Price,Michael Edwards,d1 michael edwards,1670,D1,0,1669,12.03,0.52,11.5,1
 1,2026-11-19,Josh Dudley-Price,Ewan Ferguson,d1 ewan ferguson,1839,D1,0,1661,0.27,0.27,0,1
+2,2026-11-25,Josh Dudley-Price,Adam May,w1 adam may,1955,W1,1,1686,0.43000000000000005,0.16,1,1
 1,2026-01-06,Joshua Colcombe,Robert Palser,g1 robert palser,1604,G1,0,1449,0.3,0.3,0,1
 2,2026-02-03,Joshua Colcombe,Ron Williams,g1 ron williams,1581,G1,0,1439,0.63,0.33,0,1
 3,2026-02-11,Joshua Colcombe,Lyn Holland,g1 lyn holland,1464,G1,1,1454,1.12,0.49,1,1
@@ -6784,6 +6888,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 5,2026-10-13,Joshua Phillips,Chris White,e1 chris white,1699,E1,0.5,1450,1.83,0.15000000000000002,3.5,1
 6,2026-10-19,Joshua Phillips,Nadi Grewal,e1 nadi grewal,1426,E1,0.5,1451,2.29,0.46,4,1
 7,2026-11-17,Joshua Phillips,Wayne Holland,e1 wayne holland,1382,E1,0,1436,2.82,0.53,4,1
+8,2026-11-23,Joshua Phillips,Michael Evans,e1 michael evans,1400,E1,1,1451,3.32,0.5,5,1
 1,2026-03-10,Joshua Richards,Andrew Smith,w1 andrew smith,1902,W1,0.5,1715,0.25,0.25,0.5,1
 2,2026-03-24,Joshua Richards,Guto Llywelyn,w1 guto llywelyn,1683,W1,1,1729,0.78,0.53,1.5,1
 3,2026-05-10,Joshua Richards,Liam Powell-Jones,g1 liam powell-jones,1777,G1,0,1717,1.18,0.4,1.5,1
@@ -6919,6 +7024,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 14,2026-10-28,Justin Morgans,Ivan De La Cruz,e1 ivan de la cruz,2133,E1,0,1791,8.27,0.12000000000000001,8.5,1
 15,2026-11-09,Justin Morgans,Shaun Jenkins,e1 shaun jenkins,1400,E1,1,1794,9.17,0.9,9.5,1
 16,2026-11-16,Justin Morgans,Andy Basford,e1 andy basford,1580,E1,0.5,1786,9.93,0.76,10,1
+17,2026-11-23,Justin Morgans,Ben Bickford,e1 ben bickford,1660,E1,0,1766,10.6,0.6699999999999999,10,1
 1,2026-01-13,Kai Palmer,Steffani Dimitrova,w1 steffani dimitrova,1497,W1,1,1332,0.25,0.25,1,1
 2,2026-02-11,Kai Palmer,Spencer Ripley,w1 spencer ripley,1407,W1,0.5,1336,0.61,0.36,1.5,1
 3,2026-03-11,Kai Palmer,Paul Thomas,w1 paul thomas,1405,W1,0,1325,0.98,0.37,1.5,1
@@ -7022,6 +7128,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 4,2026-09-21,Ken Hannah,Jeremy Jones,e1 jeremy jones,1602,E1,0.5,1646,2.24,0.59,1.5,1
 5,2026-10-26,Ken Hannah,Mark Chinnick,e1 mark chinnick,1604,E1,0.5,1643,2.8299999999999996,0.59,2,1
 6,2026-11-04,Ken Hannah,Zack Wilkins,e1 zack wilkins,1765,E1,1,1662,3.19,0.36,3,1
+7,2026-11-23,Ken Hannah,Suraj Prabhu,e1 suraj prabhu,1766,E1,1,1681,3.55,0.36,4,1
 1,2026-01-12,Kevin Evans,James Tapp,e1 james tapp,2176,E1,0,1934,0.2,0.2,0,1
 2,2026-01-19,Kevin Evans,Kevin Stephens,e1 kevin stephens,1811,E1,1,1940,0.88,0.68,1,1
 3,2026-01-26,Kevin Evans,Guy Wagner,e1 guy wagner,1877,E1,0,1929,1.47,0.59,1,1
@@ -7135,6 +7242,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 4,2026-09-07,Kieran Judge,Summer Cooke,e1 summer cooke,1337,E1,1,1493,1.83,0.6699999999999999,3,1
 5,2026-09-14,Kieran Judge,Phil Jones,e1 phil jones,1502,E1,1,1510,2.27,0.44,4,1
 6,2026-09-28,Kieran Judge,Dwain Jones,e1 dwain jones,1685,E1,1,1534,2.48,0.21,5,1
+7,2026-11-23,Kieran Judge,Callum Williams,e1 callum williams,1354,E1,1,1544,3.13,0.65,6,1
 1,2026-06-29,Kieran Williams,Henry Burton,d1 henry burton,1714,D1,0,1445,0.18,0.18,0,1
 1,2026-08-24,Kieran Williams,Joshua John,d1 joshua john,1400,D1,0,1428,0.56,0.56,0,1
 2,2026-09-24,Kieran Williams,Luca Davies,d1 luca davies,1350,D1,1,1439,1.1900000000000002,0.63,1,1
@@ -7226,6 +7334,8 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 19,2026-11-11,Lachlan Tyrrell,Sam Jukes,e1 sam jukes,2043,E1,0,2080,9.59,0.47000000000000003,12.5,1
 20,2026-11-16,Lachlan Tyrrell,Daniel Wilmot,e1 daniel wilmot,2039,E1,1,2091,10.07,0.48000000000000004,13.5,1
 21,2026-11-18,Lachlan Tyrrell,George Turner,e1 george turner,1929,E1,0.5,2088,10.7,0.63,14,1
+22,2026-11-23,Lachlan Tyrrell,Michael Binks,e1 michael binks,1901,E1,1,2095,11.370000000000001,0.6699999999999999,15,1
+23,2026-11-25,Lachlan Tyrrell,Tim Kett,e1 tim kett,2210,E1,0.5,2099,11.62,0.25,15.5,1
 1,2026-01-07,Lee Davis,Alex P Nicholls,NA,1759,ENG,1,2009,0.8,0.8,1,1
 2,2026-01-09,Lee Davis,Joseph D Friar,NA,2161,ENG,1,2023,1.09,0.29,2,1
 3,2026-01-15,Lee Davis,Ed Osbourne,NA,2025,ENG,0.5,2024,1.56,0.47,2.5,1
@@ -7363,7 +7473,8 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 5,2026-11-05,Leon Vincent,Stewart Ayers,w1 stewart ayers,1559,W1,1,1608,1.87,0.54,2.5,1
 6,2026-11-11,Leon Vincent,Joseph Lake,w1 joseph lake,1479,W1,0,1589,2.52,0.65,2.5,1
 7,2026-11-17,Leon Vincent,Cameron Ferguson,w1 cameron ferguson,1408,W1,1,1596,3.2600000000000002,0.74,3.5,1
-2,2026-10-26,Leon lorch,Gethin Brown,d1 gethin brown,1478,D1,1,1443,0.55,0.43000000000000005,1,1
+8,2026-11-24,Leon Vincent,Donovan Sipho,w1 donovan sipho,1802,W1,0,1590,3.4899999999999998,0.23,3.5,1
+2,2026-10-26,Leon lorch,Gethin Brown,d1 gethin brown,1478,D1,1,1443,0.55,0.4300000000000001,1,1
 3,2026-11-17,Leon lorch,Mark Perrella,d1 mark perrella,1496,D1,0,1431,0.96,0.41000000000000003,1,1
 1,2026-01-07,Les Philpin,John Arnold,w1 john arnold,1726,W1,0,1687,0.46,0.46,0,1
 2,2026-01-13,Les Philpin,George Crockart,w1 george crockart,1947,W1,0,1681,0.66,0.2,0,1
@@ -7386,6 +7497,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 7,2026-11-21,Les Philpin,Andrew Powell,w1 andrew powell,1579,W1,0.5,1725,2.4899999999999998,0.7,2.5,2
 8,2026-11-22,Les Philpin,Darson Beeston,w1 darson beeston,1715,W1,0.5,1724,3,0.51,3,1
 9,2026-11-22,Les Philpin,John A Williams,g1 john a williams,1693,G1,1,1738,3.54,0.54,4,2
+10,2026-11-25,Les Philpin,Dale Westcott,w1 dale westcott,1903,W1,0,1730,3.8,0.26,4,1
 1,2026-01-29,Les Simcock,Barrie Wells,n1 barrie wells,1710,N1,0.5,1855,0.7,0.7,0.5,1
 2,2026-02-10,Les Simcock,Ethan Challoner,n1 ethan challoner,1868,N1,1,1865,1.19,0.49,1.5,1
 3,2026-03-03,Les Simcock,Paul Watson,NA,1840,ENG,0.5,1865,1.72,0.53,2,1
@@ -7427,6 +7539,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 5,2026-10-14,Liam Penny,Michael Arribas-Ayllon,e1 michael arribas-ayllon,1792,E1,1,1825,2.97,0.5,4,1
 8,2026-10-27,Liam Penny,Owen Tompkins Coll,e1 owen tompkins coll,1821,E1,1,1860,4.28,0.46,6.5,1
 9,2026-11-11,Liam Penny,Michael Arribas-Ayllon,e1 michael arribas-ayllon,1792,E1,0,1845,4.78,0.5,6.5,1
+10,2026-11-18,Liam Penny,Reuben Thomas-Davis,g1 reuben thomas-davis,1620,G1,1,1853,5.51,0.73,7.5,1
 2,2026-01-06,Liam Powell-Jones,Bob Hurn,e1 bob hurn,1706,E1,1,1797,1.33,0.6,2,1
 3,2026-01-07,Liam Powell-Jones,Tomas Forsey,g1 tomas forsey,1684,G1,0.5,1793,1.96,0.63,2.5,1
 4,2026-01-12,Liam Powell-Jones,Jack Bull,g1 jack bull,1713,G1,1,1805,2.55,0.59,3.5,1
@@ -7529,6 +7642,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-10-19,Logan Cox,Adnan Yilmaz,e1 adnan yilmaz,1340,E1,1,1605,0.8200000000000001,0.8200000000000001,1,1
 2,2026-10-27,Logan Cox,Simon Blackmore,e1 simon blackmore,1678,E1,0,1594,1.21,0.39,1,1
 3,2026-11-16,Logan Cox,Mark Reckless,e1 mark reckless,1408,E1,0,1571,1.96,0.75,1,1
+4,2026-11-23,Logan Cox,Chris Peters,e1 chris peters,1700,E1,1,1590,2.32,0.36,2,1
 1,2026-04-21,Logathraiyan Pirashanth,Aya Jamil,e1 aya jamil,1317,E1,0,1295,0.49,0.49,0,1
 2,2026-06-09,Logathraiyan Pirashanth,Jacob Holmes,e1 jacob holmes,1310,E1,1,1310,0.99,0.5,1,1
 3,2026-06-16,Logathraiyan Pirashanth,James Powell,e1 james powell,1611,E1,0,1306,1.14,0.15,1,1
@@ -7750,6 +7864,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 3,2026-10-06,Mabon Hanczar,Martin Ilett,e1 martin ilett,1568,E1,0,1366,1.89,0.27,1,1
 4,2026-10-20,Mabon Hanczar,Eli Williams,e1 eli williams,1384,E1,1,1381,2.4,0.51,2,1
 5,2026-11-03,Mabon Hanczar,Charlie Duffin,e1 charlie duffin,1326,E1,0,1363,3,0.6,2,1
+6,2026-11-23,Mabon Hanczar,Dave Mahoney,e1 dave mahoney,1310,E1,1,1375,3.62,0.62,3,1
 1,2026-01-05,Madged Bani Hani,Sergio Esteves,e1 sergio esteves,1829,E1,1,1901,0.59,0.59,1,1
 2,2026-01-06,Madged Bani Hani,John A Williams,g1 john a williams,1734,G1,1,1907,1.3,0.71,2,1
 3,2026-01-12,Madged Bani Hani,Jacob Limeslade,e1 jacob limeslade,1548,E1,1,1909,2.18,0.88,3,1
@@ -7782,9 +7897,10 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 2,2026-04-21,Maharshi Ray,Llewelyn Gruffydd,NA,1,E1,0,1297,1.48,1,0.5,1
 3,2026-05-19,Maharshi Ray,Toby Blankley,e1 toby blankley,1626,E1,0,1293,1.63,0.15,0.5,1
 1,2026-10-12,Maher Alrais,Shaun Jenkins,e1 shaun jenkins,1400,E1,0,1385,0.5,0.5,0,1
-2,2026-10-26,Maher Alrais,Mike White,e1 mike white,1424,E1,0,1371,0.97,0.47000000000000003,0,1
+2,2026-10-26,Maher Alrais,Mike White,e1 mike white,1424,E1,0,1371,0.97,0.47,0,1
 3,2026-11-10,Maher Alrais,Akshara Mandadapu,e1 akshara mandadapu,1310,E1,1,1382,1.6,0.63,1,1
 4,2026-11-16,Maher Alrais,Alex Rees,e1 alex rees,1310,E1,1,1393,2.23,0.63,2,1
+5,2026-11-24,Maher Alrais,Oliver Williams,e1 oliver williams,1350,E1,1,1406,2.8,0.5700000000000001,3,1
 1,2026-01-10,Malcolm Probert,Paul W O'Brien,NA,1849,ENG,1,1645,0.21,0.21,1,1
 2,2026-01-10,Malcolm Probert,Christopher M Southall,NA,1802,ENG,0.5,1652,0.47,0.26,1.5,2
 3,2026-01-11,Malcolm Probert,Dillon Rock Cooper,NA,1829,ENG,0.5,1660,0.7,0.23,2,1
@@ -7938,7 +8054,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 6,2026-08-23,Mark Chinnick,Shaun Walsh,NA,1493,ENG,0,1556,4.109999999999999,0.65,2.5,2
 7,2026-09-14,Mark Chinnick,Bob Hurn,e1 bob hurn,1637,E1,0,1542,4.56,0.45,2.5,1
 8,2026-10-12,Mark Chinnick,Erion Pici,e1 erion pici,1588,E1,0.5,1542,5.08,0.52,3,1
-9,2026-10-26,Mark Chinnick,Ken Hannah,e1 ken hannah,1668,E1,0.5,1544,5.49,0.41000000000000003,3.5,1
+9,2026-10-26,Mark Chinnick,Ken Hannah,e1 ken hannah,1668,E1,0.5,1544,5.49,0.41,3.5,1
 10,2026-10-27,Mark Chinnick,David Rovaretti,e1 david rovaretti,1747,E1,0,1535,5.8,0.31,3.5,1
 11,2026-11-03,Mark Chinnick,Andy Basford,e1 andy basford,1580,E1,0,1519,6.33,0.53,3.5,1
 12,2026-11-09,Mark Chinnick,Zack Wilkins,e1 zack wilkins,1765,E1,0,1511,6.609999999999999,0.28,3.5,1
@@ -7972,6 +8088,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 11,2026-10-03,Mark Cooke,Scott Hammett,d1 scott hammett,1766,D1,0,1577,6.819999999999999,0.28,6,2
 12,2026-10-04,Mark Cooke,S Wyn Howells,e1 s wyn howells,1691,E1,1,1595,7.1899999999999995,0.37,7,1
 8,2026-10-12,Mark Cooke,John Smart,e1 john smart,1310,E1,1,1589,5.89,0.8400000000000001,5.5,1
+13,2026-11-23,Mark Cooke,Bob Hurn,e1 bob hurn,1637,E1,1,1612,7.64,0.45,8,1
 1,2026-10-06,Mark Emblem,Mike Stannard,g1 mike stannard,1566,G1,0,1476,0.39,0.39,0,1
 2,2026-10-12,Mark Emblem,Alex Stephens,g1 alex stephens,1310,G1,1,1484,1.13,0.74,1,1
 3,2026-10-20,Mark Emblem,Theo Edwards,g1 theo edwards,1402,G1,0.5,1511,1.75,0.62,2.5,1
@@ -8000,7 +8117,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 3,2026-11-11,Mark Paffard,Kieran Edwards,d1 kieran edwards,1383,D1,1,1662,1.85,0.8500000000000001,1,1
 1,2026-06-13,Mark Perrella,Riley Fitzpatrick,w1 riley fitzpatrick,1404,W1,0.5,1496,0.63,0.63,0.5,1
 1,2026-09-24,Mark Perrella,Sam Rawlinson,d1 sam rawlinson,1487,D1,0,1481,0.51,0.51,0,1
-2,2026-10-26,Mark Perrella,Steve Broomfield,d1 steve broomfield,1518,D1,0,1467,0.98,0.47000000000000003,0,1
+2,2026-10-26,Mark Perrella,Steve Broomfield,d1 steve broomfield,1518,D1,0,1467,0.98,0.47,0,1
 3,2026-10-27,Mark Perrella,Gwyn Evans,d1 gwyn evans,1532,D1,0,1453,1.43,0.45,0,1
 4,2026-11-17,Mark Perrella,Leon Lorch,d1 leon lorch,1430,D1,1,1465,2.02,0.59,1,1
 1,2026-01-20,Mark Reckless,Andrei Zhuravlev,e1 andrei zhuravlev,1638,E1,0,1473,0.29,0.29,0,1
@@ -8097,6 +8214,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 22,2026-11-21,Mark Thomas,Suhayl Abdalla,NA,1770,ENG,1,1951,15.49,0.7799999999999999,13.5,2
 23,2026-11-22,Mark Thomas,James N Hawkins,NA,1806,ENG,1,1956,16.23,0.74,14.5,1
 24,2026-11-22,Mark Thomas,Alan W Brusey,NA,1922,ENG,0,1944,16.830000000000002,0.6,14.5,2
+25,2026-11-25,Mark Thomas,Aaron Davies,w1 aaron davies,1624,W1,1,1946,17.72,0.89,15.5,1
 1,2026-01-21,Mark Thomas (N),Richard Doble,n1 richard doble,1757,N1,1,1823,0.58,0.58,1,1
 2,2026-01-26,Mark Thomas (N),Mike Stoddart,NA,1839,ENG,0.5,1824,1.05,0.47,1.5,1
 3,2026-03-04,Mark Thomas (N),Alan Kelly,NA,1677,ENG,0.5,1820,1.74,0.69,2,1
@@ -8173,6 +8291,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 2,2026-10-06,Martin Ilett,Mabon Hanczar,e1 mabon hanczar,1393,E1,1,1554,1.45,0.73,1,1
 3,2026-10-27,Martin Ilett,Constantine Popov,e1 constantine popov,1489,E1,1,1566,2.06,0.61,2,1
 4,2026-11-09,Martin Ilett,Andrew Jeanes,e1 andrew jeanes,1638,E1,0.5,1569,2.46,0.4,2.5,1
+5,2026-11-23,Martin Ilett,Ben Trigg,e1 ben trigg,1474,E1,0,1550,3.09,0.63,2.5,1
 1,2026-01-05,Martin K Jones,John Watts,e1 john watts,1711,E1,0,1557,0.3,0.3,0,1
 2,2026-03-30,Martin K Jones,Suraj Prabhu,e1 suraj prabhu,1740,E1,0,1549,0.57,0.27,0,1
 1,2026-08-24,Martin K Jones,Mike Stannard,g1 mike stannard,1566,G1,0.5,1550,0.48,0.48,0.5,1
@@ -8275,6 +8394,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 5,2026-11-04,Matthew Billington,Gareth Harper,w1 gareth harper,1640,W1,1,1917,3.73,0.8400000000000001,3.5,1
 6,2026-11-11,Matthew Billington,Carl Halpin,w1 carl halpin,1634,W1,1,1921,4.57,0.8400000000000001,4.5,1
 7,2026-11-18,Matthew Billington,Adam Dalton,w1 adam dalton,2093,W1,0,1915,4.84,0.27,4.5,1
+8,2026-11-25,Matthew Billington,Jonathan Baker,w1 jonathan baker,1552,W1,1,1917,5.73,0.89,5.5,1
 1,2026-08-10,Matthew Cobley,Oliver McManamon,e1 oliver mcmanamon,1400,E1,0,1385,0.5,0.5,0,1
 2,2026-08-24,Matthew Cobley,Tom Ferries,e1 tom ferries,1367,E1,1,1399,1.05,0.55,1,1
 3,2026-09-07,Matthew Cobley,Joshua Phillips,e1 joshua phillips,1400,E1,1,1414,1.55,0.5,2,1
@@ -8282,6 +8402,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 5,2026-10-13,Matthew Cobley,Tom Bennett,e1 tom bennett,1857,E1,0,1427,2.09,0.1,3,1
 6,2026-11-02,Matthew Cobley,Ben Hannigan,e1 ben hannigan,1503,E1,1,1447,2.4499999999999997,0.36,4,1
 7,2026-11-17,Matthew Cobley,Clem Jones,e1 clem jones,1486,E1,1,1465,2.8299999999999996,0.38,5,1
+8,2026-11-23,Matthew Cobley,John Smart,e1 john smart,1310,E1,1,1477,3.46,0.63,6,1
 1,2026-01-07,Matthew Davies,Jonathan Gilbert,g1 jonathan gilbert,2005,G1,0.5,1983,0.47,0.47,0.5,1
 2,2026-01-21,Matthew Davies,Joshua McKenna,e1 joshua mckenna,1815,E1,1,1988,1.19,0.72,1.5,1
 3,2026-02-04,Matthew Davies,Jake Hurley,e1 jake hurley,1937,E1,0,1977,1.75,0.56,1.5,1
@@ -8341,7 +8462,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-07-07,Matthew Yan,Zirui Xu,e1 zirui xu,1310,E1,1,1325,0.5,0.5,1,1
 2,2026-07-14,Matthew Yan,Teilo Gruffydd,e1 teilo gruffydd,1399,E1,1,1344,0.8700000000000001,0.37,2,1
 1,2026-10-10,Mattvii Maceac,Cynan Jones,w1 cynan jones,1569,W1,0,1304,0.18,0.18,0,1
-2,2026-10-26,Mattvii Maceac,Sam Cocklin,d1 sam cocklin,1500,D1,0,1297,0.43000000000000005,0.25,0,1
+2,2026-10-26,Mattvii Maceac,Sam Cocklin,d1 sam cocklin,1500,D1,0,1297,0.4300000000000001,0.25,0,1
 1,2026-01-14,Matvei Bagno,Mike White,e1 mike white,1398,E1,0,1360,0.47,0.47,0,1
 2,2026-01-28,Matvei Bagno,Lucas Zheng,e1 lucas zheng,1752,E1,0,1357,0.57,0.1,0,1
 3,2026-02-04,Matvei Bagno,Karthik Kumar,e1 karthik kumar,1661,E1,0.5,1367,0.73,0.16,0.5,1
@@ -8476,10 +8597,11 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-06-13,Michael Edwards,Josh Dudley-Price,w1 josh dudley-price,1685,W1,1,1686,0.48,0.48,1,1
 1,2026-07-02,Michael Edwards,Mark Paffard,d1 mark paffard,1688,D1,1,1701,0.5,0.5,1,1
 2,2026-09-24,Michael Edwards,Shailendra Musale,d1 shailendra musale,1703,D1,0,1687,0.98,0.48,1,1
-3,2026-10-26,Michael Edwards,Martin C Jones,d1 martin c jones,1885,D1,0,1680,1.22,0.24000000000000002,1,1
+3,2026-10-26,Michael Edwards,Martin C Jones,d1 martin c jones,1885,D1,0,1680,1.22,0.24,1,1
 4,2026-10-27,Michael Edwards,Mark Paffard,d1 mark paffard,1688,D1,1,1695,1.72,0.5,2,1
 5,2026-11-17,Michael Edwards,Colin Bloodworth,d1 colin bloodworth,1619,D1,1,1707,2.32,0.6,3,1
 1,2026-10-26,Michael Evans,Clive Silver,e1 clive silver,1512,E1,0.5,1405,0.33999999999999997,0.33999999999999997,0.5,1
+2,2026-11-23,Michael Evans,Joshua Phillips,e1 joshua phillips,1400,E1,0,1390,0.8400000000000001,0.5,0.5,1
 1,2026-01-20,Michael J Williams,Lucas Ofubu,NA,1866,ENG,0,1780,0.4,0.4,0,1
 2,2026-01-26,Michael J Williams,Nick Darlington,NA,1747,ENG,0.5,1778,0.96,0.56,0.5,1
 3,2026-02-05,Michael J Williams,Paul Bluck,NA,1727,ENG,0.5,1775,1.55,0.59,1,1
@@ -8698,6 +8820,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 2,2026-09-21,Nadi Grewal,Martin Neil Jones,e1 martin neil jones,1310,E1,0.5,1436,1.1800000000000002,0.6599999999999999,1.5,1
 3,2026-10-05,Nadi Grewal,Richard Larg,e1 richard larg,1557,E1,0,1426,1.5,0.32,1.5,1
 4,2026-10-19,Nadi Grewal,Joshua Phillips,e1 joshua phillips,1400,E1,0.5,1425,2.04,0.54,2,1
+5,2026-11-23,Nadi Grewal,Thomasz Naljon,e1 thomasz naljon,1345,E1,1,1436,2.65,0.61,3,1
 1,2026-01-06,Nathan Gunardi,Chris Daniel,w1 chris daniel,1746,W1,1,1805,0.57,0.57,1,1
 1,2026-08-21,Nathaniel Ekermawi,Mike Hollyman,e1 mike hollyman,1613,E1,0,1411,0.25,0.25,0,1
 2,2026-08-22,Nathaniel Ekermawi,John Cox,e1 john cox,1612,E1,1,1433,0.5,0.25,1,1
@@ -8772,16 +8895,18 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-09-02,Nick Van Noorden,Mark Jones,e1 mark jones,1742,E1,1,2011,0.8200000000000001,0.8200000000000001,1,1
 2,2026-09-16,Nick Van Noorden,Ivan De La Cruz,e1 ivan de la cruz,2133,E1,0,2004,1.15,0.32999999999999996,1,1
 3,2026-09-24,Nick Van Noorden,Grzegorz Toczek,e1 grzegorz toczek,2285,E1,0,2001,1.32,0.17,1,1
-4,2026-10-26,Nick Van Noorden,Jonathan Gilbert,g1 jonathan gilbert,2023,G1,0,1991,1.8,0.48000000000000004,1,1
+4,2026-10-26,Nick Van Noorden,Jonathan Gilbert,g1 jonathan gilbert,2023,G1,0,1991,1.8,0.48,1,1
 5,2026-11-10,Nick Van Noorden,Archie Jones,e1 archie jones,1805,E1,1,1996,2.56,0.76,2,1
 6,2026-11-11,Nick Van Noorden,Roy Thomas,e1 roy thomas,2021,E1,1,2006,3.04,0.48000000000000004,3,1
 7,2026-11-18,Nick Van Noorden,Pete Heaven,e1 pete heaven,2120,E1,1,2019,3.38,0.33999999999999997,4,1
+8,2026-11-25,Nick Van Noorden,Guy Wagner,e1 guy wagner,1895,E1,1,2026,4.04,0.6599999999999999,5,1
 1,2026-01-06,Nickolas Sharifi,Finn Jones,e1 finn jones,1310,E1,0,1295,0.5,0.5,0,1
 2,2026-04-21,Nickolas Sharifi,Akshara Mandadapu,e1 akshara mandadapu,1340,E1,0,1281,0.96,0.46,0,1
 1,2026-06-29,Nigel Payne,Dave Parsons,e1 dave parsons,1791,E1,0,1307,0.1,0.1,0,1
 1,2026-10-12,Nigel Payne,Anthony Williams,e1 anthony williams,1425,E1,1,1512,0.61,0.61,1,1
 2,2026-10-19,Nigel Payne,John Cox,e1 john cox,1612,E1,0.5,1516,0.95,0.33999999999999997,1.5,1
 3,2026-11-02,Nigel Payne,Ben Trigg,e1 ben trigg,1474,E1,1,1530,1.49,0.54,2.5,1
+4,2026-11-23,Nigel Payne,Kam Choo Yin,e1 kam choo yin,1635,E1,0.5,1536,1.8,0.31,3,1
 1,2026-01-07,Nigel Saunders,David Llewellyn,g1 david llewellyn,1957,G1,0,1929,0.47,0.47,0,1
 2,2026-01-21,Nigel Saunders,Liam Powell-Jones,g1 liam powell-jones,1777,G1,1,1934,1.19,0.72,1,1
 3,2026-02-04,Nigel Saunders,Jonathan Gilbert,g1 jonathan gilbert,2005,G1,0,1926,1.59,0.4,1,1
@@ -8814,6 +8939,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 2,2026-10-27,Nma-Elietta Abdul-Obitayo,Janet Evans,w1 janet evans,1310,W1,0,1289,0.6799999999999999,0.5,0,1
 3,2026-11-17,Nma-Elietta Abdul-Obitayo,Stewart Ayers,w1 stewart ayers,1559,W1,0,1284,0.8700000000000001,0.19,0,1
 4,2026-11-18,Nma-Elietta Abdul-Obitayo,John Ward,w1 john ward,1382,W1,0,1272,1.27,0.4,0,1
+5,2026-11-24,Nma-Elietta Abdul-Obitayo,Dylan Greenway,w1 dylan greenway,1444,W1,0,1262,1.59,0.32,0,1
 1,2026-01-21,Noah Pynn,Gareth Holyfield,g1 gareth holyfield,1458,G1,1,1331,0.3,0.3,1,1
 2,2026-04-08,Noah Pynn,Micah Matheson,g1 micah matheson,1359,G1,0,1318,0.73,0.43,1,1
 1,2026-10-14,Noah Pynn,Thomas Fletcher,g1 thomas fletcher,1310,G1,0.5,1318,0.51,0.51,0.5,1
@@ -8835,6 +8961,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 4,2026-10-28,Oliver Lake,John Giannini,w1 john giannini,1310,W1,0.5,1270,1.82,0.5,0.5,1
 5,2026-11-04,Oliver Lake,Janet Evans,w1 janet evans,1310,W1,0,1255,2.32,0.5,0.5,1
 6,2026-11-10,Oliver Lake,Advik Ram,w1 advik ram,1406,W1,0,1244,2.69,0.37,0.5,1
+7,2026-11-25,Oliver Lake,Paul Thomas,w1 paul thomas,1427,W1,0,1234,3.03,0.33999999999999997,0.5,1
 1,2026-08-10,Oliver McManamon,Matthew Cobley,e1 matthew cobley,1400,E1,1,1415,0.5,0.5,1,1
 2,2026-08-24,Oliver McManamon,Peter Watkins,e1 peter watkins,1426,E1,1,1431,0.96,0.46,2,1
 3,2026-10-12,Oliver McManamon,Wayne Holland,e1 wayne holland,1382,E1,1,1445,1.49,0.53,3,1
@@ -8846,6 +8973,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-09-01,Oliver Williams,Sam T Jones,e1 sam t jones,1400,E1,0,1337,0.4300000000000001,0.4300000000000001,0,1
 2,2026-10-12,Oliver Williams,Oliver Pici,e1 oliver pici,1310,E1,0,1320,0.99,0.56,0,1
 3,2026-11-17,Oliver Williams,Bailey Vokes,e1 bailey vokes,1312,E1,0,1304,1.54,0.55,0,1
+4,2026-11-24,Oliver Williams,Maher Alrais,e1 maher alrais,1400,E1,0,1291,1.97,0.43000000000000005,0,1
 1,2026-01-06,Olivia Smith,Edward Lewis,NA,1829,FIDE,0.5,2198,0.9,0.9,0.5,1
 2,2026-01-20,Olivia Smith,Hector Viadiu-Ilarraza,NA,1774,FIDE,0,2189,1.8,0.9,0.5,1
 3,2026-01-27,Olivia Smith,Michael Walder,NA,1873,FIDE,1,2190,2.67,0.87,1.5,1
@@ -8871,6 +8999,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 2,2026-09-29,Oscar Purcell,Rhys Evans,w1 rhys evans,1310,W1,1,1340,1,0.5,2,1
 3,2026-10-22,Oscar Purcell,Stuart Thomas,w1 stuart thomas,1310,W1,1,1355,1.5,0.5,3,1
 4,2026-11-18,Oscar Purcell,Paul O'Gara,w1 paul o'gara,1310,W1,0,1340,2,0.5,3,1
+5,2026-11-24,Oscar Purcell,John Ward,w1 john ward,1382,W1,0,1328,2.4,0.4,3,1
 1,2026-01-27,Osian Griffiths,Joe Morton,d1 joe morton,1734,D1,0,1307,0.1,0.1,0,1
 2,2026-02-24,Osian Griffiths,Sebastian Kummer,d1 sebastian kummer,1326,D1,0,1293,0.58,0.48,0,1
 3,2026-03-03,Osian Griffiths,Tony Shum,d1 tony shum,1350,D1,0,1279,1.02,0.44,0,1
@@ -8952,6 +9081,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 20,2026-09-29,Otto Bartlett-Davis,Jai Hrithvik Adithya Are,e1 jai hrithvik adithya are,1667,E1,1,1758,12.02,0.65,11.5,1
 21,2026-10-18,Otto Bartlett-Davis,Leon Iorch,d1 leon iorch,1430,D1,1,1761,12.9,0.88,12.5,1
 22,2026-11-10,Otto Bartlett-Davis,Jake Hurley,e1 jake hurley,1962,E1,0.5,1765,13.27,0.25,13,1
+23,2026-11-24,Otto Bartlett-Davis,Derek Jones,e1 derek jones,1945,E1,0,1757,13.54,0.27,13,1
 1,2026-11-20,Ovidiu Pintea,Hywel Griffiths,w1 hywel griffiths,1897,W1,0,1773,0.33999999999999997,0.33999999999999997,0,1
 2,2026-11-21,Ovidiu Pintea,Les Philpin,w1 les philpin,1724,W1,0.5,1770,0.92,0.58,0.5,1
 3,2026-11-21,Ovidiu Pintea,Ian Hayes,d1 ian hayes,1830,D1,1,1787,1.35,0.43000000000000005,1.5,2
@@ -8975,6 +9105,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-10-12,Owen Tompkins Coll,Bill Harle,e1 bill harle,1808,E1,0,1811,0.52,0.52,0,1
 2,2026-10-27,Owen Tompkins Coll,Liam Penny,e1 liam penny,1794,E1,0,1800,1.06,0.54,0,1
 3,2026-11-03,Owen Tompkins Coll,John McGregor,e1 john mcgregor,1867,E1,0.5,1801,1.49,0.43000000000000005,0.5,1
+4,2026-11-23,Owen Tompkins Coll,Mark Jones,e1 mark jones,1742,E1,1,1809,2.1,0.61,1.5,1
 1,2026-09-15,Patrick Ackerman,David Orford,g1 david orford,1310,G1,1,1325,0.5,0.5,1,1
 2,2026-10-20,Patrick Ackerman,George Siddall,g1 george siddall,1350,G1,0,1312,0.94,0.44,1,1
 1,2026-01-08,Patrick Bennett,Simon Layhe,NA,1936,ENG,0.5,1950,0.52,0.52,0.5,1
@@ -9040,6 +9171,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 10,2026-10-07,Patrick Bourne,Dave Connolly,g1 dave connolly,1679,G1,0,1687,4.96,0.5700000000000001,3.5,1
 11,2026-10-19,Patrick Bourne,Simon Tang,g1 simon tang,1757,G1,1,1703,5.42,0.46,4.5,1
 1,2026-11-18,Patryk Bialowas,Stuart Enoch,e1 stuart enoch,1545,E1,0,1562,0.55,0.55,0,1
+2,2026-11-25,Patryk Bialowas,Gavin Jones,e1 gavin jones,1809,E1,0.5,1570,0.76,0.21000000000000002,0.5,1
 1,2026-01-21,Paul Bevan,June Evans,w1 june evans,1310,W1,1,1491,0.73,0.73,1,1
 2,2026-01-28,Paul Bevan,Tony Williams,w1 tony williams,1442,W1,1,1504,1.29,0.56,2,1
 3,2026-02-04,Paul Bevan,Steve Edwards,w1 steve edwards,1573,W1,0,1493,1.66,0.37,2,1
@@ -9061,7 +9193,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 7,2026-10-01,Paul Bevan,Tony Williams,w1 tony williams,1420,W1,0.5,1432,2.4099999999999997,0.58,1,1
 8,2026-10-06,Paul Bevan,Glyn Hill,w1 glyn hill,1574,W1,0,1421,2.77,0.36,1,1
 9,2026-10-14,Paul Bevan,Steve Edwards,w1 steve edwards,1591,W1,0,1411,3.11,0.33999999999999997,1,1
-10,2026-10-26,Paul Bevan,Robert Narayan-Taylor,d1 robert narayan-taylor,1575,D1,0,1400,3.4699999999999998,0.36,1,1
+10,2026-10-26,Paul Bevan,Robert Narayan-Taylor,d1 robert narayan-taylor,1575,D1,0,1400,3.47,0.36,1,1
 11,2026-10-28,Paul Bevan,Simon Browning,w1 simon browning,1310,W1,0,1378,4.1899999999999995,0.72,1,1
 12,2026-11-04,Paul Bevan,Samuel Lee,w1 samuel lee,1500,W1,0,1365,4.6499999999999995,0.46,1,1
 13,2026-11-18,Paul Bevan,Nithan Krish,w1 nithan krish,1500,W1,1,1381,5.109999999999999,0.46,2,1
@@ -9191,6 +9323,8 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 6,2026-11-21,Paul Thomas,Daarshik Haldar,d1 daarshik haldar,1384,D1,1,1413,2.9699999999999998,0.56,2.5,2
 7,2026-11-22,Paul Thomas,Joseph Lake,w1 joseph lake,1479,W1,0,1400,3.4,0.43000000000000005,2.5,1
 8,2026-11-22,Paul Thomas,Ethan Tirukoti,w1 ethan tirukoti,1310,W1,1,1410,4.06,0.6599999999999999,3.5,2
+9,2026-11-24,Paul Thomas,James Vincent,w1 james vincent,1325,W1,1,1421,4.7,0.64,4.5,1
+10,2026-11-25,Paul Thomas,Oliver Lake,w1 oliver lake,1310,W1,1,1431,5.359999999999999,0.6599999999999999,5.5,1
 1,2026-01-10,Pete Heaven,Szymon Pozimski,NA,2107,ENG,0,2117,0.53,0.53,0,1
 2,2026-01-11,Pete Heaven,Maxim Dunn,NA,2144,ENG,1,2128,1.01,0.48,1,1
 3,2026-02-03,Pete Heaven,Anezka Vlkova,e1 anezka vlkova,2012,E1,1,2135,1.67,0.66,2,1
@@ -9459,6 +9593,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 6,2026-04-07,Phil Jones,Shaun Owens,e1 shaun owens,1310,E1,0,1502,2.95,0.82,0.5,1
 1,2026-09-14,Phil Jones,Kieran Judge,e1 kieran judge,1458,E1,0,1485,0.56,0.56,0,1
 2,2026-10-27,Phil Jones,Charlie Duffin,e1 charlie duffin,1326,E1,0,1463,1.29,0.73,0,1
+3,2026-11-23,Phil Jones,Shaun Jenkins,e1 shaun jenkins,1400,E1,1,1474,1.93,0.64,1,1
 1,2026-01-14,Piotr Graczyk,Kam Choo Yin,e1 kam choo yin,1755,E1,0.5,1685,0.4,0.4,0.5,1
 2,2026-02-04,Piotr Graczyk,Hamid Farani Sani,e1 hamid farani sani,1823,E1,0,1676,0.71,0.31,0.5,1
 3,2026-02-11,Piotr Graczyk,Michael Arribas-Ayllon,e1 michael arribas-ayllon,1837,E1,0,1667,1,0.29,0.5,1
@@ -9486,6 +9621,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 9,2026-11-03,Piotr Graczyk,Kam Choo Yin,e1 kam choo yin,1635,E1,1,1738,4.859999999999999,0.62,5.5,1
 10,2026-11-16,Piotr Graczyk,Steve Jones,e1 steve jones,1826,E1,1,1757,5.21,0.35,6.5,1
 11,2026-11-18,Piotr Graczyk,Joe Fathallah,e1 joe fathallah,2027,E1,0,1753,5.35,0.14,6.5,1
+12,2026-11-25,Piotr Graczyk,Derek Jones,e1 derek jones,1945,E1,0,1746,5.56,0.21000000000000002,6.5,1
 1,2026-10-09,Pugalnanthy Amirthalingam,Tomi Ogden,w1 tomi ogden,1310,W1,1,1325,0.5,0.5,1,1
 2,2026-10-13,Pugalnanthy Amirthalingam,Virat Nagari,w1 virat nagari,1345,W1,1,1342,0.95,0.45,2,1
 3,2026-10-27,Pugalnanthy Amirthalingam,Jakob Josh-Wright,w1 jakob josh-wright,1357,W1,1,1359,1.3800000000000001,0.43000000000000005,3,1
@@ -9562,6 +9698,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 5,2026-11-04,Ralph Cook,Spencer Ripley,w1 spencer ripley,1435,W1,1,1586,3.3,0.73,2.5,1
 6,2026-11-11,Ralph Cook,Cynan Jones,w1 cynan jones,1569,W1,0,1569,3.86,0.56,2.5,1
 7,2026-11-18,Ralph Cook,Nick Hale,w1 nick hale,1472,W1,1,1578,4.55,0.69,3.5,1
+8,2026-11-25,Ralph Cook,Adam Woodruff,d1 adam woodruff,1987,D1,0,1575,4.6499999999999995,0.1,3.5,1
 1,2026-09-23,Ramesh Arjunan,James Vincent,w1 james vincent,1325,W1,1,1379,0.56,0.56,1,1
 2,2026-10-07,Ramesh Arjunan,Erik Elgersma,w1 erik elgersma,1328,W1,1,1393,1.11,0.55,2,1
 3,2026-10-28,Ramesh Arjunan,Kai Palmer,w1 kai palmer,1320,W1,1,1406,1.6800000000000002,0.5700000000000001,3,1
@@ -9627,6 +9764,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-09-22,Rhys Davies,Anievv Pirashanth,e1 anievv pirashanth,1495,E1,0,1390,0.37,0.37,0,1
 2,2026-09-28,Rhys Davies,Gethin Stephens,e1 gethin stephens,1425,E1,0.5,1391,0.8400000000000001,0.47,0.5,1
 3,2026-11-16,Rhys Davies,Bob Hurn,e1 bob hurn,1637,E1,0,1385,1.04,0.2,0.5,1
+4,2026-11-24,Rhys Davies,James Williams,e1 james williams,1412,E1,1,1400,1.52,0.48000000000000004,1.5,1
 1,2026-09-29,Rhys Evans,Oscar Purcell,w1 oscar purcell,1310,W1,0,1295,0.5,0.5,0,1
 2,2026-10-09,Rhys Evans,Torrigan Chapman,w1 torrigan chapman,1310,W1,1,1310,1,0.5,1,1
 3,2026-11-04,Rhys Evans,Paul O'Gara,w1 paul o'gara,1310,W1,0,1295,1.5,0.5,1,1
@@ -9634,7 +9772,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-07-06,Rhys Sommerville,Huw Holliday,d1 huw holliday,1367,D1,0,1467,0.6699999999999999,0.6699999999999999,0,1
 2,2026-08-24,Rhys Sommerville,Richard Baker,d1 richard baker,1482,D1,1,1482,1.1800000000000002,0.51,1,1
 3,2026-09-24,Rhys Sommerville,Emily Thomas-Ward,d1 emily thomas-ward,1380,D1,1,1492,1.83,0.65,2,1
-4,2026-10-26,Rhys Sommerville,Ray Greenwood,d1 ray greenwood,1537,D1,0,1479,2.2600000000000002,0.43000000000000005,2,1
+4,2026-10-26,Rhys Sommerville,Ray Greenwood,d1 ray greenwood,1537,D1,0,1479,2.26,0.4300000000000001,2,1
 5,2026-11-01,Rhys Sommerville,Robert Wallace,e1 robert wallace,1563,E1,0,1468,2.65,0.39,2,1
 1,2026-06-29,Rhys Warrell,Tommy Cheverette,d1 tommy cheverette,1400,D1,0,1433,0.57,0.57,0,1
 1,2026-07-27,Rhys Warrell,James Moffat,d1 james moffat,1399,D1,0,1385,0.5,0.5,0,1
@@ -9653,7 +9791,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-07-27,Richard Baker,Dan Kite,d1 dan kite,1511,D1,0,1468,0.46,0.46,0,1
 2,2026-08-24,Richard Baker,Rhys Sommerville,d1 rhys sommerville,1487,D1,0,1453,0.95,0.49,0,1
 3,2026-09-28,Richard Baker,Daarshik Haldar,d1 daarshik haldar,1384,D1,0,1434,1.59,0.64,0,1
-4,2026-10-26,Richard Baker,Harry Harling,d1 harry harling,1341,D1,0,1414,2.2800000000000002,0.69,0,1
+4,2026-10-26,Richard Baker,Harry Harling,d1 harry harling,1341,D1,0,1414,2.28,0.69,0,1
 1,2026-01-07,Richard Batey,Dave Williams,g1 dave williams,1733,G1,0,1873,0.71,0.71,0,1
 2,2026-01-20,Richard Batey,John A Williams,g1 john a williams,1734,G1,1,1879,1.42,0.71,1,1
 3,2026-02-04,Richard Batey,Richard Miles,g1 richard miles,1976,G1,0.5,1881,1.79,0.37,1.5,1
@@ -9723,6 +9861,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 14,2026-11-09,Richard Larg,Ben Trigg,e1 ben trigg,1474,E1,1,1611,6.72,0.62,8.5,1
 15,2026-11-16,Richard Larg,Shaun Jenkins,e1 shaun jenkins,1400,E1,1,1619,7.430000000000001,0.71,9.5,1
 16,2026-11-17,Richard Larg,Alex Rees,e1 alex rees,1310,E1,1,1625,8.239999999999998,0.81,10.5,1
+17,2026-11-24,Richard Larg,Yimo Liu,e1 yimo liu,1472,E1,0,1606,8.860000000000001,0.62,10.5,1
 1,2026-01-07,Richard Miles,William Phillips,g1 william phillips,1837,G1,0.5,1972,0.69,0.69,0.5,1
 2,2026-02-04,Richard Miles,Richard Batey,g1 richard batey,1887,G1,0.5,1970,1.32,0.63,1,1
 3,2026-02-18,Richard Miles,John A Williams,g1 john a williams,1734,G1,0.5,1964,2.12,0.8,1.5,1
@@ -9813,11 +9952,14 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 3,2026-11-01,Rishi Choudhuri,Robert Palser,g1 robert palser,1592,G1,1,1644,1.59,0.51,3,1
 4,2026-11-03,Rishi Choudhuri,Archie Jones,e1 archie jones,1805,E1,0,1637,1.83,0.24000000000000002,3,1
 5,2026-11-11,Rishi Choudhuri,Andrei Zhuravlev,e1 andrei zhuravlev,1404,E1,1,1644,2.59,0.76,4,1
-6,2026-11-20,Rishi Choudhuri,Martin C Jones,d1 martin c jones,1885,D1,1,1669,2.75,0.16,5,1
-7,2026-11-21,Rishi Choudhuri,Gareth Harper,w1 gareth harper,1640,W1,1,1686,3.2,0.45,6,1
-8,2026-11-21,Rishi Choudhuri,Hywel Griffiths,w1 hywel griffiths,1897,W1,1,1711,3.3499999999999996,0.15000000000000002,7,2
-9,2026-11-22,Rishi Choudhuri,George Crockart,w1 george crockart,1976,W1,0,1708,3.4499999999999997,0.1,7,1
-10,2026-11-22,Rishi Choudhuri,Jon Tuson,d1 jon tuson,1799,D1,0,1701,3.69,0.24000000000000002,7,2
+6,2026-11-16,Rishi Choudhuri,Derek Jones,e1 derek jones,1945,E1,0,1640,2.71,0.12000000000000001,4,1
+7,2026-11-18,Rishi Choudhuri,Wutong Chen,e1 wutong chen,2000,E1,0,1637,2.8099999999999996,0.1,4,1
+8,2026-11-20,Rishi Choudhuri,Martin C Jones,d1 martin c jones,1885,D1,1,1663,2.9699999999999998,0.16,5,1
+9,2026-11-21,Rishi Choudhuri,Gareth Harper,w1 gareth harper,1640,W1,1,1679,3.42,0.45,6,1
+10,2026-11-21,Rishi Choudhuri,Hywel Griffiths,w1 hywel griffiths,1897,W1,1,1705,3.57,0.15000000000000002,7,2
+11,2026-11-22,Rishi Choudhuri,George Crockart,w1 george crockart,1976,W1,0,1701,3.67,0.1,7,1
+12,2026-11-22,Rishi Choudhuri,Jon Tuson,d1 jon tuson,1799,D1,0,1694,3.9099999999999997,0.24000000000000002,7,2
+13,2026-11-23,Rishi Choudhuri,Chris White,e1 chris white,1699,E1,0.5,1698,4.2700000000000005,0.36,7.5,1
 1,2026-09-29,Rishva Putluru,Adeline Wong,e1 adeline wong,1310,E1,0,1295,0.5,0.5,0,1
 2,2026-10-06,Rishva Putluru,Ahmed Jamil,e1 ahmed jamil,1310,E1,0,1280,1,0.5,0,1
 3,2026-10-14,Rishva Putluru,Akshara Mandadapu,e1 akshara mandadapu,1310,E1,0,1265,1.5,0.5,0,1
@@ -9833,6 +9975,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 7,2026-03-31,Rob Frame,Tom Bennett,e1 tom bennett,1871,E1,0,1490,1.96,0.13,0.5,1
 8,2026-05-19,Rob Frame,Constantine Popov,e1 constantine popov,1418,E1,1,1501,2.62,0.66,1.5,1
 1,2026-11-17,Rob Frame,Mike White,e1 mike white,1424,E1,1,1513,0.61,0.61,1,1
+2,2026-11-24,Rob Frame,Ella Green,g1 ella green,1607,G1,1,1532,0.96,0.35,2,1
 1,2026-01-20,Rob Paige,Robert Wallace,e1 robert wallace,1583,E1,0.5,1494,0.37,0.37,0.5,1
 2,2026-02-17,Rob Paige,Robert Wallace,e1 robert wallace,1583,E1,1,1513,0.74,0.37,1.5,1
 3,2026-06-02,Rob Paige,Saksham Chawla,e1 saksham chawla,1310,E1,1,1521,1.48,0.74,2.5,1
@@ -9883,6 +10026,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 22,2026-11-21,Robert Bradley,Vlad Pintea,w1 vlad pintea,1693,W1,0,1544,9.06,0.38,7,2
 23,2026-11-22,Robert Bradley,Jonathan Edwards,e1 jonathan edwards,1441,E1,1,1552,9.78,0.72,8,1
 24,2026-11-22,Robert Bradley,Samuel Lee,w1 samuel lee,1500,W1,0,1533,10.43,0.65,8,2
+25,2026-11-25,Robert Bradley,Carl Halpin,w1 carl halpin,1634,W1,0.5,1534,10.89,0.46,8.5,1
 1,2026-01-03,Robert G Clark,Sylvan Clarke,NA,1630,ENG,1,1985,0.88,0.88,1,1
 2,2026-01-03,Robert G Clark,Charlie Wainwright,NA,2020,ENG,0,1976,1.33,0.45,1,2
 3,2026-01-03,Robert G Clark,Matthew Grimley,NA,1921,ENG,0.5,1975,1.92,0.59,1.5,3
@@ -9999,6 +10143,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 10,2026-11-01,Robert Wallace,Rhys Sommerville,d1 rhys sommerville,1487,D1,1,1564,3.4699999999999998,0.61,3.5,1
 11,2026-11-10,Robert Wallace,Gareth Richards,e1 gareth richards,1640,E1,0,1552,3.86,0.39,3.5,1
 12,2026-11-16,Robert Wallace,Toby Blankley,e1 toby blankley,1525,E1,1,1566,4.41,0.55,4.5,1
+13,2026-11-25,Robert Wallace,Andrei Zhuravlev,e1 andrei zhuravlev,1404,E1,1,1574,5.119999999999999,0.71,5.5,1
 1,2026-09-29,Robin Jones,Ahmed Jamil,e1 ahmed jamil,1310,E1,1,1325,0.5,0.5,1,1
 2,2026-10-06,Robin Jones,Charlie Duffin,e1 charlie duffin,1326,E1,0,1311,0.98,0.48,1,1
 3,2026-10-14,Robin Jones,Adeline Wong,e1 adeline wong,1310,E1,1,1326,1.48,0.5,2,1
@@ -10218,7 +10363,9 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 16,2026-10-04,Roy Thomas,Chris Dixon,g1 chris dixon,1837,G1,0.5,1978,9.13,0.74,7,1
 17,2026-10-04,Roy Thomas,Peter Quinn,e1 peter quinn,1768,E1,1,1982,9.94,0.81,8,2
 12,2026-10-12,Roy Thomas,Ivan De La Cruz,e1 ivan de la cruz,2133,E1,0,1995,6.3,0.33999999999999997,5,1
-18,2026-11-11,Roy Thomas,Nick Van Noorden,e1 nick van noorden,2007,E1,0,1972,10.46,0.52,8,1
+18,2026-11-09,Roy Thomas,Ioan Rees,e1 ioan rees,2352,E1,0,1979,10.07,0.13,8,1
+19,2026-11-11,Roy Thomas,Nick Van Noorden,e1 nick van noorden,2007,E1,0,1969,10.59,0.52,8,1
+20,2026-11-24,Roy Thomas,John McGregor,e1 john mcgregor,1867,E1,0,1955,11.3,0.71,8,1
 1,2026-01-09,Rudy van Kemenade,Mike Surtees,NA,2147,ENG,0,1943,0.24,0.24,0,1
 2,2026-01-10,Rudy van Kemenade,Simon Layhe,NA,1936,ENG,1,1953,0.76,0.52,1,1
 3,2026-01-10,Rudy van Kemenade,Tomasz Sygnowski,NA,2222,ENG,0,1949,0.93,0.17,1,2
@@ -10282,6 +10429,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-09-21,Russell Dodington,Mike Gale,e1 mike gale,1808,E1,0,1803,0.51,0.51,0,1
 2,2026-10-06,Russell Dodington,James Choung,e1 james choung,1653,E1,1,1809,1.23,0.72,1,1
 3,2026-11-09,Russell Dodington,Bob Hurn,e1 bob hurn,1637,E1,0.5,1804,1.96,0.73,1.5,1
+4,2026-11-24,Russell Dodington,John Watts,e1 john watts,1778,E1,0,1793,2.51,0.55,1.5,1
 1,2026-08-21,Ryan Edwards,Daniel Boyle,NA,1542,ENG,0,1439,0.37,0.37,0,1
 2,2026-08-22,Ryan Edwards,Shanaya Chauhan,NA,1457,ENG,0,1424,0.8600000000000001,0.49,0,1
 3,2026-08-22,Ryan Edwards,Ahmad Milad Abdulkhaleq,NA,1510,ENG,1,1442,1.27,0.41,1,2
@@ -10348,6 +10496,9 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 8,2026-10-14,S Wyn Howells,Jamie Wilson,e1 jamie wilson,1417,E1,0,1642,5.64,0.8300000000000001,4,1
 13,2026-10-19,S Wyn Howells,Oliver McManamon,e1 oliver mcmanamon,1400,E1,1,1623,8.27,0.8400000000000001,6,1
 14,2026-11-09,S Wyn Howells,Kevin Lambert,g1 kevin lambert,1610,G1,0,1605,8.88,0.61,6,1
+15,2026-11-18,S Wyn Howells,Robert Palser,g1 robert palser,1592,G1,1,1616,9.52,0.64,7,1
+16,2026-11-24,S Wyn Howells,Iain Keys,e1 iain keys,1600,E1,1,1627,10.15,0.63,8,1
+17,2026-11-25,S Wyn Howells,Savelii Turchenko,g1 savelii turchenko,1310,G1,1,1630,11.05,0.9,9,1
 1,2026-01-06,Saksham Chawla,Ahmed Jamil,e1 ahmed jamil,1310,E1,0,1295,0.5,0.5,0,1
 2,2026-01-13,Saksham Chawla,Felix Deng,e1 felix deng,1336,E1,0,1281,0.96,0.46,0,1
 3,2026-01-27,Saksham Chawla,Alex Rees,e1 alex rees,1320,E1,1,1297,1.45,0.49,1,1
@@ -10497,6 +10648,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 30,2026-11-10,Sam Jukes,Adam Dalton,w1 adam dalton,2093,W1,0,2049,17.22,0.43000000000000005,17.5,1
 31,2026-11-11,Sam Jukes,Lachlan Tyrrell,e1 lachlan tyrrell,2022,E1,1,2058,17.75,0.53,18.5,1
 32,2026-11-18,Sam Jukes,Tom Brown,e1 tom brown,2107,E1,1,2070,18.16,0.41000000000000003,19.5,1
+33,2026-11-23,Sam Jukes,Jonathan Gilbert,g1 jonathan gilbert,2023,G1,1,2079,18.69,0.53,20.5,1
 1,2026-03-23,Sam Rawlinson,Mark Rummery,d1 mark rummery,1546,D1,0,1487,0.43,0.43,0,1
 1,2026-07-13,Sam Rawlinson,Wayne Edwards,d1 wayne edwards,1395,D1,1,1498,0.63,0.63,1,1
 2,2026-08-24,Sam Rawlinson,Jesus Avendano,d1 jesus avendano,1310,D1,1,1506,1.36,0.73,2,1
@@ -10541,7 +10693,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 3,2026-08-24,Sam White,Ken Hannah,e1 ken hannah,1668,E1,0,1545,1.88,0.36,1,1
 4,2026-10-06,Sam White,Wilfrid Tang,e1 wilfrid tang,1366,E1,0,1522,2.64,0.76,1,1
 5,2026-10-07,Sam White,Finley Jones,e1 finley jones,1438,E1,1,1531,3.32,0.6799999999999999,2,1
-6,2026-10-26,Sam White,Maya Hurst,e1 maya hurst,1600,E1,0,1517,3.7800000000000002,0.46,2,1
+6,2026-10-26,Sam White,Maya Hurst,e1 maya hurst,1600,E1,0,1517,3.78,0.46,2,1
 7,2026-11-02,Sam White,Wayne Olsen,e1 wayne olsen,1496,E1,0,1499,4.39,0.61,2,1
 8,2026-11-17,Sam White,Gareth Richards,e1 gareth richards,1640,E1,0,1487,4.79,0.4,2,1
 1,2026-01-06,Samarth Chawla,Constantine Popov,e1 constantine popov,1418,E1,1,1454,0.53,0.53,1,1
@@ -10628,6 +10780,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 10,2026-08-30,Sami Hoosein,Danial Hassan,NA,1637,ENG,0,1510,4.94,0.31,5.5,2
 11,2026-08-31,Sami Hoosein,Martyn J Maber,NA,1541,ENG,0.5,1512,5.37,0.4300000000000001,6,1
 12,2026-10-26,Sami Hoosein,Peter Watkins,e1 peter watkins,1426,E1,1,1525,5.970000000000001,0.6,7,1
+13,2026-11-24,Sami Hoosein,William O'Connor-Gunston,e1 william o'connor-gunston,1310,E1,1,1532,6.71,0.74,8,1
 1,2026-02-25,Samson Muputa,John Newcombe,g1 john newcombe,1623,G1,0,1340,0.17,0.17,0,1
 1,2026-11-04,Samuel Lee,Paul Bevan,w1 paul bevan,1474,W1,1,1514,0.54,0.54,1,1
 2,2026-11-18,Samuel Lee,Jack Mason,w1 jack mason,1476,W1,1,1528,1.07,0.53,2,1
@@ -10636,6 +10789,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 5,2026-11-21,Samuel Lee,Rohan Powell,e1 rohan powell,1590,E1,0.5,1558,2.08,0.37,4,2
 6,2026-11-22,Samuel Lee,Tony Goodchild,w1 tony goodchild,1537,W1,1,1574,2.53,0.45,5,1
 7,2026-11-22,Samuel Lee,Robert Bradley,w1 robert bradley,1606,W1,1,1594,2.88,0.35,6,2
+8,2026-11-24,Samuel Lee,Glyn Hill,w1 glyn hill,1574,W1,0,1582,3.2800000000000002,0.4,6,1
 1,2026-01-23,Samuele Scarpignato,Bob Wiltshire,g1 bob wiltshire,1545,G1,0,1705,0.74,0.74,0,1
 2,2026-01-24,Samuele Scarpignato,David Belochkin,e1 david belochkin,1561,E1,0.5,1698,1.46,0.72,0.5,1
 3,2026-01-24,Samuele Scarpignato,Mike Stannard,g1 mike stannard,1479,G1,1,1704,2.27,0.81,1.5,2
@@ -10750,6 +10904,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 3,2026-11-21,Serdar Gurdas,Raju Md Rahim Uddin,NA,1,Pending,1,1377,1.75,1,1,2
 4,2026-11-22,Serdar Gurdas,Anievv Pirashanth,e1 anievv pirashanth,1495,E1,0.5,1381,2.12,0.37,1.5,1
 5,2026-11-22,Serdar Gurdas,Robert Narayan-Taylor,d1 robert narayan-taylor,1575,D1,0.5,1388,2.3899999999999997,0.27,2,2
+6,2026-11-24,Serdar Gurdas,Claire Gorman,w1 claire gorman,1442,W1,1,1405,2.8299999999999996,0.44,3,1
 1,2026-06-02,Sergey Popov,Toby Reckless,e1 toby reckless,1523,E1,0,1390,0.33,0.33,0,1
 2,2026-06-16,Sergey Popov,Saksham Chawla,e1 saksham chawla,1310,E1,0,1371,0.96,0.63,0,1
 3,2026-06-23,Sergey Popov,Danni Ramayead,e1 danni ramayead,1310,E1,0.5,1367,1.59,0.63,0.5,1
@@ -10782,7 +10937,8 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 9,2026-09-21,Sergio Esteves,Joseph Browse,e1 joseph browse,1842,E1,0.5,1782,5.6499999999999995,0.48,3.5,1
 10,2026-10-12,Sergio Esteves,Matthew Davies,e1 matthew davies,1978,E1,0.5,1786,5.94,0.29000000000000004,4,1
 11,2026-11-01,Sergio Esteves,Reginald Mba,e1 reginald mba,1977,E1,1,1800,6.23,0.29000000000000004,5,1
-12,2026-11-16,Sergio Esteves,James Choung,e1 james choung,1653,E1,0.5,1796,6.96,0.73,5.5,1
+12,2026-11-09,Sergio Esteves,Jack Hannigan,e1 jack hannigan,1735,E1,0.5,1798,6.859999999999999,0.63,5.5,1
+13,2026-11-16,Sergio Esteves,James Choung,e1 james choung,1653,E1,0.5,1793,7.59,0.73,6,1
 1,2026-01-06,Seth Livesey,Joe Muxlow,n1 joe muxlow,1829,N1,0,1394,0.1,0.1,0,1
 2,2026-02-25,Seth Livesey,G Brian Davies,n1 g brian davies,1781,N1,0,1391,0.2,0.1,0,1
 3,2026-04-01,Seth Livesey,Gary Slegg,n1 gary slegg,1690,N1,0,1386,0.36,0.16,0,1
@@ -10799,6 +10955,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 5,2026-11-09,Shaun Jenkins,Justin Morgans,e1 justin morgans,1784,E1,0,1420,2.34,0.1,3,1
 6,2026-11-16,Shaun Jenkins,Richard Larg,e1 richard larg,1557,E1,0,1411,2.63,0.29000000000000004,3,1
 7,2026-11-17,Shaun Jenkins,Akshara Mandadapu,e1 akshara mandadapu,1310,E1,1,1422,3.2600000000000002,0.63,4,1
+8,2026-11-23,Shaun Jenkins,Phil Jones,e1 phil jones,1502,E1,0,1412,3.62,0.36,4,1
 1,2026-04-07,Shaun Owens,Phil Jones,e1 phil jones,1576,E1,1,1335,0.18,0.18,1,1
 2,2026-04-28,Shaun Owens,Ben Trigg,e1 ben trigg,1500,E1,0,1327,0.43,0.25,1,1
 1,2026-03-17,Shaun Waines,Richard Doble,n1 richard doble,1757,N1,0,1429,0.13,0.13,0,1
@@ -10929,6 +11086,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 13,2026-11-21,Spencer Ripley,Ethan Tirukoti,w1 ethan tirukoti,1310,W1,1,1398,5.72,0.6699999999999999,4.5,2
 14,2026-11-22,Spencer Ripley,Chris Peters,e1 chris peters,1700,E1,0,1393,5.9,0.18,4.5,1
 15,2026-11-22,Spencer Ripley,John Giannini,w1 john giannini,1310,W1,1,1403,6.57,0.6699999999999999,5.5,2
+16,2026-11-25,Spencer Ripley,Derek Bellamy,w1 derek bellamy,1525,W1,1,1421,6.94,0.37,6.5,1
 1,2026-03-11,Sree Panita,Cynan Jones,w1 cynan jones,1567,W1,0.5,1319,0.19,0.19,0.5,1
 1,2026-01-28,Sree Pranita,Derek Bellamy,w1 derek bellamy,1468,W1,0,1301,0.29,0.29,0,1
 2,2026-03-11,Sree Pranita,Cynan Jones,w1 cynan jones,1567,W1,0.5,1311,0.48,0.19,0.5,1
@@ -11005,6 +11163,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 8,2026-11-04,Steve Edwards,Joseph Lake,w1 joseph lake,1479,W1,1,1637,4.970000000000001,0.6599999999999999,6.5,1
 9,2026-11-11,Steve Edwards,Mike Richards,w1 mike richards,1522,W1,1,1649,5.57,0.6,7.5,1
 10,2026-11-18,Steve Edwards,Jeff Boyce,w1 jeff boyce,1403,W1,0.5,1642,6.319999999999999,0.75,8,1
+11,2026-11-25,Steve Edwards,Ewan Ferguson,d1 ewan ferguson,1839,D1,0,1636,6.51,0.19,8,1
 1,2026-01-07,Steve Horrell,Kevin Thomas,g1 kevin thomas,1856,G1,0.5,1677,0.26,0.26,0.5,1
 2,2026-01-10,Steve Horrell,Alistair A Gilbert,NA,1972,ENG,0,1673,0.41,0.15,0.5,1
 3,2026-01-10,Steve Horrell,Nathaniel Wu,NA,1738,ENG,0,1661,0.81,0.4,0.5,2
@@ -11161,6 +11320,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 17,2026-11-14,Steve Smith,Peter A Isaksen,NA,1991,Est,0.5,1927,8.94,0.44,8,1
 18,2026-11-14,Steve Smith,David Hunn,NA,1960,ENG,0.5,1928,9.42,0.48000000000000004,8.5,2
 19,2026-11-15,Steve Smith,Andrew Di-Vetta,e1 andrew di-vetta,1835,E1,0,1915,10.07,0.65,8.5,1
+20,2026-11-25,Steve Smith,Ian Eustis,w1 ian eustis,1822,W1,0.5,1911,10.739999999999998,0.6699999999999999,9,1
 1,2026-01-06,Steve Williams (Cwm),Neil Carter,g1 neil carter,1850,G1,0,1712,0.32,0.32,0,1
 2,2026-01-10,Steve Williams (Cwm),Greig A Sweetland,NA,1838,ENG,0,1702,0.66,0.34,0,1
 3,2026-01-10,Steve Williams (Cwm),Dave Tomlin,NA,1644,ENG,1,1714,1.27,0.61,1,2
@@ -11457,6 +11617,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 10,2026-10-28,Suraj Prabhu,Joseph Browse,e1 joseph browse,1842,E1,0,1803,4.7700000000000005,0.39,6,1
 11,2026-11-09,Suraj Prabhu,Jonathan James,e1 jonathan james,2068,E1,1,1828,4.92,0.15000000000000002,7,1
 12,2026-11-16,Suraj Prabhu,David Belochkin,e1 david belochkin,1538,E1,0,1805,5.71,0.7899999999999999,7,1
+13,2026-11-23,Suraj Prabhu,Ken Hannah,e1 ken hannah,1668,E1,0,1786,6.35,0.64,7,1
 1,2026-01-15,Susan F Parry,Stephen Garnett,n1 stephen garnett,1545,N1,1,1474,0.37,0.37,1,1
 2,2026-01-21,Susan F Parry,Ian Regan,n1 ian regan,1429,N1,1,1488,0.91,0.54,2,1
 3,2026-02-02,Susan F Parry,Ben Thomas Davies,NA,1654,ENG,0,1480,1.15,0.24,2,1
@@ -11589,6 +11750,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 19,2026-11-03,Teilo Gruffydd,Saksham Chawla,e1 saksham chawla,1310,E1,1,1413,7.55,0.63,8,1
 20,2026-11-10,Teilo Gruffydd,Zirui Xu,e1 zirui xu,1310,E1,0,1394,8.18,0.63,8,1
 21,2026-11-16,Teilo Gruffydd,Clive Silver,e1 clive silver,1512,E1,0.5,1399,8.52,0.33999999999999997,8.5,1
+22,2026-11-24,Teilo Gruffydd,Chris White,e1 chris white,1699,E1,1,1424,8.67,0.15000000000000002,9.5,1
 2,2026-02-04,Thaarun Prabagar,Steve McCall,n1 steve mccall,1739,N1,0,1357,0.2,0.1,0,1
 3,2026-04-29,Thaarun Prabagar,James Will,n1 james will,1523,N1,0,1348,0.48,0.28,0,1
 1,2026-04-07,Theo Edwards,Dekota Sansome,g1 dekota sansome,1438,G1,0.5,1402,0.45,0.45,0.5,1
@@ -11620,6 +11782,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 10,2026-11-09,Thomas Mahoney,John Watts,e1 john watts,1778,E1,1,1797,5.930000000000001,0.52,6,1
 11,2026-11-16,Thomas Mahoney,Richard Swales,e1 richard swales,1446,E1,1,1800,6.81,0.88,7,1
 12,2026-11-18,Thomas Mahoney,Ivan De La Cruz,e1 ivan de la cruz,2133,E1,0,1796,6.94,0.13,7,1
+13,2026-11-25,Thomas Mahoney,Emma Kong,e1 emma kong,1912,E1,0,1786,7.28,0.33999999999999997,7,1
 1,2026-01-06,Thomas Mitchell,James Evans,w1 james evans,1678,W1,1,1710,0.53,0.53,1,1
 2,2026-01-20,Thomas Mitchell,John Arnold,w1 john arnold,1726,W1,1,1727,0.99,0.46,2,1
 3,2026-01-27,Thomas Mitchell,Ewan Ferguson,d1 ewan ferguson,1832,D1,0,1717,1.3,0.31,2,1
@@ -11662,6 +11825,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 3,2026-03-17,Thomasz Naljon,Callum Prescott,e1 callum prescott,1310,E1,1,1348,1.11,0.56,1,1
 4,2026-04-27,Thomasz Naljon,Suraj Prabhu,e1 suraj prabhu,1740,E1,0,1345,1.21,0.1,1,1
 1,2026-11-10,Thomasz Naljon,Wayne Holland,e1 wayne holland,1382,E1,0,1332,0.45,0.45,0,1
+2,2026-11-23,Thomasz Naljon,Nadi Grewal,e1 nadi grewal,1426,E1,0,1320,0.8400000000000001,0.39,0,1
 1,2026-01-07,Tim Kett,Jamie Wilson,e1 jamie wilson,1444,E1,1,2221,0.9,0.9,1,1
 2,2026-01-09,Tim Kett,Sam Jukes,e1 sam jukes,2000,E1,0.5,2218,1.68,0.78,1.5,1
 3,2026-01-10,Tim Kett,Carmel Barwick,NA,2046,ENG,0.5,2216,2.41,0.73,2,1
@@ -11756,7 +11920,19 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 41,2026-10-28,Tim Kett,George Turner,e1 george turner,1929,E1,0.5,2194,30.610000000000003,0.8300000000000001,29,1
 42,2026-11-03,Tim Kett,Lachlan Tyrrell,e1 lachlan tyrrell,2022,E1,0.5,2191,31.36,0.75,29.5,1
 43,2026-11-04,Tim Kett,Alex Bullen,e1 alex bullen,2205,E1,1,2196,31.87,0.51,30.5,1
+47,2026-11-10,Tim Kett,Raymond Wynarczyk,NA,1830,ENG,1,2202,34.760000000000005,0.9,34,1
+48,2026-11-10,Tim Kett,Roland Bezuidenhout,NA,2344,ENG,0.5,2204,35.08,0.32,34.5,2
+49,2026-11-11,Tim Kett,Neil F Dickenson,NA,2222,ENG,0.5,2204,35.56,0.48000000000000004,35,1
+50,2026-11-12,Tim Kett,Vinuda Gunatilake,NA,2146,ENG,1,2208,36.15,0.59,36,1
+51,2026-11-13,Tim Kett,Andrew P Smith,NA,2174,ENG,1,2213,36.7,0.55,37,2
+52,2026-11-13,Tim Kett,Harry Vernon,NA,1831,ENG,1,2214,37.6,0.9,38,1
+53,2026-11-14,Tim Kett,Venuda Gunatilake,NA,2146,ENG,0,2208,38.190000000000005,0.59,38,1
+54,2026-11-14,Tim Kett,John Moore,NA,1671,ENG,1,2209,39.09,0.9,39,2
+55,2026-11-15,Tim Kett,Nurlykhan Kudaibergen,NA,2236,ENG,0.5,2209,39.55,0.46,39.5,1
+56,2026-11-15,Tim Kett,Andrew Di-Vetta,e1 andrew di-vetta,1835,E1,1,2210,40.449999999999996,0.9,40.5,2
 44,2026-11-18,Tim Kett,Alex Bullen,e1 alex bullen,2205,E1,1,2201,32.379999999999995,0.51,31.5,1
+45,2026-11-24,Tim Kett,Daniel Wilmot,e1 daniel wilmot,2039,E1,1,2204,33.11,0.73,32.5,1
+46,2026-11-25,Tim Kett,Lachlan Tyrrell,e1 lachlan tyrrell,2022,E1,0.5,2201,33.86,0.75,33,1
 1,2026-03-02,Tim Warner,Toby Nash,d1 toby nash,1647,D1,0,1306,0.13,0.13,0,1
 1,2026-01-06,Tim Whitchurch,Rhys Davies,e1 rhys davies,1398,E1,1,1585,0.74,0.74,1,1
 2,2026-01-20,Tim Whitchurch,Leon Jansen van Rensburg,e1 leon jansen van rensburg,1680,E1,0,1574,1.1,0.36,1,1
@@ -11943,6 +12119,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 20,2026-10-12,Tom Brown,Ifan Rathbone-Jones,n1 ifan rathbone-jones,2257,N1,0,2103,10.72,0.3,10.5,1
 23,2026-11-04,Tom Brown,Michael Binks,e1 michael binks,1901,E1,1,2102,12.25,0.77,12,1
 24,2026-11-18,Tom Brown,Sam Jukes,e1 sam jukes,2043,E1,0,2091,12.84,0.59,12,1
+25,2026-11-25,Tom Brown,Alex Bullen,e1 alex bullen,2205,E1,1,2103,13.2,0.36,13,1
 1,2026-01-02,Tom Ferries,Daniel Katchi,e1 daniel katchi,1310,E1,1,1325,0.5,0.5,1,1
 2,2026-01-19,Tom Ferries,Martin Ilett,e1 martin ilett,1593,E1,0,1320,0.66,0.16,1,1
 3,2026-01-26,Tom Ferries,Gwawr Evans,e1 gwawr evans,1310,E1,1,1335,1.16,0.5,2,1
@@ -12242,6 +12419,7 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 1,2026-09-15,William O'Connor-Gunston,Ben Trigg,e1 ben trigg,1474,E1,0,1302,0.28,0.28,0,1
 2,2026-10-12,William O'Connor-Gunston,Summer Cooke,e1 summer cooke,1337,E1,0,1288,0.74,0.46,0,1
 3,2026-11-03,William O'Connor-Gunston,Jamie Wilson,e1 jamie wilson,1417,E1,0,1277,1.09,0.35,0,1
+4,2026-11-24,William O'Connor-Gunston,Sami Hoosein,e1 sami hoosein,1494,E1,0,1270,1.35,0.26,0,1
 1,2026-01-07,William Phillips,Richard Miles,g1 richard miles,1976,G1,0.5,1841,0.31,0.31,0.5,1
 2,2026-01-21,William Phillips,Tomas Forsey,g1 tomas forsey,1684,G1,0.5,1837,1.02,0.71,1,1
 3,2026-02-04,William Phillips,John A Williams,g1 john a williams,1734,G1,0,1824,1.66,0.64,1,1
@@ -12303,8 +12481,9 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 4,2026-07-29,Yimo Liu,Ankita Belur,NA,1732,ENG,0,1440,1.08,0.18,0,2
 5,2026-07-29,Yimo Liu,Coral Cresswell,NA,1500,Est,1,1456,1.54,0.46,1,1
 6,2026-07-30,Yimo Liu,Siyao Ou,NA,1597,ENG,0,1446,1.87,0.32999999999999996,1,1
-7,2026-10-27,Yimo Liu,Chris Peters,e1 chris peters,1700,E1,0,1440,2.08,0.21,1,1
+7,2026-10-27,Yimo Liu,Chris Peters,e1 chris peters,1700,E1,0,1440,2.08,0.21000000000000002,1,1
 8,2026-11-01,Yimo Liu,Andrei Zhuravlev,e1 andrei zhuravlev,1404,E1,0,1422,2.68,0.6,1,1
+11,2026-11-24,Yimo Liu,Richard Larg,e1 richard larg,1557,E1,1,1459,4.45,0.38,4,1
 1,2026-01-28,Yoganand Kumar Kunche,Robert Palser,g1 robert palser,1604,G1,1,2139,0.9,0.9,1,1
 2,2026-02-18,Yoganand Kumar Kunche,Mark Adams,g1 mark adams,1863,G1,1,2142,1.73,0.83,2,1
 1,2026-08-21,Yoganand Kumar Kunche,Judd Chidwick,g1 judd chidwick,1820,G1,0,2125,0.8600000000000001,0.8600000000000001,0,1
@@ -12408,6 +12587,8 @@ GameNo,Date,Player1,Player2,OppKey,OppRating_Display,RatingType,Result,New,Tot,E
 42,2026-11-09,Zack Wilkins,Mark Chinnick,e1 mark chinnick,1604,E1,1,1728,20.74,0.72,19.5,1
 44,2026-11-11,Zack Wilkins,Csege Hanczar,e1 csege hanczar,1606,E1,0,1727,21.77,0.71,20.5,1
 45,2026-11-16,Zack Wilkins,John Callan,e1 john callan,1443,E1,1,1731,22.630000000000003,0.8600000000000001,21.5,1
+46,2026-11-23,Zack Wilkins,John D Thornton,e1 john d thornton,2015,E1,0,1725,22.82,0.19,21.5,1
+47,2026-11-25,Zack Wilkins,James Tapp,e1 james tapp,2201,E1,0,1722,22.919999999999998,0.1,21.5,1
 1,2026-01-06,Zane Allford,Mike Stannard,g1 mike stannard,1479,G1,1,1832,0.88,0.88,1,1
 2,2026-01-21,Zane Allford,Dave Connolly,g1 dave connolly,1681,G1,1,1838,1.58,0.7,2,1
 3,2026-02-04,Zane Allford,Steve Williams (Cwm),g1 steve williams (cwm),1722,G1,0.5,1835,2.23,0.65,2.5,1
